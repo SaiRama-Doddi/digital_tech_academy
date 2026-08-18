@@ -2,13 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowDown, CheckCircle2, Compass, Target } from "lucide-react";
 
 import aboutImg from "@/assets/about-training.jpg";
-import { CTASection } from "@/components/site/CTASection";
 import { Icon } from "@/components/site/Icon";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { StatsSection } from "@/components/site/StatsSection";
-import { careerBenefits, whyChooseUs } from "@/data/content";
+import { whyChooseUs } from "@/data/content";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -50,7 +49,7 @@ function AboutPage() {
 
       {/* Who We Are */}
       <section className="bg-background">
-        <div className="container-site section-y grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="container-site py-10 lg:py-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="overflow-hidden rounded-2xl border border-border shadow-card" data-reveal="left">
             <img
               src={aboutImg}
@@ -67,7 +66,7 @@ function AboutPage() {
               title="A Focused Institute for Two High-Demand Domains"
               align="left"
             />
-            <div className="mt-5 space-y-4 text-[0.98rem] leading-relaxed text-muted-foreground">
+            <div className="mt-4 space-y-4 text-[0.98rem] leading-relaxed text-muted-foreground text-justify">
               <p>
                 Digital Tech Solution is a specialist training institute for Digital Marketing and
                 Cyber Security. Instead of offering everything, we focus on two domains and teach
@@ -95,13 +94,13 @@ function AboutPage() {
 
       {/* Our Story */}
       <section className="bg-surface">
-        <div className="container-site section-y">
+        <div className="container-site py-10 lg:py-12">
           <SectionHeading
             eyebrow="Our Story"
             title="Started to Close the Gap Between Courses and Careers"
             description="We kept meeting learners who had completed courses but had never run a campaign or worked inside a security lab. Digital Tech Solution was built to fix exactly that."
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="mt-7 grid gap-4 sm:grid-cols-3">
             {[
               {
                 year: "Then",
@@ -127,7 +126,7 @@ function AboutPage() {
               >
                 <span className="eyebrow text-accent-foreground/70">{item.year}</span>
                 <h3 className="mt-2 text-base font-bold text-foreground">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">{item.text}</p>
               </article>
             ))}
           </div>
@@ -137,7 +136,7 @@ function AboutPage() {
       {/* Vision & Mission */}
       <section className="surface-navy relative overflow-hidden">
         <div className="grid-lines absolute inset-0 opacity-50" aria-hidden="true" />
-        <div className="container-site relative section-y grid gap-5 lg:grid-cols-2">
+        <div className="container-site relative py-10 lg:py-12 grid gap-5 lg:grid-cols-2">
           <article
             data-reveal="left"
             className="flex flex-col gap-4 rounded-2xl border border-accent/30 bg-accent/10 p-7 backdrop-blur sm:p-9"
@@ -146,7 +145,7 @@ function AboutPage() {
               <Compass className="size-6" aria-hidden="true" />
             </span>
             <h2 className="text-2xl font-extrabold text-navy-foreground sm:text-3xl">Our Vision</h2>
-            <p className="text-base leading-relaxed text-navy-foreground/85">
+            <p className="text-base leading-relaxed text-navy-foreground/85 text-justify">
               To become a trusted learning destination for practical Digital Marketing and Cyber
               Security education.
             </p>
@@ -159,7 +158,7 @@ function AboutPage() {
               <Target className="size-6" aria-hidden="true" />
             </span>
             <h2 className="text-2xl font-extrabold text-navy-foreground sm:text-3xl">Our Mission</h2>
-            <p className="text-base leading-relaxed text-navy-muted">
+            <p className="text-base leading-relaxed text-navy-muted text-justify">
               To empower learners with relevant skills, practical experience and professional
               confidence needed to succeed in a rapidly changing digital world.
             </p>
@@ -169,13 +168,13 @@ function AboutPage() {
 
       {/* Training Philosophy */}
       <section className="bg-background">
-        <div className="container-site section-y">
+        <div className="container-site py-10 lg:py-12">
           <SectionHeading
             eyebrow="Training Philosophy"
             title="Four Stages, Every Single Module"
             description="The same rhythm repeats across every topic so learning always ends in application."
           />
-          <ol className="mx-auto mt-10 flex max-w-4xl flex-col items-stretch gap-3">
+          <ol className="mx-auto mt-7 flex max-w-4xl flex-col items-stretch gap-3">
             {philosophy.map((stage, index) => (
               <li key={stage.title} data-reveal className="flex flex-col items-center gap-3">
                 <div className="hover-lift flex w-full items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-card sm:items-center">
@@ -184,7 +183,7 @@ function AboutPage() {
                   </span>
                   <div>
                     <h3 className="text-base font-bold text-foreground">{stage.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{stage.text}</p>
+                    <p className="mt-1 text-sm text-muted-foreground text-justify">{stage.text}</p>
                   </div>
                 </div>
                 {index < philosophy.length - 1 ? (
@@ -198,12 +197,12 @@ function AboutPage() {
 
       {/* Why students choose us */}
       <section className="bg-surface">
-        <div className="container-site section-y">
+        <div className="container-site py-10 lg:py-12">
           <SectionHeading
             eyebrow="Why Students Choose Us"
             title="Consistent Structure, Real Accountability"
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {whyChooseUs.map((item) => (
               <article
                 key={item.title}
@@ -214,39 +213,16 @@ function AboutPage() {
                   <Icon name={item.icon} className="size-5 text-accent-foreground" />
                 </span>
                 <h3 className="text-base font-bold text-foreground">{item.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground text-justify">{item.text}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Learning experience */}
-      <section className="bg-background">
-        <div className="container-site section-y">
-          <SectionHeading
-            eyebrow="Learning Experience"
-            title="What a Batch Actually Feels Like"
-            description="Small groups, structured sessions, weekly deliverables and honest feedback."
-          />
-          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {careerBenefits.map((item) => (
-              <article key={item.title} data-reveal className="group bg-card p-6 transition-colors hover:bg-surface">
-                <span className="grid size-11 place-items-center rounded-md bg-accent-soft transition-transform duration-300 group-hover:scale-110">
-                  <Icon name={item.icon} className="size-5 text-accent-foreground" />
-                </span>
-                <h3 className="mt-3 text-base font-bold text-foreground">{item.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <CTASection
-        heading="Learn With a Team That Cares About Outcomes"
-        text="Talk to a counsellor about which program fits your background and career goal."
-      />
+
+
     </SiteLayout>
   );
 }

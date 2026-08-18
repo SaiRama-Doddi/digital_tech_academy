@@ -38,20 +38,20 @@ function RequestCallPage() {
       />
 
       <section className="bg-background">
-        <div className="container-site section-y grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+        <div className="container-site py-10 lg:py-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
           <div data-reveal="left">
             <RequestCallForm />
           </div>
 
           <aside className="flex flex-col gap-4" data-reveal="right">
-            <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-              <h2 className="text-base font-bold text-foreground">Prefer to talk right away?</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.03)]">
+              <h2 className="text-base font-extrabold text-slate-800">Prefer to talk right away?</h2>
+              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-500 text-justify">
                 Call us during working hours or send a WhatsApp message — both reach the admissions
                 team directly.
               </p>
               <div className="mt-5 flex flex-col gap-3">
-                <BtnAnchor href={site.phoneHref} variant="primary" size="md">
+                <BtnAnchor href={site.phoneHref} variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/10 h-11 rounded-lg">
                   <Phone className="size-4" aria-hidden="true" />
                   {site.phone}
                 </BtnAnchor>
@@ -61,6 +61,7 @@ function RequestCallPage() {
                   rel="noreferrer"
                   variant="outline"
                   size="md"
+                  className="border-slate-200 bg-white hover:border-blue-600 hover:text-blue-600 text-slate-700 h-11 rounded-lg"
                 >
                   <MessageCircle className="size-4" aria-hidden="true" />
                   Enquire on WhatsApp
@@ -79,12 +80,12 @@ function RequestCallPage() {
               ].map((item) => (
                 <li
                   key={item.title}
-                  className="flex gap-3 rounded-xl border border-border bg-surface p-4"
+                  className="flex gap-3 rounded-xl border border-slate-100 bg-slate-50/50 p-4"
                 >
-                  <item.icon className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden="true" />
+                  <item.icon className="mt-0.5 size-5 shrink-0 text-blue-500" aria-hidden="true" />
                   <span>
-                    <span className="block text-sm font-bold text-foreground">{item.title}</span>
-                    <span className="block text-xs text-muted-foreground">{item.text}</span>
+                    <span className="block text-sm font-bold text-slate-800">{item.title}</span>
+                    <span className="block text-xs text-slate-500 mt-0.5">{item.text}</span>
                   </span>
                 </li>
               ))}

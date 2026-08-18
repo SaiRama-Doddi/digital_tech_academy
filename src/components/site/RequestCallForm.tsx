@@ -32,7 +32,7 @@ type Errors = Partial<Record<keyof Values, string>>;
 const initial: Values = { name: "", phone: "", email: "", course: "", callTime: "", message: "" };
 
 const fieldClass =
-  "w-full rounded-md border bg-card px-3.5 py-3 text-[0.95rem] text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent";
+  "w-full rounded-lg border bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500";
 
 export function RequestCallForm({
   defaultCourse,
@@ -101,7 +101,7 @@ export function RequestCallForm({
       onSubmit={onSubmit}
       noValidate
       className={cn(
-        "rounded-xl border border-border bg-card p-5 shadow-card sm:p-6 lg:p-7",
+        "rounded-2xl border border-slate-100/80 bg-white p-5 shadow-[0_12px_40px_rgba(0,0,0,0.03)] sm:p-6 lg:p-7",
         compact && "sm:p-5",
       )}
     >
@@ -178,10 +178,10 @@ export function RequestCallForm({
                 onClick={() => set("callTime", option)}
                 aria-pressed={values.callTime === option}
                 className={cn(
-                  "rounded-md border px-3 py-2 text-xs font-semibold transition-colors sm:text-sm",
+                  "rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all duration-200",
                   values.callTime === option
-                    ? "border-accent bg-accent text-accent-foreground"
-                    : "border-input text-muted-foreground hover:border-accent hover:text-foreground",
+                    ? "border-blue-600 bg-blue-50 text-blue-600 font-bold"
+                    : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-800",
                 )}
               >
                 {option}
@@ -205,7 +205,11 @@ export function RequestCallForm({
         </Field>
       </div>
 
-      <Btn type="submit" size="lg" className="mt-5 w-full" disabled={status === "loading"}>
+      <button
+        type="submit"
+        disabled={status === "loading"}
+        className="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 text-sm shadow-md shadow-blue-500/10 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 disabled:opacity-50"
+      >
         {status === "loading" ? (
           <>
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -217,7 +221,7 @@ export function RequestCallForm({
             Request a Call
           </>
         )}
-      </Btn>
+      </button>
       <p className="mt-3 text-center text-xs text-muted-foreground">
         We respect your privacy. Your details are used only to contact you about training programs.
       </p>

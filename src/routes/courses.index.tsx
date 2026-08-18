@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
-import { CTASection } from "@/components/site/CTASection";
 import { CourseCard } from "@/components/site/CourseCard";
 import { PageHero } from "@/components/site/PageHero";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -91,10 +90,7 @@ function CoursesPage() {
         </div>
       </section>
 
-      <CTASection
-        heading="Not Sure Which Program Fits?"
-        text="A short counselling call is usually enough to match your background to the right learning path."
-      />
+
     </SiteLayout>
   );
 }

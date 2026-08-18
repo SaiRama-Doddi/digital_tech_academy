@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { createLink } from "@tanstack/react-router";
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ComponentProps } from "react";
+import { forwardRef, type ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,8 @@ export const btnVariants = cva(
           "border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent",
         onDark:
           "border border-navy-foreground/25 bg-navy-foreground/5 text-navy-foreground hover:border-accent hover:bg-accent hover:text-accent-foreground",
+        onDarkOutline:
+          "border border-navy-foreground/25 bg-transparent text-navy-foreground hover:border-accent hover:text-accent-foreground",
         ghost: "text-foreground hover:text-accent",
       },
       size: {
@@ -36,14 +38,23 @@ export function Btn({ className, variant, size, ...props }: ComponentProps<"butt
   return <button className={cn(btnVariants({ variant, size }), className)} {...props} />;
 }
 
-export function BtnLink({
-  className,
-  variant,
-  size,
-  ...props
-}: ComponentProps<typeof Link> & Variants) {
-  return <Link className={cn(btnVariants({ variant, size }), className)} {...props} />;
-}
+// 1. Create a styled anchor component that supports ref forwarding and our custom Variants props
+const BtnLinkComponent = forwardRef<HTMLAnchorElement, ComponentProps<"a"> & Variants>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <a
+        ref={ref}
+        className={cn(btnVariants({ variant, size }), className)}
+        {...props}
+      />
+    );
+  }
+);
+
+BtnLinkComponent.displayName = "BtnLinkComponent";
+
+// 2. Wrap it with TanStack Router's createLink helper to inject all Link props (to, params, search, etc.) type-safely
+export const BtnLink = createLink(BtnLinkComponent);
 
 export function BtnAnchor({
   className,
@@ -53,3 +64,4 @@ export function BtnAnchor({
 }: ComponentProps<"a"> & Variants) {
   return <a className={cn(btnVariants({ variant, size }), className)} {...props} />;
 }
+

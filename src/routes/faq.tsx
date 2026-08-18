@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CTASection } from "@/components/site/CTASection";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -54,10 +53,7 @@ function FaqPage() {
         </div>
       </section>
 
-      <CTASection
-        heading="Still Have a Question?"
-        text="Request a call and a counsellor will answer everything specific to your goals."
-      />
+
     </SiteLayout>
   );
 }

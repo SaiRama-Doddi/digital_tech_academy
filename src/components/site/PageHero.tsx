@@ -14,7 +14,7 @@ export function PageHero({
   return (
     <section className="surface-navy relative overflow-hidden">
       <div className="grid-lines absolute inset-0 opacity-70" aria-hidden="true" />
-      <div className="container-site relative py-14 sm:py-16 lg:py-20">
+      <div className="container-site relative py-10 sm:py-12 lg:py-14">
         <div className="max-w-3xl" data-reveal>
           {eyebrow ? (
             <span className="eyebrow text-accent">

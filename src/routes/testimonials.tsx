@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Quote, Star } from "lucide-react";
 
-import { CTASection } from "@/components/site/CTASection";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -141,11 +140,6 @@ function TestimonialsPage() {
           ))}
         </div>
       </section>
-
-      <CTASection
-        heading="Your Experience Could Be Next"
-        text="Join a batch built around practice, mentorship and measurable progress."
-      />
     </SiteLayout>
   );
 }
