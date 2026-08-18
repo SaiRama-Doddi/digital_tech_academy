@@ -33,7 +33,7 @@ const icons: Record<string, LucideIcon> = {
   Wrench,
 };
 
-export function Icon({ name, className }: { name: string; className?: string }) {
+export function Icon({ name, className }: { name: string; className?: string | undefined }) {
   const Cmp = icons[name] ?? BadgeCheck;
   return <Cmp className={className} aria-hidden="true" />;
 }

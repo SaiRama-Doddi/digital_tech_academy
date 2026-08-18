@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
 
 type Props = {
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  description?: string;
-  align?: "left" | "center";
-  onDark?: boolean;
-  className?: string;
-  as?: "h1" | "h2" | "h3";
+  description?: string | undefined;
+  align?: "left" | "center" | undefined;
+  onDark?: boolean | undefined;
+  className?: string | undefined;
+  as?: "h1" | "h2" | "h3" | undefined;
 };
 
 export function SectionHeading({

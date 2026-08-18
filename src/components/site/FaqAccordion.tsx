@@ -11,8 +11,8 @@ export function FaqAccordion({
   defaultOpen = 0,
 }: {
   items: FaqItem[];
-  className?: string;
-  defaultOpen?: number | null;
+  className?: string | undefined;
+  defaultOpen?: number | null | undefined;
 }) {
   const [open, setOpen] = useState<number | null>(defaultOpen);
 

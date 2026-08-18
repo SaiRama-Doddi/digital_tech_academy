@@ -38,8 +38,8 @@ export function RequestCallForm({
   defaultCourse,
   compact = false,
 }: {
-  defaultCourse?: string;
-  compact?: boolean;
+  defaultCourse?: string | undefined;
+  compact?: boolean | undefined;
 }) {
   const [values, setValues] = useState<Values>({ ...initial, course: defaultCourse ?? "" });
   const [errors, setErrors] = useState<Errors>({});
@@ -233,9 +233,9 @@ function Field({
   children,
 }: {
   label: string;
-  error?: string;
+  error?: string | undefined;
   htmlFor: string;
-  className?: string;
+  className?: string | undefined;
   children: React.ReactNode;
 }) {
   return (

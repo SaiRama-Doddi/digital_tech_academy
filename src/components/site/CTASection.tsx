@@ -3,8 +3,8 @@ import { ArrowRight, PhoneCall } from "lucide-react";
 import { BtnLink } from "./Btn";
 
 type Props = {
-  heading?: string;
-  text?: string;
+  heading?: string | undefined;
+  text?: string | undefined;
 };
 
 export function CTASection({

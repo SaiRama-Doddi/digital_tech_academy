@@ -7,8 +7,8 @@ type Props = {
   course: string;
   rating: number;
   quote: string;
-  onDark?: boolean;
-  className?: string;
+  onDark?: boolean | undefined;
+  className?: string | undefined;
 };
 
 export function TestimonialCard({ name, course, rating, quote, onDark, className }: Props) {

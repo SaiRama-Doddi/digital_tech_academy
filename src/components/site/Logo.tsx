@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export function Logo({ onDark = false, className }: { onDark?: boolean; className?: string }) {
+export function Logo({ onDark = false, className }: { onDark?: boolean | undefined; className?: string | undefined }) {
   return (
     <Link
       to="/"

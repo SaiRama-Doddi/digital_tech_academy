@@ -3,7 +3,7 @@ import { TestimonialCard } from "./TestimonialCard";
 type Item = { name: string; course: string; rating: number; quote: string };
 
 /** Grid on tablet/desktop, swipeable horizontal carousel on mobile. */
-export function TestimonialCarousel({ items, onDark }: { items: Item[]; onDark?: boolean }) {
+export function TestimonialCarousel({ items, onDark }: { items: Item[]; onDark?: boolean | undefined }) {
   return (
     <>
       <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:hidden">

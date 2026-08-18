@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export type ProcessStep = { step: string; title: string; text?: string };
+export type ProcessStep = { step: string; title: string; text?: string | undefined };
 
 export function ProcessTimeline({
   steps,
@@ -8,8 +8,8 @@ export function ProcessTimeline({
   className,
 }: {
   steps: ProcessStep[];
-  onDark?: boolean;
-  className?: string;
+  onDark?: boolean | undefined;
+  className?: string | undefined;
 }) {
   return (
     <ol
