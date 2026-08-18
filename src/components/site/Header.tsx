@@ -64,23 +64,24 @@ export function Header() {
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "relative py-1.5 text-sm font-bold transition-colors duration-200 h-full flex items-center",
+                  "py-1.5 text-sm font-bold transition-colors duration-200 h-full flex items-center",
                   isActive(link.to)
                     ? "text-blue-600"
                     : "text-slate-500 hover:text-blue-600"
                 )}
               >
-                <span className="flex items-center gap-1">
+                <span className="relative py-1 flex items-center gap-1">
                   {link.label}
                   {link.label === "Courses" && <span className="text-[10px] ml-0.5 opacity-60">&#9662;</span>}
+                  
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "absolute bottom-0 inset-x-0 h-0.5 origin-left rounded-full bg-blue-600 transition-all duration-300",
+                      isActive(link.to) ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0",
+                    )}
+                  />
                 </span>
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    "absolute bottom-0 inset-x-0 h-0.5 origin-left rounded-full bg-blue-600 transition-all duration-300",
-                    isActive(link.to) ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0",
-                  )}
-                />
               </Link>
             ))}
           </nav>
