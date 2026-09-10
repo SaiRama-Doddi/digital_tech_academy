@@ -1,0 +1,49 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // 1. STUDENT ENQUIRIES & LEAD CAPTURE
+    // Allows any visitor to submit a demo/callback enquiry, and allows reading/updating
+    // for the admin dashboard CRM.
+    // =========================================================================
+    match /enquiries/{enquiryId} {
+      // Anyone can submit an enquiry from the frontend forms
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.phone is string
+                    && request.resource.data.phone.size() >= 6;
+
+      // Allow reading, updating status, and deleting leads in admin console
+      allow read, update, delete: if true;
+    }
+
+    // =========================================================================
+    // 2. COURSES CATALOG & POPULAR CATEGORIES
+    // Public can read all published courses; allows admin dashboard to manage courses.
+    // =========================================================================
+    match /courses/{courseId} {
+      // Public visitors can view courses
+      allow read: if true;
+
+      // Admin console can create, update, or delete courses
+      allow write: if true;
+    }
+
+    // =========================================================================
+    // 3. REVIEWS & TESTIMONIALS (Optional collection)
+    // =========================================================================
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // =========================================================================
+    // 4. DEFAULT FALLBACK
+    // =========================================================================
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

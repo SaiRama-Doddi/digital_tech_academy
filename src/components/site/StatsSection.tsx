@@ -4,11 +4,14 @@ import { useInView } from "@/hooks/use-reveal";
 import { stats } from "@/data/content";
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
-  const { ref, inView } = useInView<HTMLSpanElement>();
+  const { ref, inView } = useInView<HTMLSpanElement>(false);
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView) {
+      setDisplay(0);
+      return;
+    }
     const reduce =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -30,7 +33,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   }, [inView, value]);
 
   return (
-    <span ref={ref} className="text-3xl font-extrabold text-accent sm:text-4xl lg:text-[2.6rem]">
+    <span ref={ref} className="text-xl sm:text-2xl lg:text-[1.85rem] font-extrabold text-accent tracking-tight">
       {display}
       {suffix}
     </span>

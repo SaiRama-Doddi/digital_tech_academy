@@ -7,7 +7,7 @@ export const site = {
   shortName: "DTS",
   tagline: "Digital Marketing & Cyber Security Training",
   description:
-    "Industry-focused Digital Marketing and Cyber Security training designed to build practical skills, confidence and career-ready expertise.",
+    "Digitechademy delivers practical, career-focused training in Digital Marketing, Programmatic Advertising, Cyber Security, SEO, and Performance Marketing. Our approach combines structured learning with hands-on practice to help learners build relevant professional skills.",
   phone: "+91 90000 00000",
   phoneHref: "tel:+919000000000",
   whatsapp: "919000000000",

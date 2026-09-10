@@ -51,8 +51,9 @@ function AdminLoginPage() {
 
   // State
   const [step, setStep] = useState<"email" | "otp">("email");
-  const [email, setEmail] = useState("sunilneelakantams@gmail.com");
+  const [email, setEmail] = useState("sunilkumarneelakantam@gmail.com");
   const [otp, setOtp] = useState("");
+  const [devCode, setDevCode] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -97,6 +98,9 @@ function AdminLoginPage() {
 
       if (res.success) {
         setStep("otp");
+        if ((res as any).code) {
+          setDevCode((res as any).code);
+        }
         setSuccessMsg(res.message || `Verification code sent to ${email}`);
         setResendCooldown(45);
       } else {
@@ -353,6 +357,28 @@ function AdminLoginPage() {
                       <InputOTPSlot index={5} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
                     </InputOTPGroup>
                   </InputOTP>
+
+                  {devCode && (
+                    <div className="mt-3.5 w-full rounded-xl border border-blue-200 bg-blue-50/90 p-3 text-center">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="text-left">
+                          <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-blue-700 block">
+                            Direct Security Passcode
+                          </span>
+                          <span className="text-xs text-slate-600 font-medium">
+                            Code: <strong className="font-mono text-blue-900 text-sm tracking-widest">{devCode}</strong>
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setOtp(devCode)}
+                          className="px-3 py-1 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-xs cursor-pointer active:scale-95 transition-all shrink-0"
+                        >
+                          Auto-fill
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="mt-4 flex items-center justify-between w-full text-xs">
                     <button

@@ -1,27 +1,38 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, CheckCircle2, Compass, Target } from "lucide-react";
+import {
+  BookOpen,
+  Briefcase,
+  CheckCircle2,
+  Compass,
+  GraduationCap,
+  History,
+  Layers,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Workflow,
+} from "lucide-react";
 
 import aboutImg from "@/assets/about-training.jpg";
-import { Icon } from "@/components/site/Icon";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { StatsSection } from "@/components/site/StatsSection";
-import { whyChooseUs } from "@/data/content";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Our Academy | Digital Tech Solution" },
+      { title: "About Digitechademy | Practical Technology & Marketing Institute" },
       {
         name: "description",
         content:
-          "Learn how Digital Tech Solution trains learners in Digital Marketing and Cyber Security through practical, mentor-led, career-focused programs.",
+          "Digitechademy is a practical learning platform focused on helping students and professionals develop relevant skills for today's digital careers.",
       },
-      { property: "og:title", content: "About Our Academy | Digital Tech Solution" },
+      { property: "og:title", content: "About Digitechademy" },
       {
         property: "og:description",
-        content: "Building practical skills for the digital and technology-driven world.",
+        content: "Learn Skills. Build Experience. Grow With the Digital Industry.",
       },
       { property: "og:url", content: "/about" },
     ],
@@ -30,199 +41,269 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
-const philosophy = [
-  { title: "Learn the Concept", text: "Structured sessions that build clear fundamentals first." },
-  { title: "Understand the Tool", text: "Guided walkthroughs of the platforms professionals use." },
-  { title: "Practice the Skill", text: "Repeated hands-on practice until execution feels natural." },
-  { title: "Apply It to Real Problems", text: "Projects and scenarios modelled on real business needs." },
+
+
+const whyLearnersChooseUs = [
+  {
+    title: "Practical Curriculum",
+    text: "Training focuses on usable skills rather than theory alone.",
+    icon: Layers,
+  },
+  {
+    title: "Industry Relevance",
+    text: "Course topics and workflows are aligned with evolving digital roles.",
+    icon: TrendingUp,
+  },
+  {
+    title: "Structured Learning",
+    text: "Clear learning paths help students progress from fundamentals to practical application.",
+    icon: Workflow,
+  },
+  {
+    title: "Career Focus",
+    text: "Programs are designed to strengthen skills, confidence, and professional readiness.",
+    icon: Briefcase,
+  },
 ];
 
 function AboutPage() {
   return (
     <SiteLayout>
+      {/* Section 1 — Hero */}
       <PageHero
-        eyebrow="About Our Academy"
-        title="About Our Academy"
-        description="Building practical skills for the digital and technology-driven world."
+        eyebrow="ABOUT DIGITECHADEMY"
+        title="Learn Skills. Build Experience. Grow With the Digital Industry."
+        description="Digitechademy is a practical learning platform focused on helping students and professionals develop relevant skills for today's digital careers."
+        containerClassName="max-w-6xl xl:max-w-7xl w-full"
+        titleClassName="max-w-none text-2xl sm:text-3xl md:text-4xl lg:text-[1.5rem] xl:text-[1.85rem] 2xl:text-[2.2rem] font-extrabold tracking-tight text-balance break-words xl:whitespace-nowrap leading-[1.25] sm:leading-[1.2]"
       />
       <StatsSection />
 
-      {/* Who We Are */}
+      {/* Section 2 — Introduction */}
       <section className="bg-background">
-        <div className="container-site py-10 lg:py-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="overflow-hidden rounded-2xl border border-border shadow-card" data-reveal="left">
+        <div className="container-site py-8 sm:py-10 lg:py-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 shadow-md" data-reveal="left">
             <img
               src={aboutImg}
               alt="Trainer working with learners in a technology training classroom"
               loading="lazy"
               width={1200}
               height={1008}
-              className="aspect-[5/4] w-full object-cover"
+              className="aspect-[5/4] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
             />
           </div>
           <div data-reveal="right">
             <SectionHeading
-              eyebrow="Who We Are"
-              title="A Focused Institute for Two High-Demand Domains"
+              eyebrow="ABOUT DIGITECHADEMY"
+              title="Where Practical Learning Meets Career Growth"
+              singleLine={false}
+              description={
+                <>
+                  <span className="sm:hidden">
+                    Digitechademy combines structured concepts, practical application, industry tools, and real projects for job-ready skills.
+                  </span>
+                  <span className="hidden sm:inline">
+                    We believe effective training should go beyond completing lessons. Digitechademy combines structured concepts, practical application, industry tools, guided projects, and continuous improvement to create a learning experience built around real skills.
+                  </span>
+                </>
+              }
               align="left"
             />
-            <div className="mt-4 space-y-4 text-[0.98rem] leading-relaxed text-muted-foreground text-justify">
-              <p>
-                Digital Tech Solution is a specialist training institute for Digital Marketing and
-                Cyber Security. Instead of offering everything, we focus on two domains and teach
-                them deeply, with curriculum shaped by how these roles actually work in industry.
-              </p>
-              <p>
-                Every program is delivered by practitioners, structured around practical work and
-                supported by mentors who review what you build. Learners finish with skills they
-                can demonstrate — campaign work, audits, labs and assessment reports.
-              </p>
-            </div>
-            <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
-              {["Practical education", "Technology-first curriculum", "Career development focus", "Continuous mentorship"].map(
-                (item) => (
-                  <li key={item} className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <CheckCircle2 className="size-4 shrink-0 text-accent" aria-hidden="true" />
-                    {item}
-                  </li>
-                ),
-              )}
+            <ul className="mt-3.5 sm:mt-6 grid gap-1.5 sm:gap-3 sm:grid-cols-2">
+              {[
+                "Structured Core Concepts",
+                "Practical Hands-On Application",
+                "Industry Standard Tools",
+                "Guided Real-World Projects",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center gap-2 sm:gap-2.5 rounded-lg sm:rounded-xl border border-slate-200/80 bg-white py-1.5 px-2.5 sm:p-3.5 text-[11.5px] sm:text-sm font-bold text-slate-800 shadow-xs sm:shadow-sm transition-all duration-300 hover:border-accent/40"
+                >
+                  <span className="grid size-3.5 sm:size-5 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
+                    <CheckCircle2 className="size-2 sm:size-3.5" aria-hidden="true" />
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </section>
 
-      {/* Our Story */}
-      <section className="bg-surface">
-        <div className="container-site py-10 lg:py-12">
-          <SectionHeading
-            eyebrow="Our Story"
-            title="Started to Close the Gap Between Courses and Careers"
-            description="We kept meeting learners who had completed courses but had never run a campaign or worked inside a security lab. Digital Tech Solution was built to fix exactly that."
-          />
-          <div className="mt-7 grid gap-4 sm:grid-cols-3">
+      {/* Section 3 — Our Story */}
+      <section className="bg-surface border-t border-slate-200/80">
+        <div className="container-site py-8 sm:py-10 lg:py-12">
+          <div className="max-w-4xl lg:max-w-5xl text-left" data-reveal>
+            <span className="inline-block text-xs font-black uppercase tracking-widest text-accent mb-3">
+              OUR STORY
+            </span>
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight text-navy text-left break-words">
+              Built to Make Digital Learning More Practical
+            </h2>
+            <p className="mt-4 text-sm sm:text-base lg:text-[1.05rem] leading-relaxed text-slate-600 max-w-4xl text-left font-normal">
+              Digitechademy was created with a simple goal: make professional digital training more practical, accessible, and relevant to the skills employers and businesses need. Our programs are designed to connect learning with real-world application so learners can understand not only what to learn, but how to use it.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4 — Then / Now / Next */}
+      <section className="bg-background border-t border-slate-200/60">
+        <div className="container-site py-8 sm:py-10 lg:py-12">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8" data-reveal>
+            <span className="inline-block text-xs font-black uppercase tracking-widest text-accent mb-2">
+              THE PROGRESSION
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-navy text-center">
+              Then / Now / Next
+            </h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3 max-w-5xl mx-auto">
             {[
               {
-                year: "Then",
-                title: "A practical pilot batch",
-                text: "The first programs ran with small batches and heavy project work to prove the format.",
+                stage: "Then",
+                icon: History,
+                badgeClass: "bg-slate-100 text-slate-700 border-slate-200",
+                iconBg: "bg-slate-100 text-slate-600",
+                cardClass: "border-slate-200/80 bg-white",
+                text: "Learning was often separated from practical workplace experience.",
               },
               {
-                year: "Now",
-                title: "Two structured domains",
-                text: "Digital Marketing and Cyber Security tracks with defined levels, labs and certification.",
+                stage: "Now",
+                icon: Sparkles,
+                badgeClass: "bg-accent/15 text-accent border-accent/30 font-black",
+                iconBg: "bg-accent/15 text-accent",
+                cardClass: "border-accent/40 bg-white ring-2 ring-accent/20 shadow-md shadow-accent/5",
+                text: "Digitechademy brings structured learning, practical projects, tools, and guided application together.",
               },
               {
-                year: "Next",
-                title: "Deeper specialisation",
-                text: "Advanced tracks and industry collaboration to keep the curriculum current.",
+                stage: "Next",
+                icon: TrendingUp,
+                badgeClass: "bg-navy text-white border-navy font-black",
+                iconBg: "bg-navy/10 text-primary",
+                cardClass: "border-slate-200/80 bg-white",
+                text: "We aim to help more learners build specialized digital skills and confidently pursue evolving career opportunities.",
               },
-            ].map((item, index) => (
-              <article
-                key={item.title}
-                data-reveal
-                style={{ "--reveal-delay": `${index * 90}ms` } as React.CSSProperties}
-                className="hover-lift rounded-xl border border-border bg-card p-6 shadow-card"
-              >
-                <span className="eyebrow text-accent-foreground/70">{item.year}</span>
-                <h3 className="mt-2 text-base font-bold text-foreground">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">{item.text}</p>
-              </article>
-            ))}
+            ].map((item, index) => {
+              const IconComp = item.icon;
+              return (
+                <article
+                  key={item.stage}
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 90}ms` } as React.CSSProperties}
+                  className={cn(
+                    "group flex flex-col justify-between gap-3 rounded-xl border p-4 sm:p-5 shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-md",
+                    item.cardClass
+                  )}
+                >
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={cn(
+                        "inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] uppercase tracking-wider border font-bold",
+                        item.badgeClass
+                      )}
+                    >
+                      {item.stage}
+                    </span>
+                    <span
+                      className={cn(
+                        "grid size-8 place-items-center rounded-lg transition-transform duration-300 group-hover:scale-105",
+                        item.iconBg
+                      )}
+                    >
+                      <IconComp className="size-4" aria-hidden="true" />
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-[13px] leading-relaxed text-slate-600 font-medium text-left">
+                    {item.text}
+                  </p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission */}
-      <section className="surface-navy relative overflow-hidden">
-        <div className="grid-lines absolute inset-0 opacity-50" aria-hidden="true" />
-        <div className="container-site relative py-10 lg:py-12 grid gap-5 lg:grid-cols-2">
+      {/* Section 5 — Vision & Section 6 — Mission */}
+      <section className="surface-navy relative overflow-hidden py-10 sm:py-12 lg:py-14 border-t border-navy-700/60">
+        <div className="grid-lines absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute -right-20 -top-20 size-[28rem] rounded-full bg-accent/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -left-20 -bottom-20 size-[28rem] rounded-full bg-blue-500/10 blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div className="container-site relative z-10 grid gap-6 lg:grid-cols-2">
+          {/* Section 5 — Vision */}
           <article
             data-reveal="left"
-            className="flex flex-col gap-4 rounded-2xl border border-accent/30 bg-accent/10 p-7 backdrop-blur sm:p-9"
+            className="group flex flex-col gap-3.5 rounded-2xl border border-navy-foreground/15 bg-navy-700/30 backdrop-blur-md p-6 sm:p-7 shadow-xl transition-all duration-300 hover:border-accent/40"
           >
-            <span className="grid size-12 place-items-center rounded-md bg-accent text-accent-foreground">
-              <Compass className="size-6" aria-hidden="true" />
-            </span>
-            <h2 className="text-2xl font-extrabold text-navy-foreground sm:text-3xl">Our Vision</h2>
-            <p className="text-base leading-relaxed text-navy-foreground/85 text-justify">
-              To become a trusted learning destination for practical Digital Marketing and Cyber
-              Security education.
+            <div className="flex items-center gap-3.5">
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-105">
+                <Compass className="size-5.5" aria-hidden="true" />
+              </span>
+              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">Our Vision</h2>
+            </div>
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-300 text-justify [text-align:justify] [text-justify:inter-word] sm:text-left">
+              To build a trusted learning ecosystem where people can develop practical digital skills and continuously adapt to a changing technology-driven workplace.
             </p>
           </article>
+
+          {/* Section 6 — Mission */}
           <article
             data-reveal="right"
-            className="flex flex-col gap-4 rounded-2xl border border-navy-foreground/12 glass-panel p-7 sm:p-9"
+            className="group flex flex-col gap-3.5 rounded-2xl border border-navy-foreground/15 bg-navy-700/30 backdrop-blur-md p-6 sm:p-7 shadow-xl transition-all duration-300 hover:border-accent/40"
           >
-            <span className="grid size-12 place-items-center rounded-md border border-accent/40 text-accent">
-              <Target className="size-6" aria-hidden="true" />
-            </span>
-            <h2 className="text-2xl font-extrabold text-navy-foreground sm:text-3xl">Our Mission</h2>
-            <p className="text-base leading-relaxed text-navy-muted text-justify">
-              To empower learners with relevant skills, practical experience and professional
-              confidence needed to succeed in a rapidly changing digital world.
+            <div className="flex items-center gap-3.5">
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-105">
+                <Target className="size-5.5" aria-hidden="true" />
+              </span>
+              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">Our Mission</h2>
+            </div>
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-300 text-justify [text-align:justify] [text-justify:inter-word] sm:text-left">
+              To deliver practical, industry-relevant training that helps learners understand concepts, apply skills, build experience, and prepare for meaningful digital career opportunities.
             </p>
           </article>
         </div>
       </section>
 
-      {/* Training Philosophy */}
-      <section className="bg-background">
-        <div className="container-site py-10 lg:py-12">
+      {/* Section 8 — Why Learners Choose Us */}
+      <section className="bg-surface border-t border-slate-200/80">
+        <div className="container-site py-8 sm:py-10 lg:py-12">
           <SectionHeading
-            eyebrow="Training Philosophy"
-            title="Four Stages, Every Single Module"
-            description="The same rhythm repeats across every topic so learning always ends in application."
+            eyebrow="WHY LEARNERS CHOOSE US"
+            title="Why Learners Choose Us"
           />
-          <ol className="mx-auto mt-7 flex max-w-4xl flex-col items-stretch gap-3">
-            {philosophy.map((stage, index) => (
-              <li key={stage.title} data-reveal className="flex flex-col items-center gap-3">
-                <div className="hover-lift flex w-full items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-card sm:items-center">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-md bg-primary font-display text-sm font-extrabold text-primary-foreground">
-                    0{index + 1}
+          <div className="mt-8 sm:mt-10 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
+            {whyLearnersChooseUs.map((item, index) => {
+              const IconComp = item.icon;
+              return (
+                <article
+                  key={item.title}
+                  data-reveal={index % 2 === 0 ? "left" : "top"}
+                  style={{ "--reveal-delay": `${(index % 2) * 120 + Math.floor(index / 2) * 80}ms` } as React.CSSProperties}
+                  className="group flex flex-col justify-between gap-2.5 sm:gap-4 rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-7 shadow-xs sm:shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-navy/5"
+                >
+                  <span className="grid size-9 sm:size-12 place-items-center rounded-lg sm:rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-110">
+                    <IconComp className="size-4.5 sm:size-6 text-accent" aria-hidden="true" />
                   </span>
                   <div>
-                    <h3 className="text-base font-bold text-foreground">{stage.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground text-justify">{stage.text}</p>
+                    <h3 className="text-xs sm:text-lg font-bold text-navy leading-snug">{item.title}</h3>
+                    <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm leading-relaxed text-slate-600 text-justify [text-align:justify] [text-justify:inter-word]">
+                      {item.text}
+                    </p>
                   </div>
-                </div>
-                {index < philosophy.length - 1 ? (
-                  <ArrowDown className="size-5 text-accent" aria-hidden="true" />
-                ) : null}
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Why students choose us */}
-      <section className="bg-surface">
-        <div className="container-site py-10 lg:py-12">
-          <SectionHeading
-            eyebrow="Why Students Choose Us"
-            title="Consistent Structure, Real Accountability"
-          />
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {whyChooseUs.map((item) => (
-              <article
-                key={item.title}
-                data-reveal
-                className="hover-lift group flex flex-col gap-3 rounded-xl border border-border bg-card p-5 shadow-card"
-              >
-                <span className="grid size-11 place-items-center rounded-md bg-accent-soft transition-transform duration-300 group-hover:scale-110">
-                  <Icon name={item.icon} className="size-5 text-accent-foreground" />
-                </span>
-                <h3 className="text-base font-bold text-foreground">{item.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground text-justify">{item.text}</p>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
-
-
-
-
     </SiteLayout>
   );
 }

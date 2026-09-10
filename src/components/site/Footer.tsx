@@ -1,12 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import {
+  ArrowRight,
+  Award,
+  CheckCircle2,
+  ChevronRight,
+  GraduationCap,
   Instagram,
   Linkedin,
   Mail,
   MapPin,
   MessageCircle,
   Phone,
+  PhoneCall,
   Send,
+  ShieldCheck,
+  Sparkles,
   Twitter,
   Youtube,
 } from "lucide-react";
@@ -28,41 +36,114 @@ export function Footer() {
   };
 
   return (
-    <footer className="surface-navy relative border-t border-navy-600/50">
-      {/* Premium subtle top gradient border glow */}
+    <footer className="relative bg-[#020712] text-slate-300 border-t border-sky-500/20 overflow-hidden select-none">
+      {/* ========================================================================= */}
+      {/* 1. TOP AMBIENT GLOW & MULTI-STOP BORDER                                   */}
+      {/* ========================================================================= */}
       <div
-        className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+        className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-blue-600/10 blur-[120px]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-40 right-0 size-[500px] rounded-full bg-indigo-600/10 blur-[140px]"
         aria-hidden="true"
       />
 
-      <div className="container-site relative z-10 py-12 lg:py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-          {/* Brand Info & Newsletter */}
-          <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-5">
+      {/* ========================================================================= */}
+      {/* 2. PRE-FOOTER TRUST BADGES STRIP                                          */}
+      {/* ========================================================================= */}
+      <div className="relative z-10 border-b border-white/[0.08] bg-gradient-to-r from-[#030b1c]/80 via-[#07173a]/90 to-[#030b1c]/80 py-6 sm:py-8">
+        <div className="container-site">
+          {/* Trust Badges Strip */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+            {[
+              {
+                icon: ShieldCheck,
+                title: "ISO 9001:2015",
+                subtitle: "Certified Academy",
+                color: "bg-sky-500/15 text-sky-400 border-sky-400/30",
+              },
+              {
+                icon: GraduationCap,
+                title: "Govt Recognized",
+                subtitle: "Industry Accredited",
+                color: "bg-purple-500/15 text-purple-400 border-purple-400/30",
+              },
+              {
+                icon: Award,
+                title: "100% Placement",
+                subtitle: "Career Assistance",
+                color: "bg-amber-500/15 text-amber-400 border-amber-400/30",
+              },
+              {
+                icon: CheckCircle2,
+                title: "4.9 / 5 Rating",
+                subtitle: "2,500+ Alumni Reviews",
+                color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30",
+              },
+            ].map((badge) => {
+              const BadgeIcon = badge.icon;
+              return (
+                <div
+                  key={badge.title}
+                  className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#07152b]/60 border border-sky-500/15 backdrop-blur-sm"
+                >
+                  <span className={`grid size-8 shrink-0 place-items-center rounded-lg border ${badge.color}`}>
+                    <BadgeIcon className="size-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-white truncate leading-tight">{badge.title}</p>
+                    <p className="text-[10px] text-slate-400 truncate mt-0.5">{badge.subtitle}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 3. MAIN MULTI-COLUMN FOOTER                                               */}
+      {/* ========================================================================= */}
+      <div className="container-site relative z-10 py-10 sm:py-12 lg:py-16">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-12 xl:gap-10">
+          {/* Column 1: Brand & VIP Newsletter (4 cols on lg/xl) */}
+          <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-4 min-w-0">
             <div>
               <Logo onDark />
-              <p className="mt-3.5 max-w-md text-sm leading-relaxed text-navy-muted">
-                {site.description}
+              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md">
+                Digital Tech Solution delivers practical, project-driven training in Cyber Security,
+                Ethical Hacking, Digital Marketing, and Programmatic Advertising with dedicated placement support.
               </p>
             </div>
 
-            {/* Newsletter Subscription */}
-            <div className="max-w-md rounded-xl border border-navy-600/30 bg-navy-700/20 p-5 backdrop-blur-sm">
-              <h4 className="text-sm font-bold uppercase tracking-[0.12em] text-navy-foreground">
-                Stay Updated
+            {/* VIP Newsletter Box */}
+            <div className="rounded-2xl border border-sky-500/20 bg-gradient-to-b from-[#081836]/90 to-[#040e21]/90 p-4 sm:p-5 shadow-xl backdrop-blur-md relative overflow-hidden">
+              <div className="flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-wider text-sky-300 mb-1">
+                <Sparkles className="size-3 text-amber-400" />
+                <span>Industry Intelligence</span>
+              </div>
+              <h4 className="text-sm font-bold text-white tracking-wide">
+                Get Practical Career Insights
               </h4>
-              <p className="mt-1 text-xs text-navy-muted">
-                Subscribe to receive industry insights, resources, and batch updates.
+              <p className="mt-1 text-xs text-slate-300 leading-relaxed">
+                Free cheatsheets, curriculum updates, and interview roadmaps delivered weekly.
               </p>
+
               {subscribed ? (
-                <div className="mt-4 rounded-md bg-accent/10 border border-accent/20 px-3.5 py-2 text-xs font-semibold text-accent">
-                  ✓ Thank you! You've been subscribed successfully.
+                <div className="mt-3.5 rounded-xl bg-emerald-500/10 border border-emerald-400/30 px-3.5 py-2.5 text-xs font-semibold text-emerald-300 flex items-center gap-2">
+                  <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
+                  <span>Thank you! You're subscribed to the weekly dispatch.</span>
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="mt-4 flex gap-2">
+                <form onSubmit={handleSubscribe} className="mt-3.5 flex gap-2">
                   <div className="relative flex-1">
                     <Mail
-                      className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-navy-muted"
+                      className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-sky-400"
                       aria-hidden="true"
                     />
                     <input
@@ -71,12 +152,12 @@ export function Footer() {
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="h-10 w-full rounded-md border border-navy-600/60 bg-navy-700/30 pl-9 pr-3 text-xs text-navy-foreground placeholder-navy-muted transition-all focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                      className="h-10 w-full rounded-xl border border-sky-500/25 bg-[#091d3d] pl-9 pr-3 text-xs text-white placeholder:text-slate-400 transition-all focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="inline-flex h-10 items-center justify-center gap-1.5 rounded-md bg-accent px-4 text-xs font-bold text-accent-foreground shadow-accent transition-all duration-300 hover:brightness-110 active:scale-95"
+                    className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 text-xs font-bold text-white shadow-md shadow-sky-500/20 transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer shrink-0"
                   >
                     <span>Subscribe</span>
                     <Send className="size-3" aria-hidden="true" />
@@ -85,13 +166,33 @@ export function Footer() {
               )}
             </div>
 
-            {/* Social Media Row */}
-            <div className="flex items-center gap-3">
+            {/* Social Media Pills */}
+            <div className="flex items-center gap-2.5">
               {[
-                { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
-                { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
-                { icon: Instagram, label: "Instagram", href: "https://instagram.com" },
-                { icon: Youtube, label: "YouTube", href: "https://youtube.com" },
+                {
+                  icon: Linkedin,
+                  label: "LinkedIn",
+                  href: "https://linkedin.com",
+                  colors: "border-[#0077b5]/35 bg-[#0077b5]/15 text-[#38bdf8] hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] hover:shadow-[#0077b5]/40",
+                },
+                {
+                  icon: Twitter,
+                  label: "Twitter",
+                  href: "https://twitter.com",
+                  colors: "border-sky-400/35 bg-sky-500/15 text-sky-400 hover:bg-sky-500 hover:text-white hover:border-sky-400 hover:shadow-sky-500/40",
+                },
+                {
+                  icon: Instagram,
+                  label: "Instagram",
+                  href: "https://instagram.com",
+                  colors: "border-pink-500/35 bg-pink-500/15 text-pink-400 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-pink-500 hover:to-purple-600 hover:text-white hover:border-pink-400 hover:shadow-pink-500/40",
+                },
+                {
+                  icon: Youtube,
+                  label: "YouTube",
+                  href: "https://youtube.com",
+                  colors: "border-red-500/35 bg-red-500/15 text-red-500 hover:bg-red-600 hover:text-white hover:border-red-500 hover:shadow-red-500/40",
+                },
               ].map((social) => {
                 const IconComp = social.icon;
                 return (
@@ -101,111 +202,152 @@ export function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Follow us on ${social.label}`}
-                    className="grid size-9 place-items-center rounded-lg border border-navy-600/50 bg-navy-700/20 text-navy-muted transition-all duration-300 hover:border-accent hover:bg-accent/10 hover:text-accent hover:shadow-accent"
+                    className={`grid size-9.5 place-items-center rounded-xl border transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${social.colors}`}
                   >
-                    <IconComp className="size-4.5" />
+                    <IconComp className="size-4" />
                   </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Quick Links Column */}
-          <div className="lg:col-span-2 lg:pl-4">
-            <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-navy-foreground">
-              Quick Links
-            </h3>
-            <ul className="mt-4 space-y-2.5">
+          {/* Column 2: Quick Links (2 cols) */}
+          <div className="md:col-span-1 lg:col-span-2 min-w-0">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-4 w-1 rounded-full bg-sky-500 shrink-0" />
+              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
+                Quick Links
+              </h3>
+            </div>
+            <ul className="space-y-2.5 text-xs sm:text-[13px]">
               {navLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="group relative inline-flex items-center text-sm text-navy-muted transition-colors hover:text-accent"
+                    className="group flex items-center gap-1.5 text-slate-300 transition-all duration-200 hover:text-sky-300 hover:translate-x-1 w-full min-w-0"
                   >
-                    <span className="transition-transform duration-300 group-hover:translate-x-0.5">
-                      {link.label}
-                    </span>
+                    <ChevronRight className="size-3 text-sky-400 shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
+                    <span className="truncate">{link.label}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Courses Column */}
-          <div className="lg:col-span-2">
-            <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-navy-foreground">
-              Courses
-            </h3>
-            <ul className="mt-4 space-y-2.5">
+          {/* Column 3: Courses (3 cols on lg/xl with min-w-0 and clean truncate) */}
+          <div className="md:col-span-1 lg:col-span-3 min-w-0">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-4 w-1 rounded-full bg-indigo-500 shrink-0" />
+              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
+                Courses
+              </h3>
+            </div>
+            <ul className="space-y-2.5 text-xs sm:text-[13px]">
               {courses.map((course) => (
-                <li key={course.slug}>
+                <li key={course.slug} className="min-w-0">
                   <Link
                     to="/courses/$slug"
                     params={{ slug: course.slug }}
-                    className="group relative inline-flex items-center text-sm text-navy-muted transition-colors hover:text-accent"
+                    className="group flex items-center gap-1.5 text-slate-300 transition-all duration-200 hover:text-sky-300 hover:translate-x-1 w-full min-w-0 overflow-hidden"
                   >
-                    <span className="transition-transform duration-300 group-hover:translate-x-0.5">
-                      {course.title}
-                    </span>
+                    <ChevronRight className="size-3 text-indigo-400 shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
+                    <span className="truncate block min-w-0 flex-1">{course.title}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Column */}
-          <div className="lg:col-span-3">
-            <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-navy-foreground">
-              Contact Us
-            </h3>
-            <ul className="mt-4 space-y-3.5 text-sm text-navy-muted">
-              <li>
+          {/* Column 4: Contact Information (3 cols on lg/xl with min-w-0) */}
+          <div className="md:col-span-2 lg:col-span-3 min-w-0">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="h-4 w-1 rounded-full bg-emerald-500 shrink-0" />
+              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
+                Contact Us
+              </h3>
+            </div>
+            <ul className="space-y-3 text-xs sm:text-[13px] text-slate-300 min-w-0">
+              <li className="min-w-0">
                 <a
                   href={site.phoneHref}
-                  className="group inline-flex items-start gap-3 transition-colors hover:text-accent"
+                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-white/[0.04] hover:text-white min-w-0"
                 >
-                  <Phone className="mt-0.5 size-4 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                  <span>{site.phone}</span>
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-sky-500/15 border border-sky-400/30 text-sky-400 transition-all group-hover:bg-sky-500 group-hover:text-white group-hover:scale-110 shadow-sm shadow-sky-500/20">
+                    <Phone className="size-3.5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <span className="block font-bold text-white group-hover:text-sky-300 transition-colors truncate">
+                      {site.phone}
+                    </span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">Admissions Hotline</span>
+                  </div>
                 </a>
               </li>
-              <li>
+              <li className="min-w-0">
                 <a
                   href={whatsappLink()}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-start gap-3 transition-colors hover:text-accent"
+                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-white/[0.04] hover:text-white min-w-0"
                 >
-                  <MessageCircle className="mt-0.5 size-4 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                  <span>WhatsApp Enquiry</span>
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-400 transition-all group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 shadow-sm shadow-emerald-500/20">
+                    <MessageCircle className="size-3.5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <span className="block font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
+                      WhatsApp Enquiry
+                    </span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">Instant Counselor Chat</span>
+                  </div>
                 </a>
               </li>
-              <li>
+              <li className="min-w-0">
                 <a
                   href={`mailto:${site.email}`}
-                  className="group inline-flex items-start gap-3 break-all transition-colors hover:text-accent"
+                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-white/[0.04] hover:text-white min-w-0"
                 >
-                  <Mail className="mt-0.5 size-4 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                  <span>{site.email}</span>
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-indigo-500/15 border border-indigo-400/30 text-indigo-400 transition-all group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 shadow-sm shadow-indigo-500/20">
+                    <Mail className="size-3.5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <span className="block font-semibold text-white group-hover:text-indigo-300 transition-colors break-all text-xs xl:text-[13px] leading-snug">
+                      {site.email}
+                    </span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">Official Inquiries</span>
+                  </div>
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden="true" />
-                <span className="leading-relaxed">{site.address}</span>
+              <li className="flex items-start gap-2.5 p-1.5 -m-1.5 min-w-0">
+                <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-rose-500/15 border border-rose-400/30 text-rose-400 shadow-sm shadow-rose-500/20">
+                  <MapPin className="size-3.5" />
+                </span>
+                <span className="leading-relaxed text-slate-300 text-[11.5px] min-w-0 flex-1">
+                  {site.address}
+                </span>
               </li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Footer Bottom bar */}
-      <div className="border-t border-navy-600/40 bg-navy/20">
-        <div className="container-site flex flex-col items-center justify-between gap-3 py-5 text-xs text-navy-muted sm:flex-row">
-          <p>© 2026 {site.name}. All Rights Reserved.</p>
-          <div className="flex items-center gap-5">
-            <Link to="/privacy-policy" className="transition-colors hover:text-accent">
+      {/* ========================================================================= */}
+      {/* 4. FOOTER BOTTOM COPYRIGHT STRIP                                          */}
+      {/* ========================================================================= */}
+      <div className="border-t border-white/[0.06] bg-[#01040a]/90 py-5">
+        <div className="container-site flex flex-col items-center justify-between gap-3 text-xs text-slate-400 sm:flex-row">
+          <p>© 2026 {site.name}. All Rights Reserved. Empowering Tech Careers.</p>
+
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10.5px] text-emerald-400">
+            <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Admissions &amp; Lab Portals Active</span>
+          </div>
+
+          <div className="flex items-center gap-4 text-[11.5px]">
+            <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="transition-colors hover:text-accent">
+            <span className="text-slate-600">•</span>
+            <Link to="/terms" className="transition-colors hover:text-sky-300">
               Terms &amp; Conditions
             </Link>
           </div>

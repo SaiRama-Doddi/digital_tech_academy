@@ -15,10 +15,20 @@ export type Instructor = {
   image: string;
 };
 
+export type WhatYouLearnItem = {
+  title: string;
+  description: string;
+};
+
 export type Course = {
   id: string;
   slug: string;
   title: string;
+  heroEyebrow?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  primaryCta?: string;
+  secondaryCta?: string;
   category: CourseCategory;
   description: string;
   longDescription: string;
@@ -29,9 +39,22 @@ export type Course = {
   image: string;
   highlights: string[];
   overview: {
+    heading?: string;
+    description?: string;
     learn: string[];
+    whatYouLearnDetailed?: WhatYouLearnItem[];
     audience: string[];
+    audienceDescription?: string;
     outcomes: string[];
+  };
+  practicalLearning?: {
+    heading: string;
+    description: string;
+    items?: string[];
+  };
+  careerSkills?: {
+    heading: string;
+    description: string;
   };
   syllabus: { module: string; title: string; topics: string[] }[];
   practicalTraining: string[];
@@ -45,6 +68,10 @@ export type Course = {
   };
   testimonials: { name: string; course: string; rating: number; quote: string }[];
   faqs: { question: string; answer: string }[];
+  finalCta?: {
+    heading: string;
+    buttonText: string;
+  };
 };
 
 export const instructors: Instructor[] = [
@@ -86,12 +113,18 @@ export const courses: Course[] = [
   {
     id: "dm-01",
     slug: "digital-marketing",
-    title: "Digital Marketing Mastery",
+    title: "Digital Marketing Course",
+    heroEyebrow: "DIGITAL MARKETING COURSE",
+    heroTitle: "Build a Complete Digital Marketing Skill Set",
+    heroDescription:
+      "Develop practical skills across SEO, paid advertising, social media marketing, content strategy, analytics, and performance marketing. Learn how digital channels work together to attract audiences, generate demand, and measure business results.",
+    primaryCta: "Enroll Now",
+    secondaryCta: "Request a Call",
     category: "Digital Marketing",
     description:
-      "A complete, practical path across SEO, social media, paid advertising, content and analytics — built around live campaign work.",
+      "Build practical digital marketing skills across SEO, paid advertising, social media, analytics, content, and performance marketing.",
     longDescription:
-      "Digital Marketing Mastery takes you from digital fundamentals to running and reporting on real campaigns. Each module pairs concepts with tool-based practice so you finish with a portfolio of campaign work, not just notes.",
+      "Develop practical skills across SEO, paid advertising, social media marketing, content strategy, analytics, and performance marketing. Learn how digital channels work together to attract audiences, generate demand, and measure business results.",
     duration: "12 Weeks",
     level: "Beginner to Advanced",
     mode: "Classroom & Live Online",
@@ -106,22 +139,79 @@ export const courses: Course[] = [
       "Analytics",
     ],
     overview: {
+      heading: "Learn Digital Marketing Through Practical Training",
+      description:
+        "Develop practical skills across SEO, paid advertising, social media marketing, content strategy, analytics, and performance marketing. Learn how digital channels work together to attract audiences, generate demand, and measure business results.",
       learn: [
         "Plan a digital strategy across search, social and paid channels",
         "Run and optimise Google Ads and Meta Ads campaigns",
         "Build SEO visibility through on-page, technical and off-page work",
         "Measure performance with analytics and structured reporting",
       ],
+      whatYouLearnDetailed: [
+        {
+          title: "Digital Marketing Fundamentals",
+          description:
+            "Build practical understanding and apply digital marketing fundamentals through structured learning and relevant exercises.",
+        },
+        {
+          title: "Search Engine Optimization",
+          description:
+            "Build practical understanding and apply search engine optimization through structured learning and relevant exercises.",
+        },
+        {
+          title: "Google Ads & Paid Search",
+          description:
+            "Build practical understanding and apply google ads & paid search through structured learning and relevant exercises.",
+        },
+        {
+          title: "Meta Ads & Paid Social",
+          description:
+            "Build practical understanding and apply meta ads & paid social through structured learning and relevant exercises.",
+        },
+        {
+          title: "Social Media Marketing",
+          description:
+            "Build practical understanding and apply social media marketing through structured learning and relevant exercises.",
+        },
+        {
+          title: "Content Marketing",
+          description:
+            "Build practical understanding and apply content marketing through structured learning and relevant exercises.",
+        },
+        {
+          title: "Google Analytics & Measurement",
+          description:
+            "Build practical understanding and apply google analytics & measurement through structured learning and relevant exercises.",
+        },
+        {
+          title: "Conversion & Performance Optimization",
+          description:
+            "Build practical understanding and apply conversion & performance optimization through structured learning and relevant exercises.",
+        },
+      ],
       audience: [
         "Students and fresh graduates starting a marketing career",
         "Business owners handling their own marketing",
         "Working professionals moving into digital roles",
       ],
+      audienceDescription:
+        "Suitable for learners starting in the field, students building professional skills, working professionals strengthening their capabilities, and career switchers seeking a structured path into the discipline.",
       outcomes: [
         "Portfolio with a full campaign plan and performance report",
         "Practical command of industry marketing tools",
         "Confidence to own campaigns in a live role",
       ],
+    },
+    practicalLearning: {
+      heading: "Learn by Applying What You Learn",
+      description:
+        "Apply concepts through practical exercises, guided assignments, realistic scenarios, projects, and performance-focused tasks.",
+    },
+    careerSkills: {
+      heading: "Build Skills You Can Use in the Workplace",
+      description:
+        "Develop practical knowledge, tool familiarity, problem-solving ability, and professional confidence relevant to roles in this specialization.",
     },
     syllabus: [
       {
@@ -159,44 +249,34 @@ export const courses: Course[] = [
       },
       {
         module: "Module 05",
-        title: "Meta Ads",
+        title: "Meta Ads & Social Advertising",
         topics: [
-          "Campaign structure",
-          "Audiences",
+          "Audience targeting",
+          "Ad formats",
           "Creative strategy",
           "Retargeting",
-          "Campaign optimization",
+          "A/B testing",
         ],
       },
       {
         module: "Module 06",
-        title: "Analytics",
-        topics: [
-          "Google Analytics",
-          "Conversion tracking",
-          "Reporting",
-          "Performance analysis",
-        ],
-      },
-      {
-        module: "Module 07",
-        title: "Practical Project",
-        topics: ["Campaign planning", "Execution", "Reporting", "Optimization"],
+        title: "Analytics & Reporting",
+        topics: ["Google Analytics 4", "Looker Studio", "KPI reporting", "Attribution basics"],
       },
     ],
     practicalTraining: marketingPractical,
     projects: [
       {
-        title: "Full-funnel campaign plan",
-        summary: "Research a brand, define audiences and build a channel-wise campaign plan with budgets.",
+        title: "End-to-end digital marketing strategy",
+        summary: "Build a complete multichannel strategy for an allocated brand brief.",
       },
       {
-        title: "Search & social ad build",
-        summary: "Structure live-style Google and Meta campaigns with tracking and creative variants.",
+        title: "Live search campaign setup",
+        summary: "Structure a live-style Google Ads campaign with ad copy and conversion tags.",
       },
       {
-        title: "Performance report",
-        summary: "Analyse campaign data and present optimisation recommendations like a marketing analyst.",
+        title: "Technical SEO audit",
+        summary: "Audit a live website, prioritise fixes and produce a client-ready report.",
       },
     ],
     instructors: [instructors[0]!],
@@ -238,48 +318,239 @@ export const courses: Course[] = [
     ],
     faqs: [
       {
-        question: "Is the course beginner friendly?",
+        question: "Is this course suitable for beginners?",
         answer:
-          "Yes. The first module builds digital fundamentals before moving into channel-specific and advanced work.",
+          "The learning path is structured to build foundational understanding before progressing into practical and advanced topics.",
       },
       {
-        question: "What is the duration?",
-        answer: "12 weeks, with weekday and weekend batch options.",
-      },
-      {
-        question: "Are practical sessions included?",
-        answer: "Every module includes tool-based practice, assignments and mentor feedback.",
-      },
-      {
-        question: "Is the course online or offline?",
-        answer: "Both. You can join classroom batches or live online sessions.",
-      },
-      {
-        question: "Will I receive a certificate?",
+        question: "Will I get practical experience?",
         answer:
-          "Yes, eligible learners receive a course completion certificate after assessment and project submission.",
-      },
-      {
-        question: "Are projects included?",
-        answer: "Yes — a capstone campaign project plus module-level mini projects.",
+          "The program incorporates practical exercises and application-based learning relevant to the course.",
       },
       {
         question: "How do I enroll?",
-        answer: "Submit the Request a Call form and a counsellor will guide you through enrolment.",
-      },
-      {
-        question: "Can I speak with a counsellor?",
-        answer: "Yes. Request a call or message us on WhatsApp for a free counselling session.",
+        answer:
+          "Choose the program, submit your enquiry, and speak with the Digitechademy team about the next available learning option.",
       },
     ],
+    finalCta: {
+      heading: "Start Building Your Skills Today",
+      buttonText: "Enroll Now",
+    },
+  },
+  {
+    id: "dm-03",
+    slug: "programmatic-advertising",
+    title: "Programmatic Advertising Course",
+    heroEyebrow: "PROGRAMMATIC ADVERTISING COURSE",
+    heroTitle: "Master the Fundamentals of Programmatic Media Buying",
+    heroDescription:
+      "Build practical knowledge of programmatic advertising, automated media buying, audience targeting, campaign setup, optimization, measurement, and the technologies that connect advertisers with digital inventory.",
+    primaryCta: "Enroll Now",
+    secondaryCta: "Request a Call",
+    category: "Digital Marketing",
+    description:
+      "Develop skills in programmatic media buying, DSPs, SSPs, RTB, audience targeting, campaign optimization, and reporting.",
+    longDescription:
+      "Build practical knowledge of programmatic advertising, automated media buying, audience targeting, campaign setup, optimization, measurement, and the technologies that connect advertisers with digital inventory.",
+    duration: "10 Weeks",
+    level: "Beginner to Advanced",
+    mode: "Classroom & Live Online",
+    certificate: "Course completion certificate",
+    image: advancedSeoImg,
+    highlights: [
+      "DSPs & SSPs",
+      "Real-Time Bidding (RTB)",
+      "Audience Targeting",
+      "AdTech Ecosystem",
+      "Campaign Optimization",
+      "Measurement & Attribution",
+    ],
+    overview: {
+      heading: "Learn Programmatic Advertising Through Practical Training",
+      description:
+        "Build practical knowledge of programmatic advertising, automated media buying, audience targeting, campaign setup, optimization, measurement, and the technologies that connect advertisers with digital inventory.",
+      learn: [
+        "Navigate DSPs and SSPs to set up high-performing programmatic campaigns",
+        "Execute real-time bidding (RTB) auctions and manage private marketplaces (PMP)",
+        "Leverage 1st, 2nd, and 3rd party audience data for hyper-targeted advertising",
+        "Measure performance using post-click, post-view, and multi-touch attribution models",
+      ],
+      whatYouLearnDetailed: [
+        {
+          title: "Programmatic Advertising Fundamentals",
+          description:
+            "Build practical understanding and apply programmatic advertising fundamentals through structured learning and relevant exercises.",
+        },
+        {
+          title: "DSPs, SSPs & Ad Exchanges",
+          description:
+            "Build practical understanding and apply dsps, ssps & ad exchanges through structured learning and relevant exercises.",
+        },
+        {
+          title: "Real-Time Bidding",
+          description:
+            "Build practical understanding and apply real-time bidding through structured learning and relevant exercises.",
+        },
+        {
+          title: "Audience Targeting & Segmentation",
+          description:
+            "Build practical understanding and apply audience targeting & segmentation through structured learning and relevant exercises.",
+        },
+        {
+          title: "Campaign Setup & Optimization",
+          description:
+            "Build practical understanding and apply campaign setup & optimization through structured learning and relevant exercises.",
+        },
+        {
+          title: "DV360 & Programmatic Platforms",
+          description:
+            "Build practical understanding and apply dv360 & programmatic platforms through structured learning and relevant exercises.",
+        },
+        {
+          title: "Measurement & Reporting",
+          description:
+            "Build practical understanding and apply measurement & reporting through structured learning and relevant exercises.",
+        },
+        {
+          title: "Troubleshooting & Performance Analysis",
+          description:
+            "Build practical understanding and apply troubleshooting & performance analysis through structured learning and relevant exercises.",
+        },
+      ],
+      audience: [
+        "Performance marketers aiming to specialize in media buying and AdTech",
+        "Digital agency professionals scaling display and video campaigns",
+        "Marketing graduates entering corporate digital advertising roles",
+      ],
+      audienceDescription:
+        "Suitable for learners starting in the field, students building professional skills, working professionals strengthening their capabilities, and career switchers seeking a structured path into the discipline.",
+      outcomes: [
+        "End-to-end programmatic media plan and budget allocation portfolio",
+        "Practical familiarity with leading DSP platforms and audience managers",
+        "Industry-standard campaign analysis and reporting capabilities",
+      ],
+    },
+    practicalLearning: {
+      heading: "Learn by Applying What You Learn",
+      description:
+        "Apply concepts through practical exercises, guided assignments, realistic scenarios, projects, and performance-focused tasks.",
+    },
+    careerSkills: {
+      heading: "Build Skills You Can Use in the Workplace",
+      description:
+        "Develop practical knowledge, tool familiarity, problem-solving ability, and professional confidence relevant to roles in this specialization.",
+    },
+    syllabus: [
+      {
+        module: "Module 01",
+        title: "AdTech & Programmatic Ecosystem",
+        topics: ["History of media buying", "Advertiser vs Publisher stack", "DSPs, SSPs, and Ad Exchanges", "Data Management Platforms (DMP)"],
+      },
+      {
+        module: "Module 02",
+        title: "Real-Time Bidding (RTB) & Deals",
+        topics: ["Open exchanges", "Private marketplaces (PMP)", "Programmatic guaranteed (PG)", "Floor pricing & bid shading"],
+      },
+      {
+        module: "Module 03",
+        title: "Audience Targeting & Data Strategies",
+        topics: ["1st, 2nd, and 3rd party data", "Contextual targeting", "Lookalike modeling", "Privacy regulations & cookieless future"],
+      },
+      {
+        module: "Module 04",
+        title: "Campaign Setup & Creative Formats",
+        topics: ["Display, video, native, and audio formats", "Dynamic creative optimization (DCO)", "Frequency capping", "Brand safety & fraud prevention"],
+      },
+      {
+        module: "Module 05",
+        title: "Optimization & Attribution",
+        topics: ["Bid optimization", "Supply path optimization (SPO)", "Multi-touch attribution", "Incremental lift testing"],
+      },
+      {
+        module: "Module 06",
+        title: "Capstone Programmatic Project",
+        topics: ["Media brief analysis", "Platform setup simulation", "Optimization reporting", "Final strategic review"],
+      },
+    ],
+    practicalTraining: marketingPractical,
+    projects: [
+      {
+        title: "Omnichannel programmatic plan",
+        summary: "Design a comprehensive programmatic media campaign spanning display, connected TV, and audio.",
+      },
+      {
+        title: "Audience segmentation strategy",
+        summary: "Construct a targeting matrix combining first-party CRM data and contextual signals.",
+      },
+      {
+        title: "Attribution and ROI analysis",
+        summary: "Audit campaign logs to evaluate viewability, brand safety, and true ROAS.",
+      },
+    ],
+    instructors: [instructors[0]!],
+    pricing: {
+      fee: "₹36,999",
+      earlyFee: "₹31,999",
+      note: "Early bird discount available for upcoming cohort.",
+      includes: [
+        "Full course access",
+        "DSP simulator practice",
+        "Assignments",
+        "Mentor support",
+        "Certificate",
+        "AdTech frameworks & templates",
+      ],
+    },
+    testimonials: [
+      {
+        name: "Siddharth",
+        course: "Programmatic Advertising Course",
+        rating: 5,
+        quote: "Demystified DSPs and real-time bidding completely. The campaign simulations were invaluable.",
+      },
+      {
+        name: "Rhea",
+        course: "Programmatic Advertising Course",
+        rating: 5,
+        quote: "Moved from basic paid search into enterprise media buying thanks to this course.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Is this course suitable for beginners?",
+        answer:
+          "The learning path is structured to build foundational understanding before progressing into practical and advanced topics.",
+      },
+      {
+        question: "Will I get practical experience?",
+        answer:
+          "The program incorporates practical exercises and application-based learning relevant to the course.",
+      },
+      {
+        question: "How do I enroll?",
+        answer:
+          "Choose the program, submit your enquiry, and speak with the Digitechademy team about the next available learning option.",
+      },
+    ],
+    finalCta: {
+      heading: "Start Building Your Skills Today",
+      buttonText: "Enroll Now",
+    },
   },
   {
     id: "cs-01",
     slug: "cyber-security",
-    title: "Cyber Security Professional",
+    title: "Cyber Security Course",
+    heroEyebrow: "CYBER SECURITY COURSE",
+    heroTitle: "Build Practical Foundations in Cyber Security",
+    heroDescription:
+      "Develop a strong foundation in cyber security concepts, networking, threats, vulnerabilities, security operations, and defensive practices through structured learning and practical application.",
+    primaryCta: "Enroll Now",
+    secondaryCta: "Request a Call",
     category: "Cyber Security",
     description:
-      "Structured security training across networking, Linux, web security and ethical hacking with guided hands-on labs.",
+      "Learn practical cyber security foundations covering networking, security concepts, threat awareness, monitoring, and defensive practices.",
     longDescription:
       "Cyber Security Professional builds a strong technical base in networking and Linux, then moves into security fundamentals, web security, vulnerability assessment and practical security testing through guided labs.",
     duration: "16 Weeks",
@@ -296,22 +567,79 @@ export const courses: Course[] = [
       "Security Tools",
     ],
     overview: {
+      heading: "Learn Cyber Security Through Practical Training",
+      description:
+        "Develop a strong foundation in cyber security concepts, networking, threats, vulnerabilities, security operations, and defensive practices through structured learning and practical application.",
       learn: [
         "Understand networks, protocols and Linux from a security perspective",
         "Identify and assess common vulnerabilities in web applications",
         "Use industry security tools in structured lab environments",
         "Document findings in professional assessment reports",
       ],
+      whatYouLearnDetailed: [
+        {
+          title: "Cyber Security Fundamentals",
+          description:
+            "Build practical understanding and apply cyber security fundamentals through structured learning and relevant exercises.",
+        },
+        {
+          title: "Networking & Security Concepts",
+          description:
+            "Build practical understanding and apply networking & security concepts through structured learning and relevant exercises.",
+        },
+        {
+          title: "Threats, Vulnerabilities & Risk",
+          description:
+            "Build practical understanding and apply threats, vulnerabilities & risk through structured learning and relevant exercises.",
+        },
+        {
+          title: "Security Monitoring",
+          description:
+            "Build practical understanding and apply security monitoring through structured learning and relevant exercises.",
+        },
+        {
+          title: "Security Operations Fundamentals",
+          description:
+            "Build practical understanding and apply security operations fundamentals through structured learning and relevant exercises.",
+        },
+        {
+          title: "Identity & Access Security",
+          description:
+            "Build practical understanding and apply identity & access security through structured learning and relevant exercises.",
+        },
+        {
+          title: "Incident Response Fundamentals",
+          description:
+            "Build practical understanding and apply incident response fundamentals through structured learning and relevant exercises.",
+        },
+        {
+          title: "Security Tools & Practical Exercises",
+          description:
+            "Build practical understanding and apply security tools & practical exercises through structured learning and relevant exercises.",
+        },
+      ],
       audience: [
         "Beginners aiming for a cyber security career",
         "IT and support professionals moving into security roles",
         "Students who prefer lab-based technical learning",
       ],
+      audienceDescription:
+        "Suitable for learners starting in the field, students building professional skills, working professionals strengthening their capabilities, and career switchers seeking a structured path into the discipline.",
       outcomes: [
         "Practical lab experience across security domains",
         "A written security assessment report for your portfolio",
         "Readiness for entry-level security analyst interviews",
       ],
+    },
+    practicalLearning: {
+      heading: "Learn by Applying What You Learn",
+      description:
+        "Apply concepts through practical exercises, guided assignments, realistic scenarios, projects, and performance-focused tasks.",
+    },
+    careerSkills: {
+      heading: "Build Skills You Can Use in the Workplace",
+      description:
+        "Develop practical knowledge, tool familiarity, problem-solving ability, and professional confidence relevant to roles in this specialization.",
     },
     syllabus: [
       {
@@ -417,40 +745,39 @@ export const courses: Course[] = [
     ],
     faqs: [
       {
-        question: "Is the course beginner friendly?",
-        answer: "Yes. Networking and Linux fundamentals are covered before any security topics.",
-      },
-      { question: "What is the duration?", answer: "16 weeks, with weekday and weekend batches." },
-      {
-        question: "Are practical sessions included?",
-        answer: "Yes, guided labs run through the entire programme.",
+        question: "Is this course suitable for beginners?",
+        answer:
+          "The learning path is structured to build foundational understanding before progressing into practical and advanced topics.",
       },
       {
-        question: "Do I need programming experience?",
-        answer: "No. Basic scripting is introduced where required.",
+        question: "Will I get practical experience?",
+        answer:
+          "The program incorporates practical exercises and application-based learning relevant to the course.",
       },
       {
-        question: "Will I receive a certificate?",
-        answer: "Yes, after assessment and final project participation.",
-      },
-      {
-        question: "Are projects included?",
-        answer: "Yes — lab projects plus a final security assessment project.",
-      },
-      { question: "How do I enroll?", answer: "Request a call and a counsellor will help you enrol." },
-      {
-        question: "Can I speak with a counsellor?",
-        answer: "Yes, counselling calls are free and without obligation.",
+        question: "How do I enroll?",
+        answer:
+          "Choose the program, submit your enquiry, and speak with the Digitechademy team about the next available learning option.",
       },
     ],
+    finalCta: {
+      heading: "Start Building Your Skills Today",
+      buttonText: "Enroll Now",
+    },
   },
   {
     id: "dm-02",
     slug: "advanced-seo",
     title: "Advanced SEO & Performance Marketing",
+    heroEyebrow: "ADVANCED SEO & PERFORMANCE MARKETING",
+    heroTitle: "Turn Search and Paid Media Into Measurable Growth",
+    heroDescription:
+      "Develop advanced skills in SEO and performance marketing by learning how to build search strategies, manage paid campaigns, improve conversions, analyse performance, and connect marketing activity with measurable outcomes.",
+    primaryCta: "Enroll Now",
+    secondaryCta: "Request a Call",
     category: "Digital Marketing",
     description:
-      "A focused programme for marketers who want deeper technical SEO, paid performance and conversion skills.",
+      "Develop advanced skills in search engine optimization, paid media, conversion strategy, measurement, and performance improvement.",
     longDescription:
       "Advanced SEO & Performance Marketing is built for learners who already understand marketing basics and want measurable performance skills: technical SEO, paid search efficiency, conversion optimisation and reporting.",
     duration: "8 Weeks",
@@ -467,22 +794,79 @@ export const courses: Course[] = [
       "Reporting",
     ],
     overview: {
+      heading: "Learn Advanced SEO & Performance Marketing Through Practical Training",
+      description:
+        "Develop advanced skills in SEO and performance marketing by learning how to build search strategies, manage paid campaigns, improve conversions, analyse performance, and connect marketing activity with measurable outcomes.",
       learn: [
         "Audit and fix technical SEO issues at scale",
         "Build topical authority with content and internal linking",
         "Improve paid campaign efficiency and quality",
         "Design conversion experiments and report on impact",
       ],
+      whatYouLearnDetailed: [
+        {
+          title: "Advanced SEO Strategy",
+          description:
+            "Build practical understanding and apply advanced seo strategy through structured learning and relevant exercises.",
+        },
+        {
+          title: "Keyword Research & Search Intent",
+          description:
+            "Build practical understanding and apply keyword research & search intent through structured learning and relevant exercises.",
+        },
+        {
+          title: "Technical SEO Fundamentals",
+          description:
+            "Build practical understanding and apply technical seo fundamentals through structured learning and relevant exercises.",
+        },
+        {
+          title: "Google Ads Strategy",
+          description:
+            "Build practical understanding and apply google ads strategy through structured learning and relevant exercises.",
+        },
+        {
+          title: "Paid Social Campaigns",
+          description:
+            "Build practical understanding and apply paid social campaigns through structured learning and relevant exercises.",
+        },
+        {
+          title: "Conversion Rate Optimization",
+          description:
+            "Build practical understanding and apply conversion rate optimization through structured learning and relevant exercises.",
+        },
+        {
+          title: "Analytics & Attribution",
+          description:
+            "Build practical understanding and apply analytics & attribution through structured learning and relevant exercises.",
+        },
+        {
+          title: "Performance Reporting & Optimization",
+          description:
+            "Build practical understanding and apply performance reporting & optimization through structured learning and relevant exercises.",
+        },
+      ],
       audience: [
         "Marketers with basic digital experience",
         "Freelancers handling client SEO and ads",
         "Business owners scaling organic and paid channels",
       ],
+      audienceDescription:
+        "Suitable for learners starting in the field, students building professional skills, working professionals strengthening their capabilities, and career switchers seeking a structured path into the discipline.",
       outcomes: [
         "A complete technical SEO audit deliverable",
         "Paid account optimisation playbook",
         "Reporting dashboard structure you can reuse",
       ],
+    },
+    practicalLearning: {
+      heading: "Learn by Applying What You Learn",
+      description:
+        "Apply concepts through practical exercises, guided assignments, realistic scenarios, projects, and performance-focused tasks.",
+    },
+    careerSkills: {
+      heading: "Build Skills You Can Use in the Workplace",
+      description:
+        "Develop practical knowledge, tool familiarity, problem-solving ability, and professional confidence relevant to roles in this specialization.",
     },
     syllabus: [
       {
@@ -552,16 +936,25 @@ export const courses: Course[] = [
     ],
     faqs: [
       {
-        question: "Is the course beginner friendly?",
+        question: "Is this course suitable for beginners?",
         answer:
-          "It is intended for learners with basic digital marketing knowledge. Beginners are guided to Digital Marketing Mastery first.",
+          "The learning path is structured to build foundational understanding before progressing into practical and advanced topics.",
       },
-      { question: "What is the duration?", answer: "8 weeks of focused sessions and workshops." },
-      { question: "Are practical sessions included?", answer: "Yes, every module is workshop-driven." },
-      { question: "Is the course online or offline?", answer: "Available in classroom and live online formats." },
-      { question: "Will I receive a certificate?", answer: "Yes, on completion of assessment and project." },
-      { question: "How do I enroll?", answer: "Request a call and a counsellor will confirm your batch." },
+      {
+        question: "Will I get practical experience?",
+        answer:
+          "The program incorporates practical exercises and application-based learning relevant to the course.",
+      },
+      {
+        question: "How do I enroll?",
+        answer:
+          "Choose the program, submit your enquiry, and speak with the Digitechademy team about the next available learning option.",
+      },
     ],
+    finalCta: {
+      heading: "Start Building Your Skills Today",
+      buttonText: "Enroll Now",
+    },
   },
   {
     id: "cs-02",

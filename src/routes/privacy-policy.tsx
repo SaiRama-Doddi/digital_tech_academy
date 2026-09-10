@@ -1,72 +1,228 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  BarChart2,
+  FileText,
+  Lock,
+  Mail,
+  PhoneCall,
+  Share2,
+  ShieldCheck,
+  Sliders,
+  UserCheck,
+} from "lucide-react";
 
+import { BtnLink } from "@/components/site/Btn";
 import { PageHero } from "@/components/site/PageHero";
 import { SiteLayout } from "@/components/site/SiteLayout";
 
 export const Route = createFileRoute("/privacy-policy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy | Digital Ascent Academy" },
+      { title: "Privacy Policy | Digitechademy" },
       {
         name: "description",
-        content: "Privacy policy and data protection terms for Digital Ascent Academy.",
+        content:
+          "Privacy policy for Digitechademy. Learn how we handle website analytics, information protection, cookies, and third-party services.",
       },
+      { property: "og:title", content: "Privacy Policy | Digitechademy" },
+      {
+        property: "og:description",
+        content:
+          "Privacy policy for Digitechademy. Learn how we handle website analytics, information protection, cookies, and third-party services.",
+      },
+      { property: "og:url", content: "/privacy-policy" },
     ],
+    links: [{ rel: "canonical", href: "/privacy-policy" }],
   }),
   component: PrivacyPolicyPage,
 });
 
+const sections = [
+  {
+    number: "01",
+    label: "Section 1",
+    title: "Information We Collect",
+    icon: UserCheck,
+    content:
+      "We collect personal information that you provide to us when registering interest in a course, requesting a call, submitting an enquiry, or communicating with the Digitechademy admissions team. This may include your full name, phone number, email address, preferred call time, and areas of learning interest.",
+  },
+  {
+    number: "02",
+    label: "Section 2",
+    title: "How We Use Your Information",
+    icon: FileText,
+    content:
+      "We use the collected information to process course enquiries, coordinate callback requests, provide curriculum details, assist with enrollment procedures, and improve our website and educational offerings.",
+  },
+  {
+    number: "03",
+    label: "Section 3",
+    title: "Communications & Enquiries",
+    icon: PhoneCall,
+    content:
+      "When you submit an enquiry or request a call, our team may contact you via phone, email, or WhatsApp to assist you with program details, eligibility criteria, and upcoming batch schedules.",
+  },
+  {
+    number: "04",
+    label: "Section 4",
+    title: "Website Analytics & Cookies",
+    icon: BarChart2,
+    content:
+      "Our website may use analytics technologies and cookies to understand website usage, improve performance, maintain functionality, and provide a better user experience. Specific technologies used will depend on the website configuration.",
+  },
+  {
+    number: "05",
+    label: "Section 5",
+    title: "Information Protection",
+    icon: ShieldCheck,
+    content:
+      "Digitechademy takes reasonable measures to protect information submitted through the website. No online transmission or storage system can be guaranteed to be completely secure.",
+  },
+  {
+    number: "06",
+    label: "Section 6",
+    title: "Third-Party Services",
+    icon: Share2,
+    content:
+      "Certain website functions may use third-party services such as analytics, communication, hosting, payment, or marketing platforms. Information shared with such services is governed by their applicable policies and our configuration of those services.",
+  },
+  {
+    number: "07",
+    label: "Section 7",
+    title: "Your Choices",
+    icon: Sliders,
+    content:
+      "You may contact Digitechademy regarding questions about information submitted through the website or requests relating to applicable privacy rights.",
+  },
+  {
+    number: "08",
+    label: "Section 8",
+    title: "Contact",
+    icon: Mail,
+    content:
+      "For privacy-related questions, please contact Digitechademy through the contact information provided on our website.",
+  },
+];
+
 function PrivacyPolicyPage() {
   return (
     <SiteLayout>
+      {/* Hero Section */}
       <PageHero
-        eyebrow="Legal"
+        eyebrow="LEGAL & PRIVACY"
         title="Privacy Policy"
-        description="Learn how Digital Ascent Academy collects, protects, and handles your personal information."
+        description="Learn how Digitechademy collects, handles, and protects your information across our website and training programs."
       />
 
-      <section className="bg-background py-16">
-        <div className="container-site max-w-4xl text-slate-700 leading-relaxed text-justify text-xs sm:text-sm">
+      {/* Main Content */}
+      <section className="bg-background py-8 sm:py-10 lg:py-12">
+        <div className="container-site max-w-4xl">
+          {/* Policy Intro Card */}
+          <div
+            data-reveal
+            className="mb-10 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <span className="grid size-10 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20">
+                <Lock className="size-5" aria-hidden="true" />
+              </span>
+              <div>
+                <span className="text-xs font-black uppercase tracking-widest text-accent">
+                  STATEMENT OF PRIVACY
+                </span>
+                <p className="text-xs text-slate-400 font-medium">Last updated: September 2026</p>
+              </div>
+            </div>
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+              At <strong className="font-black text-navy">Digitechademy</strong>, accessible from our
+              website, protecting the privacy of our prospective students, enrolled learners, and visitors
+              is essential to our educational mission. This document outlines how data and technology are
+              managed across our online presence.
+            </p>
+          </div>
+
+          {/* Structured Policy Sections */}
           <div className="space-y-6">
-            <p>
-              At <strong>Digital Ascent Academy</strong>, accessible from our website, one of our main
-              priorities is the privacy of our visitors. This Privacy Policy document contains types
-              of information that is collected and recorded by Digital Ascent Academy and how we use it.
-            </p>
+            {sections.map((sec) => (
+              <article
+                key={sec.number}
+                data-reveal
+                id={`section-${sec.number}`}
+                className="hover-lift group rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:border-accent/40 hover:shadow-md"
+              >
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-10 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-105">
+                      <sec.icon className="size-5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <span className="text-xs font-black uppercase tracking-widest text-accent">
+                        {sec.label}
+                      </span>
+                      <h2 className="text-lg sm:text-xl font-black text-navy leading-snug">
+                        {`${sec.label} — ${sec.title}`}
+                      </h2>
+                    </div>
+                  </div>
+                  <span className="text-sm font-black text-slate-300 select-none">
+                    {sec.number}
+                  </span>
+                </div>
 
-            <h2 className="text-lg font-bold text-slate-800 pt-4">1. Information We Collect</h2>
-            <p>
-              We collect personal information that you provide to us when registering interest in a
-              course, subscribing to our newsletter, requesting a callback, or otherwise contacting us.
-              This may include your name, phone number, email address, and any details concerning your
-              learning goals.
-            </p>
+                <div className="pt-2 border-t border-slate-100">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                    {sec.content}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
 
-            <h2 className="text-lg font-bold text-slate-800 pt-4">2. How We Use Your Information</h2>
-            <p>
-              We use the collected information to:
-            </p>
-            <ul className="list-disc pl-5 space-y-1 text-slate-600">
-              <li>Contact you regarding admission procedures, batches, and course structures.</li>
-              <li>Provide, operate, and maintain our website.</li>
-              <li>Improve, personalize, and expand our educational offerings.</li>
-              <li>Understand and analyze how you use our platform.</li>
-              <li>Send emails or marketing messages concerning digital marketing and security updates.</li>
-            </ul>
+          {/* Support & Contact Card */}
+          <div
+            data-reveal
+            className="mt-12 surface-navy relative overflow-hidden rounded-2xl p-8 sm:p-10 border border-navy-700/60 shadow-lg text-center sm:text-left"
+          >
+            <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
+            <div
+              className="pointer-events-none absolute -right-16 -bottom-16 size-64 rounded-full bg-accent/15 blur-3xl"
+              aria-hidden="true"
+            />
+            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div className="max-w-xl">
+                <span className="text-xs font-black uppercase tracking-widest text-accent">
+                  QUESTIONS & ENQUIRIES
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
+                  Have Questions About Our Privacy Practices?
+                </h3>
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Speak with our admissions and administrative support team for any questions regarding your
+                  information, courses, or enrollment.
+                </p>
+              </div>
 
-            <h2 className="text-lg font-bold text-slate-800 pt-4">3. Log Files and Analytics</h2>
-            <p>
-              Digital Ascent Academy follows a standard procedure of using log files. These files log
-              visitors when they visit websites. The information collected by log files includes internet
-              protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp,
-              referring/exit pages, and possibly the number of clicks. These are not linked to any
-              information that is personally identifiable.
-            </p>
-
-            <h2 className="text-lg font-bold text-slate-800 pt-4">4. Consent</h2>
-            <p>
-              By using our website, you hereby consent to our Privacy Policy and agree to its terms.
-            </p>
+              <div className="flex flex-wrap gap-3 shrink-0">
+                <BtnLink
+                  to="/contact"
+                  variant="outline"
+                  size="md"
+                  className="border border-white/20 text-white hover:bg-white/10 h-11 px-5 rounded-xl font-bold"
+                >
+                  Contact Us
+                </BtnLink>
+                <BtnLink
+                  to="/request-call"
+                  variant="accent"
+                  size="md"
+                  className="bg-accent hover:brightness-110 text-slate-950 font-black h-11 px-5 rounded-xl shadow-md shadow-accent/20 flex items-center gap-2 group"
+                >
+                  <span>Talk to an Expert</span>
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </BtnLink>
+              </div>
+            </div>
           </div>
         </div>
       </section>

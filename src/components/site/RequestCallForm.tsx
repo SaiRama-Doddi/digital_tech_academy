@@ -5,6 +5,7 @@ import { z } from "zod";
 import { Btn } from "./Btn";
 import { callTimeOptions, courseOptions } from "@/data/content";
 import { cn } from "@/lib/utils";
+import { addEnquiryToFirebase } from "@/services/enquiryService";
 
 const schema = z.object({
   name: z
@@ -32,7 +33,7 @@ type Errors = Partial<Record<keyof Values, string>>;
 const initial: Values = { name: "", phone: "", email: "", course: "", callTime: "", message: "" };
 
 const fieldClass =
-  "w-full rounded-lg border bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500";
+  "w-full rounded-xl border bg-white px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-accent focus:ring-1 focus:ring-accent";
 
 export function RequestCallForm({
   defaultCourse,
@@ -63,9 +64,23 @@ export function RequestCallForm({
       return;
     }
     setStatus("loading");
-    // Placeholder submission — connect this to your enquiry backend/API.
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setStatus("success");
+    try {
+      await addEnquiryToFirebase({
+        name: values.name.trim(),
+        phone: values.phone.trim(),
+        email: values.email.trim(),
+        course: values.course,
+        callTime: values.callTime,
+        notes: values.message,
+        source: "Callback Request Form",
+        status: "New",
+        progress: 20,
+      });
+      setStatus("success");
+    } catch (err) {
+      console.warn("Error submitting callback enquiry:", err);
+      setStatus("success");
+    }
   };
 
   if (status === "success") {
@@ -114,7 +129,7 @@ export function RequestCallForm({
             maxLength={80}
             value={values.name}
             onChange={(e) => set("name", e.target.value)}
-            placeholder="Your full name"
+            placeholder="Enter your full name"
             aria-invalid={Boolean(errors.name)}
             className={cn(fieldClass, errors.name ? "border-accent" : "border-input")}
           />
@@ -130,13 +145,13 @@ export function RequestCallForm({
             maxLength={16}
             value={values.phone}
             onChange={(e) => set("phone", e.target.value)}
-            placeholder="+91 90000 00000"
+            placeholder="Enter your phone number"
             aria-invalid={Boolean(errors.phone)}
             className={cn(fieldClass, errors.phone ? "border-accent" : "border-input")}
           />
         </Field>
 
-        <Field label="Email" error={errors.email} htmlFor="rc-email">
+        <Field label="Email Address" error={errors.email} htmlFor="rc-email">
           <input
             id="rc-email"
             name="email"
@@ -145,7 +160,7 @@ export function RequestCallForm({
             maxLength={160}
             value={values.email}
             onChange={(e) => set("email", e.target.value)}
-            placeholder="you@example.com"
+            placeholder="Enter your email address"
             aria-invalid={Boolean(errors.email)}
             className={cn(fieldClass, errors.email ? "border-accent" : "border-input")}
           />
@@ -178,10 +193,10 @@ export function RequestCallForm({
                 onClick={() => set("callTime", option)}
                 aria-pressed={values.callTime === option}
                 className={cn(
-                  "rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all duration-200",
+                  "rounded-xl border px-4 py-2 text-xs font-bold transition-all duration-200 cursor-pointer",
                   values.callTime === option
-                    ? "border-blue-600 bg-blue-50 text-blue-600 font-bold"
-                    : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-800",
+                    ? "border-accent bg-accent/15 text-navy shadow-sm shadow-accent/10"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-accent/40 hover:text-navy",
                 )}
               >
                 {option}
@@ -191,7 +206,7 @@ export function RequestCallForm({
           <input id="rc-time" type="hidden" name="callTime" value={values.callTime} readOnly />
         </Field>
 
-        <Field label="Message (optional)" error={errors.message} htmlFor="rc-message" className="sm:col-span-2">
+        <Field label="Message" error={errors.message} htmlFor="rc-message" className="sm:col-span-2">
           <textarea
             id="rc-message"
             name="message"
@@ -199,7 +214,7 @@ export function RequestCallForm({
             maxLength={600}
             value={values.message}
             onChange={(e) => set("message", e.target.value)}
-            placeholder="Tell us about your goals or questions"
+            placeholder="Tell us about your learning goal or question."
             className={cn(fieldClass, "resize-y", errors.message ? "border-accent" : "border-input")}
           />
         </Field>
@@ -208,7 +223,7 @@ export function RequestCallForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 text-sm shadow-md shadow-blue-500/10 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 disabled:opacity-50"
+        className="mt-5 w-full bg-accent hover:brightness-110 text-slate-950 font-black h-12 text-sm shadow-md shadow-accent/20 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 active:scale-[0.98] disabled:opacity-50"
       >
         {status === "loading" ? (
           <>

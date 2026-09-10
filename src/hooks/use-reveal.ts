@@ -8,11 +8,8 @@ export function useRevealRoot<T extends HTMLElement = HTMLDivElement>() {
     const root = ref.current;
     if (!root) return;
 
-    const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
-    if (!targets.length) return;
-
     if (typeof IntersectionObserver === "undefined") {
-      targets.forEach((el) => el.classList.add("is-visible"));
+      root.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
       return;
     }
 
@@ -21,22 +18,56 @@ export function useRevealRoot<T extends HTMLElement = HTMLDivElement>() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
+          } else {
+            // Re-trigger transitions when scrolling up and down:
+            // When an element scrolls completely outside the viewport, remove is-visible
+            // so scrolling back to it smoothly triggers the entrance transition again.
+            const rect = entry.boundingClientRect;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            if (rect.top > vh || rect.bottom < 0) {
+              entry.target.classList.remove("is-visible");
+            }
           }
         });
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px -15px 0px", threshold: [0, 0.02] },
     );
 
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const observedSet = new WeakSet<HTMLElement>();
+
+    const observeTargets = () => {
+      const targets = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      targets.forEach((el) => {
+        if (!observedSet.has(el)) {
+          observedSet.add(el);
+          observer.observe(el);
+        }
+        const rect = el.getBoundingClientRect();
+        if (rect.top < vh && rect.bottom > 0) {
+          el.classList.add("is-visible");
+        }
+      });
+    };
+
+    observeTargets();
+
+    const mutationObserver = new MutationObserver(() => {
+      observeTargets();
+    });
+    mutationObserver.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 
   return ref;
 }
 
-/** True once the element has entered the viewport (used for number counters). */
-export function useInView<T extends HTMLElement = HTMLDivElement>(once = true) {
+/** True when the element is in view (supports re-triggering on scroll up and down when once = false). */
+export function useInView<T extends HTMLElement = HTMLDivElement>(once = false) {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -57,7 +88,7 @@ export function useInView<T extends HTMLElement = HTMLDivElement>(once = true) {
           setInView(false);
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.15 },
     );
     observer.observe(el);
     return () => observer.disconnect();

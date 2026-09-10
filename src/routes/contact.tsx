@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone, ArrowRight } from "lucide-react";
 
-import { BtnAnchor } from "@/components/site/Btn";
+import { BtnAnchor, BtnLink } from "@/components/site/Btn";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { PageHero } from "@/components/site/PageHero";
 import { RequestCallForm } from "@/components/site/RequestCallForm";
@@ -13,16 +13,17 @@ import { site, whatsappLink } from "@/lib/site";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Us | Digital Tech Solution" },
+      { title: "Talk to Digitechademy | Contact Us" },
       {
         name: "description",
         content:
-          "Contact Digital Tech Solution for Digital Marketing and Cyber Security course enquiries — phone, WhatsApp, email and training centre address.",
+          "Have questions about a course, learning path, schedule, or enrollment? Send us your details and our team will help you choose the right next step.",
       },
-      { property: "og:title", content: "Contact Us | Digital Tech Solution" },
+      { property: "og:title", content: "Talk to Digitechademy" },
       {
         property: "og:description",
-        content: "Call, WhatsApp, email or visit our training centre. We reply on the same working day.",
+        content:
+          "Have questions about a course, learning path, schedule, or enrollment? Send us your details and our team will help you choose the right next step.",
       },
       { property: "og:url", content: "/contact" },
     ],
@@ -33,10 +34,18 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const cards = [
-    { icon: Phone, title: "Phone", value: site.phone, href: site.phoneHref, action: "Call now" },
+    {
+      icon: Phone,
+      title: "Call Us",
+      description: "Speak with our admissions team about courses and enrollment.",
+      value: site.phone,
+      href: site.phoneHref,
+      action: "Call now",
+    },
     {
       icon: Mail,
-      title: "Email",
+      title: "Email Us",
+      description: "Send your questions and course enquiries to our team.",
       value: site.email,
       href: `mailto:${site.email}`,
       action: "Send an email",
@@ -44,71 +53,96 @@ function ContactPage() {
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      value: "Chat with admissions",
+      description: "Connect with Digitechademy for quick course and enrollment assistance.",
+      value: "Chat on WhatsApp",
       href: whatsappLink(),
       action: "Open WhatsApp",
     },
-    { icon: MapPin, title: "Training Center", value: site.address, action: site.city },
+    {
+      icon: MapPin,
+      title: "Visit Us",
+      description: "Connect with our team for training and admissions information.",
+      value: site.address,
+      action: site.city,
+    },
   ];
 
   return (
     <SiteLayout>
+      {/* Section 1 — Hero */}
       <PageHero
-        eyebrow="Contact"
-        title="Talk to Our Admissions Team"
-        description="Questions about curriculum, batches, fees or career paths? Reach us on whichever channel suits you."
+        eyebrow="CONTACT US"
+        title="Talk to Digitechademy"
+        description="Have questions about a course, learning path, schedule, or enrollment? Send us your details and our team will help you choose the right next step."
       />
 
-      {/* Contact information */}
+      {/* Section 2 — Contact Options */}
       <section className="bg-background">
-        <div className="container-site py-10 lg:py-12">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="container-site py-8 sm:py-10 lg:py-12">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
               <article
                 key={card.title}
                 data-reveal
-                className="hover-lift group flex flex-col gap-3 rounded-xl border border-slate-100 bg-white p-5 shadow-sm"
+                className="hover-lift group flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-5.5 shadow-sm transition-all duration-300 hover:border-accent/40 hover:shadow-md"
               >
-                <span className="grid size-11 place-items-center rounded-md bg-blue-50 transition-transform duration-300 group-hover:scale-110">
-                  <card.icon className="size-5 text-blue-600" aria-hidden="true" />
-                </span>
-                <h2 className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-                  {card.title}
-                </h2>
-                {card.href ? (
-                  <a
-                    href={card.href}
-                    target={card.href.startsWith("http") ? "_blank" : undefined}
-                    rel="noreferrer"
-                    className="break-words text-[0.95rem] font-bold text-slate-800 transition-colors hover:text-blue-600"
-                  >
-                    {card.value}
-                  </a>
-                ) : (
-                  <p className="text-[0.95rem] font-bold leading-relaxed text-slate-800">{card.value}</p>
-                )}
-                <p className="mt-auto text-xs text-slate-400">{card.action}</p>
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="grid size-11 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-105">
+                      <card.icon className="size-5" aria-hidden="true" />
+                    </span>
+                    <span className="text-[0.65rem] font-black uppercase tracking-widest text-slate-400">
+                      {card.action}
+                    </span>
+                  </div>
+                  <h2 className="text-base sm:text-lg font-black text-navy leading-tight">
+                    {card.title}
+                  </h2>
+                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify]">
+                    {card.description}
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-100">
+                  {card.href ? (
+                    <a
+                      href={card.href}
+                      target={card.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
+                      title={card.value}
+                      className="block truncate text-xs sm:text-[13px] font-bold text-accent transition-colors hover:underline"
+                    >
+                      {card.value}
+                    </a>
+                  ) : (
+                    <p className="text-xs sm:text-[13px] font-bold text-navy leading-relaxed text-justify [text-align:justify]">
+                      {card.value}
+                    </p>
+                  )}
+                </div>
               </article>
             ))}
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/50 p-5">
-            <Clock className="size-5 text-blue-500" aria-hidden="true" />
-            <p className="text-sm font-bold text-slate-800">{site.hours}</p>
-            <p className="text-sm text-slate-500">Enquiries outside these hours are answered next working day.</p>
+          <div className="mt-6 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-5">
+            <Clock className="size-5 text-accent shrink-0" aria-hidden="true" />
+            <p className="text-sm font-bold text-navy">{site.hours}</p>
+            <span className="text-slate-300 hidden sm:inline">•</span>
+            <p className="text-xs sm:text-sm text-slate-500">Enquiries outside these hours are answered next working day.</p>
           </div>
         </div>
       </section>
 
-      {/* Enquiry form + location */}
+      {/* Section 3 — Enquiry Form */}
       <section className="bg-surface">
-        <div className="container-site py-10 lg:py-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+        <div className="container-site py-8 sm:py-10 lg:py-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div data-reveal="left">
             <SectionHeading
-              eyebrow="Enquiry Form"
-              title="Send Us Your Details"
+              eyebrow="ENQUIRY FORM"
+              title="Tell Us What You Want to Learn"
               description="Share your requirement and preferred call time — we'll take it from there."
               align="left"
+              singleLine={false}
               className="mb-5"
             />
             <RequestCallForm />
@@ -137,12 +171,17 @@ function ContactPage() {
                 rel="noreferrer"
                 variant="outline"
                 size="md"
-                className="border-slate-200 bg-white hover:border-blue-600 hover:text-blue-600 text-slate-700 h-11 rounded-lg"
+                className="border border-slate-200/80 bg-white hover:border-accent hover:text-navy text-slate-700 h-11 rounded-xl font-bold"
               >
-                <MessageCircle className="size-4" aria-hidden="true" />
+                <MessageCircle className="size-4 text-accent" aria-hidden="true" />
                 WhatsApp Us
               </BtnAnchor>
-              <BtnAnchor href={site.phoneHref} variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/10 h-11 rounded-lg">
+              <BtnAnchor
+                href={site.phoneHref}
+                variant="primary"
+                size="md"
+                className="bg-accent hover:brightness-110 text-slate-950 font-black shadow-md shadow-accent/20 h-11 rounded-xl"
+              >
                 <Phone className="size-4" aria-hidden="true" />
                 Call Us
               </BtnAnchor>
@@ -151,16 +190,39 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="bg-background">
-        <div className="container-site section-y grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
-          <SectionHeading
-            eyebrow="Quick Answers"
-            title="Before You Call"
-            description="The questions we're asked most often."
-            align="left"
-          />
-          <FaqAccordion items={homeFaqs} />
+      {/* Section 4 — Support */}
+      <section className="surface-navy relative overflow-hidden py-10 sm:py-12 lg:py-14 border-t border-navy-700/60">
+        <div className="grid-lines absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute -right-20 -bottom-20 size-[28rem] rounded-full bg-accent/15 blur-3xl"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -left-20 -top-20 size-[28rem] rounded-full bg-blue-500/10 blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div className="container-site relative z-10 text-left max-w-4xl" data-reveal>
+          <span className="inline-block text-xs font-black uppercase tracking-widest text-accent mb-3">
+            ACADEMIC SUPPORT
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-left">
+            Not Sure Which Course Is Right for You?
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal text-left">
+            Share your current experience, career goal, and area of interest. Our team can help you identify a suitable learning path.
+          </p>
+          <div className="mt-8 flex items-center justify-start">
+            <BtnLink
+              to="/request-call"
+              variant="accent"
+              size="lg"
+              className="bg-accent hover:brightness-110 text-slate-950 font-black h-13 px-8 text-base rounded-xl shadow-lg shadow-accent/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
+            >
+              <span>Talk to an Expert</span>
+              <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+            </BtnLink>
+          </div>
         </div>
       </section>
     </SiteLayout>

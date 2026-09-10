@@ -7,41 +7,66 @@ export const stats = [
 
 export const whyChooseUs = [
   {
-    icon: "Hammer",
-    title: "Practical First",
-    text: "Learn by doing through projects, exercises and real-world scenarios.",
+    icon: "BookOpen",
+    title: "Learn by Doing",
+    text: "Move beyond theory with practical exercises, assignments, projects, and scenario-based learning.",
   },
   {
     icon: "Building2",
-    title: "Industry-Aligned",
-    text: "Courses are structured around skills relevant to today's digital and technology careers.",
+    title: "Industry-Aligned Curriculum",
+    text: "Learn concepts and workflows that reflect how digital marketing and technology teams operate in the real world.",
   },
   {
     icon: "Users",
-    title: "Expert Guidance",
-    text: "Learn with structured guidance from experienced instructors.",
+    title: "Guided by Experience",
+    text: "Understand not only what a tool does, but how professionals use it to solve business problems.",
   },
   {
     icon: "TrendingUp",
-    title: "Career Focused",
-    text: "Build practical knowledge, confidence and portfolio-ready work.",
+    title: "Career-Focused Learning",
+    text: "Develop practical skills that can strengthen your portfolio, interview readiness, and professional confidence.",
   },
 ];
 
 export const methodology = [
-  { step: "01", title: "Learn", text: "Concept sessions that build clear, structured understanding." },
-  { step: "02", title: "Practice", text: "Guided tool work and exercises right after each concept." },
-  { step: "03", title: "Build", text: "Apply skills to projects that mirror real business problems." },
-  { step: "04", title: "Review", text: "Mentor feedback that sharpens quality and decision making." },
-  { step: "05", title: "Get Certified", text: "Assessment and certification on successful completion." },
+  { step: "01", title: "Learn", text: "Understand the principles, terminology, frameworks, and tools behind each subject." },
+  { step: "02", title: "Practice", text: "Reinforce concepts through guided exercises and practical activities." },
+  { step: "03", title: "Build", text: "Apply your learning to projects, campaigns, case studies, and realistic scenarios." },
+  { step: "04", title: "Review", text: "Identify gaps, improve your work, and learn how professionals evaluate results." },
+  { step: "05", title: "Progress", text: "Build a stronger portfolio of skills and move forward with greater career confidence." },
 ];
 
 export const practicalTraining = [
-  { icon: "Rocket", title: "Live Projects", text: "Work on end-to-end briefs with real deliverables." },
-  { icon: "ClipboardList", title: "Practical Assignments", text: "Structured practice after every module." },
-  { icon: "FileSearch", title: "Case Studies", text: "Break down real campaigns and security incidents." },
-  { icon: "Wrench", title: "Tool-Based Training", text: "Hands-on time inside the tools professionals use." },
-  { icon: "MessageSquareCheck", title: "Mentor Reviews", text: "Detailed feedback that improves your work." },
+  {
+    icon: "Rocket",
+    title: "Hands-On Projects",
+    text: "Apply concepts to structured projects that demonstrate practical understanding.",
+    shortText: "Real portfolio capstones & builds.",
+  },
+  {
+    icon: "ClipboardList",
+    title: "Practical Assignments",
+    text: "Strengthen your skills through exercises designed around real digital tasks.",
+    shortText: "Workplace task simulations.",
+  },
+  {
+    icon: "FileSearch",
+    title: "Case Studies",
+    text: "Analyse business situations and understand how digital strategies are planned, executed, and measured.",
+    shortText: "Live briefs & campaign audits.",
+  },
+  {
+    icon: "Wrench",
+    title: "Tool-Based Learning",
+    text: "Get familiar with relevant platforms and workflows used across digital marketing and technology.",
+    shortText: "Industry platforms & toolsets.",
+  },
+  {
+    icon: "MessageSquareCheck",
+    title: "Mentor Feedback",
+    text: "Use guided reviews to identify improvements and develop better practical outcomes.",
+    shortText: "1-on-1 expert code critiques.",
+  },
 ];
 
 export const careerBenefits = [
@@ -124,25 +149,29 @@ export const testimonials: Testimonial[] = [
 
 export const homeFaqs = [
   {
-    question: "Who can join the courses?",
+    question: "Who can join Digitechademy?",
     answer:
-      "Anyone interested in building practical Digital Marketing or Cyber Security skills can join.",
+      "Our programs are designed for beginners, students, working professionals, and career switchers, depending on the course and its prerequisites.",
   },
   {
-    question: "Do beginners need prior experience?",
-    answer: "No. Beginner-friendly learning paths are available.",
+    question: "Are the courses practical?",
+    answer:
+      "Yes. Our learning approach combines concepts with practical exercises, projects, case studies, and tool-based activities where applicable.",
   },
   {
-    question: "Are practical sessions included?",
-    answer: "Yes. Courses include practical assignments and project-based learning.",
+    question: "Which courses can I choose from?",
+    answer:
+      "Our programs cover Digital Marketing, Programmatic Advertising, Cyber Security, SEO, and Performance Marketing.",
   },
   {
-    question: "Will I receive a certificate?",
-    answer: "Yes, eligible learners receive a course completion certificate.",
+    question: "Do I need prior experience?",
+    answer:
+      "Prerequisites vary by program. Beginner-friendly pathways are available, while advanced programs may require foundational knowledge.",
   },
   {
-    question: "How can I enquire?",
-    answer: "Use the Request a Call, WhatsApp or Contact options.",
+    question: "How do I choose the right course?",
+    answer:
+      "Choose based on your career goal, current skill level, interests, and the type of role or specialization you want to pursue.",
   },
 ];
 
@@ -151,22 +180,29 @@ export const faqCategories = [
     title: "General",
     items: [
       {
-        question: "What kind of academy is Digital Tech Solution?",
+        question: "What is Digitechademy?",
         answer:
-          "We are a focused training institute for Digital Marketing and Cyber Security, built around practical, career-oriented learning.",
+          "Digitechademy is a career-focused training platform offering practical learning programs across digital marketing, programmatic advertising, cyber security, SEO, and performance marketing.",
       },
       {
-        question: "Who can enrol in your programs?",
+        question: "Who can join the courses?",
         answer:
-          "Students, graduates, working professionals and business owners. Each course lists the level it is designed for.",
+          "Programs are suitable for beginners, students, working professionals, and career switchers depending on the course requirements.",
       },
       {
-        question: "What training formats do you offer?",
-        answer: "Classroom batches at our training centre and live online sessions with the same curriculum.",
+        question: "Are the courses practical?",
+        answer:
+          "Yes. Practical exercises, projects, case studies, and tool-based activities are incorporated where applicable.",
       },
       {
-        question: "Are batch timings flexible?",
-        answer: "Yes, weekday and weekend batches are available. Availability is confirmed on your counselling call.",
+        question: "Do I need prior experience?",
+        answer:
+          "Prerequisites vary by program. Beginner-friendly pathways are available for learners starting from the fundamentals.",
+      },
+      {
+        question: "How can I choose the right course?",
+        answer:
+          "Start with your career goal, current skills, interests, and preferred specialization. Our team can also help you identify a suitable learning path.",
       },
     ],
   },
@@ -174,23 +210,38 @@ export const faqCategories = [
     title: "Digital Marketing",
     items: [
       {
-        question: "Is SEO covered in depth?",
+        question: "What will I learn in Digital Marketing?",
         answer:
-          "Yes — keyword research, on-page, technical, off-page and local SEO, plus SEO analytics and reporting.",
+          "The program covers areas such as SEO, paid advertising, social media marketing, analytics, content, and performance marketing.",
       },
       {
-        question: "Will I run real ad campaigns?",
+        question: "Will I learn Google Ads and Meta Ads?",
         answer:
-          "You build and optimise Google Ads and Meta Ads campaigns as part of guided practical sessions.",
+          "The curriculum can include paid search and paid social concepts, campaign planning, targeting, optimization, and measurement.",
       },
       {
-        question: "Is social media marketing included?",
-        answer: "Yes, covering Instagram, Facebook and LinkedIn with content and campaign planning.",
+        question: "Is SEO included?",
+        answer: "Yes. SEO concepts are included as part of the digital marketing learning path.",
+      },
+    ],
+  },
+  {
+    title: "Programmatic Advertising",
+    items: [
+      {
+        question: "What is Programmatic Advertising training?",
+        answer:
+          "It is practical training focused on automated digital media buying, DSPs, SSPs, RTB, audience targeting, campaign management, optimization, and measurement.",
       },
       {
-        question: "How is analytics taught?",
+        question: "Is DV360 covered?",
         answer:
-          "Through hands-on work with analytics dashboards, conversion tracking and structured performance reporting.",
+          "DV360 concepts and workflows can be included in the program based on the selected curriculum.",
+      },
+      {
+        question: "Can beginners learn programmatic advertising?",
+        answer:
+          "Yes. The learning path can start with programmatic fundamentals before moving into platforms, campaign workflows, optimization, and reporting.",
       },
     ],
   },
@@ -198,62 +249,60 @@ export const faqCategories = [
     title: "Cyber Security",
     items: [
       {
-        question: "Do I need networking knowledge before joining?",
-        answer: "No. Networking and Linux fundamentals are covered from the beginning.",
-      },
-      {
-        question: "Is ethical hacking taught responsibly?",
+        question: "What will I learn in Cyber Security?",
         answer:
-          "Yes. All testing happens in controlled lab environments with a strong focus on scope, consent and ethics.",
+          "The program covers cyber security fundamentals, networking, threats, vulnerabilities, security operations, monitoring, and defensive security concepts.",
       },
       {
-        question: "What do the security labs include?",
-        answer: "Network labs, web application testing, Linux hardening and scenario-based drills.",
+        question: "Is prior networking knowledge required?",
+        answer:
+          "Foundational networking concepts are introduced as part of the learning path, while advanced topics may require additional background knowledge.",
       },
       {
-        question: "Are security tools provided?",
-        answer: "Yes, tool-based training runs inside guided lab setups shared during the course.",
+        question: "Is ethical security covered?",
+        answer:
+          "Relevant ethical security concepts and practical exercises can be included according to the selected program curriculum.",
       },
     ],
   },
   {
-    title: "Enrollment, Fees & Support",
+    title: "Enrollment & Support",
     items: [
       {
-        question: "How does admission work?",
+        question: "How do I enroll?",
         answer:
-          "Submit an enquiry, take a counselling call, choose your program and confirm your batch to start learning.",
+          "Choose your preferred course and submit an enquiry. The Digitechademy team will guide you through the next steps.",
       },
       {
-        question: "What are the course fees?",
+        question: "Can I speak with someone before enrolling?",
         answer:
-          "Fees are listed on each course page. Early enrolment pricing and instalment options are available.",
+          "Yes. You can request a call to discuss the course, learning path, prerequisites, and enrollment process.",
       },
       {
-        question: "When do I receive the certificate?",
+        question: "Do courses include certificates?",
         answer:
-          "After completing assessments and participating in the course project, a completion certificate is issued.",
+          "Certificate availability depends on the selected program and its completion requirements.",
       },
       {
-        question: "What support is available after the course?",
+        question: "Is career support available?",
         answer:
-          "Mentor guidance on project work, interview preparation discussions and doubt-clearing support.",
+          "Career-focused guidance may be provided according to the program and support package selected.",
       },
     ],
   },
 ];
 
 export const courseOptions = [
-  "Digital Marketing Mastery",
-  "Cyber Security Professional",
+  "Digital Marketing",
+  "Programmatic Advertising",
+  "Cyber Security",
   "Advanced SEO & Performance Marketing",
-  "Ethical Hacking & Security Fundamentals",
   "Not sure yet",
 ];
 
 export const callTimeOptions = [
-  "Morning (9:30 AM – 12 PM)",
-  "Afternoon (12 PM – 4 PM)",
-  "Evening (4 PM – 7:30 PM)",
+  "Morning",
+  "Afternoon",
+  "Evening",
   "Anytime",
 ];
