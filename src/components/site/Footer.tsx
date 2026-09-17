@@ -325,11 +325,11 @@ export function Footer() {
             <span className="text-slate-700">|</span>
             <Link to="/courses" className="transition-colors hover:text-sky-300">Programs</Link>
             <span className="text-slate-700">|</span>
-            <Link to="/courses/digital-marketing" className="transition-colors hover:text-sky-300">Digital Marketing</Link>
+            <Link to="/courses/$slug" params={{ slug: "digital-marketing" }} className="transition-colors hover:text-sky-300">Digital Marketing</Link>
             <span className="text-slate-700">|</span>
-            <Link to="/courses/programmatic-advertising" className="transition-colors hover:text-sky-300">Programmatic Advertising</Link>
+            <Link to="/courses/$slug" params={{ slug: "programmatic-advertising" }} className="transition-colors hover:text-sky-300">Programmatic Advertising</Link>
             <span className="text-slate-700">|</span>
-            <Link to="/courses/cyber-security" className="transition-colors hover:text-sky-300">Cyber Security</Link>
+            <Link to="/courses/$slug" params={{ slug: "cyber-security" }} className="transition-colors hover:text-sky-300">Cyber Security</Link>
             <span className="text-slate-700">|</span>
             <Link to="/testimonials" className="transition-colors hover:text-sky-300">Resources</Link>
             <span className="text-slate-700">|</span>

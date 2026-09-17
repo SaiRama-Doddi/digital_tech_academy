@@ -577,9 +577,30 @@
       background-color 0.35s ease;
     transition-delay: var(--reveal-delay, 0ms);
   }
+  .programmatic-pillar-card:hover,
   .programmatic-pillar-card[data-reveal="left-to-right-and-bottom-to-up"].is-visible:hover {
-    transform: translate3d(0, -8px, 0) scale(1.02);
+    transform: translate3d(0, -6px, 0) scale(1.02);
     box-shadow: 0 20px 40px -15px rgba(22, 199, 255, 0.25), 0 0 0 1px rgba(56, 189, 248, 0.35);
+  }
+
+  /* Auto-scrolling marquee animation for single-row cards */
+  @keyframes programmatic-marquee {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .animate-programmatic-marquee {
+    animation: programmatic-marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-programmatic-marquee:hover,
+  .animate-programmatic-marquee:active {
+    animation-play-state: paused;
   }
 
   /* Premium Cyber Security step transition cards for all screens */

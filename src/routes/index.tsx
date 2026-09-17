@@ -145,9 +145,6 @@ function Home() {
       {/* 14. FAQ */}
       <FaqSection />
 
-      {/* 15. Final CTA */}
-      <FinalCta />
-
       {/* Interactive Global Demo Class Modal */}
       <DemoClassModal />
     </SiteLayout>
@@ -1217,6 +1214,139 @@ function CorePrograms() {
  * =========================================================================
  */
 function ProgrammaticDifferentiator() {
+  const programmaticPillars = [
+    {
+      icon: Radio,
+      badge: "Demand Side Platform",
+      dotColor: "bg-sky-400",
+      name: "DV360",
+      desc: "Campaign planning, targeting, bidding and optimization.",
+      color: "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
+      hoverGlow: "from-sky-500/10",
+      accentGradient: "from-sky-400 via-blue-500 to-indigo-500",
+    },
+    {
+      icon: Server,
+      badge: "Ad Server & Tracking",
+      dotColor: "bg-blue-400",
+      name: "CM360",
+      desc: "Ad serving, tracking, attribution and campaign measurement.",
+      color: "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
+      hoverGlow: "from-blue-500/10",
+      accentGradient: "from-blue-400 via-indigo-500 to-sky-400",
+    },
+    {
+      icon: Play,
+      badge: "Video & Discovery",
+      dotColor: "bg-red-400",
+      name: "YouTube Advertising",
+      desc: "Audience strategy, video campaigns and performance analysis.",
+      color: "bg-red-500/15 text-red-400 border-red-400/30 group-hover:bg-red-500 group-hover:text-white group-hover:border-red-400 group-hover:shadow-[0_0_18px_rgba(239,68,68,0.4)]",
+      hoverGlow: "from-red-500/10",
+      accentGradient: "from-red-400 via-rose-500 to-amber-400",
+    },
+    {
+      icon: Target,
+      badge: "Audience Strategy",
+      dotColor: "bg-indigo-400",
+      name: "Audience & Targeting",
+      desc: "Understand how audiences are built, segmented and activated.",
+      color: "bg-indigo-500/15 text-indigo-400 border-indigo-400/30 group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-400 group-hover:shadow-[0_0_18px_rgba(99,102,241,0.4)]",
+      hoverGlow: "from-indigo-500/10",
+      accentGradient: "from-indigo-400 via-purple-500 to-sky-400",
+    },
+    {
+      icon: TrendingUp,
+      badge: "Media Trader Decisions",
+      dotColor: "bg-emerald-400",
+      name: "Optimization",
+      desc: "Learn how traders identify performance issues and make optimization decisions.",
+      color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30 group-hover:bg-emerald-500 group-hover:text-slate-950 group-hover:border-emerald-400 group-hover:shadow-[0_0_18px_rgba(16,185,129,0.4)]",
+      hoverGlow: "from-emerald-500/10",
+      accentGradient: "from-emerald-400 via-teal-500 to-sky-400",
+    },
+    {
+      icon: BarChart3,
+      badge: "Analytics & Attribution",
+      dotColor: "bg-amber-400",
+      name: "Reporting & Measurement",
+      desc: "Turn campaign data into actionable media insights.",
+      color: "bg-amber-500/15 text-amber-400 border-amber-400/30 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-400 group-hover:shadow-[0_0_18px_rgba(245,158,11,0.4)]",
+      hoverGlow: "from-amber-500/10",
+      accentGradient: "from-amber-400 via-orange-500 to-rose-400",
+    },
+  ];
+
+  const renderPillarCard = (
+    item: (typeof programmaticPillars)[number],
+    key: string,
+  ) => {
+    const ItemIcon = item.icon;
+    return (
+      <div
+        key={key}
+        className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-pointer active:scale-[0.985] w-[290px] sm:w-[330px] md:w-[350px] shrink-0 min-h-[220px]"
+      >
+        {/* Top Accent Gradient Line that glides open */}
+        <div
+          className={cn(
+            "absolute top-0 inset-x-0 h-1 bg-gradient-to-r transition-transform duration-500 ease-out origin-left scale-x-0 group-hover:scale-x-100",
+            item.accentGradient,
+          )}
+        />
+
+        {/* Subtle Ambient Glow on Hover */}
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 bg-gradient-to-b via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+            item.hoverGlow,
+          )}
+          aria-hidden="true"
+        />
+
+        <div>
+          {/* Card Top Row: Icon Badge & Platform Pill */}
+          <div className="relative z-10 flex items-center justify-between gap-2">
+            <span
+              className={cn(
+                "grid size-9 sm:size-9.5 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6",
+                item.color,
+              )}
+            >
+              <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-bold text-slate-300 uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10 transition-all duration-300 group-hover:border-sky-400/50 group-hover:text-white group-hover:bg-white/10">
+              <span className={cn("size-1.5 rounded-full animate-pulse", item.dotColor)} />
+              <span>{item.badge}</span>
+            </span>
+          </div>
+
+          {/* Title & Description */}
+          <div className="relative z-10 mt-3.5">
+            <h3 className="text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
+              {item.name}
+            </h3>
+            <p className="mt-1.5 text-xs leading-relaxed text-slate-300 group-hover:text-slate-100 font-normal transition-colors duration-200 text-justify">
+              {item.desc}
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Interactive Micro Standard Indicator */}
+        <div className="relative z-10 mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10.5px] font-semibold text-slate-400 group-hover:text-sky-300 transition-colors">
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="size-3 text-emerald-400" />
+            <span>Industry Framework</span>
+          </span>
+          <span className="flex items-center gap-0.5 text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <span>Explore Track</span>
+            <ChevronRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section id="programmatic-differentiator" className="surface-navy relative py-12 sm:py-20 overflow-hidden">
       <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
@@ -1230,160 +1360,53 @@ function ProgrammaticDifferentiator() {
       />
 
       <div className="container-site relative z-10">
-        <div className="max-w-4xl lg:max-w-6xl" data-reveal>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-sky-300 mb-3 backdrop-blur-xs">
-            <Radio className="size-3 text-sky-400 animate-pulse" />
-            <span>GO BEYOND BASIC DIGITAL MARKETING</span>
-          </div>
+        <div className="max-w-4xl lg:max-w-6xl flex flex-col sm:flex-row sm:items-end justify-between gap-4" data-reveal>
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-sky-300 mb-3 backdrop-blur-xs">
+              <Radio className="size-3 text-sky-400 animate-pulse" />
+              <span>GO BEYOND BASIC DIGITAL MARKETING</span>
+            </div>
 
-          <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight whitespace-nowrap">
-            Learn Programmatic Advertising{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
-              From the Inside Out
-            </span>
-          </h2>
+            <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight whitespace-nowrap">
+              Learn Programmatic Advertising{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
+                From the Inside Out
+              </span>
+            </h2>
 
-          <div className="mt-3.5 space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
-            <p>
+            <p className="mt-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
               Programmatic advertising isn't just about running ads. It's about understanding audiences, inventory, bidding, targeting, pacing, optimization, measurement and media performance.
             </p>
-            <p className="text-slate-400">
-              Learn how modern programmatic campaigns are planned, launched, monitored and optimized using industry workflows and platforms.
-            </p>
+          </div>
+
+          <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sky-300 text-xs font-semibold shrink-0 mb-1 backdrop-blur-xs">
+            <span className="size-2 rounded-full bg-sky-400 animate-pulse" />
+            <span>Auto-Scrolling • Hover to pause</span>
           </div>
         </div>
 
-        {/* 6 Platform Pillars Grid */}
-        <div className="mt-8 grid gap-3.5 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              icon: Radio,
-              badge: "Demand Side Platform",
-              dotColor: "bg-sky-400",
-              name: "DV360",
-              desc: "Campaign planning, targeting, bidding and optimization.",
-              color: "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
-              hoverGlow: "from-sky-500/10",
-              accentGradient: "from-sky-400 via-blue-500 to-indigo-500",
-            },
-            {
-              icon: Server,
-              badge: "Ad Server & Tracking",
-              dotColor: "bg-blue-400",
-              name: "CM360",
-              desc: "Ad serving, tracking, attribution and campaign measurement.",
-              color: "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
-              hoverGlow: "from-blue-500/10",
-              accentGradient: "from-blue-400 via-indigo-500 to-sky-400",
-            },
-            {
-              icon: Play,
-              badge: "Video & Discovery",
-              dotColor: "bg-red-400",
-              name: "YouTube Advertising",
-              desc: "Audience strategy, video campaigns and performance analysis.",
-              color: "bg-red-500/15 text-red-400 border-red-400/30 group-hover:bg-red-500 group-hover:text-white group-hover:border-red-400 group-hover:shadow-[0_0_18px_rgba(239,68,68,0.4)]",
-              hoverGlow: "from-red-500/10",
-              accentGradient: "from-red-400 via-rose-500 to-amber-400",
-            },
-            {
-              icon: Target,
-              badge: "Audience Strategy",
-              dotColor: "bg-indigo-400",
-              name: "Audience & Targeting",
-              desc: "Understand how audiences are built, segmented and activated.",
-              color: "bg-indigo-500/15 text-indigo-400 border-indigo-400/30 group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-400 group-hover:shadow-[0_0_18px_rgba(99,102,241,0.4)]",
-              hoverGlow: "from-indigo-500/10",
-              accentGradient: "from-indigo-400 via-purple-500 to-sky-400",
-            },
-            {
-              icon: TrendingUp,
-              badge: "Media Trader Decisions",
-              dotColor: "bg-emerald-400",
-              name: "Optimization",
-              desc: "Learn how traders identify performance issues and make optimization decisions.",
-              color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30 group-hover:bg-emerald-500 group-hover:text-slate-950 group-hover:border-emerald-400 group-hover:shadow-[0_0_18px_rgba(16,185,129,0.4)]",
-              hoverGlow: "from-emerald-500/10",
-              accentGradient: "from-emerald-400 via-teal-500 to-sky-400",
-            },
-            {
-              icon: BarChart3,
-              badge: "Analytics & Attribution",
-              dotColor: "bg-amber-400",
-              name: "Reporting & Measurement",
-              desc: "Turn campaign data into actionable media insights.",
-              color: "bg-amber-500/15 text-amber-400 border-amber-400/30 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-400 group-hover:shadow-[0_0_18px_rgba(245,158,11,0.4)]",
-              hoverGlow: "from-amber-500/10",
-              accentGradient: "from-amber-400 via-orange-500 to-rose-400",
-            },
-          ].map((item, index) => {
-            const ItemIcon = item.icon;
-            return (
-              <div
-                key={item.name}
-                data-reveal="left-to-right-and-bottom-to-up"
-                style={{ "--reveal-delay": `${(index % 3) * 120}ms` } as React.CSSProperties}
-                className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-pointer active:scale-[0.985]"
-              >
-                {/* Top Accent Gradient Line that glides open */}
-                <div
-                  className={cn(
-                    "absolute top-0 inset-x-0 h-1 bg-gradient-to-r transition-transform duration-500 ease-out origin-left scale-x-0 group-hover:scale-x-100",
-                    item.accentGradient,
-                  )}
-                />
+        {/* Auto-scrolling Single-Row Platform Pillars Marquee */}
+        <div className="relative mt-8 -mx-4 sm:-mx-6 px-4 sm:px-6 overflow-hidden py-3" data-reveal>
+          {/* Subtle gradient edge fades */}
+          <div
+            className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-[var(--navy)] via-[var(--navy)]/80 to-transparent"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 z-20 bg-gradient-to-l from-[var(--navy)] via-[var(--navy)]/80 to-transparent"
+            aria-hidden="true"
+          />
 
-                {/* Subtle Ambient Glow on Hover */}
-                <div
-                  className={cn(
-                    "pointer-events-none absolute inset-0 bg-gradient-to-b via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-                    item.hoverGlow,
-                  )}
-                  aria-hidden="true"
-                />
-
-                <div>
-                  {/* Card Top Row: Icon Badge & Platform Pill */}
-                  <div className="relative z-10 flex items-center justify-between gap-2">
-                    <span
-                      className={cn(
-                        "grid size-9 sm:size-9.5 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6",
-                        item.color,
-                      )}
-                    >
-                      <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-bold text-slate-300 uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10 transition-all duration-300 group-hover:border-sky-400/50 group-hover:text-white group-hover:bg-white/10">
-                      <span className={cn("size-1.5 rounded-full animate-pulse", item.dotColor)} />
-                      <span>{item.badge}</span>
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <div className="relative z-10 mt-3.5">
-                    <h3 className="text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
-                      {item.name}
-                    </h3>
-                    <p className="mt-1.5 text-xs leading-relaxed text-slate-300 group-hover:text-slate-100 font-normal transition-colors duration-200 text-justify">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Bottom Interactive Micro Standard Indicator */}
-                <div className="relative z-10 mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10.5px] font-semibold text-slate-400 group-hover:text-sky-300 transition-colors">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="size-3 text-emerald-400" />
-                    <span>Industry Framework</span>
-                  </span>
-                  <span className="flex items-center gap-0.5 text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <span>Explore Track</span>
-                    <ChevronRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+          <div className="flex w-max animate-programmatic-marquee hover:[animation-play-state:paused] active:[animation-play-state:paused]">
+            {/* Primary Track Set */}
+            <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0">
+              {programmaticPillars.map((item, index) => renderPillarCard(item, `pillar-a-${index}`))}
+            </div>
+            {/* Duplicated Track Set for Seamless Infinite Loop */}
+            <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0" aria-hidden="true">
+              {programmaticPillars.map((item, index) => renderPillarCard(item, `pillar-b-${index}`))}
+            </div>
+          </div>
         </div>
 
         {/* Signature Statement Banner */}
@@ -1406,7 +1429,8 @@ function ProgrammaticDifferentiator() {
           </div>
 
           <BtnLink
-            to="/courses/programmatic-advertising"
+            to="/courses/$slug"
+            params={{ slug: "programmatic-advertising" }}
             variant="primary"
             size="md"
             className="bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap shadow-md shadow-sky-500/30"
@@ -1510,7 +1534,8 @@ function CyberSecurityDifferentiator() {
             return (
               <Link
                 key={item.step}
-                to="/courses/cyber-security"
+                to="/courses/$slug"
+                params={{ slug: "cyber-security" }}
                 data-reveal="left-to-right-and-bottom-to-up"
                 style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
                 className="cyber-step-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white hover:border-blue-400/80 cursor-pointer active:scale-[0.985] h-full"
@@ -1589,7 +1614,8 @@ function CyberSecurityDifferentiator() {
           </div>
 
           <BtnLink
-            to="/courses/cyber-security"
+            to="/courses/$slug"
+            params={{ slug: "cyber-security" }}
             variant="primary"
             size="md"
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap shadow-sm"
@@ -1648,7 +1674,7 @@ function PracticalLearning() {
   return (
     <section className="bg-surface py-12 sm:py-16 overflow-hidden border-b border-slate-200/80">
       <div className="container-site">
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-14">
+        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
           <div data-reveal="left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
               <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
@@ -2110,18 +2136,18 @@ function GenuineTestimonials() {
 function FaqSection() {
   return (
     <section className="bg-white py-12 sm:py-18 overflow-hidden border-b border-slate-200/80">
-      <div className="container-site grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
-        <div data-reveal="left">
+      <div className="container-site grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-14">
+        <div data-reveal="left" className="lg:sticky lg:top-24 self-start">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
             <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
             FAQ — QUESTIONS &amp; ANSWERS
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight text-left">
             Frequently Asked Questions
           </h2>
 
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-left">
             Find clear, straightforward answers about eligibility, hands-on learning, offered programs, prerequisites, and certifications at DIGITECHADEMY.
           </p>
 
@@ -2138,7 +2164,7 @@ function FaqSection() {
 
             <BtnLink
               to="/contact"
-              variant="secondary"
+              variant="outline"
               size="md"
               className="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm border border-blue-200"
             >
@@ -2155,88 +2181,3 @@ function FaqSection() {
   );
 }
 
-/**
- * =========================================================================
- * 18. FINAL CTA
- * =========================================================================
- */
-function FinalCta() {
-  return (
-    <section className="surface-navy relative py-8 sm:py-12 overflow-hidden">
-      <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
-      <div
-        className="pointer-events-none absolute -right-16 -top-16 size-72 rounded-full bg-blue-600/15 blur-2xl"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -left-16 -bottom-16 size-64 rounded-full bg-sky-500/10 blur-2xl"
-        aria-hidden="true"
-      />
-
-      <div className="container-site relative z-10 max-w-3xl text-center" data-reveal>
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-sky-300 text-[10.5px] font-bold uppercase tracking-wider mb-2.5">
-          <span className="size-1.5 rounded-full bg-blue-400 animate-pulse" />
-          START YOUR LEARNING JOURNEY
-        </div>
-
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
-          READY TO BUILD SKILLS THAT{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
-            ACTUALLY MATTER?
-          </span>
-        </h2>
-
-        <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto font-normal">
-          Whether you're starting your career, switching fields or upgrading your existing skills, Digitechademy helps you move from learning concepts to applying them with confidence.
-        </p>
-
-        {/* 3 Value Pillars */}
-        <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-3.5 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 backdrop-blur-md">
-          <span className="text-[11px] sm:text-xs font-semibold text-sky-300">Choose Your Path.</span>
-          <span className="text-slate-500 text-xs font-bold">•</span>
-          <span className="text-[11px] sm:text-xs font-semibold text-blue-300">Learn With Purpose.</span>
-          <span className="text-slate-500 text-xs font-bold">•</span>
-          <span className="text-[11px] sm:text-xs font-semibold text-indigo-300">Build Your Future.</span>
-        </div>
-
-        <div className="mt-5 flex flex-row justify-center items-center gap-2.5 sm:gap-3 w-full max-w-sm sm:max-w-none mx-auto">
-          <BtnLink
-            to="/courses"
-            variant="primary"
-            size="sm"
-            className="flex-1 sm:flex-initial inline-flex h-9 sm:h-10 items-center justify-center gap-1 sm:gap-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-3 sm:px-5 text-[11px] min-[380px]:text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer whitespace-nowrap"
-          >
-            <span>Explore Programs</span>
-            <ArrowRight className="size-3 sm:size-3.5" />
-          </BtnLink>
-
-          <BtnLink
-            to="/request-call"
-            variant="outline"
-            size="sm"
-            className="flex-1 sm:flex-initial inline-flex h-9 sm:h-10 items-center justify-center gap-1 sm:gap-1.5 border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 font-bold px-3 sm:px-4 rounded-lg text-[11px] min-[380px]:text-xs whitespace-nowrap"
-          >
-            <span>Talk to an Expert</span>
-          </BtnLink>
-        </div>
-
-        <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-400 font-medium">
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="size-3 text-emerald-400" />
-            100% Practical Training
-          </span>
-          <span>•</span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="size-3 text-emerald-400" />
-            1-on-1 Expert Guidance
-          </span>
-          <span>•</span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="size-3 text-emerald-400" />
-            Placement Support
-          </span>
-        </div>
-      </div>
-    </section>
-  );
-}
