@@ -120,23 +120,25 @@ export function Header() {
         )}
       >
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-4 xl:px-8">
-          {/* Mobile view (< sm): Single centered line that never wraps */}
+          {/* Mobile view (< sm): Clean, non-colliding responsive layout */}
           <div className="flex sm:hidden items-center justify-center text-center">
             <Link
               to="/courses"
-              className="group inline-flex items-center gap-1.5 text-[10.5px] text-slate-200 hover:text-white transition-colors truncate max-w-full"
+              className="group inline-flex items-center justify-center gap-2 text-[10.5px] text-slate-200 hover:text-white transition-colors max-w-full px-1"
             >
               <span className="relative flex size-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="font-bold text-emerald-400 shrink-0 uppercase tracking-wide text-[10px]">
+              <span className="font-bold text-emerald-400 shrink-0 uppercase tracking-wide text-[10px] sm:text-[10.5px]">
                 Admissions Open 2026
               </span>
-              <span className="text-slate-600 shrink-0" aria-hidden="true">•</span>
-              <span className="text-slate-300 truncate">New Batches Starting Soon</span>
-              <span className="ml-1 inline-flex items-center gap-0.5 rounded-full bg-blue-600/30 border border-blue-400/30 px-2 py-0.5 text-[9.5px] font-bold text-sky-300 group-hover:bg-blue-600 group-hover:text-white shrink-0">
-                Explore Programs
+              <span className="hidden min-[480px]:inline text-slate-600 shrink-0" aria-hidden="true">•</span>
+              <span className="hidden min-[480px]:inline text-slate-300 truncate text-[10.5px]">
+                New Batches Starting Soon
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2.5 py-0.5 text-[9.5px] font-bold text-sky-300 group-hover:bg-blue-600 group-hover:text-white shrink-0 transition-colors">
+                <span>Explore Programs</span>
                 <ArrowRight className="size-2.5" />
               </span>
             </Link>
