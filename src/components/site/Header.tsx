@@ -119,23 +119,24 @@ export function Header() {
             : "max-h-12 py-2 opacity-100 border-white/[0.08] text-xs font-medium",
         )}
       >
-        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-4 xl:px-8">
-          {/* Mobile view (< sm): Clean, non-colliding responsive layout */}
-          <div className="flex sm:hidden items-center justify-center text-center">
-            <Link
-              to="/courses"
-              className="group inline-flex items-center justify-center gap-2 text-[10.5px] text-slate-200 hover:text-white transition-colors max-w-full px-1"
-            >
-              <span className="relative flex size-2 shrink-0">
+        <div className="container-site">
+          {/* Mobile view (< sm) */}
+          <div className="flex sm:hidden items-center justify-between gap-1 text-[11px] font-semibold py-1">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <span className="relative flex size-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
               </span>
-              <span className="font-bold text-emerald-400 shrink-0 uppercase tracking-wide text-[10px] sm:text-[10.5px]">
+              <span className="font-bold text-emerald-400 uppercase tracking-wider text-[10px]">
                 Admissions Open 2026
               </span>
-              <span className="hidden min-[480px]:inline text-slate-600 shrink-0" aria-hidden="true">•</span>
+            </div>
+            <Link
+              to="/courses"
+              className="inline-flex items-center gap-1 text-slate-300 hover:text-white shrink-0 group ml-auto"
+            >
               <span className="hidden min-[480px]:inline text-slate-300 truncate text-[10.5px]">
-                New Batches Starting Soon
+                • New Batches Starting Soon
               </span>
               <span className="inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2.5 py-0.5 text-[9.5px] font-bold text-sky-300 group-hover:bg-blue-600 group-hover:text-white shrink-0 transition-colors">
                 <span>Explore Programs</span>
@@ -211,7 +212,7 @@ export function Header() {
       >
         <div
           className={cn(
-            "relative z-50 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-4 xl:px-8 flex items-center justify-between gap-2 xl:gap-6 transition-all duration-300",
+            "container-site relative z-50 flex items-center justify-between gap-2 xl:gap-6 transition-all duration-300",
             mobileOpen ? "bg-white" : "",
             scrolled ? "h-16" : "h-17 lg:h-20",
           )}
