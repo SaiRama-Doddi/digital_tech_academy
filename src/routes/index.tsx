@@ -297,9 +297,9 @@ function Hero() {
               </span>
             </div>
 
-            {/* CTAs: Explore Programs / Talk to an Expert */}
+            {/* CTAs: Explore Programs / Talk to an Expert (Side-by-side on mobile) */}
             <div
-              className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3.5"
+              className="mt-5 sm:mt-6 flex flex-row items-center gap-2 sm:gap-3.5 w-full max-w-md sm:max-w-none"
               data-reveal
               style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
             >
@@ -307,20 +307,20 @@ function Hero() {
                 to="/courses"
                 variant="primary"
                 size="md"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 sm:h-12 px-4.5 sm:px-7 text-xs sm:text-base rounded-xl shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group"
+                className="flex-1 sm:flex-initial justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 sm:h-12 px-3 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center gap-1 sm:gap-2 group whitespace-nowrap"
               >
                 <span>Explore Programs</span>
-                <ArrowRight className="size-3.5 sm:size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <ArrowRight className="size-3 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
               </BtnLink>
 
               <BtnLink
                 to="/request-call"
                 variant="outline"
                 size="md"
-                className="h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-xs hover:shadow-sm transition-all flex items-center gap-2 text-xs sm:text-base active:scale-[0.98] cursor-pointer"
+                className="flex-1 sm:flex-initial justify-center h-10 sm:h-12 px-2.5 sm:px-6 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 sm:gap-2 text-[11px] min-[380px]:text-xs sm:text-base active:scale-[0.98] cursor-pointer whitespace-nowrap"
               >
-                <span className="grid size-5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100">
-                  <PhoneCall className="size-2.5 sm:size-3" aria-hidden="true" />
+                <span className="grid size-4.5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
+                  <PhoneCall className="size-2 sm:size-3" aria-hidden="true" />
                 </span>
                 <span>Talk to an Expert</span>
               </BtnLink>
@@ -1787,22 +1787,22 @@ function FinalCta() {
           <span className="text-[11px] sm:text-xs font-semibold text-indigo-300">Build Your Future.</span>
         </div>
 
-        <div className="mt-5 flex flex-wrap justify-center items-center gap-3">
+        <div className="mt-5 flex flex-row justify-center items-center gap-2.5 sm:gap-3 w-full max-w-sm sm:max-w-none mx-auto">
           <BtnLink
             to="/courses"
             variant="primary"
             size="sm"
-            className="inline-flex h-9 sm:h-10 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer"
+            className="flex-1 sm:flex-initial inline-flex h-9 sm:h-10 items-center justify-center gap-1 sm:gap-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-3 sm:px-5 text-[11px] min-[380px]:text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer whitespace-nowrap"
           >
             <span>Explore Programs</span>
-            <ArrowRight className="size-3.5" />
+            <ArrowRight className="size-3 sm:size-3.5" />
           </BtnLink>
 
           <BtnLink
             to="/request-call"
             variant="outline"
             size="sm"
-            className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 font-bold h-9 sm:h-10 px-4 rounded-lg text-xs"
+            className="flex-1 sm:flex-initial inline-flex h-9 sm:h-10 items-center justify-center gap-1 sm:gap-1.5 border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 font-bold px-3 sm:px-4 rounded-lg text-[11px] min-[380px]:text-xs whitespace-nowrap"
           >
             <span>Talk to an Expert</span>
           </BtnLink>
