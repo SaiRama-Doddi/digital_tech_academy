@@ -335,7 +335,7 @@ function CoursesPage() {
                 <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-black tracking-tight text-white leading-tight sm:whitespace-nowrap">
                   Practical Courses for Today&apos;s Digital Careers
                 </h1>
-                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-2xl text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap">
                   Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic Advertising.
                 </p>
               </div>

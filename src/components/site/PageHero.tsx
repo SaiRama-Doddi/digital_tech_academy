@@ -58,7 +58,7 @@ export function PageHero({
 
           <h1
             className={cn(
-              "mt-3 text-xl sm:text-2xl md:text-3xl lg:text-[2.2rem] xl:text-[2.45rem] font-black leading-tight sm:leading-tight text-white tracking-tight sm:whitespace-nowrap text-left",
+              "mt-2.5 sm:mt-3 text-xl sm:text-2xl md:text-3xl lg:text-[2.2rem] xl:text-[2.45rem] font-black leading-tight sm:leading-tight text-white tracking-tight sm:whitespace-nowrap text-left",
               isCenter && "text-center mx-auto",
               titleClassName
             )}
@@ -69,8 +69,8 @@ export function PageHero({
           {description ? (
             <p
               className={cn(
-                "mt-2.5 max-w-2xl text-xs sm:text-sm md:text-[15px] leading-relaxed text-slate-300 font-normal text-justify [text-align:justify] [text-justify:inter-word]",
-                isCenter && "mx-auto",
+                "mt-1.5 sm:mt-2 text-xs sm:text-sm md:text-[15px] leading-relaxed text-slate-300 font-normal text-left whitespace-normal md:whitespace-nowrap w-full max-w-none",
+                isCenter && "text-center mx-auto",
                 descriptionClassName
               )}
             >

@@ -359,7 +359,7 @@ function CourseDetailPage() {
                 <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-black tracking-tight text-white leading-tight sm:whitespace-nowrap">
                   {displayTitle}
                 </h1>
-                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-2xl text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap">
                   {course.category === "Cyber Security"
                     ? "Comprehensive practical training for mastering essential Cyber Security skills remotely."
                     : course.heroDescription || course.description}
