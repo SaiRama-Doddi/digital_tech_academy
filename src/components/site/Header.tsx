@@ -8,7 +8,6 @@ import {
   Menu,
   MessageCircle,
   Phone,
-  PhoneCall,
   ShieldCheck,
   Sparkles,
   TrendingUp,
@@ -21,8 +20,8 @@ import { courses } from "@/data/courses";
 import { navLinks, site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-// Exclude Contact from Navbar as requested
-const headerNavLinks = navLinks.filter((link) => link.label !== "Contact");
+// All 9 navigation links
+const headerNavLinks = navLinks;
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -62,11 +61,11 @@ export function Header() {
         )}
       >
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-4 xl:px-8">
-          {/* Mobile view (< sm): Single centered line that never wraps or breaks */}
+          {/* Mobile view (< sm): Single centered line that never wraps */}
           <div className="flex sm:hidden items-center justify-center text-center">
             <Link
               to="/courses"
-              className="group inline-flex items-center gap-1.5 text-[11px] text-slate-200 hover:text-white transition-colors truncate max-w-full"
+              className="group inline-flex items-center gap-1.5 text-[10.5px] text-slate-200 hover:text-white transition-colors truncate max-w-full"
             >
               <span className="relative flex size-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -76,15 +75,18 @@ export function Header() {
                 Admissions Open 2026
               </span>
               <span className="text-slate-600 shrink-0" aria-hidden="true">•</span>
-              <span className="truncate text-slate-300">Explore Programs</span>
-              <ArrowRight className="size-3 shrink-0 text-accent group-hover:translate-x-0.5 transition-transform" />
+              <span className="text-slate-300 truncate">New Batches Starting Soon</span>
+              <span className="ml-1 inline-flex items-center gap-0.5 rounded-full bg-blue-600/30 border border-blue-400/30 px-2 py-0.5 text-[9.5px] font-bold text-sky-300 group-hover:bg-blue-600 group-hover:text-white shrink-0">
+                Explore Programs
+                <ArrowRight className="size-2.5" />
+              </span>
             </Link>
           </div>
 
-          {/* Tablet & Desktop view (>= sm): Perfectly balanced grid */}
-          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 items-center gap-3">
-            {/* Left: Live status beacon */}
-            <div className="flex items-center gap-2">
+          {/* Tablet & Desktop view (>= sm) */}
+          <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-center gap-3">
+            {/* Left/Center: The Announcement + CTA */}
+            <div className="lg:col-span-8 flex items-center gap-2.5">
               <span className="relative flex size-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
@@ -93,47 +95,38 @@ export function Header() {
                 Admissions Open 2026
               </span>
               <span className="text-slate-600" aria-hidden="true">•</span>
-              <span className="text-slate-300 text-[11px] whitespace-nowrap">
-                <span className="hidden xl:inline">Weekend &amp; </span>Weekday Batches
+              <span className="text-slate-200 text-[11px] whitespace-nowrap font-medium">
+                New Batches Starting Soon
               </span>
-            </div>
-
-            {/* Center: Highlight Promotion banner pill */}
-            <div className="hidden lg:flex items-center justify-center text-center">
               <Link
                 to="/courses"
-                className="group inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-accent/40 transition-all text-slate-200 hover:text-white"
+                className="group inline-flex items-center gap-1.5 ml-1 px-2.5 py-0.5 rounded-full bg-blue-500/20 hover:bg-blue-600 border border-blue-400/30 hover:border-blue-500 text-sky-300 hover:text-white text-[10.5px] font-bold transition-all whitespace-nowrap shadow-2xs"
               >
-                <span className="px-1.5 py-0.2 rounded-full text-[9.5px] font-black uppercase tracking-wider bg-accent/20 text-accent border border-accent/30 whitespace-nowrap">
-                  100% Placement
-                </span>
-                <span className="font-medium text-slate-200 group-hover:text-white text-[11.5px] whitespace-nowrap">
-                  Build Career-Ready Skills
-                </span>
-                <ArrowRight className="size-3 text-accent group-hover:translate-x-0.5 transition-transform" />
+                <span>Explore Programs</span>
+                <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
 
-            {/* Right: Hotline & WhatsApp shortcuts with premium glass pills */}
-            <div className="flex items-center justify-end gap-2.5 text-[11px]">
+            {/* Right: Hotline & WhatsApp shortcuts */}
+            <div className="lg:col-span-4 flex items-center justify-end gap-2.5 text-[11px]">
               <a
                 href={site.phoneHref}
-                className="group inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] hover:bg-blue-600/20 border border-white/[0.08] hover:border-blue-400/40 text-slate-200 hover:text-white transition-all shadow-2xs hover:shadow-[0_0_12px_rgba(59,130,246,0.25)] whitespace-nowrap"
+                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] hover:bg-blue-600/20 border border-white/[0.08] hover:border-blue-400/40 text-slate-200 hover:text-white transition-all whitespace-nowrap"
               >
-                <span className="grid size-4 place-items-center rounded-full bg-blue-600/30 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
-                  <Phone className="size-2.5" />
+                <span className="grid size-3.5 place-items-center rounded-full bg-blue-600/30 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
+                  <Phone className="size-2" />
                 </span>
-                <span className="font-semibold text-[11px]">{site.phone}</span>
+                <span className="font-semibold text-[10.5px]">{site.phone}</span>
               </a>
               <span className="h-3 w-px bg-white/10" aria-hidden="true" />
               <a
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 hover:text-emerald-200 transition-all shadow-[0_0_10px_rgba(16,185,129,0.12)] hover:shadow-[0_0_16px_rgba(16,185,129,0.3)] font-semibold text-[11px] whitespace-nowrap"
+                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 hover:text-emerald-200 transition-all font-semibold text-[10.5px] whitespace-nowrap"
               >
-                <span className="grid size-4 place-items-center rounded-full bg-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all shrink-0">
-                  <MessageCircle className="size-2.5" />
+                <span className="grid size-3.5 place-items-center rounded-full bg-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all shrink-0">
+                  <MessageCircle className="size-2" />
                 </span>
                 <span>WhatsApp</span>
               </a>
@@ -166,32 +159,32 @@ export function Header() {
           <Logo />
 
           {/* Desktop Navigation Links (Responsive spacing & Premium Active Pills) */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-1 xl:gap-1.5 lg:flex h-full">
+          <nav aria-label="Main navigation" className="hidden items-center gap-0.5 xl:gap-1 lg:flex h-full">
             {headerNavLinks.map((link) => {
-              if (link.label === "Courses") {
+              if (link.label === "Programs") {
                 return (
                   <div key={link.to} className="relative group/nav h-full flex items-center">
-                    {/* Courses Dropdown Trigger Button */}
+                    {/* Programs Dropdown Trigger Button */}
                     <Link
                       to={link.to}
                       className={cn(
-                        "group inline-flex items-center justify-center gap-1.5 rounded-xl font-semibold transition-all duration-200 select-none relative cursor-pointer",
-                        "px-2.5 py-1.5 text-xs xl:px-3.5 xl:py-2 xl:text-sm",
+                        "group inline-flex items-center justify-center gap-1 rounded-lg font-semibold transition-all duration-200 select-none relative cursor-pointer",
+                        "px-2 py-1.5 text-[11.5px] xl:px-2.5 xl:text-[13px] 2xl:px-3 2xl:text-sm",
                         isActive(link.to)
                           ? "bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 text-blue-700 font-bold shadow-[0_2px_8px_-2px_rgba(37,99,235,0.14)]"
-                          : "text-slate-650 hover:text-slate-950 hover:bg-slate-100/80 group-hover/nav:text-blue-600 group-hover/nav:bg-slate-100/80",
+                          : "text-slate-700 hover:text-slate-950 hover:bg-slate-100/80 group-hover/nav:text-blue-600 group-hover/nav:bg-slate-100/80",
                       )}
                     >
                       {isActive(link.to) && (
                         <span className="size-1.5 rounded-full bg-blue-600 shadow-[0_0_6px_rgba(37,99,235,0.9)] shrink-0" />
                       )}
                       <span>{link.label}</span>
-                      <span className="grid size-4 place-items-center rounded-full bg-slate-100 group-hover/nav:bg-blue-100/70 text-slate-500 group-hover/nav:text-blue-600 transition-colors shrink-0">
+                      <span className="grid size-3.5 place-items-center rounded-full bg-slate-100 group-hover/nav:bg-blue-100/70 text-slate-500 group-hover/nav:text-blue-600 transition-colors shrink-0">
                         <ChevronDown className="size-2.5 transition-transform duration-300 group-hover/nav:rotate-180" />
                       </span>
                     </Link>
 
-                    {/* COURSES MEGA MENU DROPDOWN (Centered & Constrained to never overflow) */}
+                    {/* PROGRAMS MEGA MENU DROPDOWN (Centered & Constrained to never overflow) */}
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[680px] xl:w-[740px] max-w-[calc(100vw-2rem)] opacity-0 translate-y-2 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-200 z-50 pointer-events-none group-hover/nav:pointer-events-auto">
                       <div className="rounded-3xl border border-slate-200/90 bg-white/98 p-5 xl:p-6 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18)] backdrop-blur-2xl ring-1 ring-black/[0.03] overflow-hidden">
                         {/* Mega Menu Top Header */}
@@ -321,10 +314,10 @@ export function Header() {
                                   <div>
                                     <div className="flex items-center gap-1 text-[10.5px] font-extrabold text-accent">
                                       <Sparkles className="size-3" />
-                                      <span>100% Placement Assurance</span>
+                                      <span>100% Placement Assistance</span>
                                     </div>
                                     <p className="text-[9.5px] text-slate-300 mt-0.5">
-                                      250+ companies hire our graduates.
+                                      Dedicated resume reviews &amp; mock interviews.
                                     </p>
                                   </div>
                                   <Link
@@ -344,18 +337,18 @@ export function Header() {
                           <div className="flex items-center gap-3">
                             <span className="inline-flex items-center gap-1 font-semibold text-slate-700">
                               <CheckCircle2 className="size-3 text-emerald-600" />
-                              ISO 9001:2015 Certified
+                              10 Dedicated Mentors
                             </span>
                             <span className="inline-flex items-center gap-1 font-semibold text-slate-700">
                               <Award className="size-3 text-amber-500" />
-                              Govt Recognized
+                              100% Practical Labs
                             </span>
                           </div>
                           <Link
                             to="/courses"
                             className="font-bold text-blue-600 hover:underline inline-flex items-center gap-1"
                           >
-                            <span>Download Full Syllabi</span>
+                            <span>Explore All Programs</span>
                             <ArrowRight className="size-3" />
                           </Link>
                         </div>
@@ -370,57 +363,34 @@ export function Header() {
                   key={link.to}
                   to={link.to}
                   className={cn(
-                    "group inline-flex items-center justify-center gap-1.5 rounded-xl font-semibold transition-all duration-200 select-none relative cursor-pointer",
-                    "px-2.5 py-1.5 text-xs xl:px-3.5 xl:py-2 xl:text-sm",
+                    "group inline-flex items-center justify-center gap-1 rounded-lg font-semibold transition-all duration-200 select-none relative cursor-pointer",
+                    "px-2 py-1.5 text-[11.5px] xl:px-2.5 xl:text-[13px] 2xl:px-3 2xl:text-sm",
                     isActive(link.to)
                       ? "bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 text-blue-700 font-bold border border-blue-200/80 shadow-[0_2px_8px_-2px_rgba(37,99,235,0.14)]"
-                      : "text-slate-650 hover:text-slate-950 hover:bg-slate-100/80 hover:shadow-2xs",
+                      : "text-slate-700 hover:text-slate-950 hover:bg-slate-100/80 hover:shadow-2xs",
                   )}
                 >
                   {isActive(link.to) && (
                     <span className="size-1.5 rounded-full bg-blue-600 shadow-[0_0_6px_rgba(37,99,235,0.9)] shrink-0" />
                   )}
-                  <span>{link.label}</span>
+                  <span className="whitespace-nowrap">{link.label}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Desktop Right Area: Ultra-Premium CTA */}
-          <div className="hidden items-center gap-2 xl:gap-3 lg:flex shrink-0">
-            {/* Ultra-Premium Request a Call CTA Button */}
+          {/* Desktop Right Area: Primary CTA (Explore Programs) */}
+          <div className="hidden items-center gap-2 xl:gap-2.5 lg:flex shrink-0">
             <Link
-              to="/request-call"
+              to="/courses"
               className={cn(
-                "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl font-bold transition-all duration-300 select-none shrink-0 cursor-pointer",
-                "h-9 px-3.5 text-xs xl:h-10.5 xl:px-5 xl:text-sm",
-                // Luxury Multi-stop Gradient
-                "bg-[linear-gradient(135deg,#0284c7_0%,#2563eb_45%,#4f46e5_80%,#6366f1_100%)]",
-                // Beveled Hardware Edge & Luminous Shadows
-                "text-white border border-white/25",
-                "shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_4px_16px_-2px_rgba(37,99,235,0.45),0_2px_4px_rgba(15,23,42,0.1)]",
-                "hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_8px_26px_-2px_rgba(37,99,235,0.65),0_3px_8px_rgba(79,70,229,0.35)]",
-                "hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
+                "group relative inline-flex items-center justify-center gap-1.5 rounded-xl font-bold transition-all duration-200 select-none shrink-0 cursor-pointer",
+                "h-8.5 px-3.5 text-[11.5px] xl:h-9.5 xl:px-4 xl:text-xs 2xl:h-10 2xl:px-4.5 2xl:text-sm",
+                "bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md active:scale-[0.98]",
               )}
             >
-              {/* Micro Light-Sweep Glare on Hover */}
-              <span
-                className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
-                aria-hidden="true"
-              />
-
-              {/* Glowing Phone Badge with Pulse Radar Dot */}
-              <span className="relative grid size-5.5 xl:size-6 place-items-center rounded-lg bg-white/20 ring-1 ring-white/30 shadow-inner backdrop-blur-xs shrink-0">
-                <PhoneCall className="size-3 xl:size-3.5 text-white animate-pulse shrink-0" aria-hidden="true" />
-                <span className="absolute -top-0.5 -right-0.5 size-1.5 rounded-full bg-emerald-400 ring-1 ring-white" />
-              </span>
-
-              <span className="whitespace-nowrap font-extrabold tracking-tight">Request a Call</span>
-
-              <ArrowRight
-                className="size-3.5 text-white/80 group-hover:text-white group-hover:translate-x-1 transition-all shrink-0 hidden sm:inline-block"
-                aria-hidden="true"
-              />
+              <span>Explore Programs</span>
+              <ArrowRight className="size-3 xl:size-3.5 text-white/90 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
 
@@ -482,7 +452,7 @@ export function Header() {
             {/* Mobile Nav Links */}
             <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
               {headerNavLinks.map((link) => {
-                if (link.label === "Courses") {
+                if (link.label === "Programs") {
                   return (
                     <div key={link.to} className="space-y-1 rounded-xl bg-slate-50/60 p-1">
                       <div className="flex items-center justify-between">
@@ -498,7 +468,7 @@ export function Header() {
                         <button
                           type="button"
                           onClick={() => setMobileCoursesOpen((v) => !v)}
-                          aria-label="Toggle courses list"
+                          aria-label="Toggle programs list"
                           className="px-3 py-2 text-slate-500 hover:text-slate-900"
                         >
                           <ChevronDown
@@ -555,17 +525,16 @@ export function Header() {
               })}
             </nav>
 
-            {/* Mobile Full-Width CTA with Luxury Gradient & Hardware Bevel */}
-            <Link
-              to="/request-call"
-              className="relative overflow-hidden w-full bg-[linear-gradient(135deg,#0284c7_0%,#2563eb_45%,#4f46e5_80%,#6366f1_100%)] text-white font-extrabold h-12 text-sm rounded-xl border border-white/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.45),0_4px_18px_-2px_rgba(37,99,235,0.45)] flex items-center justify-center gap-2.5 active:scale-[0.99] transition-all"
-            >
-              <span className="grid size-6 place-items-center rounded-lg bg-white/20 ring-1 ring-white/30 backdrop-blur-xs shrink-0">
-                <PhoneCall className="size-3.5 text-white animate-pulse" aria-hidden="true" />
-              </span>
-              <span className="font-extrabold tracking-tight">Request a Call</span>
-              <ArrowRight className="size-4 text-white/80" />
-            </Link>
+            {/* Mobile Primary CTA: Explore Programs */}
+            <div className="pt-1">
+              <Link
+                to="/courses"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 active:scale-[0.99] transition-all"
+              >
+                <span>Explore Programs</span>
+                <ArrowRight className="size-3.5 text-white/90" />
+              </Link>
+            </div>
           </div>
         </div>
       </header>

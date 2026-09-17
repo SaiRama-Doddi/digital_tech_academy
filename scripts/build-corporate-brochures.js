@@ -353,13 +353,13 @@ const coursesData = [
   {
     slug: "all-courses-prospectus",
     title: "Complete Career Programs Prospectus",
-    subtitle: "Digital Tech Academy - Comprehensive Training & Placement Guide",
+    subtitle: "DIGITECHADEMY - Comprehensive Training & Placement Guide",
     category: "All Programs",
     duration: "10–16 Weeks Career Tracks",
     mode: "Live Interactive Online & Virtual Cloud Labs",
     level: "All Skill Levels",
     summary:
-      "Comprehensive prospectus covering all Digitechademy job-oriented career tracks including Cyber Security, Digital Marketing, Ethical Hacking, and Programmatic Advertising with dedicated 1-on-1 placement preparation and mentorship.",
+      "Comprehensive prospectus covering all DIGITECHADEMY job-oriented career tracks including Cyber Security, Digital Marketing, Ethical Hacking, and Programmatic Advertising with dedicated 1-on-1 placement preparation and mentorship.",
     tools: ["Wireshark", "Google Ads", "Splunk", "Meta Ads", "Kali Linux", "DV360", "Semrush", "Burp Suite"],
     audience: [
       "Students, fresh graduates, and career changers exploring high-growth technology and digital marketing careers",
@@ -802,8 +802,8 @@ function generateHtml(course) {
 
   <!-- Contact & Verification Footer -->
   <div class="contact-footer">
-    <div>Admissions Desk: +91 90000 00000 &bull; admissions@digitaltechsolution.in &bull; Hyderabad, India</div>
-    <div>Digital Tech Academy &bull; Official Career Curriculum Guide &bull; 2026 Academic Edition</div>
+    <div>Admissions Desk: +91 90000 00000 &bull; admissions@digitechademy.com &bull; Hyderabad, India</div>
+    <div>DIGITECHADEMY &bull; Official Career Curriculum Guide &bull; 2026 Academic Edition</div>
   </div>
 
 </body>

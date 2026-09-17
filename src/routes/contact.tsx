@@ -13,17 +13,17 @@ import { site, whatsappLink } from "@/lib/site";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Talk to Digitechademy | Contact Us" },
+      { title: "Talk to DIGITECHADEMY | Contact Us" },
       {
         name: "description",
         content:
-          "Have questions about a course, learning path, schedule, or enrollment? Send us your details and our team will help you choose the right next step.",
+          "Have questions about Cyber Security, Digital Marketing, or Programmatic Advertising courses? Connect with the DIGITECHADEMY team.",
       },
-      { property: "og:title", content: "Talk to Digitechademy" },
+      { property: "og:title", content: "Talk to DIGITECHADEMY" },
       {
         property: "og:description",
         content:
-          "Have questions about a course, learning path, schedule, or enrollment? Send us your details and our team will help you choose the right next step.",
+          "Have questions about courses, schedules, or enrollment? Connect with DIGITECHADEMY.",
       },
       { property: "og:url", content: "/contact" },
     ],
@@ -53,7 +53,7 @@ function ContactPage() {
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      description: "Connect with Digitechademy for quick course and enrollment assistance.",
+      description: "Connect with DIGITECHADEMY for quick course and enrollment assistance.",
       value: "Chat on WhatsApp",
       href: whatsappLink(),
       action: "Open WhatsApp",
@@ -72,13 +72,13 @@ function ContactPage() {
       {/* Section 1 — Hero */}
       <PageHero
         eyebrow="CONTACT US"
-        title="Talk to Digitechademy"
-        description="Have questions about a course, learning path, schedule, or enrollment? Send us your details and our team will help you choose the right next step."
+        title="Talk to DIGITECHADEMY"
+        description="Have questions about courses, schedules, or admissions? Our academic advisors are here to help."
       />
 
       {/* Section 2 — Contact Options */}
       <section className="bg-background">
-        <div className="container-site py-8 sm:py-10 lg:py-12">
+        <div className="container-site py-6 sm:py-8 lg:py-10">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
               <article
@@ -209,7 +209,7 @@ function ContactPage() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-left">
             Not Sure Which Course Is Right for You?
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal text-left">
+          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
             Share your current experience, career goal, and area of interest. Our team can help you identify a suitable learning path.
           </p>
           <div className="mt-8 flex items-center justify-start">

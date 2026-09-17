@@ -93,23 +93,29 @@ export function getDefaultCoursesList(): FirebaseCourse[] {
   return defaultStaticCourses.map(mapStaticCourse);
 }
 
+export const DEMO_COURSE_IDS = [
+  "digital-marketing",
+  "programmatic-advertising",
+  "cyber-security",
+  "advanced-seo",
+  "web-development",
+];
+
 // Get courses from local storage cache
 export function getLocalCachedCourses(): FirebaseCourse[] {
-  if (typeof window === "undefined") return getDefaultCoursesList();
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!raw) {
-      const defaults = getDefaultCoursesList();
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaults));
-      return defaults;
+      return [];
     }
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0) {
+    if (Array.isArray(parsed)) {
       return parsed;
     }
-    return getDefaultCoursesList();
+    return [];
   } catch {
-    return getDefaultCoursesList();
+    return [];
   }
 }
 
@@ -121,6 +127,42 @@ export function saveLocalCachedCourses(coursesList: FirebaseCourse[]): void {
   } catch (err) {
     console.warn("Failed to write to localStorage course cache:", err);
   }
+}
+
+/**
+ * Delete all demo / dummy courses from Firebase Firestore and local cache
+ */
+export async function deleteDemoCoursesFromFirebase(): Promise<number> {
+  let count = 0;
+  for (const id of DEMO_COURSE_IDS) {
+    try {
+      const docRef = doc(db, "courses", id);
+      await deleteDoc(docRef);
+      count++;
+    } catch {
+      // ignore
+    }
+  }
+  const cached = getLocalCachedCourses();
+  const cleaned = cached.filter((c) => !DEMO_COURSE_IDS.includes(c.id) && !DEMO_COURSE_IDS.includes(c.slug));
+  saveLocalCachedCourses(cleaned);
+  return count;
+}
+
+/**
+ * Clear all courses from Firestore and local cache
+ */
+export async function clearAllCoursesFromFirebase(): Promise<void> {
+  const cached = getLocalCachedCourses();
+  for (const c of cached) {
+    try {
+      const docRef = doc(db, "courses", c.id);
+      await deleteDoc(docRef);
+    } catch {
+      // ignore
+    }
+  }
+  saveLocalCachedCourses([]);
 }
 
 /**
@@ -272,11 +314,14 @@ export async function addCourseToFirebase(
   // 2. Persist to Firestore
   try {
     const docRef = doc(db, "courses", newCourse.id);
-    await setDoc(docRef, {
-      ...newCourse,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    });
+    const firestoreData = Object.fromEntries(
+      Object.entries({
+        ...newCourse,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      }).filter(([_, v]) => v !== undefined)
+    );
+    await setDoc(docRef, firestoreData);
   } catch (err) {
     console.warn("Could not save to Cloud Firestore directly (will remain in local cache):", err);
   }

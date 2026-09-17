@@ -81,14 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Digital Tech Solution — Digital Marketing & Cyber Security Training" },
+      { title: "DIGITECHADEMY — LEARN • GROW • ACHIEVE | Cyber Security • Digital Marketing • Programmatic Advertising" },
       {
         name: "description",
         content:
-          "Industry-focused Digital Marketing and Cyber Security training built around practical projects, mentor guidance and career-ready skills.",
+          "Learn practical skills. Build real-world confidence. Become career ready. DIGITECHADEMY delivers practical training in Cyber Security, Digital Marketing, and Programmatic Advertising.",
       },
-      { name: "author", content: "Digital Tech Solution" },
-      { property: "og:site_name", content: "Digital Tech Solution" },
+      { name: "author", content: "DIGITECHADEMY" },
+      { property: "og:site_name", content: "DIGITECHADEMY" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#081426" },
@@ -109,11 +109,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "EducationalOrganization",
-          name: "Digital Tech Solution",
+          name: "DIGITECHADEMY",
           description:
-            "Training institute for Digital Marketing and Cyber Security with practical, project-based programs.",
-          telephone: "+91 90000 00000",
-          email: "admissions@digitaltechsolution.in",
+            "Cyber Security, Digital Marketing, and Programmatic Advertising training institute. Learn practical skills. Build real-world confidence. Become career ready.",
+          telephone: "+91 81434 51426",
+          email: "admissions@digitechademy.com",
           address: {
             "@type": "PostalAddress",
             streetAddress: "2nd Floor, Tech Park Avenue, Madhapur",

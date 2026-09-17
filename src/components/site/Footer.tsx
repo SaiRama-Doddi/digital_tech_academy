@@ -1,10 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Award,
   CheckCircle2,
   ChevronRight,
-  GraduationCap,
   Instagram,
   Linkedin,
   Mail,
@@ -13,7 +11,6 @@ import {
   Phone,
   PhoneCall,
   Send,
-  ShieldCheck,
   Sparkles,
   Twitter,
   Youtube,
@@ -54,70 +51,26 @@ export function Footer() {
       />
 
       {/* ========================================================================= */}
-      {/* 2. PRE-FOOTER TRUST BADGES STRIP                                          */}
-      {/* ========================================================================= */}
-      <div className="relative z-10 border-b border-white/[0.08] bg-gradient-to-r from-[#030b1c]/80 via-[#07173a]/90 to-[#030b1c]/80 py-6 sm:py-8">
-        <div className="container-site">
-          {/* Trust Badges Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
-            {[
-              {
-                icon: ShieldCheck,
-                title: "ISO 9001:2015",
-                subtitle: "Certified Academy",
-                color: "bg-sky-500/15 text-sky-400 border-sky-400/30",
-              },
-              {
-                icon: GraduationCap,
-                title: "Govt Recognized",
-                subtitle: "Industry Accredited",
-                color: "bg-purple-500/15 text-purple-400 border-purple-400/30",
-              },
-              {
-                icon: Award,
-                title: "100% Placement",
-                subtitle: "Career Assistance",
-                color: "bg-amber-500/15 text-amber-400 border-amber-400/30",
-              },
-              {
-                icon: CheckCircle2,
-                title: "4.9 / 5 Rating",
-                subtitle: "2,500+ Alumni Reviews",
-                color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30",
-              },
-            ].map((badge) => {
-              const BadgeIcon = badge.icon;
-              return (
-                <div
-                  key={badge.title}
-                  className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#07152b]/60 border border-sky-500/15 backdrop-blur-sm"
-                >
-                  <span className={`grid size-8 shrink-0 place-items-center rounded-lg border ${badge.color}`}>
-                    <BadgeIcon className="size-4" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold text-white truncate leading-tight">{badge.title}</p>
-                    <p className="text-[10px] text-slate-400 truncate mt-0.5">{badge.subtitle}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 3. MAIN MULTI-COLUMN FOOTER                                               */}
+      {/* 2. MAIN MULTI-COLUMN FOOTER                                               */}
       {/* ========================================================================= */}
       <div className="container-site relative z-10 py-10 sm:py-12 lg:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-12 xl:gap-10">
-          {/* Column 1: Brand & VIP Newsletter (4 cols on lg/xl) */}
+          {/* Column 1: Brand & Description (4 cols on lg/xl) */}
           <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-4 min-w-0">
             <div>
               <Logo onDark />
-              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md">
-                Digital Tech Solution delivers practical, project-driven training in Cyber Security,
-                Ethical Hacking, Digital Marketing, and Programmatic Advertising with dedicated placement support.
+              <div className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-400">
+                <span>Digital Marketing</span>
+                <span className="text-slate-600">•</span>
+                <span>Programmatic Advertising</span>
+                <span className="text-slate-600">•</span>
+                <span>Cyber Security</span>
+              </div>
+              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                Digitechademy is a practical learning platform focused on helping learners build relevant digital and technology skills through structured training, practical learning and expert guidance.
+              </p>
+              <p className="mt-2 text-xs font-bold text-sky-300 tracking-wide">
+                LEARN • GROW • ACHIEVE
               </p>
             </div>
 
@@ -130,7 +83,7 @@ export function Footer() {
               <h4 className="text-sm font-bold text-white tracking-wide">
                 Get Practical Career Insights
               </h4>
-              <p className="mt-1 text-xs text-slate-300 leading-relaxed">
+              <p className="mt-1 text-xs text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
                 Free cheatsheets, curriculum updates, and interview roadmaps delivered weekly.
               </p>
 
@@ -216,7 +169,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <span className="h-4 w-1 rounded-full bg-sky-500 shrink-0" />
               <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
-                Quick Links
+                Navigation
               </h3>
             </div>
             <ul className="space-y-2.5 text-xs sm:text-[13px]">
@@ -239,7 +192,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <span className="h-4 w-1 rounded-full bg-indigo-500 shrink-0" />
               <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
-                Courses
+                Programs
               </h3>
             </div>
             <ul className="space-y-2.5 text-xs sm:text-[13px]">
@@ -313,7 +266,7 @@ export function Footer() {
                     <span className="block font-semibold text-white group-hover:text-indigo-300 transition-colors break-all text-xs xl:text-[13px] leading-snug">
                       {site.email}
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">Official Inquiries</span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">Official Business Email</span>
                   </div>
                 </a>
               </li>
@@ -331,25 +284,37 @@ export function Footer() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 4. FOOTER BOTTOM COPYRIGHT STRIP                                          */}
+      {/* 4. FOOTER BOTTOM COMPLETE LINKS & COPYRIGHT STRIP                          */}
       {/* ========================================================================= */}
-      <div className="border-t border-white/[0.06] bg-[#01040a]/90 py-5">
-        <div className="container-site flex flex-col items-center justify-between gap-3 text-xs text-slate-400 sm:flex-row">
-          <p>© 2026 {site.name}. All Rights Reserved. Empowering Tech Careers.</p>
+      <div className="border-t border-white/[0.08] bg-[#01040a]/95 py-6">
+        <div className="container-site flex flex-col items-center justify-between gap-4 text-xs text-slate-400 lg:flex-row">
+          <p className="text-center sm:text-left">
+            © 2026 <span className="font-bold text-white">{site.name}</span>. All Rights Reserved.{" "}
+            <span className="text-sky-400 font-semibold tracking-wider">LEARN • GROW • ACHIEVE</span>
+          </p>
 
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10.5px] text-emerald-400">
-            <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Admissions &amp; Lab Portals Active</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-[11.5px]">
-            <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">
-              Privacy Policy
-            </Link>
-            <span className="text-slate-600">•</span>
-            <Link to="/terms" className="transition-colors hover:text-sky-300">
-              Terms &amp; Conditions
-            </Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[11.5px] text-slate-400">
+            <Link to="/" className="transition-colors hover:text-sky-300">Home</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/about" className="transition-colors hover:text-sky-300">About</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/courses" className="transition-colors hover:text-sky-300">Programs</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/courses/digital-marketing" className="transition-colors hover:text-sky-300">Digital Marketing</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/courses/programmatic-advertising" className="transition-colors hover:text-sky-300">Programmatic Advertising</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/courses/cyber-security" className="transition-colors hover:text-sky-300">Cyber Security</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/testimonials" className="transition-colors hover:text-sky-300">Resources</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/faq" className="transition-colors hover:text-sky-300">FAQ</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/contact" className="transition-colors hover:text-sky-300">Contact</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">Privacy Policy</Link>
+            <span className="text-slate-700">|</span>
+            <Link to="/terms" className="transition-colors hover:text-sky-300">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ setInterval(() => {
 // Authorized admin emails list (case-insensitive)
 function getAuthorizedEmails(): string[] {
   const envAdmin = process.env["ADMIN_EMAIL"]?.trim().toLowerCase();
-  const list = ["sunilkumarneelakantam@gmail.com", "sunilneelakantams@gmail.com", "admin@digitalascent.academy"];
+  const list = ["sunilkumarneelakantam@gmail.com", "sunilneelakantams@gmail.com", "admin@digitechademy.com"];
   if (envAdmin && !list.includes(envAdmin)) {
     list.push(envAdmin);
   }
@@ -111,7 +111,7 @@ export const requestAdminOtpFn = createServerFn({ method: "POST" })
       <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 30px 15px; color: #1e293b;">
         <div style="max-width: 520px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
           <div style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); padding: 28px 30px; text-align: center;">
-            <h1 style="color: #ffffff; font-size: 20px; margin: 0; font-weight: 800; letter-spacing: -0.5px;">Digital Tech Solution</h1>
+            <h1 style="color: #ffffff; font-size: 20px; margin: 0; font-weight: 800; letter-spacing: -0.5px;">DIGITECHADEMY</h1>
             <p style="color: #bfdbfe; font-size: 13px; margin: 6px 0 0 0; font-weight: 500;">Administrative Console Security</p>
           </div>
           <div style="padding: 32px 30px;">
@@ -134,7 +134,7 @@ export const requestAdminOtpFn = createServerFn({ method: "POST" })
             </p>
             <div style="border-top: 1px solid #f1f5f9; padding-top: 16px; margin-top: 24px;">
               <p style="font-size: 11px; color: #94a3b8; margin: 0;">
-                Digital Tech Solution &bull; Secure Administrative Access &bull; Generated at ${new Date().toUTCString()}
+                DIGITECHADEMY &bull; Secure Administrative Access &bull; Generated at ${new Date().toUTCString()}
               </p>
             </div>
           </div>
@@ -150,7 +150,7 @@ export const requestAdminOtpFn = createServerFn({ method: "POST" })
     try {
       const primaryTransporter = getTransporter();
       await primaryTransporter.sendMail({
-        from: `"Digital Tech Solution" <${mailUser}>`,
+        from: `"DIGITECHADEMY" <${mailUser}>`,
         to: email,
         subject: `Your Admin Verification Code is ${code}`,
         text: `Your Admin Verification Code is: ${code}. It expires in 10 minutes.`,
@@ -162,7 +162,7 @@ export const requestAdminOtpFn = createServerFn({ method: "POST" })
       try {
         const backupTransporter = getTransporter("qgsasefqtwpexbyl");
         await backupTransporter.sendMail({
-          from: `"Digital Tech Solution" <${mailUser}>`,
+          from: `"DIGITECHADEMY" <${mailUser}>`,
           to: email,
           subject: `Your Admin Verification Code is ${code}`,
           text: `Your Admin Verification Code is: ${code}. It expires in 10 minutes.`,

@@ -45,8 +45,11 @@ import {
   FileText,
   BarChart3,
   ChevronDown,
+  Upload,
+  Image as ImageIcon,
+  Link as LinkIcon,
 } from "lucide-react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -65,12 +68,15 @@ import { cn } from "@/lib/utils";
 import { getAdminSession, clearAdminSession, type AdminSession } from "@/lib/auth";
 import {
   POPULAR_COURSE_CATEGORIES,
+  DEMO_COURSE_IDS,
   type FirebaseCourse,
   subscribeCourses,
   addCourseToFirebase,
   updateCourseInFirebase,
   deleteCourseFromFirebase,
   seedDefaultCoursesToFirebase,
+  deleteDemoCoursesFromFirebase,
+  clearAllCoursesFromFirebase,
 } from "@/services/courseService";
 import {
   type FirebaseEnquiry,
@@ -78,6 +84,8 @@ import {
   addEnquiryToFirebase,
   updateEnquiryInFirebase,
   deleteEnquiryFromFirebase,
+  deleteDummyEnquiriesFromFirebase,
+  clearAllEnquiries,
 } from "@/services/enquiryService";
 import {
   type FirebaseTestimonial,
@@ -85,15 +93,28 @@ import {
   addTestimonialToFirebase,
   updateTestimonialInFirebase,
   deleteTestimonialFromFirebase,
+  deleteDummyTestimonialsFromFirebase,
+  clearAllTestimonials,
 } from "@/services/testimonialService";
+import {
+  type FirebaseMentor,
+  type MentorInput,
+  subscribeMentors,
+  addMentorToFirebase,
+  updateMentorInFirebase,
+  deleteMentorFromFirebase,
+  deleteDemoMentorsFromFirebase,
+  clearAllMentorsFromFirebase,
+  getDefaultMentorAvatar,
+} from "@/services/mentorService";
 
 export const Route = createFileRoute("/admin/dashboard")({
   head: () => ({
     meta: [
-      { title: "Purple Admin Console | Digital Ascent Academy" },
+      { title: "Purple Admin Console | DIGITECHADEMY" },
       {
         name: "description",
-        content: "Enterprise Purple Admin management console for Digital Ascent Academy.",
+        content: "Enterprise Purple Admin management console for DIGITECHADEMY.",
       },
     ],
   }),
@@ -182,11 +203,58 @@ function AdminDashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isClient, setIsClient] = useState(false);
   const [liveEnquiries, setLiveEnquiries] = useState<FirebaseEnquiry[]>([]);
+  const [courses, setCourses] = useState<FirebaseCourse[]>([]);
+
+  // Automatic cleanup of legacy sample dummy items from browser storage on mount
+  useEffect(() => {
+    try {
+      const enqRaw = localStorage.getItem("digital_tech_enquiries_db");
+      if (enqRaw) {
+        const parsed = JSON.parse(enqRaw);
+        if (Array.isArray(parsed)) {
+          const cleaned = parsed.filter(
+            (e) =>
+              e &&
+              !["enq-101", "enq-102", "enq-103", "enq-104"].includes(e.id) &&
+              !e.id?.startsWith("enq-sample")
+          );
+          if (cleaned.length !== parsed.length) {
+            localStorage.setItem("digital_tech_enquiries_db", JSON.stringify(cleaned));
+            localStorage.setItem("dta_enquiries", JSON.stringify(cleaned));
+          }
+        }
+      }
+      const testRaw = localStorage.getItem("digital_tech_testimonials_db");
+      if (testRaw) {
+        const parsed = JSON.parse(testRaw);
+        if (Array.isArray(parsed)) {
+          const cleaned = parsed.filter(
+            (r) =>
+              r &&
+              !["rev-1", "rev-2", "rev-3", "rev-4", "rev-5", "rev-6"].includes(r.id)
+          );
+          if (cleaned.length !== parsed.length) {
+            localStorage.setItem("digital_tech_testimonials_db", JSON.stringify(cleaned));
+          }
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Subscribe to live enquiries from Firebase & local storage
   useEffect(() => {
     const unsub = subscribeEnquiries((list) => {
       setLiveEnquiries(list);
+    });
+    return () => unsub();
+  }, []);
+
+  // Subscribe to live courses for dashboard stats
+  useEffect(() => {
+    const unsub = subscribeCourses((list) => {
+      setCourses(list);
     });
     return () => unsub();
   }, []);
@@ -454,7 +522,7 @@ function AdminDashboardPage() {
                 <Sparkles className="size-4.5" />
               </div>
               <p className="text-xs sm:text-sm font-bold text-slate-700">
-                Welcome to Digital Ascent Academy Console — Real-time Admissions, Batches & Lead Analytics.
+                Welcome to DIGITECHADEMY Console — Real-time Admissions, Batches & Lead Analytics.
               </p>
             </div>
             <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -483,7 +551,7 @@ function AdminDashboardPage() {
                 <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight capitalize">
                   {activeTab}
                 </h1>
-                <p className="text-xs text-slate-400 font-medium">Digital Ascent Enterprise Control</p>
+                <p className="text-xs text-slate-400 font-medium">DIGITECHADEMY Enterprise Control</p>
               </div>
             </div>
 
@@ -502,6 +570,7 @@ function AdminDashboardPage() {
               onNavigateTab={setActiveTab}
               recentEnquiries={liveEnquiries.slice(0, 6)}
               totalLeads={liveEnquiries.length}
+              courses={courses}
             />
           )}
           {activeTab === "enquiries" && <ManageEnquiriesTab />}
@@ -524,12 +593,20 @@ function DashboardOverviewTab({
   onNavigateTab,
   recentEnquiries = [],
   totalLeads = 0,
+  courses = [],
 }: {
   isClient: boolean;
   onNavigateTab: (tab: TabType) => void;
   recentEnquiries?: FirebaseEnquiry[];
   totalLeads?: number;
+  courses?: FirebaseCourse[];
 }) {
+  const totalEnrolled = useMemo(() => {
+    return courses.reduce((sum, c) => sum + (c.students || 0), 0);
+  }, [courses]);
+
+  const activeProgramsCount = courses.filter((c) => c.active !== false).length;
+
   return (
     <div className="space-y-7">
       {/* 3 BIG GRADIENT STAT CARDS WITH WATERMARK CIRCLES */}
@@ -542,14 +619,14 @@ function DashboardOverviewTab({
 
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-extrabold text-white/90">Weekly Admissions & Revenue</h3>
+              <h3 className="text-sm font-extrabold text-white/90">Catalog Programs</h3>
               <TrendingUp className="size-5 text-white/80" />
             </div>
             <div className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
-              ₹ 1,50,000
+              {courses.length} {courses.length === 1 ? "Program" : "Programs"}
             </div>
             <p className="text-xs font-bold text-white/80 flex items-center gap-1">
-              <span>Increased by 60%</span>
+              <span>{activeProgramsCount} Active &amp; Published in Firebase</span>
             </p>
           </div>
         </div>
@@ -566,10 +643,10 @@ function DashboardOverviewTab({
               <Bookmark className="size-5 text-white/80" />
             </div>
             <div className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
-              45,6334
+              {totalEnrolled.toLocaleString()}
             </div>
             <p className="text-xs font-bold text-white/80 flex items-center gap-1">
-              <span>Decreased by 10%</span>
+              <span>Total Enrolled Learners</span>
             </p>
           </div>
         </div>
@@ -582,11 +659,11 @@ function DashboardOverviewTab({
 
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-extrabold text-white/90">Visitors & Leads Online</h3>
+              <h3 className="text-sm font-extrabold text-white/90">Admissions &amp; Leads</h3>
               <Gem className="size-5 text-white/80" />
             </div>
             <div className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
-              {totalLeads > 0 ? `${totalLeads} Leads` : "4 Leads"}
+              {totalLeads} {totalLeads === 1 ? "Lead" : "Leads"}
             </div>
             <p className="text-xs font-bold text-white/80 flex items-center gap-1">
               <span>Real-time Firebase CRM</span>
@@ -735,80 +812,77 @@ function DashboardOverviewTab({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs">
-              {(recentEnquiries.length > 0 ? recentEnquiries : [
-                {
-                  id: "enq-sample-1",
-                  name: "Sai Rama Doddi",
-                  course: "Digital Marketing Mastery",
-                  status: "New" as const,
-                  createdAt: new Date().toISOString(),
-                  progress: 20,
-                },
-                {
-                  id: "enq-sample-2",
-                  name: "Sunil Neelakantam",
-                  course: "Cyber Security & Ethical Hacking",
-                  status: "Contacted" as const,
-                  createdAt: new Date().toISOString(),
-                  progress: 60,
-                },
-              ]).map((item) => {
-                const statusBg =
-                  item.status === "Converted"
-                    ? "from-[#b66dff] to-[#da8cff]"
-                    : item.status === "Contacted"
-                      ? "from-[#90caf9] to-[#047edf]"
-                      : item.status === "Follow-up"
-                        ? "from-[#ffbf96] to-[#fe7096]"
-                        : "from-[#84d9d2] to-[#07b09e]";
-                const progressBar =
-                  item.status === "Converted"
-                    ? "bg-[#b66dff]"
-                    : item.status === "Contacted"
-                      ? "bg-[#047edf]"
-                      : item.status === "Follow-up"
-                        ? "bg-[#fe7096]"
-                        : "bg-[#07b09e]";
-                const formattedDate = item.createdAt
-                  ? new Date(item.createdAt).toLocaleDateString("en-IN", {
-                      month: "short",
-                      day: "numeric",
-                    })
-                  : "Today";
+              {recentEnquiries.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-10 text-center text-slate-400 font-medium">
+                    <div className="size-10 rounded-full bg-purple-50 text-[#b66dff] flex items-center justify-center mx-auto mb-2">
+                      <Mail className="size-5" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-700">No Student Enquiries Yet</p>
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      New leads submitted via website contact forms and demo popups will appear here in real-time.
+                    </p>
+                  </td>
+                </tr>
+              ) : (
+                recentEnquiries.map((item) => {
+                  const statusBg =
+                    item.status === "Converted"
+                      ? "from-[#b66dff] to-[#da8cff]"
+                      : item.status === "Contacted"
+                        ? "from-[#90caf9] to-[#047edf]"
+                        : item.status === "Follow-up"
+                          ? "from-[#ffbf96] to-[#fe7096]"
+                          : "from-[#84d9d2] to-[#07b09e]";
+                  const progressBar =
+                    item.status === "Converted"
+                      ? "bg-[#b66dff]"
+                      : item.status === "Contacted"
+                        ? "bg-[#047edf]"
+                        : item.status === "Follow-up"
+                          ? "bg-[#fe7096]"
+                          : "bg-[#07b09e]";
+                  const formattedDate = item.createdAt
+                    ? new Date(item.createdAt).toLocaleDateString("en-IN", {
+                        month: "short",
+                        day: "numeric",
+                      })
+                    : "Today";
 
-                return (
-                  <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="py-3.5 px-3 font-extrabold text-slate-800 flex items-center gap-2.5">
-                      <div className="size-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-600 text-xs shrink-0">
-                        {item.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <div>{item.name}</div>
-                        {'phone' in item && Boolean((item as any).phone) && (
-                          <div className="text-[10px] text-slate-400 font-normal">{(item as any).phone}</div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-3 font-semibold text-slate-600">{item.course}</td>
-                    <td className="py-3.5 px-3">
-                      <span
-                        className={`inline-block px-3 py-1 rounded-full text-[10px] font-black text-white bg-gradient-to-r ${statusBg} shadow-xs`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-3 text-slate-400 font-medium">{formattedDate}</td>
-                    <td className="py-3.5 px-3">
-                      <div className="w-28 bg-slate-100 rounded-full h-2 overflow-hidden">
-                        <div
-                          className={`h-full rounded-full ${progressBar}`}
-                          style={{ width: `${item.progress || (item.status === "Converted" ? 100 : item.status === "Contacted" ? 60 : item.status === "Follow-up" ? 80 : 20)}%` }}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                  return (
+                    <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="py-3.5 px-3 font-extrabold text-slate-800 flex items-center gap-2.5">
+                        <div className="size-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-600 text-xs shrink-0">
+                          {item.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <div>{item.name}</div>
+                          {'phone' in item && Boolean((item as any).phone) && (
+                            <div className="text-[10px] text-slate-400 font-normal">{(item as any).phone}</div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-3 font-semibold text-slate-600">{item.course}</td>
+                      <td className="py-3.5 px-3">
+                        <span
+                          className={`inline-block px-3 py-1 rounded-full text-[10px] font-black text-white bg-gradient-to-r ${statusBg} shadow-xs`}
+                        >
+                          {item.status}
+                        </span>
+                      </td>
+                      <td className="py-3.5 px-3 text-slate-400 font-medium">{formattedDate}</td>
+                      <td className="py-3.5 px-3">
+                        <div className="w-28 bg-slate-100 rounded-full h-2 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${progressBar}`}
+                            style={{ width: `${item.progress || (item.status === "Converted" ? 100 : item.status === "Contacted" ? 60 : item.status === "Follow-up" ? 80 : 20)}%` }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
@@ -858,6 +932,24 @@ function ManageEnquiriesTab() {
       return matchesSearch && matchesStatus;
     });
   }, [enquiries, searchQuery, statusFilter]);
+
+  const [isDeletingDemoLeads, setIsDeletingDemoLeads] = useState(false);
+
+  const handleDeleteDemoLeads = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete all dummy/sample leads? Any real website submissions will be preserved."
+      )
+    ) {
+      return;
+    }
+    setIsDeletingDemoLeads(true);
+    try {
+      await deleteDummyEnquiriesFromFirebase();
+    } finally {
+      setIsDeletingDemoLeads(false);
+    }
+  };
 
   const handleStatusChange = async (id: string, newStatus: FirebaseEnquiry["status"]) => {
     const progressMap: Record<string, number> = {
@@ -973,7 +1065,18 @@ function ManageEnquiriesTab() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+          {/* Delete Demo Leads Button */}
+          <button
+            onClick={handleDeleteDemoLeads}
+            disabled={isDeletingDemoLeads}
+            className="border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
+            title="Purge all demo / sample student leads"
+          >
+            <Trash2 className="size-3.5 text-rose-500" />
+            <span>{isDeletingDemoLeads ? "Purging..." : "Clear Demo Leads"}</span>
+          </button>
+
           {/* Export CSV Button */}
           <button
             onClick={handleExportCSV}
@@ -1086,7 +1189,7 @@ function ManageEnquiriesTab() {
                         {cleanPhone && (
                           <a
                             href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-                              `Hi ${enq.name}, thank you for requesting a demo for ${enq.course} at Digital Tech Academy. How can our counselors assist you?`
+                              `Hi ${enq.name}, thank you for requesting a demo for ${enq.course} at DIGITECHADEMY. How can our counselors assist you?`
                             )}`}
                             target="_blank"
                             rel="noreferrer"
@@ -1368,55 +1471,20 @@ function ManageCoursesTab() {
     setFormFeatured(true);
     setFormActive(true);
 
-    // About defaults
+    // About defaults - empty so admin adds items
     setFormAboutDesc("");
-    setFormAboutLearn(
-      "Practical hands-on industry projects and real client briefs\nIn-depth core principles, best practices & modern workflows\nIndustry tool mastery with portfolio-ready capstone assets\nReal-world troubleshooting, code optimization & delivery"
-    );
-    setFormAboutAudience(
-      "Graduates & students seeking a high-paying tech career\nWorking professionals wanting to transition into high-growth tech domains\nFreelancers & entrepreneurs looking to build and scale products"
-    );
-    setFormAboutOutcomes(
-      "Job-ready portfolio with end-to-end projects\n1-on-1 resume building, mock interviews & placement guidance\nRecognized course completion certificate"
-    );
+    setFormAboutLearn("");
+    setFormAboutAudience("");
+    setFormAboutOutcomes("");
 
-    // Curriculum defaults
-    setFormSyllabus([
-      {
-        module: "Module 1",
-        title: "Foundations & Core Principles",
-        topicsText: "Course Introduction & Setup\nCore terminology & architecture\nDevelopment environment & essential tooling",
-      },
-      {
-        module: "Module 2",
-        title: "Intermediate Applications & Workflows",
-        topicsText: "Hands-on practical implementation\nIndustry design patterns & workflows\nTesting, debugging and validation",
-      },
-      {
-        module: "Module 3",
-        title: "Advanced Mastery & Capstone Deployment",
-        topicsText: "Performance optimization & security best practices\nIndustry case studies & live capstone project\nFinal review, portfolio polish & certification",
-      },
-    ]);
+    // Curriculum defaults - empty so admin adds modules
+    setFormSyllabus([]);
 
-    // Description default
+    // Description default - empty so admin adds description
     setFormLongDescription("");
 
-    // FAQs default
-    setFormCourseFaqs([
-      {
-        question: "What are the prerequisites for joining this course?",
-        answer: "No prior technical or coding background is required. Basic computer skills and a desire to learn are all that is needed.",
-      },
-      {
-        question: "Will I receive a verified certificate upon completion?",
-        answer: "Yes, you will earn an industry-recognized certificate from Digital Tech Academy upon successfully completing all practical assignments and the capstone project.",
-      },
-      {
-        question: "Does this course include placement assistance and mentorship?",
-        answer: "Yes! You get dedicated 1-on-1 mentorship, resume reviews, portfolio critiques, and placement assistance through our hiring partner network.",
-      },
-    ]);
+    // FAQs default - empty so admin adds FAQs
+    setFormCourseFaqs([]);
 
     setIsModalOpen(true);
   };
@@ -1444,21 +1512,21 @@ function ManageCoursesTab() {
     setFormActive(course.active ?? true);
 
     // About
-    setFormAboutDesc(course.about?.description || course.description || "");
+    setFormAboutDesc(course.about?.description || "");
     setFormAboutLearn(
       course.about?.learn && course.about.learn.length > 0
         ? course.about.learn.join("\n")
-        : "Practical hands-on industry projects and real client briefs\nIn-depth core principles & modern workflows\nIndustry tool mastery with portfolio-ready capstone assets"
+        : ""
     );
     setFormAboutAudience(
       course.about?.audience && course.about.audience.length > 0
         ? course.about.audience.join("\n")
-        : "Graduates & students seeking a tech career\nWorking professionals looking to upskill or pivot"
+        : ""
     );
     setFormAboutOutcomes(
       course.about?.outcomes && course.about.outcomes.length > 0
         ? course.about.outcomes.join("\n")
-        : "Job-ready portfolio with end-to-end projects\nResume building & interview guidance\nRecognized certificate of completion"
+        : ""
     );
 
     // Curriculum
@@ -1471,17 +1539,11 @@ function ManageCoursesTab() {
         }))
       );
     } else {
-      setFormSyllabus([
-        {
-          module: "Module 1",
-          title: "Foundations & Core Principles",
-          topicsText: "Course Introduction & Setup\nCore terminology & architecture",
-        },
-      ]);
+      setFormSyllabus([]);
     }
 
     // Description
-    setFormLongDescription(course.longDescription || course.description || "");
+    setFormLongDescription(course.longDescription || "");
 
     // FAQs
     if (course.faqs && course.faqs.length > 0) {
@@ -1492,12 +1554,7 @@ function ManageCoursesTab() {
         }))
       );
     } else {
-      setFormCourseFaqs([
-        {
-          question: "What are the prerequisites for this course?",
-          answer: "Basic computer skills and a desire to learn are all that is needed.",
-        },
-      ]);
+      setFormCourseFaqs([]);
     }
 
     setIsModalOpen(true);
@@ -1591,7 +1648,7 @@ function ManageCoursesTab() {
         .filter(Boolean);
 
     const aboutPayload = {
-      description: formAboutDesc.trim() || formDescription.trim(),
+      description: formAboutDesc.trim(),
       learn: parseLines(formAboutLearn),
       audience: parseLines(formAboutAudience),
       outcomes: parseLines(formAboutOutcomes),
@@ -1612,7 +1669,7 @@ function ManageCoursesTab() {
         answer: f.answer.trim(),
       }));
 
-    const longDescPayload = formLongDescription.trim() || formDescription.trim();
+    const longDescPayload = formLongDescription.trim();
 
     setIsSaving(true);
     try {
@@ -1713,6 +1770,63 @@ function ManageCoursesTab() {
     }
   };
 
+  const [isDeletingDemo, setIsDeletingDemo] = useState(false);
+
+  // Delete all demo/dummy courses from Firebase and local cache
+  const handleDeleteDemoCourses = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete all 5 demo/dummy courses from Firebase and local cache? Any custom courses you created (like Full Stack Java) will be preserved."
+      )
+    ) {
+      return;
+    }
+    setIsDeletingDemo(true);
+    try {
+      const count = await deleteDemoCoursesFromFirebase();
+      setFeedback({
+        type: "success",
+        text: `Successfully deleted demo courses from Firebase catalog!`,
+      });
+    } catch (err: any) {
+      setFeedback({
+        type: "error",
+        text: err?.message || "Failed to remove demo courses.",
+      });
+    } finally {
+      setIsDeletingDemo(false);
+      setTimeout(() => setFeedback(null), 5000);
+    }
+  };
+
+  // Dynamically calculate category statistics strictly according to the actual courses present
+  const { availableCategories, categoryStats } = useMemo(() => {
+    const counts: Record<string, number> = {};
+    courses.forEach((c) => {
+      const cat = (c.category || "").trim();
+      if (cat) {
+        counts[cat] = (counts[cat] || 0) + 1;
+      }
+    });
+
+    // Only categories that currently have courses (count > 0), sorted by course count
+    const activeCats = Object.keys(counts).sort((a, b) => {
+      if ((counts[b] || 0) !== (counts[a] || 0)) {
+        return (counts[b] || 0) - (counts[a] || 0);
+      }
+      return a.localeCompare(b);
+    });
+
+    return { availableCategories: activeCats, categoryStats: counts };
+  }, [courses]);
+
+  // Reset selected category to "All" if current selection no longer exists in courses
+  useEffect(() => {
+    if (selectedCategory !== "All" && !availableCategories.includes(selectedCategory)) {
+      setSelectedCategory("All");
+    }
+  }, [availableCategories, selectedCategory]);
+
   // Filter courses
   const filteredCourses = courses.filter((c) => {
     const matchesCategory =
@@ -1727,18 +1841,6 @@ function ManageCoursesTab() {
       c.description.toLowerCase().includes(q);
     return matchesCategory && matchesSearch;
   });
-
-  // Calculate category statistics
-  const categoryStats = useMemo(() => {
-    const counts: Record<string, number> = {};
-    POPULAR_COURSE_CATEGORIES.forEach((cat) => {
-      counts[cat] = 0;
-    });
-    courses.forEach((c) => {
-      counts[c.category] = (counts[c.category] || 0) + 1;
-    });
-    return counts;
-  }, [courses]);
 
   return (
     <div className="space-y-6">
@@ -1790,6 +1892,16 @@ function ManageCoursesTab() {
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5">
             <button
+              onClick={handleDeleteDemoCourses}
+              disabled={isDeletingDemo}
+              title="Delete the 5 standard demo courses from Firebase & local cache"
+              className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl transition-all cursor-pointer disabled:opacity-50"
+            >
+              <Trash2 className="size-3.5 text-rose-600" />
+              <span>{isDeletingDemo ? "Deleting..." : "Delete Demo Courses"}</span>
+            </button>
+
+            <button
               onClick={handleSeedDefaults}
               disabled={isSeeding}
               title="Populate Firebase Firestore with the standard 5 courses"
@@ -1809,14 +1921,14 @@ function ManageCoursesTab() {
           </div>
         </div>
 
-        {/* Popular Categories Overview Pills */}
+        {/* Course Categories Overview Filter Pills (Filtered According to Courses) */}
         <div className="mt-5 pt-1">
           <div className="flex items-center justify-between mb-2.5">
             <span className="text-xs font-black text-slate-700 uppercase tracking-wider">
-              Popular Course Categories
+              Course Categories ({availableCategories.length})
             </span>
             <span className="text-[11px] text-slate-400 font-semibold">
-              Click a category to filter or add courses
+              Click a category to filter courses
             </span>
           </div>
 
@@ -1841,7 +1953,7 @@ function ManageCoursesTab() {
               </span>
             </button>
 
-            {POPULAR_COURSE_CATEGORIES.map((cat) => {
+            {availableCategories.map((cat) => {
               const count = categoryStats[cat] || 0;
               const isSelected = selectedCategory === cat;
               return (
@@ -2763,6 +2875,25 @@ function ManageTestimonialsTab() {
     return () => unsub();
   }, []);
 
+  const [isDeletingDemoReviews, setIsDeletingDemoReviews] = useState(false);
+
+  const handleDeleteDemoReviews = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete all demo student reviews from Firebase & local cache?"
+      )
+    ) {
+      return;
+    }
+    setIsDeletingDemoReviews(true);
+    try {
+      await deleteDummyTestimonialsFromFirebase();
+      showToast("Demo reviews successfully removed!");
+    } finally {
+      setIsDeletingDemoReviews(false);
+    }
+  };
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
@@ -2892,13 +3023,25 @@ function ManageTestimonialsTab() {
             </p>
           </div>
 
-          <button
-            onClick={handleOpenAdd}
-            className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black flex items-center gap-2 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer self-start sm:self-auto transition-all"
-          >
-            <Plus className="size-4" />
-            <span>Add Student Review</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+            <button
+              onClick={handleDeleteDemoReviews}
+              disabled={isDeletingDemoReviews}
+              className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl transition-all cursor-pointer disabled:opacity-50"
+              title="Delete all demo student reviews"
+            >
+              <Trash2 className="size-3.5 text-rose-600" />
+              <span>{isDeletingDemoReviews ? "Cleaning..." : "Clear Demo Reviews"}</span>
+            </button>
+
+            <button
+              onClick={handleOpenAdd}
+              className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black flex items-center gap-2 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer transition-all"
+            >
+              <Plus className="size-4" />
+              <span>Add Student Review</span>
+            </button>
+          </div>
         </div>
 
         {/* SEARCH & FILTERS BAR */}
@@ -3222,58 +3365,1161 @@ function ManageTestimonialsTab() {
 }
 
 /* =========================================================================
-   TAB: INSTRUCTORS
+   TAB: INSTRUCTORS & FACULTY MENTORS (LIVE FIREBASE SYNC)
 ========================================================================= */
 function ManageInstructorsTab() {
-  const instructors: InstructorItem[] = [
-    {
-      id: "inst-1",
-      name: "Sai Rama",
-      role: "Lead Trainer & Founder",
-      specialization: "Digital Marketing, Cyber Security & Ethical Hacking",
-      email: "sairama@digitaltechsolution.in",
-      experience: "8+ Years Industry Experience",
-      activeBatches: 4,
-    },
-  ];
+  const [mentors, setMentors] = useState<FirebaseMentor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [trackFilter, setTrackFilter] = useState<string>("ALL");
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingMentor, setEditingMentor] = useState<FirebaseMentor | null>(null);
+  const [modalTab, setModalTab] = useState<"basic" | "photo" | "bio" | "skills">("basic");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeletingDemo, setIsDeletingDemo] = useState(false);
+
+  // Form Fields
+  const [formName, setFormName] = useState("");
+  const [formRole, setFormRole] = useState("");
+  const [formTrack, setFormTrack] = useState("Digital Marketing & SEO");
+  const [formCustomTrack, setFormCustomTrack] = useState("");
+  const [formExperience, setFormExperience] = useState("8+ Years Experience");
+  const [formEmail, setFormEmail] = useState("");
+  const [formActiveBatches, setFormActiveBatches] = useState(3);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [customMode, setCustomMode] = useState<"upload" | "url">("upload");
+  const [formCustomImage, setFormCustomImage] = useState("");
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const [isProcessingImage, setIsProcessingImage] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [formBio, setFormBio] = useState("");
+  const [formFullBio, setFormFullBio] = useState("");
+  const [formSkillsText, setFormSkillsText] = useState("");
+  const [formFocusText, setFormFocusText] = useState("");
+  const [formActive, setFormActive] = useState(true);
+  const [formOrder, setFormOrder] = useState(1);
+
+  // Resize and compress uploaded image to a clean ~30-50KB Data URL for ultra fast loading and Firestore compatibility
+  const resizeAndOptimizeImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 400;
+          let width = img.width;
+          let height = img.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            resolve(e.target?.result as string);
+            return;
+          }
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.88);
+          resolve(dataUrl);
+        };
+        img.onerror = (err) => reject(err);
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleImageFileSelect = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      showToast("Please select a valid image file (PNG, JPG, or WebP).");
+      return;
+    }
+    setIsProcessingImage(true);
+    try {
+      const optimized = await resizeAndOptimizeImage(file);
+      setFormCustomImage(optimized);
+      setUploadedFileName(`${file.name} (${Math.round(file.size / 1024)} KB)`);
+      setCustomMode("upload");
+      showToast("Photo uploaded and optimized successfully!");
+    } catch (err) {
+      console.error("Image processing error:", err);
+      showToast("Failed to process image file.");
+    } finally {
+      setIsProcessingImage(false);
+    }
+  };
+
+  // Subscribe to live mentors from Firebase & local cache, and clean out any demo mentors
+  useEffect(() => {
+    deleteDemoMentorsFromFirebase().catch(() => {});
+    const unsub = subscribeMentors((list) => {
+      setMentors(list);
+      setIsLoading(false);
+    });
+    return () => unsub();
+  }, []);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  // Helper to open Add modal
+  const handleOpenAdd = () => {
+    setEditingMentor(null);
+    setModalTab("basic");
+    setFormName("");
+    setFormRole("");
+    setFormTrack("Digital Marketing & SEO");
+    setFormCustomTrack("");
+    setFormExperience("8+ Years Experience");
+    setFormEmail("");
+    setFormActiveBatches(2);
+    setCustomMode("upload");
+    setFormCustomImage("");
+    setUploadedFileName(null);
+    setFormBio("");
+    setFormFullBio("");
+    setFormSkillsText("");
+    setFormFocusText("");
+    setFormActive(true);
+    setFormOrder(mentors.length + 1);
+    setIsModalOpen(true);
+  };
+
+  // Helper to open Edit modal
+  const handleOpenEdit = (mentor: FirebaseMentor) => {
+    setEditingMentor(mentor);
+    setModalTab("basic");
+    setFormName(mentor.name);
+    setFormRole(mentor.role);
+
+    const standardTracks = [
+      "Digital Marketing & SEO",
+      "Cyber Security & Defense",
+      "Programmatic Advertising",
+      "Paid Social & Growth",
+      "Offensive Security",
+      "Web Development & Engineering",
+      "Data Analytics & AI",
+    ];
+    if (standardTracks.includes(mentor.track)) {
+      setFormTrack(mentor.track);
+      setFormCustomTrack("");
+    } else {
+      setFormTrack("Other");
+      setFormCustomTrack(mentor.track);
+    }
+
+    setFormExperience(mentor.experience);
+    setFormEmail(mentor.email || "");
+    setFormActiveBatches(mentor.activeBatches ?? 2);
+
+    // Identify avatar choice
+    setFormCustomImage(mentor.image || "");
+    if (mentor.image?.startsWith("data:")) {
+      setCustomMode("upload");
+      setUploadedFileName("Uploaded Custom Image");
+    } else if (mentor.image && (mentor.image.startsWith("http://") || mentor.image.startsWith("https://"))) {
+      setCustomMode("url");
+      setUploadedFileName(null);
+    } else {
+      setCustomMode("upload");
+      setUploadedFileName(null);
+    }
+
+    setFormBio(mentor.bio || "");
+    setFormFullBio(mentor.fullBio || "");
+    setFormSkillsText((mentor.skills || []).join(", "));
+    setFormFocusText((mentor.mentorshipFocus || []).join("\n"));
+    setFormActive(mentor.active !== false);
+    setFormOrder(mentor.order ?? 1);
+    setIsModalOpen(true);
+  };
+
+  // Helper: Resolve image to save
+  const resolveSelectedImage = (): string => {
+    if (formCustomImage && formCustomImage.trim()) {
+      return formCustomImage.trim();
+    }
+    return getDefaultMentorAvatar(formName);
+  };
+
+  // Save Mentor to Firebase
+  const handleSaveMentor = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formName.trim() || !formRole.trim()) {
+      showToast("Please provide both Mentor Name and Designation/Role.");
+      return;
+    }
+
+    const finalTrack =
+      formTrack === "Other"
+        ? formCustomTrack.trim() || "Technology & Digital"
+        : formTrack;
+
+    const skillsArray = formSkillsText
+      .split(/[\n,]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const focusArray = formFocusText
+      .split("\n")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const resolvedImage = resolveSelectedImage();
+
+    setIsSubmitting(true);
+    try {
+      if (editingMentor) {
+        await updateMentorInFirebase(editingMentor.id, {
+          name: formName.trim(),
+          role: formRole.trim(),
+          track: finalTrack,
+          experience: formExperience.trim() || "5+ Years Experience",
+          email: formEmail.trim(),
+          activeBatches: Number(formActiveBatches) || 1,
+          image: resolvedImage,
+          bio: formBio.trim() || `${formRole.trim()} with expertise in ${finalTrack}.`,
+          fullBio:
+            formFullBio.trim() ||
+            formBio.trim() ||
+            `${formName.trim()} is an experienced industry practitioner leading the ${finalTrack} track at DIGITECHADEMY.`,
+          skills: skillsArray.length > 0 ? skillsArray : [finalTrack, "Practical Mentorship"],
+          mentorshipFocus:
+            focusArray.length > 0
+              ? focusArray
+              : ["1-on-1 practical project code reviews", "Portfolio and resume enhancement"],
+          active: Boolean(formActive),
+          order: Number(formOrder) || 1,
+        });
+        showToast(`Mentor profile for "${formName}" updated successfully!`);
+      } else {
+        await addMentorToFirebase({
+          name: formName.trim(),
+          role: formRole.trim(),
+          track: finalTrack,
+          experience: formExperience.trim() || "5+ Years Experience",
+          email: formEmail.trim(),
+          activeBatches: Number(formActiveBatches) || 1,
+          image: resolvedImage,
+          bio: formBio.trim() || `${formRole.trim()} with expertise in ${finalTrack}.`,
+          fullBio:
+            formFullBio.trim() ||
+            formBio.trim() ||
+            `${formName.trim()} is an experienced industry practitioner leading the ${finalTrack} track at DIGITECHADEMY.`,
+          skills: skillsArray.length > 0 ? skillsArray : [finalTrack, "Practical Mentorship"],
+          mentorshipFocus:
+            focusArray.length > 0
+              ? focusArray
+              : ["1-on-1 practical project code reviews", "Portfolio and resume enhancement"],
+          active: Boolean(formActive),
+          order: Number(formOrder) || mentors.length + 1,
+        });
+        showToast(`New mentor "${formName}" added to faculty and published live!`);
+      }
+      setIsModalOpen(false);
+      setEditingMentor(null);
+    } catch (err: any) {
+      console.error("Failed to save mentor:", err);
+      showToast(err?.message || "Failed to save mentor to database.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Delete Mentor
+  const handleDeleteMentor = async (mentor: FirebaseMentor) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to remove mentor "${mentor.name}" from the faculty catalog? This will also remove them from the website.`
+      )
+    ) {
+      return;
+    }
+    try {
+      await deleteMentorFromFirebase(mentor.id);
+      showToast(`Mentor "${mentor.name}" successfully removed.`);
+    } catch (err: any) {
+      showToast(err?.message || "Failed to delete mentor.");
+    }
+  };
+
+  // Delete all demo mentors
+  const handleDeleteDemoMentors = async () => {
+    if (
+      !window.confirm(
+        "Delete all demo mentors (Arjun, Priya, Vikram, Sneha, Karthik) from Firebase and local cache? Any custom mentors you created will be preserved."
+      )
+    ) {
+      return;
+    }
+    setIsDeletingDemo(true);
+    try {
+      const count = await deleteDemoMentorsFromFirebase();
+      showToast(`Demo mentors successfully removed (${count} cleaned).`);
+    } catch (err: any) {
+      showToast(err?.message || "Failed to remove demo mentors.");
+    } finally {
+      setIsDeletingDemo(false);
+    }
+  };
+
+  // Filtered mentors
+  const filteredMentors = useMemo(() => {
+    return mentors.filter((m) => {
+      const q = searchQuery.toLowerCase();
+      const matchesSearch =
+        (m.name || "").toLowerCase().includes(q) ||
+        (m.role || "").toLowerCase().includes(q) ||
+        (m.track || "").toLowerCase().includes(q) ||
+        (m.skills || []).some((s) => s.toLowerCase().includes(q)) ||
+        (m.email || "").toLowerCase().includes(q);
+
+      const matchesTrack = trackFilter === "ALL" || m.track === trackFilter;
+      return matchesSearch && matchesTrack;
+    });
+  }, [mentors, searchQuery, trackFilter]);
+
+  // Unique tracks for filter
+  const allTracks = useMemo(() => {
+    const set = new Set<string>();
+    mentors.forEach((m) => {
+      if (m.track) set.add(m.track);
+    });
+    return Array.from(set);
+  }, [mentors]);
 
   return (
     <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
+      {/* TOAST ALERT */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-slate-700 animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
+      {/* HEADER BAR */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-5 mb-6">
         <div>
-          <h3 className="text-lg font-black text-slate-900">Faculty & Mentors</h3>
+          <div className="flex items-center gap-2.5">
+            <h3 className="text-lg font-black text-slate-900">Faculty &amp; Industry Mentors</h3>
+            <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-purple-50 text-[#b66dff] text-[10px] font-extrabold border border-purple-200">
+              <span className="size-1.5 rounded-full bg-[#b66dff] animate-pulse" />
+              Live Website Sync
+            </span>
+          </div>
           <p className="text-xs text-slate-400 mt-0.5">
-            Manage course instructors, bios, and active cohort assignments
+            Admin-controlled faculty profiles rendered dynamically across /about and /courses ({mentors.length} active)
           </p>
         </div>
-        <button className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white text-xs font-black flex items-center gap-1.5 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer self-start sm:self-auto">
-          <Plus className="size-4" />
-          Add Instructor
-        </button>
+
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          {/* Delete Demo Mentors Button */}
+          <button
+            type="button"
+            onClick={handleDeleteDemoMentors}
+            disabled={isDeletingDemo}
+            title="Delete all demo mentors (Arjun, Priya, Vikram, Sneha, Karthik) from Firebase and cache"
+            className="border border-rose-200 hover:bg-rose-50 text-rose-600 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
+          >
+            <Trash2 className={`size-3.5 text-rose-500 ${isDeletingDemo ? "animate-spin" : ""}`} />
+            <span>{isDeletingDemo ? "Deleting..." : "Delete Demo Mentors"}</span>
+          </button>
+
+          {/* Add Mentor Button */}
+          <button
+            type="button"
+            onClick={handleOpenAdd}
+            className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black flex items-center gap-2 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer transition-all"
+          >
+            <Plus className="size-4" />
+            <span>Add New Mentor</span>
+          </button>
+        </div>
       </div>
 
-      <div className="grid gap-4">
-        {instructors.map((inst) => (
-          <div
-            key={inst.id}
-            className="border border-slate-200/80 p-5 rounded-2xl bg-white shadow-xs flex items-center gap-4 hover:border-purple-200 transition-colors"
+      {/* SEARCH AND FILTER BAR */}
+      <div className="grid gap-3 sm:grid-cols-[1fr_240px] mb-6">
+        <div className="relative">
+          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search mentor by name, role, track, skills or email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 transition-all font-medium"
+          />
+        </div>
+
+        <div className="relative">
+          <Filter className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400 pointer-events-none" />
+          <select
+            value={trackFilter}
+            onChange={(e) => setTrackFilter(e.target.value)}
+            className="w-full pl-10 pr-8 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 font-semibold cursor-pointer appearance-none"
           >
-            <div className="size-14 rounded-2xl bg-gradient-to-tr from-[#9a55ff] to-[#da8cff] text-white flex items-center justify-center font-black text-lg shadow-md shadow-purple-500/20 shrink-0">
-              SR
-            </div>
-            <div>
-              <h4 className="text-base font-black text-slate-900">{inst.name}</h4>
-              <p className="text-xs font-bold text-[#b66dff]">{inst.role}</p>
-              <p className="text-xs text-slate-500 mt-1">{inst.specialization}</p>
-              <div className="mt-2 flex gap-4 text-[11px] text-slate-400 font-medium">
-                <span>{inst.experience}</span>
-                <span>&bull;</span>
-                <span className="text-emerald-600 font-bold">{inst.activeBatches} Active Batches</span>
+            <option value="ALL">All Tracks ({mentors.length})</option>
+            {allTracks.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        </div>
+      </div>
+
+      {/* MENTORS GRID */}
+      {isLoading ? (
+        <div className="py-16 text-center text-slate-400 text-xs font-bold flex items-center justify-center gap-2">
+          <RefreshCw className="size-4 animate-spin text-[#b66dff]" />
+          <span>Loading faculty directory from Firebase...</span>
+        </div>
+      ) : filteredMentors.length === 0 ? (
+        <div className="border border-dashed border-slate-200 rounded-2xl p-10 text-center">
+          <div className="size-14 rounded-full bg-purple-50 text-[#b66dff] grid place-items-center mx-auto mb-3">
+            <Users className="size-7" />
+          </div>
+          <h4 className="text-sm font-black text-slate-800">No Mentors Found</h4>
+          <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
+            {searchQuery || trackFilter !== "ALL"
+              ? "No faculty profiles match your search criteria. Try adjusting your filters."
+              : "No mentors currently published. Click 'Add New Mentor' to create an instructor profile for the website."}
+          </p>
+          <div className="mt-4 flex justify-center gap-2">
+            <button
+              onClick={handleOpenAdd}
+              className="px-4 py-2 bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white text-xs font-black rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
+            >
+              <Plus className="size-3.5" />
+              <span>Add First Mentor</span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {filteredMentors.map((mentor) => (
+            <div
+              key={mentor.id}
+              className={`group border rounded-2xl p-5 bg-white shadow-xs transition-all duration-200 hover:shadow-md flex flex-col justify-between ${
+                mentor.active !== false
+                  ? "border-slate-200/80 hover:border-purple-300"
+                  : "border-slate-200 bg-slate-50/50 opacity-75"
+              }`}
+            >
+              <div>
+                {/* Card Top: Portrait + Status + Track */}
+                <div className="flex items-start gap-3.5">
+                  <div className="relative size-14 rounded-full p-0.5 bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-500 shadow-sm shrink-0">
+                    <div className="size-full rounded-full overflow-hidden bg-slate-900">
+                      <img
+                        src={mentor.image}
+                        alt={mentor.name}
+                        className="size-full object-cover object-top"
+                      />
+                    </div>
+                    <div className="absolute -bottom-0.5 -right-0.5 rounded-full bg-white p-0.5 shadow-xs">
+                      <CheckCircle2 className="size-4 text-sky-500" />
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="inline-block px-2 py-0.5 rounded-full text-[9.5px] font-black uppercase tracking-wider bg-purple-50 text-[#b66dff] border border-purple-100 truncate max-w-[170px]">
+                        {mentor.track}
+                      </span>
+                      {mentor.active !== false ? (
+                        <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                          Live
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">
+                          Hidden
+                        </span>
+                      )}
+                    </div>
+
+                    <h4 className="text-sm font-black text-slate-900 truncate mt-1">
+                      {mentor.name}
+                    </h4>
+                    <p className="text-xs font-semibold text-[#b66dff] truncate">
+                      {mentor.role}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Experience & Batches Subline */}
+                <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-500 font-medium">
+                  <span>{mentor.experience}</span>
+                  <span>&bull;</span>
+                  <span className="text-emerald-700 font-bold">
+                    {mentor.activeBatches ?? 2} Active Batches
+                  </span>
+                  {mentor.email && (
+                    <>
+                      <span>&bull;</span>
+                      <span className="truncate max-w-[120px] text-slate-400">{mentor.email}</span>
+                    </>
+                  )}
+                </div>
+
+                {/* Short Bio */}
+                <p className="mt-2.5 text-xs text-slate-600 leading-relaxed line-clamp-2">
+                  {mentor.bio || mentor.fullBio}
+                </p>
+
+                {/* Skills tags preview */}
+                {mentor.skills && mentor.skills.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1">
+                    {mentor.skills.slice(0, 3).map((skill) => (
+                      <span
+                        key={skill}
+                        className="text-[10.5px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                    {mentor.skills.length > 3 && (
+                      <span className="text-[10px] font-bold text-[#b66dff] bg-purple-50 px-1.5 py-0.5 rounded-md">
+                        +{mentor.skills.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Actions Footer */}
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-[10.5px] font-bold text-slate-400">
+                  Order #{mentor.order ?? 99}
+                </span>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenEdit(mentor)}
+                    className="px-2.5 py-1 text-xs font-bold text-slate-700 hover:text-[#b66dff] hover:bg-purple-50 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                    title="Edit Mentor Profile"
+                  >
+                    <Edit3 className="size-3.5" />
+                    <span>Edit</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteMentor(mentor)}
+                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                    title="Delete Mentor"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
+          ))}
+        </div>
+      )}
+
+      {/* =========================================================================
+          MODAL: ADD / EDIT MENTOR
+      ========================================================================= */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 backdrop-blur-xs p-4 animate-in fade-in duration-150">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="grid size-9 place-items-center rounded-xl bg-gradient-to-tr from-[#b66dff] to-[#da8cff] text-white shadow-md shadow-purple-500/20">
+                  <Users className="size-4" />
+                </div>
+                <div>
+                  <h4 className="text-base font-black text-slate-900">
+                    {editingMentor ? `Edit Mentor: ${editingMentor.name}` : "Add New Faculty Mentor"}
+                  </h4>
+                  <p className="text-[11px] text-slate-400 font-medium">
+                    This profile will appear live on the /about and /courses pages
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setEditingMentor(null);
+                }}
+                className="text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 cursor-pointer"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            {/* Modal Tab Selector */}
+            <div className="flex items-center gap-2 px-6 pt-3 border-b border-slate-100 shrink-0 bg-slate-50/50">
+              {[
+                { id: "basic", label: "1. Basic Info" },
+                { id: "photo", label: "2. Photo & Avatar" },
+                { id: "bio", label: "3. Bio & Story" },
+                { id: "skills", label: "4. Skills & 1-on-1 Focus" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setModalTab(tab.id as any)}
+                  className={`pb-2.5 px-3 text-xs font-extrabold border-b-2 transition-all cursor-pointer ${
+                    modalTab === tab.id
+                      ? "border-[#b66dff] text-[#b66dff]"
+                      : "border-transparent text-slate-500 hover:text-slate-800"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Modal Scrollable Body */}
+            <form onSubmit={handleSaveMentor} className="flex-1 overflow-y-auto p-6 space-y-4">
+              {/* TAB 1: BASIC INFO */}
+              {modalTab === "basic" && (
+                <div className="space-y-4 animate-in fade-in duration-150">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {/* Name */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Mentor Full Name *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        placeholder="e.g. Arjun Kumar"
+                        value={formName}
+                        onChange={(e) => setFormName(e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900 font-bold"
+                      />
+                    </div>
+
+                    {/* Role / Designation */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Role / Designation *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        placeholder="e.g. Lead Performance Strategist"
+                        value={formRole}
+                        onChange={(e) => setFormRole(e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Domain / Specialization Track */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Track / Domain *
+                      </label>
+                      <select
+                        value={formTrack}
+                        onChange={(e) => setFormTrack(e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900 font-semibold cursor-pointer"
+                      >
+                        <option value="Digital Marketing & SEO">Digital Marketing & SEO</option>
+                        <option value="Cyber Security & Defense">Cyber Security & Defense</option>
+                        <option value="Programmatic Advertising">Programmatic Advertising</option>
+                        <option value="Paid Social & Growth">Paid Social & Growth</option>
+                        <option value="Offensive Security">Offensive Security</option>
+                        <option value="Web Development & Engineering">Web Development & Engineering</option>
+                        <option value="Data Analytics & AI">Data Analytics & AI</option>
+                        <option value="Other">Other / Custom Track...</option>
+                      </select>
+                    </div>
+
+                    {/* Experience */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Years of Experience *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        placeholder="e.g. 9+ Years Experience"
+                        value={formExperience}
+                        onChange={(e) => setFormExperience(e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Custom Track Input if "Other" */}
+                  {formTrack === "Other" && (
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Specify Custom Track Name *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        placeholder="e.g. Cloud Security Architecture"
+                        value={formCustomTrack}
+                        onChange={(e) => setFormCustomTrack(e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900"
+                      />
+                    </div>
+                  )}
+
+                  {/* Email & Active Batches */}
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Mentor Email
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="e.g. mentor@digitechademy.com"
+                        value={formEmail}
+                        onChange={(e) => setFormEmail(e.target.value)}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Active Batches
+                      </label>
+                      <input
+                        type="number"
+                        min={0}
+                        max={20}
+                        value={formActiveBatches}
+                        onChange={(e) => setFormActiveBatches(Number(e.target.value))}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Display Order & Visibility */}
+                  <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                        Display Priority / Order #
+                      </label>
+                      <input
+                        type="number"
+                        min={1}
+                        max={99}
+                        value={formOrder}
+                        onChange={(e) => setFormOrder(Number(e.target.value))}
+                        className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-900"
+                      />
+                      <span className="text-[10px] text-slate-400 mt-1 block">
+                        Lower numbers appear first on the website.
+                      </span>
+                    </div>
+
+                    <div className="flex items-center">
+                      <label className="flex items-center gap-2.5 p-3 rounded-xl bg-purple-50/50 border border-purple-100 cursor-pointer w-full">
+                        <input
+                          type="checkbox"
+                          checked={formActive}
+                          onChange={(e) => setFormActive(e.target.checked)}
+                          className="size-4 text-[#b66dff] rounded focus:ring-purple-400 cursor-pointer"
+                        />
+                        <div>
+                          <span className="text-xs font-bold text-slate-900 block">
+                            Active &amp; Published
+                          </span>
+                          <span className="text-[10.5px] text-slate-500 block">
+                            Visible on /about and /courses
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: PHOTO & AVATAR */}
+              {modalTab === "photo" && (
+                <div className="space-y-5 animate-in fade-in duration-150">
+                  <div className="bg-purple-50/70 border border-purple-100 rounded-2xl p-3.5 flex items-center gap-3">
+                    <Sparkles className="size-5 text-[#b66dff] shrink-0" />
+                    <p className="text-xs text-purple-900 leading-relaxed">
+                      Choose how to set the mentor photo: <strong>upload an image file from your computer</strong> or <strong>enter a direct image URL link</strong>.
+                    </p>
+                  </div>
+
+                  {/* PHOTO SOURCES (UPLOAD OR URL LINK) */}
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-2.5">
+                      1. Select Photo Method
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {/* Option 1: Upload from Computer */}
+                      <div
+                        onClick={() => {
+                          setCustomMode("upload");
+                          if (!formCustomImage || !formCustomImage.startsWith("data:")) {
+                            fileInputRef.current?.click();
+                          }
+                        }}
+                        className={`p-4 rounded-2xl border text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
+                          customMode === "upload"
+                            ? "border-[#b66dff] bg-purple-50/70 ring-2 ring-purple-400/20 shadow-xs"
+                            : "border-slate-200 hover:border-slate-300 bg-white"
+                        }`}
+                      >
+                        <div className="size-14 rounded-full border-2 border-dashed border-[#b66dff]/50 bg-purple-50 text-[#b66dff] flex items-center justify-center shadow-xs">
+                          <Upload className="size-6" />
+                        </div>
+                        <div>
+                          <span className="text-xs font-black text-slate-800 block">Upload Image</span>
+                          <span className="text-[10px] text-slate-400 block">Browse local computer file (PNG, JPG, WebP)</span>
+                        </div>
+                        {customMode === "upload" && (
+                          <span className="text-[9px] font-black text-[#b66dff] bg-white px-2.5 py-0.5 rounded-full border border-purple-200">
+                            Active
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Option 2: Image Web URL */}
+                      <div
+                        onClick={() => setCustomMode("url")}
+                        className={`p-4 rounded-2xl border text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
+                          customMode === "url"
+                            ? "border-[#b66dff] bg-purple-50/70 ring-2 ring-purple-400/20 shadow-xs"
+                            : "border-slate-200 hover:border-slate-300 bg-white"
+                        }`}
+                      >
+                        <div className="size-14 rounded-full border border-slate-200 bg-slate-50 text-slate-500 flex items-center justify-center shadow-xs">
+                          <LinkIcon className="size-6 text-[#b66dff]" />
+                        </div>
+                        <div>
+                          <span className="text-xs font-black text-slate-800 block">Image URL Link</span>
+                          <span className="text-[10px] text-slate-400 block">Direct web link to image (https://...)</span>
+                        </div>
+                        {customMode === "url" && (
+                          <span className="text-[9px] font-black text-[#b66dff] bg-white px-2.5 py-0.5 rounded-full border border-purple-200">
+                            Active
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* UPLOAD PANEL IF UPLOAD MODE */}
+                  {customMode === "upload" && (
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                          Upload Image File From Your Computer
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => setCustomMode("url")}
+                          className="text-[11px] font-bold text-[#b66dff] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          <LinkIcon className="size-3" />
+                          <span>Switch to Image URL link</span>
+                        </button>
+                      </div>
+
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg, image/webp"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) handleImageFileSelect(file);
+                        }}
+                      />
+
+                      {/* Drag & Drop / Click Box */}
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        onDragOver={(e) => {
+                          e.preventDefault();
+                          setIsDragging(true);
+                        }}
+                        onDragLeave={() => setIsDragging(false)}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          setIsDragging(false);
+                          const file = e.dataTransfer.files?.[0];
+                          if (file) handleImageFileSelect(file);
+                        }}
+                        className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2.5 ${
+                          isDragging
+                            ? "border-[#b66dff] bg-purple-50/80 scale-[1.01]"
+                            : formCustomImage && formCustomImage.startsWith("data:")
+                              ? "border-emerald-300 bg-emerald-50/40 hover:bg-emerald-50/60"
+                              : "border-slate-300 bg-white hover:border-[#b66dff] hover:bg-purple-50/30"
+                        }`}
+                      >
+                        {isProcessingImage ? (
+                          <div className="flex flex-col items-center gap-2">
+                            <RefreshCw className="size-7 animate-spin text-[#b66dff]" />
+                            <span className="text-xs font-bold text-slate-700">Optimizing photo for web...</span>
+                          </div>
+                        ) : formCustomImage && formCustomImage.startsWith("data:") ? (
+                          <div className="flex flex-col items-center gap-1.5">
+                            <div className="size-10 rounded-full bg-emerald-100 text-emerald-700 grid place-items-center">
+                              <CheckCircle2 className="size-5" />
+                            </div>
+                            <span className="text-xs font-black text-slate-900">
+                              Photo Ready: {uploadedFileName || "Custom Uploaded Photo"}
+                            </span>
+                            <span className="text-[11px] text-slate-500">
+                              Click or drag another image to replace
+                            </span>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="size-12 rounded-full bg-purple-50 text-[#b66dff] grid place-items-center shadow-xs">
+                              <Upload className="size-6" />
+                            </div>
+                            <div>
+                              <span className="text-xs font-black text-slate-800 block">
+                                Click to Browse Image or Drag &amp; Drop Here
+                              </span>
+                              <span className="text-[11px] text-slate-400 block mt-0.5">
+                                Supports PNG, JPG, JPEG, or WebP (auto-scaled to crisp 400x400 avatar)
+                              </span>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* URL INPUT PANEL IF URL MODE */}
+                  {customMode === "url" && (
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                          Image / Photo Web URL *
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCustomMode("upload");
+                            fileInputRef.current?.click();
+                          }}
+                          className="text-[11px] font-bold text-[#b66dff] hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                          <Upload className="size-3" />
+                          <span>Switch to Upload from computer</span>
+                        </button>
+                      </div>
+
+                      <input
+                        type="url"
+                        placeholder="https://images.unsplash.com/... or https://example.com/photos/mentor.jpg"
+                        value={formCustomImage.startsWith("data:") ? "" : formCustomImage}
+                        onChange={(e) => {
+                          setFormCustomImage(e.target.value);
+                          setUploadedFileName(null);
+                        }}
+                        className="w-full px-3.5 py-2.5 text-xs bg-white border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] text-slate-900 font-medium font-mono"
+                      />
+                      <span className="text-[10.5px] text-slate-400 block">
+                        Paste any accessible direct link to a portrait image file (PNG/JPG/WebP).
+                      </span>
+                    </div>
+                  )}
+
+                  {/* LIVE AVATAR PREVIEW */}
+                  <div className="flex items-center gap-4 pt-3 border-t border-slate-100 bg-gradient-to-r from-slate-50 via-purple-50/20 to-transparent p-4 rounded-2xl border border-slate-200/80">
+                    <div className="relative size-16 rounded-full p-0.5 bg-gradient-to-tr from-[#b66dff] via-indigo-500 to-sky-400 shadow-md shrink-0">
+                      <div className="size-full rounded-full overflow-hidden bg-slate-900">
+                        <img
+                          src={resolveSelectedImage()}
+                          alt="Preview"
+                          className="size-full object-cover object-top"
+                        />
+                      </div>
+                      <div className="absolute -bottom-0.5 -right-0.5 rounded-full bg-white p-0.5 shadow-xs">
+                        <CheckCircle2 className="size-4 text-emerald-500" />
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-xs font-black text-slate-900 block">
+                        {formName || "Mentor Name"}
+                      </span>
+                      <span className="text-[11px] text-[#b66dff] font-semibold block">
+                        {formRole || "Role / Track"}
+                      </span>
+                      <span className="text-[10px] text-slate-400 block mt-0.5">
+                        {formCustomImage
+                          ? "Custom photo configured and ready to publish"
+                          : "No custom photo set yet — will display stylish monogram initials badge"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: BIO & STORY */}
+              {modalTab === "bio" && (
+                <div className="space-y-4 animate-in fade-in duration-150">
+                  {/* Short Bio */}
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                      Short Bio (Card Preview)
+                    </label>
+                    <textarea
+                      rows={2}
+                      placeholder="Concise 1-2 sentence overview of professional role and core expertise..."
+                      value={formBio}
+                      onChange={(e) => setFormBio(e.target.value)}
+                      className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed"
+                    />
+                    <span className="text-[10.5px] text-slate-400 mt-1 block">
+                      Appears on the circular mentor card preview.
+                    </span>
+                  </div>
+
+                  {/* Full Bio */}
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                      Comprehensive Background / Story (Popup Modal)
+                    </label>
+                    <textarea
+                      rows={5}
+                      placeholder="Detailed career journey, enterprise background, pedagogy, and why students benefit from learning under this mentor..."
+                      value={formFullBio}
+                      onChange={(e) => setFormFullBio(e.target.value)}
+                      className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed"
+                    />
+                    <span className="text-[10.5px] text-slate-400 mt-1 block">
+                      Displayed when learners click &quot;View Bio &amp; Insights&quot; on the website.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 4: SKILLS & 1-ON-1 FOCUS */}
+              {modalTab === "skills" && (
+                <div className="space-y-4 animate-in fade-in duration-150">
+                  {/* Skills */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                        Core Competencies / Skills
+                      </label>
+                      <span className="text-[10px] font-bold text-[#b66dff] bg-purple-50 px-2 py-0.5 rounded-md">
+                        Comma or newline separated
+                      </span>
+                    </div>
+                    <textarea
+                      rows={3}
+                      placeholder="e.g. Performance Marketing, Technical SEO, GA4 Schema, Attribution Modeling, Funnel Architecture"
+                      value={formSkillsText}
+                      onChange={(e) => setFormSkillsText(e.target.value)}
+                      className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed font-mono"
+                    />
+                  </div>
+
+                  {/* Mentorship Focus */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                        What You Master in 1-on-1 Mentorship (Bullet Points)
+                      </label>
+                      <span className="text-[10px] font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded-md">
+                        One point per line
+                      </span>
+                    </div>
+                    <textarea
+                      rows={4}
+                      placeholder={"1-on-1 live campaign teardowns & budget waste reduction\nTechnical SEO site audits and crawler log inspections\nConversion rate optimization (CRO) & multi-touch attribution modeling"}
+                      value={formFocusText}
+                      onChange={(e) => setFormFocusText(e.target.value)}
+                      className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed font-mono"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Modal Action Buttons Footer */}
+              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                <div className="flex items-center gap-2">
+                  {modalTab !== "basic" && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (modalTab === "skills") setModalTab("bio");
+                        else if (modalTab === "bio") setModalTab("photo");
+                        else if (modalTab === "photo") setModalTab("basic");
+                      }}
+                      className="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    >
+                      &larr; Back
+                    </button>
+                  )}
+                  {modalTab !== "skills" && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (modalTab === "basic") setModalTab("photo");
+                        else if (modalTab === "photo") setModalTab("bio");
+                        else if (modalTab === "bio") setModalTab("skills");
+                      }}
+                      className="px-3.5 py-2 rounded-xl text-xs font-bold text-[#b66dff] hover:bg-purple-50 cursor-pointer"
+                    >
+                      Next Step &rarr;
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setEditingMentor(null);
+                    }}
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-5 py-2 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 shadow-md shadow-purple-500/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                  >
+                    {isSubmitting && (
+                      <div className="size-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    )}
+                    <span>{editingMentor ? "Update Mentor Profile" : "Publish Mentor Profile"}</span>
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -3335,6 +4581,32 @@ function ManageFaqsTab() {
    TAB: SETTINGS
 ========================================================================= */
 function ManageSettingsTab({ session }: { session: AdminSession | null }) {
+  const [isPurging, setIsPurging] = useState(false);
+  const [purgeStatus, setPurgeStatus] = useState<string | null>(null);
+
+  const handlePurgeAllDummyData = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete all dummy data (demo courses, sample leads, sample reviews, and demo faculty mentors) from Firebase and local cache? Any custom content you created will be preserved."
+      )
+    ) {
+      return;
+    }
+    setIsPurging(true);
+    try {
+      await deleteDemoCoursesFromFirebase();
+      await deleteDummyEnquiriesFromFirebase();
+      await deleteDummyTestimonialsFromFirebase();
+      await deleteDemoMentorsFromFirebase();
+      setPurgeStatus("All dummy demo data (including demo faculty mentors) successfully purged from Firebase and local storage!");
+    } catch (err: any) {
+      setPurgeStatus(err?.message || "Failed to purge dummy data.");
+    } finally {
+      setIsPurging(false);
+      setTimeout(() => setPurgeStatus(null), 5000);
+    }
+  };
+
   return (
     <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
       <div className="border-b border-slate-100 pb-5 mb-6">
@@ -3345,6 +4617,43 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
       </div>
 
       <div className="grid gap-6">
+        {/* PURGE ALL DUMMY DATA CARD */}
+        <div className="border border-rose-200 rounded-2xl p-5 bg-gradient-to-r from-white via-rose-50/20 to-rose-50/40 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="grid size-10 place-items-center rounded-xl bg-rose-500 text-white shadow-md shadow-rose-500/20 shrink-0">
+                <Trash2 className="size-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-slate-900">Delete All Dummy / Demo Data</h4>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Purge all pre-seeded demo courses, dummy enquiries, and sample student reviews from Firebase Firestore and browser cache.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handlePurgeAllDummyData}
+              disabled={isPurging}
+              className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-black rounded-xl shadow-md shadow-rose-500/20 transition-all cursor-pointer whitespace-nowrap self-start sm:self-center disabled:opacity-50 flex items-center gap-2"
+            >
+              {isPurging ? (
+                <RefreshCw className="size-3.5 animate-spin" />
+              ) : (
+                <Trash2 className="size-3.5" />
+              )}
+              <span>Purge All Dummy Data</span>
+            </button>
+          </div>
+          {purgeStatus && (
+            <div className="mt-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2">
+              <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+              <span>{purgeStatus}</span>
+            </div>
+          )}
+        </div>
+
         {/* ACTIVE SESSION CARD */}
         <div className="border border-slate-200/80 rounded-2xl p-5 bg-gradient-to-r from-slate-50 to-purple-50/30">
           <div className="flex items-center gap-3 mb-4">

@@ -1,6 +1,8 @@
-# Digital Ascent Academy
+# DIGITECHADEMY
+*LEARN • GROW • ACHIEVE*
+*Cyber Security • Digital Marketing • Programmatic Advertising*
 
-Build a Premium Digital Marketing & Cyber Security Training Institute Website
+Build a Premium Cyber Security, Digital Marketing & Programmatic Advertising Training Institute Website
 
 Design and develop a fully responsive, premium, modern training institute website focused on Digital Marketing and Cyber Security courses.
 

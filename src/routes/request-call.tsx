@@ -10,16 +10,16 @@ import { site, whatsappLink } from "@/lib/site";
 export const Route = createFileRoute("/request-call")({
   head: () => ({
     meta: [
-      { title: "Request a Call | Digital Tech Solution" },
+      { title: "Request a Call | DIGITECHADEMY" },
       {
         name: "description",
         content:
-          "Request a free counselling call about our Digital Marketing and Cyber Security programs — batches, fees, curriculum and career guidance.",
+          "Request a free counselling call about our Cyber Security, Digital Marketing, and Programmatic Advertising programs — batches, fees, curriculum and career guidance.",
       },
-      { property: "og:title", content: "Request a Call | Digital Tech Solution" },
+      { property: "og:title", content: "Request a Call | DIGITECHADEMY" },
       {
         property: "og:description",
-        content: "Share your details and our admissions team will call you at your preferred time.",
+        content: "Share your details and the DIGITECHADEMY admissions team will call you at your preferred time.",
       },
       { property: "og:url", content: "/request-call" },
     ],
@@ -32,9 +32,9 @@ function RequestCallPage() {
   return (
     <SiteLayout>
       <PageHero
-        eyebrow="Admissions"
+        eyebrow="ADMISSIONS"
         title="Request a Call"
-        description="Tell us what you want to learn and when to reach you. A counsellor will call to guide you through the right program."
+        description="Tell us your learning goals. An academic advisor will guide you to the right program."
       />
 
       <section className="bg-background">

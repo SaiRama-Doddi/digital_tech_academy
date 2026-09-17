@@ -4,21 +4,27 @@ import {
   ArrowRight,
   Award,
   BarChart3,
+  BookOpen,
   Briefcase,
+  Check,
   CheckCircle2,
   ChevronRight,
-  Code2,
   Cpu,
   FileText,
   GraduationCap,
-  Headphones,
+  HelpCircle,
+  Layers,
+  Lock,
   Megaphone,
-  Palette,
+  PhoneCall,
   Play,
+  Radio,
+  Server,
   ShieldCheck,
   Sparkles,
+  Target,
+  Terminal,
   TrendingUp,
-  User,
   UserCheck,
   Users,
 } from "lucide-react";
@@ -34,64 +40,198 @@ import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { DemoClassModal } from "@/components/site/DemoClassModal";
 import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
-import { ProcessTimeline } from "@/components/site/ProcessTimeline";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { StatsSection } from "@/components/site/StatsSection";
-import { TestimonialCarousel } from "@/components/site/TestimonialCarousel";
-import {
-  homeFaqs,
-  methodology,
-  practicalTraining,
-  testimonials,
-  whyChooseUs,
-} from "@/data/content";
+import { homeFaqs, practicalTraining, whoIsForAudience, careerReadinessPillars } from "@/data/content";
 import { courses } from "@/data/courses";
 import { subscribeCourses, type FirebaseCourse } from "@/services/courseService";
-import { subscribeTestimonials } from "@/services/testimonialService";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Digital Marketing & Cyber Security Training | Digital Tech Solution" },
+      {
+        title: "Digital Marketing, Programmatic & Cyber Security Training | Digitechademy",
+      },
       {
         name: "description",
         content:
-          "Career-focused Digital Marketing and Cyber Security courses with practical projects, expert mentors and certification. Explore programs and request a call.",
+          "Build practical skills in Digital Marketing, Programmatic Advertising & Cyber Security through real-world projects, industry tools and expert-led training at Digitechademy.",
+      },
+      {
+        name: "keywords",
+        content:
+          "Digital Marketing Training, Cyber Security Training, Programmatic Advertising Training, Digital Marketing Course, Cyber Security Course, Programmatic Advertising Course, DV360 Training, Performance Marketing Training, DV360 Course, CM360 Training, Programmatic Media Buying Course, Ethical Hacking Course, Cyber Security Training for Beginners, Practical Cyber Security Course, Paid Advertising Course, Digital Marketing Training for Beginners",
       },
       {
         property: "og:title",
-        content: "Digital Marketing & Cyber Security Training | Digital Tech Solution",
+        content: "Digital Marketing, Programmatic & Cyber Security Training | Digitechademy",
       },
       {
         property: "og:description",
         content:
-          "Practical, industry-focused training that turns knowledge into real-world Digital Marketing and Cyber Security skills.",
+          "Build practical skills in Digital Marketing, Programmatic Advertising & Cyber Security through real-world projects, industry tools and expert-led training at Digitechademy.",
       },
       { property: "og:url", content: "/" },
+      { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
   component: Home,
 });
 
+/**
+ * =========================================================================
+ * HOMEPAGE MASTER STRUCTURE (Exact 16-Section Architecture)
+ * =========================================================================
+ * 1. Announcement Bar                      -> Provided by SiteLayout (Header)
+ * 2. Navigation                            -> Provided by SiteLayout (Header)
+ * 3. Hero                                  -> <Hero />
+ * 4. USP / Trust Strip                     -> <UspTrustStrip />
+ * 5. Why Digitechademy                     -> <WhyDigitechademy />
+ * 6. Core Programs                         -> <CorePrograms />
+ * 7. Programmatic Advertising Differentiator-> <ProgrammaticDifferentiator />
+ * 8. Cyber Security Differentiator         -> <CyberSecurityDifferentiator />
+ * 9. Digitechademy Learning Method         -> <DigitechademyLearningMethod />
+ * 10. Practical Learning                   -> <PracticalLearning />
+ * 11. Who Is This For?                     -> <WhoIsThisFor />
+ * 12. Career Readiness                     -> <CareerReadiness />
+ * 13. Genuine Testimonials (only when avail)-> <GenuineTestimonials />
+ * 14. FAQ                                  -> <FaqSection />
+ * 15. Final CTA                            -> <FinalCta />
+ * 16. Footer                               -> Provided by SiteLayout (Footer)
+ * =========================================================================
+ */
 function Home() {
   return (
     <SiteLayout>
+      {/* 3. Hero */}
       <Hero />
-      <AboutPreview />
-      <FeaturedCourses />
-      <WhyChooseUs />
-      <Methodology />
-      <PracticalTraining />
-      <CareerFocus />
-      <Testimonials />
-      <FaqPreview />
+
+      {/* 4. USP / Trust Strip */}
+      <UspTrustStrip />
+
+      {/* 5. Why Digitechademy */}
+      <WhyDigitechademy />
+
+      {/* 6. Core Programs */}
+      <CorePrograms />
+
+      {/* 7. Programmatic Advertising Differentiator */}
+      <ProgrammaticDifferentiator />
+
+      {/* 8. Cyber Security Differentiator */}
+      <CyberSecurityDifferentiator />
+
+      {/* 9. Digitechademy Learning Method */}
+      <DigitechademyLearningMethod />
+
+      {/* 10. Practical Learning */}
+      <PracticalLearning />
+
+      {/* 11. Who Is This For? */}
+      <WhoIsThisFor />
+
+      {/* 12. Career Readiness */}
+      <CareerReadiness />
+
+      {/* 13. Genuine Testimonials (only when available) */}
+      <GenuineTestimonials />
+
+      {/* 14. FAQ */}
+      <FaqSection />
+
+      {/* 15. Final CTA */}
+      <FinalCta />
+
+      {/* Interactive Global Demo Class Modal */}
       <DemoClassModal />
     </SiteLayout>
   );
 }
 
+/**
+ * Rotating Trust Highlights Tag (displays Practical Training, Industry Mentorship, Real-World Projects, Career-Focused Learning one by one)
+ */
+const TRUST_HIGHLIGHTS = [
+  {
+    icon: CheckCircle2,
+    text: "Practical Training",
+    textColor: "text-blue-700",
+    iconColor: "text-blue-600",
+    badgeClass: "bg-blue-50/85 border-blue-200/80 shadow-blue-500/5",
+  },
+  {
+    icon: Users,
+    text: "Industry Mentorship",
+    textColor: "text-indigo-700",
+    iconColor: "text-indigo-600",
+    badgeClass: "bg-indigo-50/85 border-indigo-200/80 shadow-indigo-500/5",
+  },
+  {
+    icon: Cpu,
+    text: "Real-World Projects",
+    textColor: "text-sky-700",
+    iconColor: "text-sky-600",
+    badgeClass: "bg-sky-50/85 border-sky-200/80 shadow-sky-500/5",
+  },
+  {
+    icon: Award,
+    text: "Career-Focused Learning",
+    textColor: "text-emerald-700",
+    iconColor: "text-emerald-600",
+    badgeClass: "bg-emerald-50/85 border-emerald-200/80 shadow-emerald-500/5",
+  },
+];
+
+function RotatingTrustBadge() {
+  const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % TRUST_HIGHLIGHTS.length);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const current = TRUST_HIGHLIGHTS[index] ?? TRUST_HIGHLIGHTS[0]!;
+  const IconComponent = current.icon;
+
+  return (
+    <div
+      className="mt-6 pt-4 border-t border-slate-200/60 flex items-center gap-3"
+      data-reveal
+      style={{ "--reveal-delay": "300ms" } as React.CSSProperties}
+    >
+      <div
+        className={cn(
+          "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 shadow-xs transition-all duration-500 select-none",
+          current.badgeClass
+        )}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        aria-live="polite"
+      >
+        <div
+          key={index}
+          className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-1 duration-300 text-xs sm:text-[13px] font-bold"
+        >
+          <IconComponent className={cn("size-3.5 sm:size-4 shrink-0", current.iconColor)} />
+          <span className={cn("whitespace-nowrap font-bold", current.textColor)}>
+            {current.text}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * =========================================================================
+ * 3. HERO
+ * =========================================================================
+ */
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/50 via-white to-slate-50/40 pb-8 pt-4 sm:pt-6 lg:pb-10 lg:pt-6">
@@ -107,9 +247,9 @@ function Hero() {
 
       <div className="container-site relative z-10 overflow-x-clip sm:overflow-visible">
         <div className="grid lg:grid-cols-2 items-center gap-8 lg:gap-10 xl:gap-14 w-full">
-          {/* Left Column: Text, CTAs & Social Proof */}
-          <div className="w-full max-w-xl text-left flex flex-col justify-center min-w-0">
-            {/* Premium Pill Eyebrow */}
+          {/* Left Column: Text & CTAs */}
+          <div className="w-full max-w-xl lg:max-w-2xl xl:max-w-3xl text-left flex flex-col justify-center min-w-0">
+            {/* Eyebrow: INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED */}
             <div
               className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/80 bg-gradient-to-r from-blue-50/90 via-sky-50/60 to-indigo-50/90 px-2.5 py-1 sm:px-3.5 sm:py-1.5 shadow-[0_2px_10px_-2px_rgba(37,99,235,0.12)] backdrop-blur-md mb-3 sm:mb-4 w-fit select-none transition-all duration-300 hover:border-blue-300 hover:shadow-[0_4px_14px_-2px_rgba(37,99,235,0.18)]"
               data-reveal
@@ -118,33 +258,46 @@ function Hero() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-blue-500 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-blue-600" />
               </span>
-              <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.16em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 whitespace-nowrap">
-                Skills Today · A Brighter Tomorrow
+              <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 whitespace-nowrap">
+                INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED
               </span>
               <Sparkles className="size-2.5 sm:size-3 text-blue-500/80 shrink-0" aria-hidden="true" />
             </div>
 
+            {/* H1: MASTER THE SKILLS. BUILD REAL-WORLD EXPERIENCE. (Strictly 2 lines) */}
             <h1
-              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] xl:text-[2.85rem] font-black leading-[1.2] sm:leading-[1.15] tracking-tight text-slate-900 break-words"
+              className="text-[1.05rem] xs:text-[1.2rem] sm:text-[1.45rem] md:text-[1.75rem] lg:text-[1.65rem] xl:text-[2.05rem] 2xl:text-[2.25rem] font-black leading-[1.2] sm:leading-[1.15] tracking-tight text-slate-900"
               data-reveal
               style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
             >
-              Digital Skills.
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 inline-block">
-                Build Real-World Expertise.
+              <span className="block whitespace-nowrap">MASTER THE SKILLS.</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 whitespace-nowrap">
+                BUILD REAL-WORLD EXPERIENCE.
               </span>
             </h1>
 
+            {/* Subheading: Learn Cyber Security, Programmatic Advertising & Digital Marketing from industry practitioners... */}
             <p
-              className="mt-3.5 sm:mt-4 text-xs sm:text-base text-slate-600 leading-relaxed max-w-lg font-normal text-justify sm:text-left"
+              className="mt-3.5 sm:mt-4 text-xs sm:text-base text-slate-600 leading-relaxed max-w-lg font-normal text-justify [text-align:justify] [text-justify:inter-word]"
               data-reveal
               style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
             >
-              Build practical skills through career-focused training in Digital Marketing, Programmatic Advertising, Cyber Security, SEO, and Performance Marketing. Learn industry-relevant tools, apply concepts through hands-on projects, and develop the confidence to take on real digital roles.
+              Learn Cyber Security, Programmatic Advertising &amp; Digital Marketing from industry practitioners through practical training, real-world scenarios, guided projects and hands-on learning.
             </p>
 
-            {/* CTAs */}
+            {/* Supporting line: Learn. Practice. Build. Become Industry Ready. */}
+            <div
+              className="mt-3 sm:mt-3.5 inline-flex items-center gap-2 rounded-lg bg-blue-50/80 border border-blue-100/90 px-3 py-1.5 w-fit"
+              data-reveal
+              style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
+            >
+              <span className="size-1.5 rounded-full bg-blue-600 shrink-0" />
+              <span className="text-xs sm:text-[13px] font-bold text-blue-800 tracking-wide">
+                Learn. Practice. Build. Become Industry Ready.
+              </span>
+            </div>
+
+            {/* CTAs: Explore Programs / Talk to an Expert */}
             <div
               className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3.5"
               data-reveal
@@ -154,356 +307,65 @@ function Hero() {
                 to="/courses"
                 variant="primary"
                 size="md"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-9.5 sm:h-12 px-4 sm:px-7 text-xs sm:text-base rounded-lg sm:rounded-xl shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 sm:h-12 px-4.5 sm:px-7 text-xs sm:text-base rounded-xl shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group"
               >
-                <span>Explore Courses</span>
+                <span>Explore Programs</span>
                 <ArrowRight className="size-3.5 sm:size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </BtnLink>
 
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById("methodology");
-                  el?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="h-9.5 sm:h-12 px-3.5 sm:px-5 rounded-lg sm:rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold border border-slate-200 shadow-xs hover:shadow-sm transition-all flex items-center gap-2 sm:gap-2.5 text-xs sm:text-base active:scale-[0.98] cursor-pointer"
+              <BtnLink
+                to="/request-call"
+                variant="outline"
+                size="md"
+                className="h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-xs hover:shadow-sm transition-all flex items-center gap-2 text-xs sm:text-base active:scale-[0.98] cursor-pointer"
               >
-                <span className="grid size-5 sm:size-6 place-items-center rounded-full bg-blue-600 text-white shadow-xs">
-                  <Play className="size-2.5 sm:size-3 fill-white ml-0.5" aria-hidden="true" />
+                <span className="grid size-5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+                  <PhoneCall className="size-2.5 sm:size-3" aria-hidden="true" />
                 </span>
-                <span>Watch Video</span>
-              </button>
+                <span>Talk to an Expert</span>
+              </BtnLink>
             </div>
 
-            {/* Social Proof */}
+            {/* Rotating Trust Tag: Practical Training, Industry Mentorship, Real-World Projects, Career-Focused Learning */}
+            <RotatingTrustBadge />
+          </div>
+
+          {/* Right Column: Hero Visual Graphic */}
+          <div className="relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0 select-none">
             <div
-              className="mt-6 pt-5 border-t border-slate-200/60 flex items-center gap-3.5"
-              data-reveal
-              style={{ "--reveal-delay": "300ms" } as React.CSSProperties}
+              className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-none rounded-3xl p-3 sm:p-4"
+              data-reveal="right"
             >
-              <div className="flex -space-x-2">
-                {[
-                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop",
-                  "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=120&auto=format&fit=crop",
-                ].map((url, i) => (
-                  <img
-                    key={i}
-                    src={url}
-                    alt="Student avatar"
-                    className="size-8 rounded-full border-2 border-white object-cover shadow-xs ring-1 ring-slate-100"
-                  />
-                ))}
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm font-black text-blue-600 leading-tight">
-                  <CountUp value={10} suffix="K+" /> Students
-                </p>
-                <p className="text-[11px] text-slate-500 font-medium">Already building their careers with us</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Visual Composition */}
-          <div
-            className="relative flex justify-center items-center lg:justify-end animate-fade-in duration-700 select-none w-full min-w-0"
-            data-reveal="scale"
-          >
-            <div className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[480px] lg:max-w-[500px] flex items-center justify-center py-4 mx-auto">
-              {/* Background Soft Radiant Gradient Halo */}
-              <div
-                className="pointer-events-none absolute inset-0 m-auto size-[300px] sm:size-[380px] rounded-full bg-gradient-to-tr from-sky-200/50 via-blue-100/35 to-indigo-100/25 blur-2xl"
-                aria-hidden="true"
-              />
-
-              {/* SVG Circular Orbit Paths */}
-              <svg
-                className="pointer-events-none absolute inset-0 size-full"
-                viewBox="0 0 500 500"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="250"
-                  cy="250"
-                  r="195"
-                  stroke="#38bdf8"
-                  strokeOpacity="0.35"
-                  strokeWidth="1.5"
-                  strokeDasharray="6 6"
-                />
-                <circle
-                  cx="250"
-                  cy="250"
-                  r="235"
-                  stroke="#60a5fa"
-                  strokeOpacity="0.25"
-                  strokeWidth="1.2"
-                  strokeDasharray="8 8"
-                />
-              </svg>
-
-              {/* Mobile Centered Tag (sm:hidden) — Elegant, No Colliding Doodles */}
-              <div className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2 z-20 flex sm:hidden">
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50/95 border border-blue-200/80 px-3.5 py-1 text-[11px] font-black italic tracking-wide text-blue-600 shadow-xs backdrop-blur-sm whitespace-nowrap">
-                  <span className="text-blue-500">✦</span>
-                  <span>Learn · Practice · Grow</span>
-                </div>
-              </div>
-
-              {/* Desktop Top-Left Doodle: "Learn Practice Grow" (hidden on mobile) */}
-              <div className="pointer-events-none absolute left-0 sm:left-2 top-0 z-20 hidden sm:flex flex-col items-center">
-                <div className="flex items-center gap-1 text-blue-600 font-black italic text-[11px] sm:text-xs tracking-wide">
-                  <span className="text-blue-500">✦</span>
-                  <span>Learn · Practice · Grow</span>
-                </div>
-                <svg
-                  className="w-14 h-6 text-blue-500 -mt-0.5 ml-4"
-                  viewBox="0 0 80 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  aria-hidden="true"
-                >
-                  <path d="M10 5 C 40 8, 55 18, 65 30" />
-                  <path d="M58 28 L 65 30 L 64 22" />
-                </svg>
-              </div>
-
-              {/* Desktop Top-Right Doodle: "Your Future Starts Here" (hidden on mobile) */}
-              <div className="pointer-events-none absolute right-0 sm:right-2 top-0 z-20 hidden sm:flex flex-col items-center">
-                <div className="flex items-center gap-1 text-blue-600 font-black italic text-[11px] sm:text-xs tracking-wide">
-                  <Sparkles className="size-3.5 text-blue-500" aria-hidden="true" />
-                  <span>Your Future Starts Here</span>
-                </div>
-                <svg
-                  className="w-14 h-6 text-blue-500 -mt-0.5 -mr-4"
-                  viewBox="0 0 80 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  aria-hidden="true"
-                >
-                  <path d="M70 5 C 45 8, 30 18, 20 30" />
-                  <path d="M26 22 L 20 30 L 28 29" />
-                </svg>
-              </div>
-
-              {/* Centerpiece Student Photo — Crystal Clear, Unobstructed */}
-              <div className="relative z-10 w-[88%] sm:w-[78%] max-w-[370px] lg:max-w-[400px] flex justify-center">
+              {/* Central Hero Image */}
+              <div className="relative overflow-hidden rounded-2xl shadow-xl shadow-slate-900/10 border border-white/80 aspect-[16/11] sm:aspect-[16/10] bg-slate-950">
                 <img
-                  src={heroStudentImg}
-                  alt="Digitechademy student building real-world expertise"
-                  className="w-full object-contain rounded-2xl drop-shadow-xl"
+                  src={heroImg}
+                  alt="DIGITECHADEMY training lab simulation"
+                  className="w-full h-full object-cover object-center transform transition-transform duration-700 hover:scale-105"
+                  width={960}
+                  height={600}
                 />
-              </div>
-
-              {/* Mobile Subtle Floating Chips (sm:hidden) — Non-obtrusive outer edge chips */}
-              <div className="sm:hidden absolute left-0 top-6 z-20 flex items-center gap-1 rounded-full bg-white/95 border border-slate-200/90 shadow-md px-2 py-0.5 backdrop-blur-md">
-                <span className="grid size-4.5 place-items-center rounded-full bg-blue-50 text-blue-600">
-                  <ShieldCheck className="size-2.5" aria-hidden="true" />
-                </span>
-                <span className="text-[9px] font-black text-slate-800 whitespace-nowrap">Cyber Security</span>
-              </div>
-
-              <div className="sm:hidden absolute right-0 top-6 z-20 flex items-center gap-1 rounded-full bg-white/95 border border-slate-200/90 shadow-md px-2 py-0.5 backdrop-blur-md">
-                <span className="grid size-4.5 place-items-center rounded-full bg-blue-50 text-blue-600">
-                  <Megaphone className="size-2.5" aria-hidden="true" />
-                </span>
-                <span className="text-[9px] font-black text-slate-800 whitespace-nowrap">Digital Marketing</span>
-              </div>
-
-              <div className="sm:hidden absolute right-0 bottom-14 z-20 flex items-center gap-1 rounded-full bg-slate-950 text-white shadow-md border border-slate-800 px-2 py-0.5">
-                <GraduationCap className="size-2.5 text-cyan-400" aria-hidden="true" />
-                <span className="text-[8.5px] font-black uppercase tracking-wider whitespace-nowrap">Job-Ready Skills</span>
-              </div>
-
-              {/* Desktop/Tablet Floating Card 1 (Top-Left): Digital Marketing */}
-              <div className="hidden sm:block absolute left-0 sm:-left-2 lg:-left-4 top-14 sm:top-16 z-20 rounded-lg sm:rounded-xl border border-white/90 bg-white/95 shadow-md p-1.5 sm:p-2.5 backdrop-blur-md w-32 sm:w-38 transition-transform duration-300 hover:scale-105">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="grid size-5 sm:size-6 shrink-0 place-items-center rounded-md bg-blue-50 text-blue-600 border border-blue-100">
-                    <Megaphone className="size-2.5 sm:size-3" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] sm:text-[11px] font-black text-slate-900 leading-tight">Digital Marketing</p>
-                    <p className="text-[8px] sm:text-[8.5px] text-slate-400 font-medium truncate">From strategy to execution</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 text-white flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-[11px] font-bold tracking-wide uppercase">Live Cloud Sandbox Active</span>
                   </div>
-                </div>
-                {/* Mini Bar Chart */}
-                <div className="mt-1 flex items-end justify-between gap-0.5 sm:gap-1 h-3.5 sm:h-4 pt-0.5 px-0.5 sm:px-1 bg-slate-50/90 rounded">
-                  {[28, 42, 35, 58, 50, 72, 65, 92].map((height, i) => (
-                    <span
-                      key={i}
-                      className="w-full bg-blue-600 rounded-xs transition-all"
-                      style={{ height: `${height}%` }}
-                    />
-                  ))}
+                  <span className="text-[11px] font-semibold text-sky-300">100% Hands-On</span>
                 </div>
               </div>
 
-              {/* Desktop/Tablet Floating Card 2 (Bottom-Left): Cyber Security */}
-              <div className="hidden sm:block absolute left-0 sm:-left-2 lg:-left-4 bottom-14 sm:bottom-16 z-20 rounded-lg sm:rounded-xl border border-white/90 bg-white/95 shadow-md p-1.5 sm:p-2.5 backdrop-blur-md w-30 sm:w-36 transition-transform duration-300 hover:scale-105">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="grid size-5 sm:size-6 shrink-0 place-items-center rounded-md bg-blue-50 text-blue-600 border border-blue-100">
-                    <ShieldCheck className="size-2.5 sm:size-3" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] sm:text-[11px] font-black text-slate-900 leading-tight">Cyber Security</p>
-                    <p className="text-[8px] sm:text-[8.5px] text-slate-400 font-medium truncate">Stay ahead. Stay secure.</p>
-                  </div>
-                </div>
-                {/* Mini Upward Line Chart */}
-                <div className="mt-1 h-3.5 sm:h-4 w-full flex items-center">
-                  <svg className="w-full h-full text-emerald-500" viewBox="0 0 100 28" fill="none" aria-hidden="true">
-                    <path
-                      d="M 0 24 Q 25 18, 45 20 T 80 8 T 100 3"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M 0 24 Q 25 18, 45 20 T 80 8 T 100 3 L 100 28 L 0 28 Z"
-                      fill="currentColor"
-                      fillOpacity="0.12"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Desktop/Tablet Floating Card 3 (Top-Right): Hands-on Projects */}
-              <div className="hidden sm:block absolute right-0 sm:-right-2 lg:-right-4 top-10 sm:top-12 z-20 rounded-lg sm:rounded-xl border border-white/90 bg-white/95 shadow-md p-1.5 sm:p-2.5 backdrop-blur-md w-34 sm:w-40 transition-transform duration-300 hover:scale-105">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="grid size-5 sm:size-6 shrink-0 place-items-center rounded-md bg-blue-50 text-blue-600 border border-blue-100">
-                    <FileText className="size-2.5 sm:size-3" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] sm:text-[11px] font-black text-slate-900 leading-tight">Hands-on Projects</p>
-                    <p className="text-[8px] sm:text-[8.5px] text-slate-400 font-medium truncate">Build real-world experience</p>
-                  </div>
-                </div>
-                {/* Mini Collaboration Image */}
-                <div className="mt-1 overflow-hidden rounded border border-slate-100 h-8 sm:h-9 w-full">
-                  <img
-                    src={aboutImg}
-                    alt="Students collaborating on projects"
-                    className="size-full object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Desktop/Tablet Floating Card 4 (Bottom-Right): Career Support */}
-              <div className="hidden sm:block absolute right-0 sm:-right-2 lg:-right-4 bottom-18 sm:bottom-20 z-20 rounded-lg sm:rounded-xl border border-white/90 bg-white/95 shadow-md p-1.5 sm:p-2.5 backdrop-blur-md w-30 sm:w-36 transition-transform duration-300 hover:scale-105">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <span className="grid size-5 sm:size-6 shrink-0 place-items-center rounded-md bg-blue-50 text-blue-600 border border-blue-100">
-                    <User className="size-2.5 sm:size-3" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] sm:text-[11px] font-black text-slate-900 leading-tight">Career Support</p>
-                    <p className="text-[8px] sm:text-[8.5px] text-slate-400 font-medium truncate">Guidance till you succeed</p>
-                  </div>
-                </div>
-                {/* Upward Growth Arrow */}
-                <div className="mt-1 h-3.5 sm:h-4 w-full flex items-center">
-                  <svg className="w-full h-full text-emerald-500" viewBox="0 0 100 28" fill="none" aria-hidden="true">
-                    <path
-                      d="M 0 24 C 30 22, 50 14, 75 10 L 95 4"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <polygon points="90,3 98,3 96,10" fill="currentColor" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Attached Circular Badge: Job-Ready Skills (Desktop/Tablet) */}
-              <div className="hidden sm:flex absolute right-[4%] bottom-[12%] sm:bottom-[14%] z-30 size-14 sm:size-16 rounded-full bg-slate-950 text-white shadow-xl border-2 border-white flex-col items-center justify-center p-1 text-center transition-transform hover:scale-110">
-                <GraduationCap className="size-3.5 sm:size-4 text-cyan-400" aria-hidden="true" />
-                <span className="text-[7.5px] sm:text-[8px] font-black uppercase tracking-wider leading-tight mt-0.5">
-                  Job-Ready
-                  <br />
-                  Skills
-                </span>
-              </div>
-
-              {/* Bottom Pill Strip - 100% Responsive on All Screens */}
+              {/* Floating Bottom Trust Pill Strip */}
               <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-30 w-full max-w-full px-2 sm:max-w-none flex justify-center pointer-events-none">
-                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md px-3 sm:px-5 py-1 sm:py-1.5 text-[9.5px] sm:text-xs font-bold text-slate-800 text-center whitespace-nowrap">
-                  <span>Industry Experts</span>
-                  <span className="text-slate-300 font-normal">|</span>
-                  <span>Get Certified</span>
-                  <span className="text-slate-300 font-normal">|</span>
-                  <span className="hidden sm:inline">Grow Your </span>
-                  <span>Career</span>
+                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md px-3 sm:px-4 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-bold text-slate-800 text-center whitespace-nowrap">
+                  <span>Practical Training</span>
+                  <span className="text-slate-300 font-normal">•</span>
+                  <span>Industry Mentorship</span>
+                  <span className="text-slate-300 font-normal">•</span>
+                  <span>Real-World Projects</span>
+                  <span className="text-slate-300 font-normal">•</span>
+                  <span>Career-Focused</span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 2 — Elevated Stats Bar */}
-        <div
-          className="mt-6 sm:mt-8 w-full max-w-6xl mx-auto rounded-2xl bg-white border border-slate-200/80 shadow-[0_8px_30px_-10px_rgba(8,20,38,0.06)] px-3 sm:px-6 py-3 sm:py-4"
-          data-reveal
-        >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-slate-100">
-            <div className="flex items-center gap-2 sm:gap-3 px-1 sm:px-5">
-              <span className="grid size-8 sm:size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
-                <Users className="size-4 sm:size-5" aria-hidden="true" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
-                  <CountUp value={10} suffix="K+" />
-                </p>
-                <p className="text-[10px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate sm:whitespace-normal">
-                  Students Trained
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 sm:gap-3 px-1 sm:px-5">
-              <span className="grid size-8 sm:size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
-                <UserCheck className="size-4 sm:size-5" aria-hidden="true" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
-                  <CountUp value={50} suffix="+" />
-                </p>
-                <p className="text-[10px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate sm:whitespace-normal">
-                  Expert Trainers
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 sm:gap-3 px-1 sm:px-5">
-              <span className="grid size-8 sm:size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
-                <Cpu className="size-4 sm:size-5" aria-hidden="true" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
-                  <CountUp value={20} suffix="+" />
-                </p>
-                <p className="text-[10px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate sm:whitespace-normal">
-                  Industry Courses
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 sm:gap-3 px-1 sm:px-5">
-              <span className="grid size-8 sm:size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
-                <ShieldCheck className="size-4 sm:size-5" aria-hidden="true" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
-                  <CountUp value={95} suffix="%" />
-                </p>
-                <p className="text-[10px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate sm:whitespace-normal">
-                  Career Advancement
-                </p>
               </div>
             </div>
           </div>
@@ -513,169 +375,276 @@ function Hero() {
   );
 }
 
-function AboutPreview() {
+/**
+ * =========================================================================
+ * 4. USP / TRUST STRIP
+ * =========================================================================
+ */
+function UspTrustStrip() {
   return (
-    <section className="bg-background overflow-hidden">
-      <div className="container-site py-8 sm:py-10 lg:py-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className="relative" data-reveal="left">
-          <div className="overflow-hidden rounded-2xl border border-slate-200/80 shadow-md">
+    <section className="bg-white border-y border-slate-200/80 py-6 sm:py-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] select-none">
+      <div className="container-site">
+        {/* Row 1: Key Credible Statistics */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:divide-x lg:divide-slate-200/80">
+          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
+            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
+              <Users className="size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+                <CountUp value={3} suffix="k+" />
+              </p>
+              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+                Learners Mentored
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
+            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 shadow-xs">
+              <UserCheck className="size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+                <CountUp value={10} suffix="" />
+              </p>
+              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+                Dedicated Mentors
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
+            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-sky-50 text-sky-600 border border-sky-100 shadow-xs">
+              <Cpu className="size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+                <CountUp value={25} suffix="+" />
+              </p>
+              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+                Practical Projects
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
+            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-xs">
+              <Award className="size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+                <CountUp value={100} suffix="%" />
+              </p>
+              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+                Placement Assistance
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Row 2: 4 Foundational USP Commitments */}
+        <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3.5">
+          {[
+            {
+              title: "Practical Training",
+              text: "Live tool labs & sandboxes",
+              icon: Terminal,
+              color: "text-blue-600 bg-blue-50 border-blue-100",
+            },
+            {
+              title: "Industry Mentorship",
+              text: "10 dedicated expert mentors",
+              icon: Users,
+              color: "text-indigo-600 bg-indigo-50 border-indigo-100",
+            },
+            {
+              title: "Real-World Projects",
+              text: "Live campaigns & security audits",
+              icon: Layers,
+              color: "text-sky-600 bg-sky-50 border-sky-100",
+            },
+            {
+              title: "Career-Focused Learning",
+              text: "100% placement assistance & prep",
+              icon: Briefcase,
+              color: "text-emerald-600 bg-emerald-50 border-emerald-100",
+            },
+          ].map((usp) => {
+            const UspIcon = usp.icon;
+            return (
+              <div
+                key={usp.title}
+                className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-slate-50/70 border border-slate-200/70"
+              >
+                <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg border", usp.color)}>
+                  <UspIcon className="size-4" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-slate-800 truncate">{usp.title}</p>
+                  <p className="text-[10.5px] text-slate-500 truncate">{usp.text}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 5. WHY DIGITECHADEMY
+ * =========================================================================
+ */
+function WhyDigitechademy() {
+  return (
+    <section className="bg-background py-10 sm:py-16 overflow-hidden border-b border-slate-200/60">
+      <div className="container-site grid items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+        {/* Left Column: Visual graphic */}
+        <div className="relative lg:col-span-5" data-reveal="left">
+          <div className="overflow-hidden rounded-3xl border border-slate-200/80 shadow-xl bg-slate-950 aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] relative">
             <img
               src={aboutImg}
-              alt="Instructor guiding students during a practical technology training session"
+              alt="DIGITECHADEMY practical skills and industry training"
               loading="lazy"
               width={1200}
               height={1008}
-              className="aspect-[5/4] w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 text-white">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-600/80 text-[10.5px] font-black uppercase tracking-wider text-sky-200 mb-1.5 backdrop-blur-xs">
+                <Sparkles className="size-3" />
+                LEARN • GROW • ACHIEVE
+              </span>
+              <p className="font-bold text-sm sm:text-base text-white">
+                Learn practical skills. Build real-world confidence.
+              </p>
+              <p className="text-xs text-slate-300 mt-0.5">
+                100% hands-on training with 10 dedicated mentors.
+              </p>
+            </div>
           </div>
-          <div className="absolute -bottom-5 -right-3 hidden rounded-xl border border-slate-200/80 bg-white/95 backdrop-blur-md p-4 shadow-lg sm:block">
-            <p className="font-display text-2xl font-black text-accent">95%</p>
-            <p className="text-xs font-bold text-slate-600">Learning satisfaction</p>
+
+          {/* Floating Pill Badge */}
+          <div className="absolute -bottom-3 -right-2 rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md p-3.5 shadow-lg hidden sm:flex items-center gap-3">
+            <span className="grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+              <CheckCircle2 className="size-5" />
+            </span>
+            <div>
+              <p className="font-display text-sm font-black text-slate-900">Career Ready</p>
+              <p className="text-[11px] font-semibold text-slate-500">100% Placement Assistance</p>
+            </div>
           </div>
         </div>
 
-        <div data-reveal="right">
+        {/* Right Column: Heading and 5 Exact Differentiators */}
+        <div className="lg:col-span-7" data-reveal="right">
           <SectionHeading
-            eyebrow="ABOUT DIGITECHADEMY"
-            title="Training Built Around Skills You Can Actually Use"
+            eyebrow="WHY DIGITECHADEMY"
+            title="WHAT MAKES DIGITECHADEMY DIFFERENT?"
             singleLine={false}
-            description={
-              <>
-                <span className="sm:hidden">
-                  Digitechademy turns digital concepts into practical, career-ready skills through hands-on practice, industry tools, and guided projects.
-                </span>
-                <span className="hidden sm:inline">
-                  Digitechademy helps learners turn digital concepts into practical, career-ready skills. Our training combines structured learning, hands-on practice, industry tools, guided projects, and real-world scenarios across digital marketing and technology-focused disciplines.
-                </span>
-              </>
-            }
+            description="DIGITECHADEMY bridges the gap between academic theory and technical employability through practical, mentor-led training across Cyber Security, Digital Marketing, and Programmatic Advertising."
             align="left"
-            descriptionClassName="text-justify [text-align:justify] [text-justify:inter-word]"
           />
-          <ul className="mt-3.5 sm:mt-6 flex flex-col gap-1.5 sm:gap-3">
+
+          <div className="mt-6 grid gap-2.5 sm:gap-3">
             {[
               {
-                mobile: "Learn fundamentals before advanced concepts.",
-                full: "Learn the fundamentals before moving into advanced concepts.",
+                title: "Industry-Led Training",
+                desc: "Learn concepts through an industry-focused lens, not just theory.",
+                icon: Briefcase,
+                color: "bg-blue-50 text-blue-600 border-blue-100",
               },
               {
-                mobile: "Practice with industry tools & real workflows.",
-                full: "Practice with tools, workflows, campaigns, and realistic business scenarios.",
+                title: "Hands-On Practice",
+                desc: "Practice the skills you are learning through exercises and realistic scenarios.",
+                icon: Terminal,
+                color: "bg-indigo-50 text-indigo-600 border-indigo-100",
               },
               {
-                mobile: "Build practical confidence & career readiness.",
-                full: "Develop practical confidence that extends beyond course completion.",
+                title: "Build Work You Can Talk About",
+                desc: "Use projects and practical outcomes to demonstrate what you can actually do.",
+                icon: Award,
+                color: "bg-amber-50 text-amber-600 border-amber-100",
               },
-            ].map((item) => (
-              <li
-                key={item.full}
-                className="flex items-center gap-2 sm:gap-3 rounded-lg sm:rounded-xl border border-slate-200/80 bg-white py-1.5 px-2.5 sm:py-3.5 sm:px-4 text-[11.5px] sm:text-sm font-medium text-slate-700 shadow-xs sm:shadow-sm transition-all duration-300 hover:border-accent/40 hover:shadow-md"
-              >
-                <span className="grid size-3.5 sm:size-5 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
-                  <CheckCircle2 className="size-2 sm:size-3.5" aria-hidden="true" />
-                </span>
-                <span className="leading-snug text-left">
-                  <span className="sm:hidden">{item.mobile}</span>
-                  <span className="hidden sm:inline">{item.full}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-          <Link
-            to="/about"
-            className="group mt-4 sm:mt-7 inline-flex items-center gap-1.5 sm:gap-2 text-[11.5px] sm:text-sm font-bold text-slate-900 transition-colors hover:text-accent"
-          >
-            <span>Discover Our Approach</span>
-            <ArrowRight
-              className="size-3 sm:size-4 transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </Link>
+              {
+                title: "Industry-Relevant Skills",
+                desc: "Focus on tools, workflows and skills relevant to modern digital and technology roles.",
+                icon: Target,
+                color: "bg-sky-50 text-sky-600 border-sky-100",
+              },
+              {
+                title: "Guidance, Not Just Content",
+                desc: "Learn with structured guidance, feedback and practical direction.",
+                icon: Users,
+                color: "bg-emerald-50 text-emerald-600 border-emerald-100",
+              },
+            ].map((item) => {
+              const ItemIcon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3 sm:p-3.5 shadow-2xs transition-all duration-200 hover:border-blue-300 hover:shadow-sm"
+                >
+                  <span
+                    className={cn(
+                      "grid size-7 sm:size-8 shrink-0 place-items-center rounded-lg border mt-0.5",
+                      item.color,
+                    )}
+                  >
+                    <ItemIcon className="size-3.5 sm:size-4" aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                      {item.title}
+                    </h4>
+                    <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <BtnLink
+              to="/courses"
+              variant="primary"
+              size="md"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm"
+            >
+              <span>Explore Programs</span>
+              <ArrowRight className="size-3.5 ml-1.5" />
+            </BtnLink>
+
+            <BtnLink
+              to="/about"
+              variant="outline"
+              size="md"
+              className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm"
+            >
+              <span>Learn About Our Mentors</span>
+            </BtnLink>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-const popularCategories = [
-  {
-    title: "Digital Marketing",
-    skills: "SEO, Social Media, Ads & More",
-    coursesCount: "120+ Courses",
-    href: "/courses",
-    icon: Megaphone,
-    bgGradient: "from-rose-50/80 via-white to-rose-50/30",
-    borderColor: "border-rose-100 hover:border-rose-200",
-    iconBg: "bg-rose-100 text-rose-600",
-    btnBg: "bg-rose-100/90 text-rose-600 group-hover:bg-rose-200",
-  },
-  {
-    title: "Web Development",
-    skills: "HTML, CSS, JavaScript, React & More",
-    coursesCount: "150+ Courses",
-    href: "/courses",
-    icon: Code2,
-    bgGradient: "from-emerald-50/80 via-white to-emerald-50/30",
-    borderColor: "border-emerald-100 hover:border-emerald-200",
-    iconBg: "bg-emerald-100 text-emerald-600",
-    btnBg: "bg-emerald-100/90 text-emerald-600 group-hover:bg-emerald-200",
-  },
-  {
-    title: "Data Analytics",
-    skills: "Excel, SQL, Power BI, Python",
-    coursesCount: "100+ Courses",
-    href: "/courses",
-    icon: BarChart3,
-    bgGradient: "from-purple-50/80 via-white to-purple-50/30",
-    borderColor: "border-purple-100 hover:border-purple-200",
-    iconBg: "bg-purple-100 text-purple-600",
-    btnBg: "bg-purple-100/90 text-purple-600 group-hover:bg-purple-200",
-  },
-  {
-    title: "Cyber Security",
-    skills: "Network Security, Ethical Hacking",
-    coursesCount: "80+ Courses",
-    href: "/courses",
-    icon: ShieldCheck,
-    bgGradient: "from-amber-50/80 via-white to-amber-50/30",
-    borderColor: "border-amber-100 hover:border-amber-200",
-    iconBg: "bg-amber-100 text-amber-600",
-    btnBg: "bg-amber-100/90 text-amber-600 group-hover:bg-amber-200",
-  },
-  {
-    title: "Design & Creative",
-    skills: "UI/UX, Graphic Design, Video Editing",
-    coursesCount: "90+ Courses",
-    href: "/courses",
-    icon: Palette,
-    bgGradient: "from-sky-50/80 via-white to-sky-50/30",
-    borderColor: "border-sky-100 hover:border-sky-200",
-    iconBg: "bg-sky-100 text-sky-600",
-    btnBg: "bg-sky-100/90 text-sky-600 group-hover:bg-sky-200",
-  },
-  {
-    title: "Business & Management",
-    skills: "Leadership, Product, Career Growth",
-    coursesCount: "70+ Courses",
-    href: "/courses",
-    icon: Briefcase,
-    bgGradient: "from-pink-50/80 via-white to-pink-50/30",
-    borderColor: "border-pink-100 hover:border-pink-200",
-    iconBg: "bg-pink-100 text-pink-600",
-    btnBg: "bg-pink-100/90 text-pink-600 group-hover:bg-pink-200",
-  },
-];
-
-function FeaturedCourses() {
+/**
+ * =========================================================================
+ * 6. CORE PROGRAMS
+ * =========================================================================
+ */
+function CorePrograms() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const raw = localStorage.getItem("digital_tech_courses_db");
-        if (raw) return JSON.parse(raw);
-      } catch {}
-    }
-    return courses.map((c) => ({
+  const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() =>
+    courses.map((c) => ({
       id: c.id,
       slug: c.slug,
       title: c.title,
@@ -683,202 +652,84 @@ function FeaturedCourses() {
       description: c.description,
       duration: c.duration,
       level: c.level,
-      instructor: c.instructors?.[0]?.name || "Sai Rama",
+      instructor: c.instructors?.[0]?.name || "Lead Faculty",
       price: c.pricing?.fee || "₹24,999",
       highlights: c.highlights || [],
       syllabus: c.syllabus || [],
-      students: 180,
+      students: 150,
       active: true,
       featured: true,
       image: c.image || "",
-    }));
-  });
+    })),
+  );
 
-  // Subscribe to live Firebase courses
   useEffect(() => {
-    const unsub = subscribeCourses((courses) => {
-      setLiveCourses(courses);
+    const unsub = subscribeCourses((coursesList) => {
+      if (coursesList && coursesList.length > 0) {
+        setLiveCourses(coursesList);
+      }
     });
     return () => unsub();
   }, []);
 
-  // Filter courses displayed directly in this section
+  const programCategories = ["All", "Cyber Security", "Digital Marketing", "Programmatic Advertising"];
+
   const displayedCourses = useMemo(() => {
     const active = liveCourses.filter((c) => c.active !== false);
-    if (selectedCategory === "All") {
-      return active;
-    }
-    return active.filter(
-      (c) => c.category.toLowerCase() === selectedCategory.toLowerCase()
-    );
+    if (selectedCategory === "All") return active;
+    return active.filter((c) => c.category.toLowerCase() === selectedCategory.toLowerCase());
   }, [liveCourses, selectedCategory]);
 
   return (
-    <section id="courses" className="bg-white py-10 sm:py-14 lg:py-16 border-y border-slate-200/80 overflow-hidden">
+    <section id="courses" className="bg-surface py-10 sm:py-16 border-y border-slate-200/80 overflow-hidden">
       <div className="container-site">
-        {/* Header matching reference design with right-aligned View All Courses link */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10" data-reveal>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8" data-reveal>
           <div className="max-w-2xl">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-blue-600 select-none">
-              EXPLORE
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-[2.35rem] font-black text-slate-900 tracking-tight mt-1 leading-[1.15]">
-              Popular Course Categories
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 mt-1.5 font-normal leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
-              Choose from our most in-demand programs and start your learning journey today.
-            </p>
+            <SectionHeading
+              eyebrow="CORE PROGRAMS"
+              title="Career-Oriented Training Tracks"
+              description="Choose an industry-aligned program crafted for real-world technical competency, hands-on lab practice, and comprehensive placement support."
+              align="left"
+            />
           </div>
-          <div className="shrink-0 flex items-center gap-3">
-            <Link
-              to="/courses"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors group"
-            >
-              <span>View All Courses</span>
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-            </Link>
-          </div>
+          <Link
+            to="/courses"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors whitespace-nowrap self-start sm:self-end"
+          >
+            <span>View All Course Details</span>
+            <ArrowRight className="size-4" />
+          </Link>
         </div>
 
-        {/* Category Quick Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0" data-reveal>
-          {["All", ...popularCategories.map((c) => c.title)].map((catName) => {
-            const isSelected = selectedCategory === catName;
-            const count = catName === "All"
-              ? liveCourses.filter((c) => c.active !== false).length
-              : liveCourses.filter((c) => c.category.toLowerCase() === catName.toLowerCase() && c.active !== false).length;
-
+        {/* Category Filters */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 mb-8" data-reveal>
+          {programCategories.map((cat) => {
+            const isActive = selectedCategory === cat;
             return (
               <button
-                key={catName}
+                key={cat}
                 type="button"
-                onClick={() => setSelectedCategory(catName)}
+                onClick={() => setSelectedCategory(cat)}
                 className={cn(
-                  "shrink-0 text-xs font-bold px-3.5 sm:px-4 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5",
-                  isSelected
-                    ? "bg-slate-950 text-white shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                  "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap",
+                  isActive
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
+                    : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80"
                 )}
               >
-                <span>{catName === "All" ? "All Programs" : catName}</span>
-                <span
-                  className={cn(
-                    "text-[10px] px-1.5 py-0.2 rounded-full font-extrabold",
-                    isSelected ? "bg-white/20 text-white" : "bg-slate-200/80 text-slate-600"
-                  )}
-                >
-                  {count}
-                </span>
+                {cat}
               </button>
             );
           })}
         </div>
 
-        {/* Courses Grid Styled with Category Theme UI */}
-        {displayedCourses.length > 0 ? (
-          <div className="grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {displayedCourses.map((course) => (
-              <CourseCard key={course.slug || course.id} course={course} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-8 sm:p-12 text-center max-w-md mx-auto">
-            <div className="size-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-3">
-              <Sparkles className="size-6" />
-            </div>
-            <h4 className="text-base font-bold text-slate-900">
-              New {selectedCategory} Courses Coming Soon
-            </h4>
-            <p className="text-xs text-slate-500 mt-1 mb-4">
-              We are curating high-impact curriculum for this category. Explore our live courses below or in our catalog.
-            </p>
-            <button
-              type="button"
-              onClick={() => setSelectedCategory("All")}
-              className="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl transition-colors cursor-pointer"
-            >
-              View All Available Courses
-            </button>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function WhyChooseUs() {
-  return (
-    <section className="surface-navy relative overflow-hidden">
-      {/* Subtle cyber grid backdrop */}
-      <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
-
-      {/* Ambient cyan and blue glow */}
-      <div
-        className="pointer-events-none absolute -left-20 -top-20 size-[32rem] rounded-full bg-blue-600/15 blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -right-20 -bottom-20 size-[32rem] rounded-full bg-accent/10 blur-3xl"
-        aria-hidden="true"
-      />
-
-      <div className="container-site relative z-10 py-10 sm:py-12 lg:py-14">
-        <SectionHeading
-          eyebrow="WHY CHOOSE US"
-          title="More Than a Course. A Practical Learning Experience."
-          description="A learning experience designed around practice, industry relevance and measurable progress."
-          align="left"
-          onDark
-        />
-
-        {/* 2 Cards in a Row on Mobile, 4 Cards on Desktop */}
-        <div className="mt-10 sm:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-8 sm:gap-6 pt-8 sm:pt-6">
-          {whyChooseUs.map((item, index) => (
-            <article
-              key={item.title}
-              data-reveal={index % 2 === 0 ? "left" : "top"}
-              style={{ "--reveal-delay": `${(index % 2) * 120 + Math.floor(index / 2) * 80}ms` } as React.CSSProperties}
-              className="group relative flex flex-col justify-between rounded-2xl border border-sky-500/25 bg-[#0b1c34]/90 backdrop-blur-md p-3 sm:p-6 pt-8 sm:pt-9 shadow-lg shadow-black/25 transition-all duration-300 hover:-translate-y-1.5 hover:border-sky-400/60 hover:shadow-xl hover:shadow-blue-500/15"
-            >
-              {/* Circular Icon Badge Straddling Top Border */}
-              <div className="absolute -top-5 sm:-top-6 left-3 sm:left-7 z-10">
-                <div className="relative flex items-center justify-center">
-                  {/* Soft luminous halo */}
-                  <div
-                    className="absolute -inset-1.5 rounded-full bg-sky-400/30 blur-sm transition-all duration-300 group-hover:bg-sky-400/50 group-hover:blur-md"
-                    aria-hidden="true"
-                  />
-                  {/* Glowing Circle Badge */}
-                  <span className="relative grid size-11 sm:size-13 place-items-center rounded-full bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 text-white border-2 border-sky-300/40 shadow-md shadow-blue-950/60 transition-transform duration-300 group-hover:scale-110">
-                    <Icon name={item.icon} className="size-5.5 sm:size-6.5 text-white drop-shadow-xs" />
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                {/* Title */}
-                <h3 className="min-h-[30px] sm:min-h-0 flex items-center sm:block text-xs sm:text-base sm:text-[17px] font-bold text-white transition-colors group-hover:text-sky-300 leading-snug">
-                  {item.title}
-                </h3>
-
-                {/* Description */}
-                <p className="mt-1.5 sm:mt-2.5 text-[10.5px] sm:text-[13px] leading-relaxed text-slate-300 font-normal text-justify [text-align:justify] [text-justify:inter-word] [hyphens:auto]">
-                  {item.text}
-                </p>
-              </div>
-
-              {/* Connector arrow between cards on desktop */}
-              {index < whyChooseUs.length - 1 && (
-                <div
-                  className="pointer-events-none absolute -right-3.5 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center z-20"
-                  aria-hidden="true"
-                >
-                  <span className="grid size-6 place-items-center rounded-full bg-[#081426] border border-sky-400/40 text-sky-400 shadow-sm shadow-blue-950/50">
-                    <ChevronRight className="size-3" />
-                  </span>
-                </div>
-              )}
-            </article>
+        {/* Course Cards Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {displayedCourses.map((course) => (
+            <CourseCard
+              key={course.id || course.slug}
+              course={course as any}
+            />
           ))}
         </div>
       </div>
@@ -886,410 +737,149 @@ function WhyChooseUs() {
   );
 }
 
-function Methodology() {
+/**
+ * =========================================================================
+ * 7. PROGRAMMATIC ADVERTISING DIFFERENTIATOR
+ * =========================================================================
+ */
+function ProgrammaticDifferentiator() {
   return (
-    <section id="methodology" className="surface-navy relative overflow-hidden py-8 sm:py-14 lg:py-16 border-t border-navy-700/60">
+    <section id="programmatic-differentiator" className="surface-navy relative py-12 sm:py-20 overflow-hidden">
       <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
       <div
         className="pointer-events-none absolute -left-20 -bottom-20 size-[32rem] rounded-full bg-blue-600/15 blur-3xl"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -right-20 -top-20 size-[32rem] rounded-full bg-accent/10 blur-3xl"
+        className="pointer-events-none absolute -right-20 -top-20 size-[32rem] rounded-full bg-indigo-600/15 blur-3xl"
         aria-hidden="true"
       />
-      <div className="container-site relative z-10 overflow-x-clip">
-        <SectionHeading
-          eyebrow="OUR LEARNING APPROACH"
-          title="From Concept Architecture to Real-World Mastery"
-          description="An interactive 5-stage progressive pathway designed to move you from fundamental concepts to building portfolio-grade deliverables."
-          align="left"
-          onDark
-        />
-        <div className="mt-5 sm:mt-10">
-          <StudentLearningPath />
+
+      <div className="container-site relative z-10">
+        <div className="max-w-3xl" data-reveal>
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-sky-300 mb-3 backdrop-blur-xs">
+            <Radio className="size-3 text-sky-400 animate-pulse" />
+            <span>GO BEYOND BASIC DIGITAL MARKETING</span>
+          </div>
+
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] font-black text-white leading-tight tracking-tight">
+            Learn Programmatic Advertising{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
+              From the Inside Out
+            </span>
+          </h2>
+
+          <div className="mt-3.5 space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p>
+              Programmatic advertising isn't just about running ads. It's about understanding audiences, inventory, bidding, targeting, pacing, optimization, measurement and media performance.
+            </p>
+            <p className="text-slate-400">
+              Learn how modern programmatic campaigns are planned, launched, monitored and optimized using industry workflows and platforms.
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
 
-function PracticalTraining() {
-  const [activeCard, setActiveCard] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-
-  // Auto-advancing sequential transition effect:
-  // Card 1 (Top-Left) -> Card 2 (Top-Right) -> Card 3 (Mid-Left) -> Card 4 (Mid-Right) -> Card 5 (Bottom)
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setActiveCard((prev) => (prev + 1) % practicalTraining.length);
-    }, 2600);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  return (
-    <section className="bg-surface overflow-hidden">
-      <div className="container-site py-8 sm:py-10 lg:py-12">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
-          <div data-reveal="left">
-            <SectionHeading
-              eyebrow="PRACTICAL EXPERIENCE"
-              title="Practice the Work. Build the Skill. Be Ready for the Real World."
-              description="Real capability comes from applying what you learn. Our practical learning experience connects concepts with the tasks, decisions, tools, and problem-solving situations professionals encounter in the workplace."
-              align="left"
-              singleLine={false}
-            />
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <BtnLink
-                to="/courses"
-                variant="primary"
-                size="md"
-                className="bg-navy hover:bg-navy-700 text-white font-bold h-12 px-7 rounded-xl inline-flex items-center gap-2 shadow-md shadow-navy/10 hover:shadow-accent/20 transition-all duration-300"
+        {/* 6 Platform Pillars Grid */}
+        <div className="mt-8 grid gap-3.5 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              icon: Radio,
+              badge: "Demand Side Platform",
+              name: "DV360",
+              desc: "Campaign planning, targeting, bidding and optimization.",
+              color: "bg-sky-500/15 text-sky-400 border-sky-400/30",
+            },
+            {
+              icon: Server,
+              badge: "Ad Server & Tracking",
+              name: "CM360",
+              desc: "Ad serving, tracking, attribution and campaign measurement.",
+              color: "bg-blue-500/15 text-blue-400 border-blue-400/30",
+            },
+            {
+              icon: Play,
+              badge: "Video & Discovery",
+              name: "YouTube Advertising",
+              desc: "Audience strategy, video campaigns and performance analysis.",
+              color: "bg-red-500/15 text-red-400 border-red-400/30",
+            },
+            {
+              icon: Target,
+              badge: "Audience Strategy",
+              name: "Audience & Targeting",
+              desc: "Understand how audiences are built, segmented and activated.",
+              color: "bg-indigo-500/15 text-indigo-400 border-indigo-400/30",
+            },
+            {
+              icon: TrendingUp,
+              badge: "Media Trader Decisions",
+              name: "Optimization",
+              desc: "Learn how traders identify performance issues and make optimization decisions.",
+              color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30",
+            },
+            {
+              icon: BarChart3,
+              badge: "Analytics & Attribution",
+              name: "Reporting & Measurement",
+              desc: "Turn campaign data into actionable media insights.",
+              color: "bg-amber-500/15 text-amber-400 border-amber-400/30",
+            },
+          ].map((item) => {
+            const ItemIcon = item.icon;
+            return (
+              <div
+                key={item.name}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/50 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-2 cursor-pointer"
               >
-                <span>Explore Practical Learning</span>
-                <ArrowRight
-                  className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </BtnLink>
+                {/* Top Accent Line */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
-              {/* Live Transition Step Indicator */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200/90 text-blue-700 text-xs font-bold shadow-xs">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-blue-600" />
-                </span>
-                <span>Transitioning: Step {activeCard + 1} of 5</span>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="grid grid-cols-2 gap-2.5 sm:gap-4"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {practicalTraining.map((item, index) => {
-              const isActive = index === activeCard;
-
-              return (
-                <article
-                  key={item.title}
-                  onClick={() => setActiveCard(index)}
-                  className={cn(
-                    "group relative overflow-hidden rounded-xl sm:rounded-2xl border p-2.5 sm:p-5 shadow-sm transition-all duration-500 ease-out cursor-pointer select-none",
-                    "flex flex-col sm:flex-row items-start gap-2 sm:gap-3.5",
-                    isActive
-                      ? "border-sky-400 bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/70 shadow-xl shadow-blue-500/15 -translate-y-1.5 translate-x-1.5 scale-[1.02]"
-                      : "border-slate-200/80 bg-white hover:border-sky-300 hover:shadow-md hover:-translate-y-0.5 hover:translate-x-0.5",
-                    index === 4 ? "col-span-2 sm:col-span-2" : "",
-                  )}
-                >
-                  {/* Left-to-right top border gradient sweep (Active on highlighted card or hover) */}
-                  <span
-                    className={cn(
-                      "absolute top-0 left-0 h-1 transition-all duration-500 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-400",
-                      isActive ? "w-full" : "w-0 group-hover:w-full",
-                    )}
-                    aria-hidden="true"
-                  />
-                  {/* Top-to-bottom left border gradient sweep (Active on highlighted card or hover) */}
-                  <span
-                    className={cn(
-                      "absolute top-0 left-0 w-1 transition-all duration-500 bg-gradient-to-b from-blue-600 via-indigo-600 to-sky-400",
-                      isActive ? "h-full" : "h-0 group-hover:h-full",
-                    )}
-                    aria-hidden="true"
-                  />
-
-                  {/* Shimmer Light Beam on active card */}
-                  <div
-                    className={cn(
-                      "pointer-events-none absolute -inset-full bg-gradient-to-r from-transparent via-blue-400/25 to-transparent rotate-25 transition-opacity duration-300",
-                      isActive ? "animate-diagonal-sweep opacity-100" : "opacity-0 group-hover:opacity-100",
-                    )}
-                    aria-hidden="true"
-                  />
-
-                  <span
-                    className={cn(
-                      "relative z-10 grid size-8 sm:size-11 shrink-0 place-items-center rounded-lg sm:rounded-xl transition-all duration-300",
-                      isActive
-                        ? "bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/30 scale-110"
-                        : "bg-navy/5 text-accent border border-navy/10 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:text-white group-hover:scale-105",
-                    )}
-                  >
-                    <Icon name={item.icon} className="size-4 sm:size-5" />
+                <div className="flex items-center justify-between">
+                  <span className={cn("grid size-9 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md", item.color)}>
+                    <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" />
                   </span>
-
-                  <div className="relative z-10 min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-1">
-                      <h3
-                        className={cn(
-                          "text-xs sm:text-sm font-extrabold transition-colors leading-tight",
-                          isActive ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600",
-                        )}
-                      >
-                        {item.title}
-                      </h3>
-                      {isActive && (
-                        <span className="size-1.5 rounded-full bg-blue-600 animate-pulse shrink-0" />
-                      )}
-                    </div>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-500 hidden sm:block">
-                      {item.text}
-                    </p>
-                    <p className="mt-0.5 text-[10.5px] leading-snug text-slate-500 font-normal sm:hidden">
-                      {(item as { shortText?: string; text: string }).shortText || item.text}
-                    </p>
-                  </div>
-
-                  {/* Active Linear Progress Bar on Bottom Edge */}
-                  {isActive && (
-                    <div className="absolute bottom-0 inset-x-0 h-0.75 bg-blue-100/60 overflow-hidden">
-                      <div
-                        key={`prog-${activeCard}`}
-                        className="h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-400"
-                        style={{
-                          animation: isPaused
-                            ? "none"
-                            : "learning-stage-fill 2600ms linear forwards",
-                        }}
-                      />
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-          </div>
+                  <span className="text-[9.5px] font-bold text-slate-300 uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10 transition-colors duration-300 group-hover:border-sky-400/40 group-hover:text-white">
+                    {item.badge}
+                  </span>
+                </div>
+                <h3 className="mt-3.5 text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
+                  {item.name}
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 font-normal transition-colors duration-200 text-justify [text-align:justify] [text-justify:inter-word]">
+                  {item.desc}
+                </p>
+              </div>
+            );
+          })}
         </div>
-      </div>
-    </section>
-  );
-}
 
-function CareerFocus() {
-  const benefits = [
-    {
-      title: "Job-Ready Capabilities",
-      desc: "Skills mapped directly to live digital marketing and cyber security roles.",
-      badge: "Role-Aligned",
-      icon: Briefcase,
-      color: "from-sky-500/20 to-blue-600/20 border-sky-400/30 text-sky-400",
-      accent: "from-sky-400 to-blue-600",
-      glow: "hover:shadow-sky-500/20 hover:border-sky-400/50",
-    },
-    {
-      title: "Portfolio Deliverables",
-      desc: "Build concrete case studies, campaign plans, and assessment reports.",
-      badge: "Live Projects",
-      icon: FileText,
-      color: "from-indigo-500/20 to-purple-600/20 border-indigo-400/30 text-indigo-400",
-      accent: "from-indigo-400 to-purple-600",
-      glow: "hover:shadow-indigo-500/20 hover:border-indigo-400/50",
-    },
-    {
-      title: "Professional Confidence",
-      desc: "Master the tools, metrics, and workflows expected in modern teams.",
-      badge: "Tool Mastery",
-      icon: Sparkles,
-      color: "from-emerald-500/20 to-teal-600/20 border-emerald-400/30 text-emerald-400",
-      accent: "from-emerald-400 to-teal-600",
-      glow: "hover:shadow-emerald-500/20 hover:border-emerald-400/50",
-    },
-  ];
-
-  return (
-    <section className="bg-background overflow-hidden">
-      <div className="container-site py-8 sm:py-12 lg:py-16">
+        {/* Signature Statement Banner */}
         <div
+          className="mt-8 rounded-2xl border border-sky-400/30 bg-gradient-to-r from-blue-950/90 via-[#071a40]/90 to-indigo-950/90 p-5 sm:p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden"
           data-reveal
-          className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#06132d] via-[#091f48] to-[#040e24] p-5 sm:p-10 lg:p-14 border border-sky-500/20 shadow-2xl shadow-navy/40"
         >
-          {/* Subtle cyber grid and ambient lighting */}
-          <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
-          <div
-            className="pointer-events-none absolute -right-20 -top-20 size-80 sm:size-96 rounded-full bg-sky-500/15 blur-3xl"
-            aria-hidden="true"
-          />
-          <div
-            className="pointer-events-none absolute left-1/4 -bottom-20 size-72 sm:size-80 rounded-full bg-indigo-500/15 blur-3xl"
-            aria-hidden="true"
-          />
-
-          <div className="relative z-10 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-            {/* Left Content Column */}
+          <div className="flex items-center gap-3">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-md">
+              <Sparkles className="size-5" />
+            </span>
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-[11px] font-bold tracking-widest text-sky-300 uppercase">
-                <span className="size-1.5 rounded-full bg-sky-400 animate-pulse" />
-                <span>Build Your Career With Confidence</span>
-              </div>
-
-              <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug sm:leading-tight">
-                Turn Knowledge Into{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-200 to-indigo-200">
-                  Career-Ready Skills
-                </span>
-              </h2>
-
-              <p className="mt-4 text-xs sm:text-sm lg:text-[15px] leading-relaxed text-slate-300 max-w-2xl text-justify [text-align:justify] [text-justify:inter-word]">
-                Whether you are starting your career, strengthening your current skill set, or moving into a new digital role, focused practical training can help you build a stronger professional foundation. Learn the concepts, practise the workflows, and develop skills you can demonstrate with confidence.
+              <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-sky-400">
+                Signature Programmatic Philosophy
+              </span>
+              <p className="text-sm sm:text-base font-black text-white tracking-wide mt-0.5 uppercase">
+                DON’T JUST LEARN PROGRAMMATIC. LEARN HOW PROGRAMMATIC PROFESSIONALS THINK.
               </p>
-
-              {/* Trust Metric Badges */}
-              <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-semibold text-slate-300">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="size-3.5 text-sky-400" />
-                  <span>100% Practical Focus</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="size-3.5 text-indigo-400" />
-                  <span>Industry Mentor Feedback</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="size-3.5 text-emerald-400" />
-                  <span>Verified Credentials</span>
-                </span>
-              </div>
-
-              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <BtnLink
-                  to="/courses"
-                  variant="primary"
-                  size="md"
-                  className="bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 hover:from-sky-300 hover:to-indigo-500 text-white font-extrabold h-12 px-7 rounded-xl inline-flex items-center justify-center gap-2 shadow-lg shadow-sky-500/25 transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
-                >
-                  <span>Explore Career-Focused Courses</span>
-                  <ArrowRight
-                    className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden="true"
-                  />
-                </BtnLink>
-              </div>
-            </div>
-
-            {/* Right Cards Column - Transition Effect From Left to Right and Top to Bottom */}
-            <div className="grid gap-3 sm:gap-3.5">
-              {benefits.map((benefit, idx) => {
-                const IconComp = benefit.icon;
-                return (
-                  <div
-                    key={benefit.title}
-                    data-reveal="top-left"
-                    style={{ "--reveal-delay": `${(idx + 1) * 110}ms` } as React.CSSProperties}
-                    className="w-full"
-                  >
-                    <div
-                      className={cn(
-                        "group relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-3.5 sm:p-4.5 cursor-pointer",
-                        // LEFT TO RIGHT TRANSITION ON HOVER
-                        "transition-all duration-300 ease-out hover:translate-x-3 sm:hover:translate-x-4 hover:bg-white/[0.08] hover:shadow-xl",
-                        benefit.glow
-                      )}
-                    >
-                      {/* Glowing Left-to-Right Accent Indicator Bar */}
-                      <div
-                        className={cn(
-                          "absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-full group-hover:translate-x-0",
-                          benefit.accent
-                        )}
-                        aria-hidden="true"
-                      />
-
-                      {/* Left-to-Right Animated Shimmer / Light Sweep */}
-                      <div
-                        className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                        aria-hidden="true"
-                      />
-
-                      <div className="flex items-start gap-3 sm:gap-3.5 transition-transform duration-300 ease-out group-hover:translate-x-1">
-                        <span
-                          className={cn(
-                            "mt-0.5 grid size-9 sm:size-10 shrink-0 place-items-center rounded-xl border bg-gradient-to-br transition-all duration-300 ease-out group-hover:scale-105 group-hover:translate-x-1 group-hover:shadow-md",
-                            benefit.color
-                          )}
-                        >
-                          <IconComp className="size-4 sm:size-4.5" aria-hidden="true" />
-                        </span>
-
-                        <div className="min-w-0 flex-1 transition-transform duration-300 ease-out group-hover:translate-x-0.5">
-                          <div className="flex items-center justify-between gap-2">
-                            <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide transition-colors duration-200 group-hover:text-white">
-                              {benefit.title}
-                            </h3>
-                            <span className="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-300 shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:text-white group-hover:border-white/20">
-                              {benefit.badge}
-                            </span>
-                          </div>
-                          <p className="mt-1 text-xs text-slate-300 leading-relaxed text-left transition-colors duration-200 group-hover:text-slate-200">
-                            {benefit.desc}
-                          </p>
-                        </div>
-
-                        {/* Right Chevron indicating forward transition direction */}
-                        <ChevronRight
-                          className="size-4 text-slate-500/0 group-hover:text-sky-400 self-center shrink-0 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 ease-out"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
-
-function Testimonials() {
-  const [liveTestimonials, setLiveTestimonials] = useState(testimonials);
-
-  useEffect(() => {
-    const unsub = subscribeTestimonials((data) => {
-      if (data && data.length > 0) {
-        setLiveTestimonials(
-          data.map((t) => ({
-            name: t.name,
-            course: t.course,
-            rating: t.rating || 5,
-            quote: t.content,
-            initials: t.name.charAt(0).toUpperCase(),
-          }))
-        );
-      }
-    });
-    return () => unsub();
-  }, []);
-
-  return (
-    <section className="bg-surface overflow-hidden">
-      <div className="container-site py-8 sm:py-10 lg:py-12">
-        <SectionHeading
-          eyebrow="LEARNER EXPERIENCES"
-          title="What Our Learners Say"
-          description="Discover how learners experience practical training, structured guidance, and career-focused learning at Digitechademy."
-          align="left"
-        />
-        <div className="mt-8">
-          <TestimonialCarousel items={liveTestimonials.slice(0, 3)} />
-        </div>
-        <div className="mt-10 flex justify-center" data-reveal>
           <BtnLink
-            to="/testimonials"
-            variant="outline"
+            to="/courses/programmatic-advertising"
+            variant="primary"
             size="md"
-            className="border-slate-200 bg-white/80 backdrop-blur-sm text-slate-800 hover:border-accent hover:text-accent font-bold px-7 h-11 rounded-xl shadow-sm transition-all duration-300 flex items-center gap-2"
+            className="bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap shadow-md shadow-sky-500/30"
           >
-            <span>Read All Testimonials</span>
-            <ArrowRight
-              className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
+            <span>Explore Programmatic Masterclass</span>
+            <ArrowRight className="size-4 ml-1.5" />
           </BtnLink>
         </div>
       </div>
@@ -1297,36 +887,795 @@ function Testimonials() {
   );
 }
 
-function FaqPreview() {
+/**
+ * =========================================================================
+ * 8. CYBER SECURITY DIFFERENTIATOR
+ * =========================================================================
+ */
+function CyberSecurityDifferentiator() {
   return (
-    <section className="bg-background overflow-hidden">
-      <div className="container-site py-8 sm:py-10 lg:py-12 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
-        <div data-reveal="left">
-          <SectionHeading
-            eyebrow="FREQUENTLY ASKED QUESTIONS"
-            title="Questions Before You Start?"
-            description="Find answers to common questions about eligibility, course structure, prerequisites, and learning pathways at Digitechademy."
-            align="left"
-            singleLine={false}
-          />
-          <div className="mt-8">
-            <BtnLink
-              to="/faq"
-              variant="outline"
-              size="md"
-              className="border-slate-200 bg-white/80 backdrop-blur-sm text-slate-800 hover:border-accent hover:text-accent font-bold px-7 h-11 rounded-xl shadow-sm transition-all duration-300 inline-flex items-center gap-2"
-            >
-              <span>View All FAQs</span>
-              <ArrowRight
-                className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                aria-hidden="true"
-              />
-            </BtnLink>
+    <section className="bg-white py-12 sm:py-20 border-b border-slate-200/80 overflow-hidden">
+      <div className="container-site">
+        <div className="max-w-3xl" data-reveal>
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-blue-700 mb-3 backdrop-blur-xs">
+            <ShieldCheck className="size-3.5 text-blue-600" />
+            <span>THINK LIKE A DEFENDER. TEST LIKE AN ETHICAL HACKER.</span>
           </div>
+
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] font-black text-slate-900 leading-tight tracking-tight">
+            Build Practical{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600">
+              Cyber Security Skills
+            </span>
+          </h2>
+
+          <p className="mt-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            Cyber Security is not learned by memorizing definitions. Learn how systems work, where vulnerabilities occur and how security professionals identify, analyze and respond to security risks.
+          </p>
         </div>
-        <FaqAccordion items={homeFaqs} />
+
+        {/* 5 Progressive Steps Grid */}
+        <div className="mt-8 grid gap-3.5 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {[
+            {
+              step: "01",
+              title: "Understand",
+              desc: "Networking, operating systems and security fundamentals.",
+              icon: ShieldCheck,
+              badge: "Foundations",
+              color: "bg-blue-50 text-blue-600 border-blue-200",
+            },
+            {
+              step: "02",
+              title: "Explore",
+              desc: "Linux, web technologies and common security weaknesses.",
+              icon: Terminal,
+              badge: "Tooling & OS",
+              color: "bg-indigo-50 text-indigo-600 border-indigo-200",
+            },
+            {
+              step: "03",
+              title: "Practice",
+              desc: "Guided security exercises and labs.",
+              icon: Cpu,
+              badge: "Hands-on",
+              color: "bg-sky-50 text-sky-600 border-sky-200",
+            },
+            {
+              step: "04",
+              title: "Test",
+              desc: "Vulnerability assessment and ethical hacking methodologies.",
+              icon: Lock,
+              badge: "Assessment",
+              color: "bg-amber-50 text-amber-600 border-amber-200",
+            },
+            {
+              step: "05",
+              title: "Apply",
+              desc: "Analyze realistic security scenarios.",
+              icon: Target,
+              badge: "Real Scenarios",
+              color: "bg-emerald-50 text-emerald-600 border-emerald-200",
+            },
+          ].map((item) => {
+            const ItemIcon = item.icon;
+            return (
+              <Link
+                key={item.step}
+                to="/courses/cyber-security"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2 flex flex-col justify-between h-full cursor-pointer select-none active:scale-[0.98]"
+              >
+                {/* Top Animated Accent Border Gradient */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
+                {/* Subtle Hover Radial Ambient Glow */}
+                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-blue-50/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="font-display text-xs font-black text-blue-700 bg-blue-100/70 border border-blue-200 px-2.5 py-0.5 rounded-md transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:shadow-sm group-hover:shadow-blue-500/30 group-hover:scale-105">
+                      {item.step}
+                    </span>
+                    <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200/70 transition-all duration-300 group-hover:bg-blue-50 group-hover:text-blue-700 group-hover:border-blue-300">
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 mt-2">
+                    <span className={cn("grid size-8.5 place-items-center rounded-xl border shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md", item.color)}>
+                      <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" />
+                    </span>
+                    <h3 className="text-base font-black text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all duration-200">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  <p className="mt-2.5 text-xs leading-relaxed text-slate-600 group-hover:text-slate-800 transition-colors duration-200 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                    {item.desc}
+                  </p>
+                </div>
+
+                {/* Bottom Step Progression Flow Indicator */}
+                <div className="relative z-10 mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-400 group-hover:text-blue-600 transition-colors duration-200">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors">Phase {item.step}</span>
+                  <span className="flex items-center gap-1">
+                    <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-200">View Track</span>
+                    <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Closing Line Banner */}
+        <div
+          className="mt-8 rounded-2xl border border-blue-200/90 bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-sky-50/80 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm"
+          data-reveal
+        >
+          <div className="flex items-center gap-3">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
+              <ShieldCheck className="size-5.5" />
+            </span>
+            <div>
+              <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-blue-700">
+                The Practical Pathway
+              </span>
+              <p className="text-sm sm:text-base font-black text-slate-900 tracking-tight mt-0.5">
+                From Security Fundamentals to Practical Confidence.
+              </p>
+            </div>
+          </div>
+
+          <BtnLink
+            to="/courses/cyber-security"
+            variant="primary"
+            size="md"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap shadow-sm"
+          >
+            <span>Explore Cyber Security Track</span>
+            <ArrowRight className="size-4 ml-1.5" />
+          </BtnLink>
+        </div>
       </div>
     </section>
   );
 }
 
+/**
+ * =========================================================================
+ * 9. DIGITECHADEMY LEARNING METHOD
+ * =========================================================================
+ */
+function DigitechademyLearningMethod() {
+  return (
+    <section id="methodology" className="surface-navy relative py-12 sm:py-18 overflow-hidden border-t border-navy-700/60">
+      <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
+      <div className="container-site relative z-10">
+        <SectionHeading
+          eyebrow="DIGITECHADEMY LEARNING METHOD"
+          title="From Concept Architecture to Real-World Mastery"
+          description="Our structured 5-stage progressive pathway takes you from fundamental principles to building defensible, portfolio-grade project deliverables."
+          align="left"
+          onDark
+        />
+        <div className="mt-8">
+          <StudentLearningPath />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 10. PRACTICAL LEARNING
+ * =========================================================================
+ */
+function PracticalLearning() {
+  const [activeCard, setActiveCard] = useState<number>(0);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveCard((prev) => (prev + 1) % practicalTraining.length);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  return (
+    <section className="bg-surface py-12 sm:py-16 overflow-hidden border-b border-slate-200/80">
+      <div className="container-site">
+        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-14">
+          <div data-reveal="left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
+              <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+              PRACTICAL LEARNING
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+              DON’T JUST WATCH. DO.
+            </h2>
+
+            <p className="mt-2 text-base sm:text-lg font-bold text-blue-600">
+              Learn By Solving Real-World Problems.
+            </p>
+
+            <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              At Digitechademy, practical learning is not an optional add-on. You'll work through exercises, projects, case studies, tools and realistic scenarios designed to help you understand how professionals approach real problems.
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <BtnLink
+                to="/courses"
+                variant="primary"
+                size="md"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 px-6 rounded-xl inline-flex items-center gap-2 shadow-sm text-xs sm:text-sm"
+              >
+                <span>Explore Hands-On Syllabus</span>
+                <ArrowRight className="size-4" />
+              </BtnLink>
+
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold">
+                <span className="size-2 rounded-full bg-emerald-500 animate-ping" />
+                <span>Pillar {activeCard + 1} of {practicalTraining.length}</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 gap-3.5"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {practicalTraining.map((item, index) => {
+              const isActive = index === activeCard;
+              return (
+                <article
+                  key={item.title}
+                  onClick={() => setActiveCard(index)}
+                  className={cn(
+                    "group relative overflow-hidden rounded-2xl border p-4 sm:p-4.5 shadow-xs transition-all duration-300 ease-out cursor-pointer select-none active:scale-[0.99] flex flex-col justify-between",
+                    isActive
+                      ? "border-blue-500 bg-white shadow-xl shadow-blue-500/10 -translate-y-1.5 ring-1 ring-blue-400/40"
+                      : "border-slate-200/90 bg-white/90 hover:border-blue-400 hover:bg-white hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5",
+                    index === 4 ? "sm:col-span-2" : ""
+                  )}
+                >
+                  {/* Top Animated Accent Border Gradient */}
+                  <div
+                    className={cn(
+                      "absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500 transition-transform duration-300 origin-left",
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    )}
+                  />
+
+                  {/* Subtle Hover & Active Radial Ambient Glow */}
+                  <div
+                    className={cn(
+                      "pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-blue-50/50 via-transparent to-transparent transition-opacity duration-300",
+                      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                    )}
+                  />
+
+                  <div className="relative z-10 flex items-start gap-3.5">
+                    <span
+                      className={cn(
+                        "grid size-10 shrink-0 place-items-center rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md",
+                        isActive
+                          ? "bg-blue-600 text-white shadow-md shadow-blue-500/30 scale-105 rotate-3"
+                          : "bg-blue-50 text-blue-600 border border-blue-100 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600"
+                      )}
+                    >
+                      <Icon name={item.icon} className="size-5 transition-transform duration-300 group-hover:scale-110" />
+                    </span>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            "text-[10px] font-bold px-1.5 py-0.5 rounded-md border transition-all duration-300",
+                            isActive
+                              ? "bg-blue-600 text-white border-blue-600 shadow-xs shadow-blue-500/30 scale-105"
+                              : "bg-blue-50 text-blue-700 border-blue-200/80 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:shadow-xs group-hover:scale-105"
+                          )}
+                        >
+                          0{index + 1}
+                        </span>
+                        <h3
+                          className={cn(
+                            "text-sm font-black leading-tight transition-all duration-200",
+                            isActive
+                              ? "text-blue-700 translate-x-0.5"
+                              : "text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5"
+                          )}
+                        >
+                          {item.title}
+                        </h3>
+                      </div>
+
+                      <p className="mt-1.5 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-justify [text-align:justify] [text-justify:inter-word]">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Bottom Indicator */}
+                  <div className="relative z-10 mt-3.5 pt-2.5 border-t border-slate-100/80 flex items-center justify-between text-[10.5px] font-bold transition-colors">
+                    <span
+                      className={cn(
+                        "uppercase tracking-wider transition-colors",
+                        isActive ? "text-blue-600" : "text-slate-400 group-hover:text-blue-600"
+                      )}
+                    >
+                      {isActive ? "Pillar Active" : `Pillar 0${index + 1}`}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        {isActive ? "Selected" : "Select"}
+                      </span>
+                      <ArrowRight
+                        className={cn(
+                          "size-3.5 transition-transform duration-300",
+                          isActive
+                            ? "translate-x-1 text-blue-600"
+                            : "text-slate-300 group-hover:translate-x-1 group-hover:text-blue-600"
+                        )}
+                      />
+                    </span>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Closing Line Callout */}
+        <div className="mt-10 rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-5 sm:p-6 text-white shadow-lg border border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="grid size-10 place-items-center rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-300 shrink-0">
+              <Sparkles className="size-5 text-blue-300" />
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wider font-bold text-blue-300/90">Closing Philosophy</p>
+              <p className="text-sm sm:text-base font-bold tracking-tight text-white mt-0.5">
+                Knowledge Gets You Started. <span className="text-blue-400">Practice Makes You Job Ready.</span>
+              </p>
+            </div>
+          </div>
+          <BtnLink
+            to="/request-call"
+            variant="primary"
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-xl shrink-0 text-xs sm:text-sm shadow-md"
+          >
+            <span>Talk to a Mentor</span>
+            <ArrowRight className="size-4" />
+          </BtnLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 14. WHO IS DIGITECHADEMY FOR?
+ * =========================================================================
+ */
+function WhoIsThisFor() {
+  return (
+    <section className="bg-white py-12 sm:py-18 overflow-hidden border-b border-slate-200/80">
+      <div className="container-site">
+        <div className="max-w-3xl" data-reveal="left">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
+            <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+            WHO IS DIGITECHADEMY FOR?
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            Programs Structured for Distinct Career Aspirations
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            Whether launching your first career, transitioning domains, or upgrading into high-paying specialized fields, DIGITECHADEMY provides clear, guided entry points.
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {whoIsForAudience.map((persona, index) => {
+            return (
+              <div
+                key={persona.title}
+                data-reveal
+                className="group relative rounded-2xl border border-slate-200/80 bg-surface p-5 sm:p-6 shadow-xs flex flex-col justify-between transition-all duration-300 hover:border-blue-500/40 hover:bg-white hover:shadow-md hover:-translate-y-0.5"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="grid size-11 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                      <Icon name={persona.icon} className="size-5.5" />
+                    </span>
+                    <span className="text-[10.5px] font-bold text-slate-600 uppercase tracking-wider bg-slate-200/70 px-2.5 py-0.5 rounded-full">
+                      {persona.badge}
+                    </span>
+                  </div>
+
+                  <div className="mt-4 flex items-center gap-2">
+                    <span className="text-[10px] font-bold text-blue-600/80 bg-blue-50 px-1.5 py-0.5 rounded">
+                      0{index + 1}
+                    </span>
+                    <h3 className="text-base font-bold text-slate-900 leading-snug">
+                      {persona.title}
+                    </h3>
+                  </div>
+
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                    {persona.desc}
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3.5 border-t border-slate-200/70 flex items-center gap-2 text-[11.5px] font-semibold text-blue-700">
+                  <Check className="size-3.5 text-emerald-600 shrink-0" />
+                  <span>{persona.highlight}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 12. CAREER READINESS
+ * =========================================================================
+ */
+/**
+ * =========================================================================
+ * 15. CAREER READINESS
+ * =========================================================================
+ */
+function CareerReadiness() {
+  return (
+    <section className="surface-navy relative py-12 sm:py-18 overflow-hidden">
+      <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
+      <div className="container-site relative z-10">
+        <div className="max-w-4xl" data-reveal="left">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-bold tracking-wider uppercase mb-3">
+            <span className="size-2 rounded-full bg-blue-400 animate-pulse" />
+            CAREER READINESS
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+            BUILD SKILLS WITH YOUR NEXT CAREER MOVE IN MIND
+          </h2>
+          <p className="mt-2 text-base sm:text-lg font-bold text-sky-400">
+            Learn With Your Next Career Move In Mind.
+          </p>
+          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            Our programs are designed to help you understand industry concepts, practice practical skills, work through realistic scenarios, build project experience, prepare for technical and role-based interviews, and communicate your knowledge with confidence.
+          </p>
+        </div>
+
+        {/* Formula / Truth Card */}
+        <div
+          data-reveal
+          className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-5 sm:p-6 shadow-xl"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <span className="text-xs uppercase tracking-wider font-semibold text-rose-300">The Hard Truth</span>
+              <p className="text-base sm:text-lg font-bold text-slate-100 mt-0.5">
+                A certificate alone doesn't build a career.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 bg-slate-900/80 border border-blue-500/30 p-3 sm:p-3.5 rounded-xl">
+              <span className="px-3 py-1 rounded-lg bg-blue-600/30 border border-blue-400/40 text-blue-200 text-xs sm:text-sm font-bold">
+                Skills
+              </span>
+              <span className="text-slate-400 font-bold">+</span>
+              <span className="px-3 py-1 rounded-lg bg-indigo-600/30 border border-indigo-400/40 text-indigo-200 text-xs sm:text-sm font-bold">
+                Practice
+              </span>
+              <span className="text-slate-400 font-bold">+</span>
+              <span className="px-3 py-1 rounded-lg bg-cyan-600/30 border border-cyan-400/40 text-cyan-200 text-xs sm:text-sm font-bold">
+                Projects
+              </span>
+              <span className="text-slate-400 font-bold">+</span>
+              <span className="px-3 py-1 rounded-lg bg-emerald-600/30 border border-emerald-400/40 text-emerald-200 text-xs sm:text-sm font-bold">
+                Confidence
+              </span>
+              <span className="text-amber-400 font-bold">=</span>
+              <span className="px-3 py-1 rounded-lg bg-amber-400/20 border border-amber-400/50 text-amber-300 text-xs sm:text-sm font-black tracking-wide">
+                Career Readiness
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 6 Career Readiness Pillars */}
+        <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {careerReadinessPillars.map((pillar, index) => (
+            <div
+              key={pillar.title}
+              data-reveal
+              className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:border-sky-400/40 hover:bg-white/[0.07] hover:-translate-y-0.5"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="grid size-11 place-items-center rounded-xl bg-blue-500/10 text-sky-400 border border-blue-400/20 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                    <Icon name={pillar.icon} className="size-5.5" />
+                  </span>
+                  <span className="text-xs font-black text-sky-400/80 bg-sky-950/60 border border-sky-800/40 px-2 py-0.5 rounded-md">
+                    0{index + 1}
+                  </span>
+                </div>
+
+                <h4 className="mt-4 text-base font-bold text-white leading-snug">
+                  {pillar.title}
+                </h4>
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                  {pillar.text}
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3.5 border-t border-white/10 flex items-center gap-1.5 text-xs text-sky-300 font-medium">
+                <CheckCircle2 className="size-3.5 text-emerald-400 shrink-0" />
+                <span>Verified Career Standard</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Closing Line & CTA Banner */}
+        <div
+          data-reveal
+          className="mt-10 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 sm:p-8 text-white shadow-2xl border border-blue-500/30 flex flex-col lg:flex-row items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-4">
+            <div className="grid size-12 place-items-center rounded-2xl bg-blue-500/20 border border-blue-400/40 text-sky-300 shrink-0 shadow-inner">
+              <Sparkles className="size-6 text-sky-300" />
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wider font-bold text-sky-300">Core Principle</p>
+              <p className="text-base sm:text-xl font-black tracking-tight text-white mt-0.5">
+                Your Career Starts With What You Can Do — <span className="text-sky-300">Not Just What You Know.</span>
+              </p>
+            </div>
+          </div>
+
+          <BtnLink
+            to="/courses"
+            variant="primary"
+            size="lg"
+            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3.5 rounded-xl shrink-0 text-sm shadow-xl flex items-center gap-2"
+          >
+            <span>Explore Career-Focused Programs</span>
+            <ArrowRight className="size-4" />
+          </BtnLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 13. GENUINE TESTIMONIALS (Only when available)
+ * =========================================================================
+ */
+function GenuineTestimonials() {
+  // Respecting the mandatory rule:
+  // "Testimonials must be genuine, attributable and approved. If genuine testimonials are not ready, replace the section with a value/trust section rather than fabricating testimonials."
+  const verifiedReviews: Array<{ name: string; course: string; quote: string; verified: boolean }> = [];
+
+  return (
+    <section className="bg-surface py-12 sm:py-16 border-y border-slate-200/80 overflow-hidden">
+      <div className="container-site max-w-5xl">
+        <SectionHeading
+          eyebrow="GENUINE TESTIMONIALS POLICY"
+          title="Authentic Reviews Policy & Trust Standards"
+          description="Credibility is our foundational principle. We do not publish fabricated quotes, fake student personas, or unverified star ratings."
+          align="left"
+        />
+
+        {verifiedReviews.length > 0 ? (
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {verifiedReviews.map((rev, i) => (
+              <div key={i} className="p-5 rounded-2xl bg-white border border-slate-200">
+                <p className="text-xs text-slate-600 italic">"{rev.quote}"</p>
+                <p className="mt-3 text-xs font-bold text-slate-900">{rev.name}</p>
+                <p className="text-[11px] text-slate-500">{rev.course}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            data-reveal
+            className="mt-8 rounded-2xl border border-blue-200/90 bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/60 p-6 sm:p-8 shadow-xs"
+          >
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-700 mb-2">
+              <ShieldCheck className="size-4 text-blue-600" />
+              <span>Authentic Reviews Standard</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+              Testimonials Must Be Genuine, Attributable &amp; Approved
+            </h3>
+            <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              At DIGITECHADEMY, we uphold strict standards of institutional credibility. We never use placeholder testimonials or manufactured reviews. As learners from our current cohorts finish their verified capstones and enter the workforce, their authorized journeys and feedback will be published here with full attribution.
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-blue-100">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-emerald-600" />
+                  Zero Fabricated Quotes
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-emerald-600" />
+                  Verified Student Defenses
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="size-4 text-emerald-600" />
+                  100% Practical Training
+                </span>
+              </div>
+
+              <BtnLink
+                to="/testimonials"
+                variant="outline"
+                size="sm"
+                className="border-blue-300 text-blue-700 bg-white hover:bg-blue-600 hover:text-white px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all duration-200"
+              >
+                <span>Read Our Standards</span>
+                <ArrowRight className="size-3.5 ml-1.5" />
+              </BtnLink>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 17. FAQ — EXACT QUESTIONS & ANSWERS
+ * =========================================================================
+ */
+function FaqSection() {
+  return (
+    <section className="bg-white py-12 sm:py-18 overflow-hidden border-b border-slate-200/80">
+      <div className="container-site grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+        <div data-reveal="left">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
+            <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+            FAQ — QUESTIONS &amp; ANSWERS
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            Frequently Asked Questions
+          </h2>
+
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            Find clear, straightforward answers about eligibility, hands-on learning, offered programs, prerequisites, and certifications at DIGITECHADEMY.
+          </p>
+
+          <div className="mt-6 flex items-center gap-3">
+            <BtnLink
+              to="/faq"
+              variant="outline"
+              size="md"
+              className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-xs"
+            >
+              <span>View All Questions</span>
+              <ArrowRight className="size-3.5 ml-1.5" />
+            </BtnLink>
+
+            <BtnLink
+              to="/contact"
+              variant="secondary"
+              size="md"
+              className="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm border border-blue-200"
+            >
+              <span>Ask a Counselor</span>
+            </BtnLink>
+          </div>
+        </div>
+
+        <div data-reveal="right">
+          <FaqAccordion items={homeFaqs} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * =========================================================================
+ * 18. FINAL CTA
+ * =========================================================================
+ */
+function FinalCta() {
+  return (
+    <section className="surface-navy relative py-8 sm:py-12 overflow-hidden select-none">
+      <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute -right-16 -top-16 size-72 rounded-full bg-blue-600/15 blur-2xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -left-16 -bottom-16 size-64 rounded-full bg-sky-500/10 blur-2xl"
+        aria-hidden="true"
+      />
+
+      <div className="container-site relative z-10 max-w-3xl text-center" data-reveal>
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-sky-300 text-[10.5px] font-bold uppercase tracking-wider mb-2.5">
+          <span className="size-1.5 rounded-full bg-blue-400 animate-pulse" />
+          START YOUR LEARNING JOURNEY
+        </div>
+
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
+          READY TO BUILD SKILLS THAT{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
+            ACTUALLY MATTER?
+          </span>
+        </h2>
+
+        <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          Whether you're starting your career, switching fields or upgrading your existing skills, Digitechademy helps you move from learning concepts to applying them with confidence.
+        </p>
+
+        {/* 3 Value Pillars */}
+        <div className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-3.5 py-1.5 rounded-xl bg-white/[0.05] border border-white/10 backdrop-blur-md">
+          <span className="text-[11px] sm:text-xs font-semibold text-sky-300">Choose Your Path.</span>
+          <span className="text-slate-500 text-xs font-bold">•</span>
+          <span className="text-[11px] sm:text-xs font-semibold text-blue-300">Learn With Purpose.</span>
+          <span className="text-slate-500 text-xs font-bold">•</span>
+          <span className="text-[11px] sm:text-xs font-semibold text-indigo-300">Build Your Future.</span>
+        </div>
+
+        <div className="mt-5 flex flex-wrap justify-center items-center gap-3">
+          <BtnLink
+            to="/courses"
+            variant="primary"
+            size="sm"
+            className="inline-flex h-9 sm:h-10 items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer"
+          >
+            <span>Explore Programs</span>
+            <ArrowRight className="size-3.5" />
+          </BtnLink>
+
+          <BtnLink
+            to="/request-call"
+            variant="outline"
+            size="sm"
+            className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 font-bold h-9 sm:h-10 px-4 rounded-lg text-xs"
+          >
+            <span>Talk to an Expert</span>
+          </BtnLink>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-slate-400 font-medium">
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="size-3 text-emerald-400" />
+            100% Practical Training
+          </span>
+          <span>•</span>
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="size-3 text-emerald-400" />
+            1-on-1 Expert Guidance
+          </span>
+          <span>•</span>
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="size-3 text-emerald-400" />
+            Placement Support
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}

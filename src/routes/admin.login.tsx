@@ -30,10 +30,10 @@ import { saveAdminSession, isUserAdminAuthenticated } from "@/lib/auth";
 export const Route = createFileRoute("/admin/login")({
   head: () => ({
     meta: [
-      { title: "Admin Portal Login | Digital Ascent Academy" },
+      { title: "Admin Portal Login | DIGITECHADEMY" },
       {
         name: "description",
-        content: "Secure administrative login portal via Email OTP for Digital Ascent Academy.",
+        content: "Secure administrative login portal via Email OTP for DIGITECHADEMY.",
       },
     ],
   }),
@@ -180,8 +180,8 @@ function AdminLoginPage() {
             DA
           </div>
           <div>
-            <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent block">
-              Digital Ascent Academy
+            <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent block uppercase">
+              DIGITECHADEMY
             </span>
             <span className="text-[11px] text-blue-300 font-medium">Enterprise Management Portal</span>
           </div>
@@ -218,7 +218,7 @@ function AdminLoginPage() {
         {/* Bottom copyright */}
         <div className="relative z-10 text-xs text-slate-400 flex items-center justify-between border-t border-white/10 pt-6">
           <span>Protected by SMTP TLS Encryption</span>
-          <span>© 2026 Digital Ascent</span>
+          <span>© 2026 DIGITECHADEMY</span>
         </div>
       </section>
 
@@ -241,7 +241,7 @@ function AdminLoginPage() {
             <div className="flex size-7 items-center justify-center rounded-lg bg-blue-600 font-extrabold text-white text-xs">
               DA
             </div>
-            <span className="font-extrabold text-xs text-slate-800">Digital Ascent</span>
+            <span className="font-extrabold text-xs text-slate-800 uppercase">DIGITECHADEMY</span>
           </div>
         </div>
 
@@ -445,7 +445,7 @@ function AdminLoginPage() {
 
         {/* Footer info (mobile fallback) */}
         <div className="relative z-10 text-center text-xs text-slate-400 mt-8 md:mt-0">
-          <span>Digital Ascent Academy &bull; Authorized Personnel Only</span>
+          <span>DIGITECHADEMY &bull; Authorized Personnel Only</span>
         </div>
       </section>
     </main>

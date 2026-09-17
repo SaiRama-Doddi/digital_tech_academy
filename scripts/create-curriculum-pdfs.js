@@ -16,7 +16,7 @@ function createSimplePdf({ title, subtitle, duration, category, description, mod
   lines.push("/F1 18 Tf");
   lines.push("1 1 1 rg"); // White
   lines.push("40 755 Td");
-  lines.push(`(${escapePdf("DIGITECHADEMY  -  DIGITAL TECH ACADEMY")}) Tj`);
+  lines.push(`(${escapePdf("DIGITECHADEMY  -  LEARN • GROW • ACHIEVE")}) Tj`);
   lines.push("ET");
 
   lines.push("BT");

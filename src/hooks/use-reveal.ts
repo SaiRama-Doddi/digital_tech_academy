@@ -20,17 +20,13 @@ export function useRevealRoot<T extends HTMLElement = HTMLDivElement>() {
             entry.target.classList.add("is-visible");
           } else {
             // Re-trigger transitions when scrolling up and down:
-            // When an element scrolls completely outside the viewport, remove is-visible
-            // so scrolling back to it smoothly triggers the entrance transition again.
-            const rect = entry.boundingClientRect;
-            const vh = window.innerHeight || document.documentElement.clientHeight;
-            if (rect.top > vh || rect.bottom < 0) {
-              entry.target.classList.remove("is-visible");
-            }
+            // Whenever an element leaves the viewport (scrolling either up or down),
+            // remove is-visible so scrolling back to it smoothly re-triggers the entrance transition.
+            entry.target.classList.remove("is-visible");
           }
         });
       },
-      { rootMargin: "0px 0px -15px 0px", threshold: [0, 0.02] },
+      { rootMargin: "0px 0px -30px 0px", threshold: 0.05 },
     );
 
     const observedSet = new WeakSet<HTMLElement>();

@@ -141,11 +141,20 @@ export function CourseCard({ course }: { course: Course | any }) {
   return (
     <article
       data-reveal
+      role="link"
+      tabIndex={0}
+      aria-label={`Explore course details for ${course.title}`}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          navigate({ to: "/courses/$slug", params: { slug: course.slug } });
+        }
+      }}
       onClick={() => {
         navigate({ to: "/courses/$slug", params: { slug: course.slug } });
       }}
       className={cn(
-        "group flex flex-col justify-between rounded-2xl bg-gradient-to-b border p-4 sm:p-5 shadow-xs transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 cursor-pointer h-full select-none",
+        "group flex flex-col justify-between rounded-2xl bg-gradient-to-b border p-4 sm:p-5 shadow-xs transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 cursor-pointer h-full select-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none",
         theme.bgGradient,
         theme.borderColor,
       )}
@@ -192,19 +201,31 @@ export function CourseCard({ course }: { course: Course | any }) {
           </p>
         </div>
 
+        {/* Learning Journey Strip (if present) */}
+        {course.learningJourney && (
+          <div className="mt-2.5 w-full rounded-lg bg-white/90 border border-slate-200/80 px-2 py-1.5 text-center">
+            <span className="block text-[8.5px] font-black uppercase tracking-wider text-slate-400">
+              Learning Journey
+            </span>
+            <span className="block text-[10px] font-bold text-blue-700 truncate mt-0.5">
+              {course.learningJourney}
+            </span>
+          </div>
+        )}
+
         {/* Skill Chips - Aligned horizontal baseline */}
-        <div className="mt-3 w-full min-h-[26px] flex flex-wrap items-center justify-center gap-1.5">
+        <div className="mt-2.5 w-full min-h-[24px] flex flex-wrap items-center justify-center gap-1.5">
           {course.highlights && course.highlights.length > 0 ? (
-            course.highlights.slice(0, 2).map((h: string, idx: number) => (
+            course.highlights.slice(0, 3).map((h: string, idx: number) => (
               <span
                 key={idx}
-                className="text-[9.5px] sm:text-[10px] font-semibold px-2 py-0.5 rounded-md border border-slate-200/70 bg-white/90 text-slate-600 max-w-[140px] truncate shadow-2xs"
+                className="text-[9px] sm:text-[9.5px] font-semibold px-2 py-0.5 rounded-md border border-slate-200/70 bg-white/90 text-slate-600 max-w-[140px] truncate shadow-2xs"
               >
                 {h}
               </span>
             ))
           ) : (
-            <span className="text-[9.5px] sm:text-[10px] font-medium px-2 py-0.5 rounded-md border border-slate-200/50 bg-white/70 text-slate-500">
+            <span className="text-[9px] sm:text-[9.5px] font-medium px-2 py-0.5 rounded-md border border-slate-200/50 bg-white/70 text-slate-500">
               Interactive Live Training
             </span>
           )}
@@ -224,15 +245,18 @@ export function CourseCard({ course }: { course: Course | any }) {
           </span>
         </div>
 
-        <span
-          className={cn(
-            "grid size-6 sm:size-7 place-items-center rounded-lg transition-all duration-200 shadow-xs",
-            theme.btnBg,
-          )}
-          aria-hidden="true"
-        >
-          <ArrowRight className="size-3 sm:size-3.5 transition-transform group-hover:translate-x-0.5" />
-        </span>
+        <div className="flex items-center gap-1 text-[11px] font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
+          <span>{course.primaryCta || "Explore Track"}</span>
+          <span
+            className={cn(
+              "grid size-6 place-items-center rounded-lg transition-all duration-200 shadow-xs ml-1",
+              theme.btnBg,
+            )}
+            aria-hidden="true"
+          >
+            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </div>
       </div>
     </article>
   );

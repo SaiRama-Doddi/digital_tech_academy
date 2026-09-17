@@ -19,17 +19,17 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Conditions | Digitechademy" },
+      { title: "Terms & Conditions | DIGITECHADEMY" },
       {
         name: "description",
         content:
-          "These terms govern your use of the Digitechademy website, course information, services, and related digital experiences.",
+          "These terms govern your use of the DIGITECHADEMY website, course information, services, and related digital experiences.",
       },
-      { property: "og:title", content: "Terms & Conditions | Digitechademy" },
+      { property: "og:title", content: "Terms & Conditions | DIGITECHADEMY" },
       {
         property: "og:description",
         content:
-          "These terms govern your use of the Digitechademy website, course information, services, and related digital experiences.",
+          "These terms govern your use of the DIGITECHADEMY website, course information, services, and related digital experiences.",
       },
       { property: "og:url", content: "/terms" },
     ],
@@ -69,7 +69,7 @@ const sections = [
     title: "Intellectual Property",
     icon: Copyright,
     content:
-      "Website content, course materials, branding, graphics, videos, documents, and other Digitechademy intellectual property may not be reproduced, distributed, resold, or commercially reused without permission.",
+      "Website content, course materials, branding, graphics, videos, documents, and other DIGITECHADEMY intellectual property may not be reproduced, distributed, resold, or commercially reused without permission.",
   },
   {
     number: "06",
@@ -85,7 +85,7 @@ const sections = [
     title: "Limitation of Liability",
     icon: AlertCircle,
     content:
-      "Digitechademy aims to provide accurate and useful training information but does not guarantee a particular employment outcome, salary, promotion, certification result, or business result from course participation.",
+      "DIGITECHADEMY aims to provide accurate and useful training information but does not guarantee a particular employment outcome, salary, promotion, certification result, or business result from course participation.",
   },
   {
     number: "08",
@@ -101,7 +101,7 @@ const sections = [
     title: "Contact",
     icon: Mail,
     content:
-      "For questions about these terms, contact Digitechademy through the contact information provided on the website.",
+      "For questions about these terms, contact DIGITECHADEMY through the contact information provided on the website.",
   },
 ];
 
@@ -112,7 +112,7 @@ function TermsPage() {
       <PageHero
         eyebrow="LEGAL & POLICIES"
         title="Terms & Conditions"
-        description="These terms govern your use of the Digitechademy website, course information, services, and related digital experiences."
+        description="Terms governing use of the DIGITECHADEMY website, courses, and educational services."
       />
 
       {/* Main Content */}
@@ -134,8 +134,8 @@ function TermsPage() {
                 <p className="text-xs text-slate-400 font-medium">Last updated: September 2026</p>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
-              Welcome to <strong className="font-black text-navy">Digitechademy</strong>. By accessing
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              Welcome to <strong className="font-black text-navy">DIGITECHADEMY</strong>. By accessing
               our website, browsing our curriculum, submitting course enquiries, or registering for
               training programs, you acknowledge and agree to the following terms and conditions.
             </p>
@@ -170,7 +170,7 @@ function TermsPage() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-100">
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
                     {sec.content}
                   </p>
                 </div>
@@ -196,7 +196,7 @@ function TermsPage() {
                 <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
                   Have Questions Regarding These Terms?
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                   Speak with our admissions and administrative support team for any clarification on course
                   policies, schedules, or enrollment conditions.
                 </p>

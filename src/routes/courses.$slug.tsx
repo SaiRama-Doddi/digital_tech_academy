@@ -20,6 +20,7 @@ import {
   FileText,
   Heart,
   HelpCircle,
+  Layers,
   PhoneCall,
   Signal,
   Star,
@@ -33,8 +34,8 @@ export const Route = createFileRoute("/courses/$slug")({
   head: ({ params }) => {
     const course = courses.find((c) => c.slug === params.slug);
     const title = course
-      ? `${course.heroTitle || course.title} | Digitechademy`
-      : "Course Not Found | Digitechademy";
+      ? `${course.heroTitle || course.title} | DIGITECHADEMY`
+      : "Course Not Found | DIGITECHADEMY";
     const desc = course ? course.heroDescription || course.description : "";
     return {
       meta: [
@@ -106,54 +107,11 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
     overview: {
       heading: `Master ${fbCourse.title} with Expert Mentorship`,
       description: fbCourse.about?.description || fbCourse.longDescription || fbCourse.description,
-      learn: fbCourse.about?.learn?.length
-        ? fbCourse.about.learn
-        : fbCourse.highlights?.length
-          ? fbCourse.highlights
-          : [
-              "Industry-standard tools and modern practices",
-              "Hands-on project work and portfolio building",
-              "Career guidance and placement readiness",
-            ],
-      audience: fbCourse.about?.audience?.length
-        ? fbCourse.about.audience
-        : [
-            "Students and fresh graduates starting a career",
-            "Working professionals seeking skill acceleration",
-            "Career switchers moving into technology & digital roles",
-          ],
-      outcomes: fbCourse.about?.outcomes?.length
-        ? fbCourse.about.outcomes
-        : [
-            "Complete portfolio with hands-on projects",
-            "Practical mastery of industry-standard tools",
-            "Confidence for interviews and client engagements",
-          ],
+      learn: fbCourse.about?.learn || [],
+      audience: fbCourse.about?.audience || [],
+      outcomes: fbCourse.about?.outcomes || [],
     },
-    syllabus: fbCourse.syllabus?.length
-      ? fbCourse.syllabus
-      : [
-          {
-            module: "Module 01",
-            title: "Core Fundamentals & Setup",
-            topics: ["Introduction & Foundations", "Environment & Tooling Setup", "Core Architecture"],
-          },
-          {
-            module: "Module 02",
-            title: "Hands-on Practical Training",
-            topics: ["Tool Deep Dive", "Practical Demonstrations", "Interactive Exercises"],
-          },
-          {
-            module: "Module 03",
-            title: "Advanced Workflows & Best Practices",
-            topics: ["Industry Workflows", "Optimization Techniques", "Live Case Studies"],
-          },
-          {
-            module: "Module 04",
-            title: "Capstone Project & Certification",
-            topics: ["End-to-End Build", "Mentor Code Review", "Verified Credential"],
-          },
-        ],
+    syllabus: fbCourse.syllabus || [],
     practicalTraining: [
       "Guided live laboratory walkthroughs",
       "Hands-on assignments after each module",
@@ -186,44 +144,14 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
       ],
     },
     testimonials: [],
-    faqs: fbCourse.faqs?.length
-      ? fbCourse.faqs
-      : [
-          {
-            question: "How do the interactive classes work?",
-            answer:
-              "Classes are conducted live by seasoned industry practitioners. Every session is interactive, allowing you to ask questions in real-time, view live practical demonstrations, and participate in guided hands-on lab exercises.",
-          },
-          {
-            question: "Do I receive hands-on lab access and real projects?",
-            answer:
-              "Yes! All programs include dedicated cloud-based virtual lab access, tool licenses, and real-world capstone projects designed to simulate actual workplace tasks and build a portfolio.",
-          },
-          {
-            question: "Are certificates provided upon course completion?",
-            answer:
-              "Yes, you receive an authorized, verified digital course completion certificate and credential that you can showcase on your resume and LinkedIn profile.",
-          },
-        ],
+    faqs: fbCourse.faqs || [],
   };
 }
 
 function CourseDetailPage() {
   const { slug } = Route.useParams();
   const staticCourse = courses.find((c) => c.slug === slug);
-  const [courseData, setCourseData] = useState<Course | null>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const raw = localStorage.getItem("digital_tech_courses_db");
-        if (raw) {
-          const list: FirebaseCourse[] = JSON.parse(raw);
-          const found = list.find((c) => c.slug === slug || c.id === slug);
-          if (found) return adaptFirebaseCourseToDetail(found);
-        }
-      } catch {}
-    }
-    return staticCourse || null;
-  });
+  const [courseData, setCourseData] = useState<Course | null>(staticCourse || null);
   const [isLoadingDynamic, setIsLoadingDynamic] = useState(!courseData);
 
   const [activeTab, setActiveTab] = useState<TabType>("about");
@@ -319,87 +247,69 @@ function CourseDetailPage() {
   return (
     <SiteLayout>
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (Dark Navy Background matching reference screenshot)       */}
+      {/* 1. HERO SECTION (Compact Sticky Navy Background)                           */}
       {/* ========================================================================= */}
-      <section className="bg-[#0b1633] text-white pt-6 pb-8 border-b border-navy-800 relative overflow-hidden">
+      <section className="bg-[#0b1633] text-white py-4 sm:py-5 border-b border-navy-800 sticky top-16 z-20 shadow-md backdrop-blur-xl relative overflow-hidden">
         {/* Subtle background circuit / grid glow */}
         <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
-        <div className="absolute -top-24 -right-24 size-96 rounded-full bg-blue-600/10 blur-3xl pointer-events-none" />
 
         <div className="container-site relative z-10">
-          <div className="max-w-6xl space-y-4">
-            {/* Breadcrumb Navigation */}
-            <nav
-              aria-label="Breadcrumb"
-              className="flex flex-wrap items-center gap-2 text-xs text-slate-300 font-medium"
-            >
-              <Link to="/" className="hover:text-white transition-colors">
-                Home
-              </Link>
-              <span className="text-slate-500 font-bold">»</span>
-              <Link to="/courses" className="hover:text-white transition-colors">
-                Courses
-              </Link>
-              <span className="text-slate-500 font-bold">»</span>
-              <span className="text-white font-semibold line-clamp-1">{displayTitle}</span>
-            </nav>
+          <div className="max-w-5xl space-y-2.5">
+            {/* Breadcrumb & Social Proof Row */}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <nav
+                aria-label="Breadcrumb"
+                className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium"
+              >
+                <Link to="/" className="hover:text-white transition-colors">
+                  Home
+                </Link>
+                <span className="text-slate-600">»</span>
+                <Link to="/courses" className="hover:text-white transition-colors">
+                  Courses
+                </Link>
+                <span className="text-slate-600">»</span>
+                <span className="text-white font-semibold line-clamp-1">{displayTitle}</span>
+              </nav>
 
-            {/* Course Main Title */}
-            <h1 className="text-xl sm:text-2xl md:text-[1.85rem] lg:text-[2.2rem] xl:text-[2.5rem] font-black tracking-tight text-white leading-tight sm:whitespace-nowrap">
-              {displayTitle}
-            </h1>
-
-            {/* Certification Badge & Social Proof Row */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-white">
-              {/* Yellow Certification Pill Badge */}
-              <span className="rounded bg-[#ffcc00] px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-slate-950 font-sans">
-                CERTIFICATION
-              </span>
-
-              {/* Star Rating */}
-              <div className="flex items-center gap-1">
-                <Star className="size-3.5 fill-amber-400 text-amber-400" />
-                <span className="text-white font-black">4.6</span>
-              </div>
-
-              {/* Likes */}
-              <div className="flex items-center gap-1">
-                <Heart className="size-3.5 fill-amber-400 text-amber-400" />
-                <span className="text-white font-black">5232</span>
-              </div>
-
-              {/* Enrolled Students */}
-              <div className="flex items-center gap-1">
-                <Users className="size-3.5 text-amber-400" />
-                <span className="text-white font-black">7845</span>
+              <div className="flex items-center gap-2 sm:gap-3 text-[11px] font-bold text-slate-300">
+                <span className="rounded bg-[#ffcc00] px-2 py-0.5 text-[9.5px] font-black uppercase tracking-wider text-slate-950 font-sans">
+                  CERTIFICATION
+                </span>
+                <span className="flex items-center gap-1 text-amber-300">
+                  <Star className="size-3 fill-current" />
+                  4.6
+                </span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-300">
+                  {course.duration.includes("h") ? course.duration : `${course.duration} (65h Live)`}
+                </span>
               </div>
             </div>
 
-            {/* Short Tagline / Summary */}
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-2xl pt-1">
-              {course.category === "Cyber Security"
-                ? "Comprehensive online training for mastering essential Cyber Security skills remotely."
-                : course.heroDescription || course.description}
-            </p>
+            {/* Course Main Title & Demo CTA */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-0.5">
+              <div>
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-black tracking-tight text-white leading-tight sm:whitespace-nowrap">
+                  {displayTitle}
+                </h1>
+                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-2xl text-justify [text-align:justify] [text-justify:inter-word]">
+                  {course.category === "Cyber Security"
+                    ? "Comprehensive practical training for mastering essential Cyber Security skills remotely."
+                    : course.heroDescription || course.description}
+                </p>
+              </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={scrollToDemoForm}
-                className="inline-flex items-center gap-2 rounded-lg bg-[#142452] hover:bg-[#1a306d] border border-white/20 px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md active:scale-[0.98] transition-all cursor-pointer"
-              >
-                <UserPlus className="size-4 text-amber-400" />
-                <span>Join Free Demo</span>
-              </button>
-
-              <Link
-                to="/courses"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-white/10 hover:bg-white/15 px-4 py-2.5 text-xs sm:text-sm font-bold text-slate-200 hover:text-white transition-colors border border-white/15"
-              >
-                <span>Explore Other Courses</span>
-                <ArrowRight className="size-3.5 text-amber-400" />
-              </Link>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={scrollToDemoForm}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 px-4 py-2 text-xs font-black text-slate-950 shadow-md transition-all cursor-pointer"
+                >
+                  <UserPlus className="size-3.5" />
+                  <span>Join Free Demo</span>
+                </button>
+              </div>
             </div>
 
             {/* Curriculum Download Notice Toast */}
@@ -409,52 +319,6 @@ function CourseDetailPage() {
                 <span>Curriculum PDF guide downloaded successfully for {course.title}!</span>
               </div>
             )}
-
-            {/* Metadata (Last Updated, Duration) & Social Share Icons */}
-            <div className="flex flex-wrap items-center justify-between gap-y-3 gap-x-6 border-t border-white/10 pt-4 text-xs font-medium text-slate-300">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
-                <span>
-                  Last Updated: <strong className="text-white font-semibold">August 26, 2026</strong>
-                </span>
-                <span>
-                  Course Duration:{" "}
-                  <strong className="text-white font-semibold">
-                    {course.duration.includes("h") ? course.duration : `${course.duration} (65h Live)`}
-                  </strong>
-                </span>
-              </div>
-
-              {/* Social Share Round Blue Icons (Matching screenshot) */}
-              <div className="flex items-center gap-2">
-                <a
-                  href="https://www.facebook.com/sharer/sharer.php"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Share on Facebook"
-                  className="grid size-6 place-items-center rounded-full bg-[#1877f2] text-white hover:brightness-110 transition-transform hover:scale-105"
-                >
-                  <FacebookIcon className="size-3 fill-current" />
-                </a>
-                <a
-                  href="https://twitter.com/intent/tweet"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Share on Twitter"
-                  className="grid size-6 place-items-center rounded-full bg-[#1da1f2] text-white hover:brightness-110 transition-transform hover:scale-105"
-                >
-                  <TwitterIcon className="size-3 fill-current" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/sharing/share-offsite/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Share on LinkedIn"
-                  className="grid size-6 place-items-center rounded-full bg-[#0a66c2] text-white hover:brightness-110 transition-transform hover:scale-105"
-                >
-                  <LinkedinIcon className="size-3 fill-current" />
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -500,13 +364,13 @@ function CourseDetailPage() {
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Opening Lead Paragraph from screenshot */}
                   <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-sm space-y-4">
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                       Our online {course.title} training and placement program is fully job-oriented
                       and includes real-time project work for hands-on learning. The{" "}
                       <strong className="text-navy">{displayTitle} Course</strong> is developed by
                       certified experts to deliver industry-ready skills.
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                       {course.longDescription || course.description}
                     </p>
                   </div>
@@ -542,103 +406,111 @@ function CourseDetailPage() {
                   </div>
 
                   {/* What You'll Learn Section */}
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
-                        <BookOpen className="size-5 text-accent shrink-0" />
-                        What You Will Learn
-                      </h3>
-                      <span className="text-xs font-bold text-slate-400">
-                        {course.overview.whatYouLearnDetailed?.length || course.overview.learn.length}{" "}
-                        Core Modules
-                      </span>
-                    </div>
-
-                    {course.overview.whatYouLearnDetailed ? (
-                      <div className="grid gap-3.5 sm:grid-cols-2">
-                        {course.overview.whatYouLearnDetailed.map((item, idx) => (
-                          <div
-                            key={idx}
-                            className="rounded-2xl border border-slate-200/80 bg-white p-4.5 shadow-sm hover:border-indigo-500/40 hover:shadow-md transition-all group"
-                          >
-                            <div className="flex items-center gap-2.5 mb-1.5">
-                              <span className="grid size-7 place-items-center rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black shrink-0">
-                                {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
-                              </span>
-                              <h4 className="text-xs sm:text-sm font-bold text-navy leading-tight">
-                                {item.title}
-                              </h4>
-                            </div>
-                            <p className="text-xs text-slate-600 leading-relaxed pl-9">
-                              {item.description}
-                            </p>
-                          </div>
-                        ))}
+                  {((course.overview.whatYouLearnDetailed && course.overview.whatYouLearnDetailed.length > 0) ||
+                    (course.overview.learn && course.overview.learn.length > 0)) && (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
+                          <BookOpen className="size-5 text-accent shrink-0" />
+                          What You Will Learn
+                        </h3>
+                        <span className="text-xs font-bold text-slate-400">
+                          {course.overview.whatYouLearnDetailed?.length || course.overview.learn.length}{" "}
+                          Core Topics
+                        </span>
                       </div>
-                    ) : (
-                      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
-                        <ul className="grid gap-2.5 sm:grid-cols-2">
-                          {course.overview.learn.map((item) => (
+
+                      {course.overview.whatYouLearnDetailed ? (
+                        <div className="grid gap-3.5 sm:grid-cols-2">
+                          {course.overview.whatYouLearnDetailed.map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="rounded-2xl border border-slate-200/80 bg-white p-4.5 shadow-sm hover:border-indigo-500/40 hover:shadow-md transition-all group"
+                            >
+                              <div className="flex items-center gap-2.5 mb-1.5">
+                                <span className="grid size-7 place-items-center rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black shrink-0">
+                                  {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                                </span>
+                                <h4 className="text-xs sm:text-sm font-bold text-navy leading-tight">
+                                  {item.title}
+                                </h4>
+                              </div>
+                              <p className="text-xs text-slate-600 leading-relaxed pl-9 text-justify [text-align:justify] [text-justify:inter-word]">
+                                {item.description}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+                          <ul className="grid gap-2.5 sm:grid-cols-2">
+                            {course.overview.learn.map((item) => (
+                              <li
+                                key={item}
+                                className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
+                              >
+                                <Check className="size-4 shrink-0 text-accent mt-0.5" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Who Should Enroll */}
+                  {(course.overview.audienceDescription ||
+                    (course.overview.audience && course.overview.audience.length > 0)) && (
+                    <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-3">
+                      <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
+                        <Users className="size-4 text-accent shrink-0" />
+                        Who Should Attend This Training?
+                      </h3>
+                      {course.overview.audienceDescription ? (
+                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                          {course.overview.audienceDescription}
+                        </p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {course.overview.audience.map((item) => (
                             <li
                               key={item}
                               className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
                             >
-                              <Check className="size-4 shrink-0 text-accent mt-0.5" />
+                              <span className="size-2 rounded-full bg-accent shrink-0 mt-1.5" />
                               <span>{item}</span>
                             </li>
                           ))}
                         </ul>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Who Should Enroll */}
-                  <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-3">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
-                      <Users className="size-4 text-accent shrink-0" />
-                      Who Should Attend This Training?
-                    </h3>
-                    {course.overview.audienceDescription ? (
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        {course.overview.audienceDescription}
-                      </p>
-                    ) : (
-                      <ul className="space-y-2">
-                        {course.overview.audience.map((item) => (
-                          <li
-                            key={item}
-                            className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
-                          >
-                            <span className="size-2 rounded-full bg-accent shrink-0 mt-1.5" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Career Readiness & Placement Outcomes */}
-                  <div className="rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-white p-6 shadow-sm space-y-3">
-                    <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
-                      <Award className="size-4 text-accent shrink-0" />
-                      Career Outcomes &amp; Skills Acquired
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      Graduates from this program gain working competence, resume-ready portfolio
-                      projects, and direct preparation for high-demand technical roles across the industry.
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {course.overview.outcomes.map((item, i) => (
-                        <span
-                          key={i}
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
-                        >
-                          <Check className="size-3.5 text-emerald-600" />
-                          {item}
-                        </span>
-                      ))}
+                  {course.overview.outcomes && course.overview.outcomes.length > 0 && (
+                    <div className="rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-white p-6 shadow-sm space-y-3">
+                      <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
+                        <Award className="size-4 text-accent shrink-0" />
+                        Career Outcomes &amp; Skills Acquired
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                        Graduates from this program gain working competence, resume-ready portfolio
+                        projects, and direct preparation for high-demand technical roles across the industry.
+                      </p>
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {course.overview.outcomes.map((item, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
+                          >
+                            <Check className="size-3.5 text-emerald-600" />
+                            {item}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
 
@@ -667,58 +539,68 @@ function CourseDetailPage() {
                     </button>
                   </div>
 
-                  <div className="space-y-3">
-                    {course.syllabus.map((item, index) => {
-                      const isExpanded = expandedModule === index;
-                      return (
-                        <div
-                          key={index}
-                          className={cn(
-                            "border rounded-2xl transition-all duration-200 overflow-hidden shadow-xs",
-                            isExpanded
-                              ? "border-indigo-500/40 bg-indigo-50/20"
-                              : "border-slate-200/80 bg-white"
-                          )}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => setExpandedModule(isExpanded ? null : index)}
-                            className="w-full flex items-center justify-between p-4 text-left font-bold text-navy hover:bg-slate-50/50 transition-colors cursor-pointer"
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className="text-[0.7rem] bg-[#0b1633] text-amber-300 font-black px-2.5 py-1 rounded-md tracking-wider">
-                                {item.module}
-                              </span>
-                              <span className="text-xs sm:text-sm font-bold text-navy">
-                                {item.title}
-                              </span>
-                            </div>
-                            {isExpanded ? (
-                              <ChevronUp className="size-4 text-indigo-600" />
-                            ) : (
-                              <ChevronDown className="size-4 text-slate-400" />
+                  {course.syllabus.length === 0 ? (
+                    <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
+                      <Layers className="size-10 text-slate-300 mx-auto mb-3" />
+                      <h4 className="text-base font-bold text-navy">Curriculum Syllabus in Progress</h4>
+                      <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+                        Detailed module topics for this program are currently being structured by our faculty. Contact us to receive syllabus updates.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {course.syllabus.map((item, index) => {
+                        const isExpanded = expandedModule === index;
+                        return (
+                          <div
+                            key={index}
+                            className={cn(
+                              "border rounded-2xl transition-all duration-200 overflow-hidden shadow-xs",
+                              isExpanded
+                                ? "border-indigo-500/40 bg-indigo-50/20"
+                                : "border-slate-200/80 bg-white"
                             )}
-                          </button>
+                          >
+                            <button
+                              type="button"
+                              onClick={() => setExpandedModule(isExpanded ? null : index)}
+                              className="w-full flex items-center justify-between p-4 text-left font-bold text-navy hover:bg-slate-50/50 transition-colors cursor-pointer"
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className="text-[0.7rem] bg-[#0b1633] text-amber-300 font-black px-2.5 py-1 rounded-md tracking-wider">
+                                  {item.module}
+                                </span>
+                                <span className="text-xs sm:text-sm font-bold text-navy">
+                                  {item.title}
+                                </span>
+                              </div>
+                              {isExpanded ? (
+                                <ChevronUp className="size-4 text-indigo-600" />
+                              ) : (
+                                <ChevronDown className="size-4 text-slate-400" />
+                              )}
+                            </button>
 
-                          {isExpanded && (
-                            <div className="border-t border-slate-100 p-5 bg-white">
-                              <ul className="grid gap-2.5 sm:grid-cols-2">
-                                {item.topics.map((topic, i) => (
-                                  <li
-                                    key={i}
-                                    className="flex items-center gap-2 text-xs sm:text-sm text-slate-600"
-                                  >
-                                    <span className="size-1.5 bg-indigo-600 rounded-full shrink-0" />
-                                    <span>{topic}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+                            {isExpanded && (
+                              <div className="border-t border-slate-100 p-5 bg-white">
+                                <ul className="grid gap-2.5 sm:grid-cols-2">
+                                  {item.topics.map((topic, i) => (
+                                    <li
+                                      key={i}
+                                      className="flex items-center gap-2 text-xs sm:text-sm text-slate-600"
+                                    >
+                                      <span className="size-1.5 bg-indigo-600 rounded-full shrink-0" />
+                                      <span>{topic}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -732,7 +614,7 @@ function CourseDetailPage() {
                     <h3 className="text-base sm:text-lg font-black text-navy">
                       Program Overview &amp; Training Methodology
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                       {course.practicalLearning?.description || course.longDescription}
                     </p>
                   </div>
@@ -766,7 +648,7 @@ function CourseDetailPage() {
                             className="border border-slate-100 rounded-xl p-3 bg-slate-50/50"
                           >
                             <h5 className="text-xs font-bold text-navy">{project.title}</h5>
-                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed">
+                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                               {project.summary}
                             </p>
                           </div>
@@ -784,7 +666,7 @@ function CourseDetailPage() {
                       <h4 className="text-base font-black text-navy">
                         {course.title} Authorized Certification
                       </h4>
-                      <p className="text-xs text-slate-600 leading-relaxed">
+                      <p className="text-xs text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                         Earn an industry-recognized certificate and verified digital credential
                         upon completing assessments, labs, and capstones. Add this credential
                         directly to LinkedIn.
@@ -794,7 +676,7 @@ function CourseDetailPage() {
                       <div className="border border-slate-200 shadow-lg rounded-xl bg-white p-4 rotate-1 max-w-[200px] text-center">
                         <Award className="size-8 text-amber-500 mx-auto" />
                         <span className="block text-xs font-black text-navy uppercase tracking-wider mt-2">
-                          Digitechademy
+                          DIGITECHADEMY
                         </span>
                         <span className="block text-[0.65rem] text-slate-400 font-semibold mt-1">
                           Verified Certificate
@@ -848,37 +730,47 @@ function CourseDetailPage() {
                     </p>
                   </div>
 
-                  <div className="space-y-2.5">
-                    {course.faqs.map((faq, index) => {
-                      const isFaqExpanded = expandedFaq === index;
-                      return (
-                        <div
-                          key={index}
-                          data-reveal={index % 2 === 0 ? "top" : "left"}
-                          style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
-                          className="border border-slate-200/80 rounded-xl overflow-hidden bg-white shadow-xs"
-                        >
-                          <button
-                            type="button"
-                            onClick={() => setExpandedFaq(isFaqExpanded ? null : index)}
-                            className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-navy hover:bg-slate-50/50 cursor-pointer"
+                  {course.faqs.length === 0 ? (
+                    <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
+                      <HelpCircle className="size-10 text-slate-300 mx-auto mb-3" />
+                      <h4 className="text-base font-bold text-navy">No FAQs Available Yet</h4>
+                      <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+                        Have questions about this course? Connect with our counselors below for personalized guidance.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {course.faqs.map((faq, index) => {
+                        const isFaqExpanded = expandedFaq === index;
+                        return (
+                          <div
+                            key={index}
+                            data-reveal={index % 2 === 0 ? "top" : "left"}
+                            style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
+                            className="border border-slate-200/80 rounded-xl overflow-hidden bg-white shadow-xs"
                           >
-                            <span>{faq.question}</span>
-                            {isFaqExpanded ? (
-                              <ChevronUp className="size-4 text-indigo-600 shrink-0 ml-2" />
-                            ) : (
-                              <ChevronDown className="size-4 text-slate-400 shrink-0 ml-2" />
+                            <button
+                              type="button"
+                              onClick={() => setExpandedFaq(isFaqExpanded ? null : index)}
+                              className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-navy hover:bg-slate-50/50 cursor-pointer"
+                            >
+                              <span>{faq.question}</span>
+                              {isFaqExpanded ? (
+                                <ChevronUp className="size-4 text-indigo-600 shrink-0 ml-2" />
+                              ) : (
+                                <ChevronDown className="size-4 text-slate-400 shrink-0 ml-2" />
+                              )}
+                            </button>
+                            {isFaqExpanded && (
+                              <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                                {faq.answer}
+                              </div>
                             )}
-                          </button>
-                          {isFaqExpanded && (
-                            <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                              {faq.answer}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
 
                   {/* Need more help card */}
                   <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
@@ -926,7 +818,7 @@ function CourseDetailPage() {
               <h2 className="text-2xl sm:text-3xl font-black text-navy mt-1">
                 Explore Other Professional Programs
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl text-justify [text-align:justify] [text-justify:inter-word]">
                 Looking to explore other career disciplines? Browse our other high-demand certification training courses with live mentors and hands-on labs.
               </p>
             </div>
@@ -967,7 +859,7 @@ function CourseDetailPage() {
                       <h3 className="text-base font-black text-navy group-hover:text-indigo-600 transition-colors line-clamp-1">
                         {otherCourse.title}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-600 line-clamp-2">
+                      <p className="mt-1 text-xs text-slate-600 line-clamp-2 text-justify [text-align:justify] [text-justify:inter-word]">
                         {otherCourse.description}
                       </p>
                     </div>

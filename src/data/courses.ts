@@ -29,6 +29,8 @@ export type Course = {
   heroDescription?: string;
   primaryCta?: string;
   secondaryCta?: string;
+  audienceText?: string;
+  learningJourney?: string;
   category: CourseCategory;
   description: string;
   longDescription: string;
@@ -113,18 +115,20 @@ export const courses: Course[] = [
   {
     id: "dm-01",
     slug: "digital-marketing",
-    title: "Digital Marketing Course",
-    heroEyebrow: "DIGITAL MARKETING COURSE",
-    heroTitle: "Build a Complete Digital Marketing Skill Set",
+    title: "Digital Marketing & Performance Marketing Program",
+    heroEyebrow: "DIGITAL MARKETING & PERFORMANCE MARKETING PROGRAM",
+    heroTitle: "Digital Marketing & Performance Marketing Program",
     heroDescription:
-      "Develop practical skills across SEO, paid advertising, social media marketing, content strategy, analytics, and performance marketing. Learn how digital channels work together to attract audiences, generate demand, and measure business results.",
-    primaryCta: "Enroll Now",
-    secondaryCta: "Request a Call",
+      "Learn how modern brands attract, engage and convert customers across search, social, paid media, analytics and performance marketing.",
+    primaryCta: "Explore Digital Marketing",
+    secondaryCta: "Talk to an Expert",
+    audienceText: "Students, marketers, entrepreneurs and career switchers.",
+    learningJourney: "Strategy → Campaigns → Optimization → Measurement",
     category: "Digital Marketing",
     description:
-      "Build practical digital marketing skills across SEO, paid advertising, social media, analytics, content, and performance marketing.",
+      "Learn how modern brands attract, engage and convert customers across search, social, paid media, analytics and performance marketing.",
     longDescription:
-      "Develop practical skills across SEO, paid advertising, social media marketing, content strategy, analytics, and performance marketing. Learn how digital channels work together to attract audiences, generate demand, and measure business results.",
+      "Learn how modern brands attract, engage and convert customers across search, social, paid media, analytics and performance marketing.",
     duration: "12 Weeks",
     level: "Beginner to Advanced",
     mode: "Classroom & Live Online",
@@ -141,7 +145,7 @@ export const courses: Course[] = [
     overview: {
       heading: "Learn Digital Marketing Through Practical Training",
       description:
-        "Develop practical skills across SEO, paid advertising, social media marketing, content strategy, analytics, and performance marketing. Learn how digital channels work together to attract audiences, generate demand, and measure business results.",
+        "Learn how modern brands attract, engage and convert customers across search, social, paid media, analytics and performance marketing.",
       learn: [
         "Plan a digital strategy across search, social and paid channels",
         "Run and optimise Google Ads and Meta Ads campaigns",
@@ -341,40 +345,42 @@ export const courses: Course[] = [
   {
     id: "dm-03",
     slug: "programmatic-advertising",
-    title: "Programmatic Advertising Course",
-    heroEyebrow: "PROGRAMMATIC ADVERTISING COURSE",
-    heroTitle: "Master the Fundamentals of Programmatic Media Buying",
+    title: "Programmatic Advertising Masterclass",
+    heroEyebrow: "PROGRAMMATIC ADVERTISING MASTERCLASS",
+    heroTitle: "Programmatic Advertising Masterclass",
     heroDescription:
-      "Build practical knowledge of programmatic advertising, automated media buying, audience targeting, campaign setup, optimization, measurement, and the technologies that connect advertisers with digital inventory.",
-    primaryCta: "Enroll Now",
-    secondaryCta: "Request a Call",
+      "Go beyond basic digital advertising and learn how programmatic campaigns are planned, launched, monitored and optimized across DV360, CM360, YouTube, audience targeting, bidding, measurement and reporting.",
+    primaryCta: "Explore Programmatic Advertising",
+    secondaryCta: "Talk to an Expert",
+    audienceText: "Digital marketers, media planners, aspiring programmatic specialists and professionals moving into AdTech.",
+    learningJourney: "Plan → Launch → Optimize → Measure",
     category: "Digital Marketing",
     description:
-      "Develop skills in programmatic media buying, DSPs, SSPs, RTB, audience targeting, campaign optimization, and reporting.",
+      "Go beyond basic digital advertising and learn how programmatic campaigns are planned, launched, monitored and optimized across DV360, CM360, YouTube, audience targeting, bidding, measurement and reporting.",
     longDescription:
-      "Build practical knowledge of programmatic advertising, automated media buying, audience targeting, campaign setup, optimization, measurement, and the technologies that connect advertisers with digital inventory.",
+      "Go beyond basic digital advertising and learn how programmatic campaigns are planned, launched, monitored and optimized across DV360, CM360, YouTube, audience targeting, bidding, measurement and reporting.",
     duration: "10 Weeks",
     level: "Beginner to Advanced",
     mode: "Classroom & Live Online",
     certificate: "Course completion certificate",
     image: advancedSeoImg,
     highlights: [
-      "DSPs & SSPs",
-      "Real-Time Bidding (RTB)",
+      "DV360 & CM360",
+      "YouTube & Video Ads",
       "Audience Targeting",
-      "AdTech Ecosystem",
+      "Real-Time Bidding (RTB)",
       "Campaign Optimization",
-      "Measurement & Attribution",
+      "Measurement & Reporting",
     ],
     overview: {
       heading: "Learn Programmatic Advertising Through Practical Training",
       description:
-        "Build practical knowledge of programmatic advertising, automated media buying, audience targeting, campaign setup, optimization, measurement, and the technologies that connect advertisers with digital inventory.",
+        "Go beyond basic digital advertising and learn how programmatic campaigns are planned, launched, monitored and optimized across DV360, CM360, YouTube, audience targeting, bidding, measurement and reporting.",
       learn: [
-        "Navigate DSPs and SSPs to set up high-performing programmatic campaigns",
+        "Navigate DSPs, SSPs, DV360 and CM360 to set up high-performing programmatic campaigns",
+        "Plan, launch and manage audience-targeted YouTube and video inventory",
         "Execute real-time bidding (RTB) auctions and manage private marketplaces (PMP)",
-        "Leverage 1st, 2nd, and 3rd party audience data for hyper-targeted advertising",
-        "Measure performance using post-click, post-view, and multi-touch attribution models",
+        "Optimize bidding strategies, frequency caps, and measure multi-touch attribution",
       ],
       whatYouLearnDetailed: [
         {
@@ -388,7 +394,7 @@ export const courses: Course[] = [
             "Build practical understanding and apply dsps, ssps & ad exchanges through structured learning and relevant exercises.",
         },
         {
-          title: "Real-Time Bidding",
+          title: "Real-Time Bidding & Auction Dynamics",
           description:
             "Build practical understanding and apply real-time bidding through structured learning and relevant exercises.",
         },
@@ -403,9 +409,9 @@ export const courses: Course[] = [
             "Build practical understanding and apply campaign setup & optimization through structured learning and relevant exercises.",
         },
         {
-          title: "DV360 & Programmatic Platforms",
+          title: "DV360, CM360 & YouTube Platforms",
           description:
-            "Build practical understanding and apply dv360 & programmatic platforms through structured learning and relevant exercises.",
+            "Build practical understanding and apply dv360, cm360 & youtube advertising through structured learning and relevant exercises.",
         },
         {
           title: "Measurement & Reporting",
@@ -419,12 +425,13 @@ export const courses: Course[] = [
         },
       ],
       audience: [
-        "Performance marketers aiming to specialize in media buying and AdTech",
-        "Digital agency professionals scaling display and video campaigns",
-        "Marketing graduates entering corporate digital advertising roles",
+        "Digital marketers",
+        "Media planners",
+        "Aspiring programmatic specialists",
+        "Professionals moving into AdTech",
       ],
       audienceDescription:
-        "Suitable for learners starting in the field, students building professional skills, working professionals strengthening their capabilities, and career switchers seeking a structured path into the discipline.",
+        "Digital marketers, media planners, aspiring programmatic specialists and professionals moving into AdTech.",
       outcomes: [
         "End-to-end programmatic media plan and budget allocation portfolio",
         "Practical familiarity with leading DSP platforms and audience managers",

@@ -41,87 +41,65 @@ export type EnquiryInput = {
 const ENQUIRIES_STORAGE_KEY = "digital_tech_enquiries_db";
 const DTA_LEGACY_KEY = "dta_enquiries";
 
-export const DEFAULT_ENQUIRIES: FirebaseEnquiry[] = [
-  {
-    id: "enq-101",
-    name: "Sai Rama Doddi",
-    phone: "+91 98765 43210",
-    email: "sairama@example.com",
-    course: "Digital Marketing Mastery",
-    callTime: "Evening (4 PM - 7 PM)",
-    source: "Free Demo Class Popup",
-    status: "New",
-    progress: 20,
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-  },
-  {
-    id: "enq-102",
-    name: "Sunil Neelakantam",
-    phone: "+91 94400 12345",
-    email: "sunil@example.com",
-    course: "Cyber Security & Ethical Hacking",
-    callTime: "Morning (9 AM - 12 PM)",
-    source: "Course Demo Sidebar",
-    status: "Contacted",
-    progress: 60,
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    id: "enq-103",
-    name: "Ramesh Sharma",
-    phone: "+91 88888 77777",
-    email: "ramesh.sharma@example.com",
-    course: "Advanced SEO & Performance Marketing",
-    callTime: "Afternoon (12 PM - 4 PM)",
-    source: "Callback Form",
-    status: "Follow-up",
-    progress: 45,
-    createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-  },
-  {
-    id: "enq-104",
-    name: "Pooja Reddy",
-    phone: "+91 77777 66666",
-    email: "pooja.reddy@example.com",
-    course: "Network Defense & Security Operations",
-    callTime: "Evening (4 PM - 7 PM)",
-    source: "Free Demo Class Popup",
-    status: "Converted",
-    progress: 100,
-    createdAt: new Date(Date.now() - 3600000 * 72).toISOString(),
-  },
+export const DEFAULT_ENQUIRIES: FirebaseEnquiry[] = [];
+
+export const DUMMY_ENQUIRY_IDS = [
+  "enq-101",
+  "enq-102",
+  "enq-103",
+  "enq-104",
+  "enq-sample-1",
+  "enq-sample-2",
 ];
 
 // Helper: read cached enquiries
 function getLocalEnquiries(): FirebaseEnquiry[] {
-  if (typeof window === "undefined") return DEFAULT_ENQUIRIES;
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(ENQUIRIES_STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        // Filter out dummy sample leads
+        const cleaned = parsed.filter(
+          (item) => item && !DUMMY_ENQUIRY_IDS.includes(item.id) && !item.id?.startsWith("enq-sample")
+        );
+        if (cleaned.length !== parsed.length) {
+          saveLocalEnquiries(cleaned);
+        }
+        return cleaned;
+      }
+    }
 
     // Check legacy key
     const legacy = localStorage.getItem(DTA_LEGACY_KEY);
     if (legacy) {
       const parsed = JSON.parse(legacy);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.map((item) => ({
-          id: item.id || `enq-${Date.now()}`,
-          name: item.name || "Anonymous",
-          phone: item.phone || "N/A",
-          email: item.email || "N/A",
-          course: item.course || "General Counseling",
-          callTime: item.callTime || "Immediate Callback",
-          source: item.source || "Website Enquiry",
-          status: (item.status === "NEW" ? "New" : item.status) || "New",
-          progress: 20,
-          createdAt: item.createdAt || new Date().toISOString(),
-        }));
+        const cleaned = parsed
+          .filter(
+            (item) => item && !DUMMY_ENQUIRY_IDS.includes(item.id) && !item.id?.startsWith("enq-sample")
+          )
+          .map((item) => ({
+            id: item.id || `enq-${Date.now()}`,
+            name: item.name || "Anonymous",
+            phone: item.phone || "N/A",
+            email: item.email || "N/A",
+            course: item.course || "General Counseling",
+            callTime: item.callTime || "Immediate Callback",
+            source: item.source || "Website Enquiry",
+            status: (item.status === "NEW" ? "New" : item.status) || "New",
+            progress: 20,
+            createdAt: item.createdAt || new Date().toISOString(),
+          }));
+        saveLocalEnquiries(cleaned);
+        return cleaned;
       }
     }
   } catch (err) {
     console.warn("Failed to read local enquiries cache:", err);
   }
-  return DEFAULT_ENQUIRIES;
+  return [];
 }
 
 // Helper: save local enquiries
@@ -133,6 +111,38 @@ function saveLocalEnquiries(enquiries: FirebaseEnquiry[]) {
     window.dispatchEvent(new CustomEvent("dta_enquiries_updated", { detail: enquiries }));
   } catch (err) {
     console.warn("Failed to write local enquiries cache:", err);
+  }
+}
+
+/**
+ * Delete all dummy demo enquiries from Firebase and localStorage
+ */
+export async function deleteDummyEnquiriesFromFirebase(): Promise<number> {
+  let count = 0;
+  for (const id of DUMMY_ENQUIRY_IDS) {
+    try {
+      const docRef = doc(db, "enquiries", id);
+      await deleteDoc(docRef);
+      count++;
+    } catch {
+      // ignore
+    }
+  }
+  clearAllEnquiries();
+  return count;
+}
+
+/**
+ * Clear all enquiries from local storage cache
+ */
+export function clearAllEnquiries(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(ENQUIRIES_STORAGE_KEY);
+    localStorage.removeItem(DTA_LEGACY_KEY);
+    window.dispatchEvent(new CustomEvent("dta_enquiries_updated", { detail: [] }));
+  } catch (err) {
+    console.warn("Failed to clear enquiries cache:", err);
   }
 }
 
@@ -160,10 +170,13 @@ export async function addEnquiryToFirebase(
   // 2. Persist to Firestore
   try {
     const docRef = doc(db, "enquiries", newId);
-    await setDoc(docRef, {
-      ...enquiry,
-      timestamp: Date.now(),
-    });
+    const firestoreData = Object.fromEntries(
+      Object.entries({
+        ...enquiry,
+        timestamp: Date.now(),
+      }).filter(([_, v]) => v !== undefined)
+    );
+    await setDoc(docRef, firestoreData);
   } catch (err) {
     console.warn("Firestore error adding enquiry, saved locally:", err);
   }
@@ -205,6 +218,9 @@ export function subscribeEnquiries(
         if (!snapshot.empty) {
           const list: FirebaseEnquiry[] = [];
           snapshot.forEach((d) => {
+            if (DUMMY_ENQUIRY_IDS.includes(d.id) || d.id.startsWith("enq-sample")) {
+              return;
+            }
             const data = d.data() as Record<string, any>;
             list.push({
               id: d.id,

@@ -39,21 +39,23 @@ export function Logo({ onDark = false, className }: { onDark?: boolean | undefin
       <span className="flex min-w-0 flex-col leading-none text-left">
         <span
           className={cn(
-            "font-display text-[0.98rem] sm:text-[1.12rem] font-black tracking-tight whitespace-nowrap",
+            "font-display text-[0.98rem] sm:text-[1.12rem] font-black tracking-tight whitespace-nowrap uppercase",
             onDark ? "text-white" : "text-slate-900",
           )}
         >
-          Digital<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Tech</span> Solution
+          DIGI<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">TECH</span>ADEMY
         </span>
         <span
           className={cn(
-            "mt-1 flex items-center gap-1.5 text-[0.58rem] sm:text-[0.62rem] font-bold uppercase tracking-[0.16em] whitespace-nowrap",
+            "mt-1 flex items-center gap-1.5 text-[0.56rem] sm:text-[0.60rem] font-bold uppercase tracking-[0.14em] whitespace-nowrap",
             onDark ? "text-slate-300" : "text-slate-500",
           )}
         >
-          <span>Premier Tech Academy</span>
-          <span className="hidden sm:inline-block lg:hidden xl:inline-block size-1 rounded-full bg-blue-600/70" />
-          <span className="hidden sm:inline-block lg:hidden xl:inline-block text-amber-600 font-extrabold">ISO Certified</span>
+          <span className="text-blue-600 font-extrabold dark:text-blue-400">LEARN</span>
+          <span className="size-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <span className="text-indigo-600 font-extrabold dark:text-indigo-400">GROW</span>
+          <span className="size-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <span className="text-sky-600 font-extrabold dark:text-sky-400">ACHIEVE</span>
         </span>
       </span>
     </Link>

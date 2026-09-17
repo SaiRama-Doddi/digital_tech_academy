@@ -19,17 +19,17 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 export const Route = createFileRoute("/privacy-policy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy | Digitechademy" },
+      { title: "Privacy Policy | DIGITECHADEMY" },
       {
         name: "description",
         content:
-          "Privacy policy for Digitechademy. Learn how we handle website analytics, information protection, cookies, and third-party services.",
+          "Privacy policy for DIGITECHADEMY. Learn how we handle website analytics, information protection, cookies, and third-party services.",
       },
-      { property: "og:title", content: "Privacy Policy | Digitechademy" },
+      { property: "og:title", content: "Privacy Policy | DIGITECHADEMY" },
       {
         property: "og:description",
         content:
-          "Privacy policy for Digitechademy. Learn how we handle website analytics, information protection, cookies, and third-party services.",
+          "Privacy policy for DIGITECHADEMY. Learn how we handle website analytics, information protection, cookies, and third-party services.",
       },
       { property: "og:url", content: "/privacy-policy" },
     ],
@@ -45,7 +45,7 @@ const sections = [
     title: "Information We Collect",
     icon: UserCheck,
     content:
-      "We collect personal information that you provide to us when registering interest in a course, requesting a call, submitting an enquiry, or communicating with the Digitechademy admissions team. This may include your full name, phone number, email address, preferred call time, and areas of learning interest.",
+      "We collect personal information that you provide to us when registering interest in a course, requesting a call, submitting an enquiry, or communicating with the DIGITECHADEMY admissions team. This may include your full name, phone number, email address, preferred call time, and areas of learning interest.",
   },
   {
     number: "02",
@@ -77,7 +77,7 @@ const sections = [
     title: "Information Protection",
     icon: ShieldCheck,
     content:
-      "Digitechademy takes reasonable measures to protect information submitted through the website. No online transmission or storage system can be guaranteed to be completely secure.",
+      "DIGITECHADEMY takes reasonable measures to protect information submitted through the website. No online transmission or storage system can be guaranteed to be completely secure.",
   },
   {
     number: "06",
@@ -93,7 +93,7 @@ const sections = [
     title: "Your Choices",
     icon: Sliders,
     content:
-      "You may contact Digitechademy regarding questions about information submitted through the website or requests relating to applicable privacy rights.",
+      "You may contact DIGITECHADEMY regarding questions about information submitted through the website or requests relating to applicable privacy rights.",
   },
   {
     number: "08",
@@ -101,7 +101,7 @@ const sections = [
     title: "Contact",
     icon: Mail,
     content:
-      "For privacy-related questions, please contact Digitechademy through the contact information provided on our website.",
+      "For privacy-related questions, please contact DIGITECHADEMY through the contact information provided on our website.",
   },
 ];
 
@@ -112,7 +112,7 @@ function PrivacyPolicyPage() {
       <PageHero
         eyebrow="LEGAL & PRIVACY"
         title="Privacy Policy"
-        description="Learn how Digitechademy collects, handles, and protects your information across our website and training programs."
+        description="How DIGITECHADEMY collects, uses, and safeguards your information across our website and programs."
       />
 
       {/* Main Content */}
@@ -134,8 +134,8 @@ function PrivacyPolicyPage() {
                 <p className="text-xs text-slate-400 font-medium">Last updated: September 2026</p>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
-              At <strong className="font-black text-navy">Digitechademy</strong>, accessible from our
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              At <strong className="font-black text-navy">DIGITECHADEMY</strong>, accessible from our
               website, protecting the privacy of our prospective students, enrolled learners, and visitors
               is essential to our educational mission. This document outlines how data and technology are
               managed across our online presence.
@@ -171,7 +171,7 @@ function PrivacyPolicyPage() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-100">
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
                     {sec.content}
                   </p>
                 </div>
@@ -197,7 +197,7 @@ function PrivacyPolicyPage() {
                 <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
                   Have Questions About Our Privacy Practices?
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                   Speak with our admissions and administrative support team for any questions regarding your
                   information, courses, or enrollment.
                 </p>

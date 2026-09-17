@@ -1,8 +1,8 @@
 export const stats = [
-  { value: 500, suffix: "+", label: "Students Trained" },
-  { value: 20, suffix: "+", label: "Practical Projects" },
-  { value: 95, suffix: "%", label: "Learning Satisfaction" },
-  { value: 2, suffix: "", label: "Industry-Focused Domains" },
+  { value: 3, suffix: "k+", label: "Learners Trained" },
+  { value: 10, suffix: "", label: "Dedicated Mentors" },
+  { value: 25, suffix: "+", label: "Practical Projects" },
+  { value: 100, suffix: "%", label: "Placement Assistance" },
 ];
 
 export const whyChooseUs = [
@@ -39,33 +39,111 @@ export const methodology = [
 export const practicalTraining = [
   {
     icon: "Rocket",
-    title: "Hands-On Projects",
-    text: "Apply concepts to structured projects that demonstrate practical understanding.",
-    shortText: "Real portfolio capstones & builds.",
+    title: "Real Projects",
+    text: "Apply knowledge to realistic briefs and scenarios.",
+    shortText: "Realistic briefs & scenarios.",
   },
   {
-    icon: "ClipboardList",
-    title: "Practical Assignments",
-    text: "Strengthen your skills through exercises designed around real digital tasks.",
-    shortText: "Workplace task simulations.",
+    icon: "Activity",
+    title: "Hands-On Practice",
+    text: "Practice concepts instead of simply watching lessons.",
+    shortText: "Active practical application.",
   },
   {
     icon: "FileSearch",
-    title: "Case Studies",
-    text: "Analyse business situations and understand how digital strategies are planned, executed, and measured.",
-    shortText: "Live briefs & campaign audits.",
+    title: "Industry Case Studies",
+    text: "Understand how real campaigns, business challenges and security scenarios are approached.",
+    shortText: "Campaigns & security challenges.",
   },
   {
     icon: "Wrench",
     title: "Tool-Based Learning",
-    text: "Get familiar with relevant platforms and workflows used across digital marketing and technology.",
-    shortText: "Industry platforms & toolsets.",
+    text: "Become familiar with tools and workflows used in industry.",
+    shortText: "Industry tools & workflows.",
   },
   {
     icon: "MessageSquareCheck",
-    title: "Mentor Feedback",
-    text: "Use guided reviews to identify improvements and develop better practical outcomes.",
-    shortText: "1-on-1 expert code critiques.",
+    title: "Expert Feedback",
+    text: "Understand what you did right, what went wrong and how to improve.",
+    shortText: "Constructive expert reviews.",
+  },
+];
+
+export const whoIsForAudience = [
+  {
+    icon: "GraduationCap",
+    badge: "Career Foundation",
+    title: "Students",
+    desc: "Build practical skills before entering the job market.",
+    highlight: "Practical skills for market entry",
+  },
+  {
+    icon: "TrendingUp",
+    badge: "Domain Transition",
+    title: "Career Switchers",
+    desc: "Move into Digital Marketing or Cyber Security with a structured learning path.",
+    highlight: "Guided transition roadmap",
+  },
+  {
+    icon: "Briefcase",
+    badge: "Skill Upgrade",
+    title: "Working Professionals",
+    desc: "Upgrade skills and stay relevant.",
+    highlight: "Advanced industry competencies",
+  },
+  {
+    icon: "Rocket",
+    badge: "Business Growth",
+    title: "Entrepreneurs",
+    desc: "Understand technologies and digital strategies behind modern businesses.",
+    highlight: "Tech & digital growth strategies",
+  },
+  {
+    icon: "Target",
+    badge: "AdTech Specialization",
+    title: "Digital Marketers",
+    desc: "Move beyond basic marketing into performance, AdTech and programmatic advertising.",
+    highlight: "DSP, RTB & programmatic mastery",
+  },
+  {
+    icon: "ShieldCheck",
+    badge: "Infosec Pathway",
+    title: "Aspiring Cyber Security Professionals",
+    desc: "Build foundations needed to start.",
+    highlight: "Security & ethical hacking foundations",
+  },
+];
+
+export const careerReadinessPillars = [
+  {
+    icon: "BookOpen",
+    title: "Industry Concepts",
+    text: "Understand core terminology, architecture, and professional workflows.",
+  },
+  {
+    icon: "Activity",
+    title: "Practical Skills",
+    text: "Hands-on execution drills that replace passive watching.",
+  },
+  {
+    icon: "FileSearch",
+    title: "Realistic Scenarios",
+    text: "Work through challenges modeled after live business and threat landscapes.",
+  },
+  {
+    icon: "FolderOpen",
+    title: "Project Experience",
+    text: "Build portfolio-ready deliverables that demonstrate proven capability.",
+  },
+  {
+    icon: "Target",
+    title: "Role-Based Interviews",
+    text: "Rigorous technical and scenario mock interviews with senior mentors.",
+  },
+  {
+    icon: "Mic",
+    title: "Communicate with Confidence",
+    text: "Articulate and defend your technical and strategic decisions fluently.",
   },
 ];
 
@@ -151,27 +229,32 @@ export const homeFaqs = [
   {
     question: "Who can join Digitechademy?",
     answer:
-      "Our programs are designed for beginners, students, working professionals, and career switchers, depending on the course and its prerequisites.",
+      "Our programs are designed for beginners, students, working professionals and career switchers depending on the course and any stated prerequisites.",
   },
   {
     question: "Are the courses practical?",
     answer:
-      "Yes. Our learning approach combines concepts with practical exercises, projects, case studies, and tool-based activities where applicable.",
+      "Yes. Programs combine concepts with exercises, projects, case studies and tool-based activities where applicable.",
   },
   {
-    question: "Which courses can I choose from?",
+    question: "Which programs does Digitechademy offer?",
     answer:
-      "Our programs cover Digital Marketing, Programmatic Advertising, Cyber Security, SEO, and Performance Marketing.",
+      "Our core focus is Digital Marketing, Programmatic Advertising and Cyber Security, with additional specializations as the academy grows.",
   },
   {
     question: "Do I need prior experience?",
     answer:
-      "Prerequisites vary by program. Beginner-friendly pathways are available, while advanced programs may require foundational knowledge.",
+      "Requirements vary by program. Beginner-friendly pathways are available, while advanced programs may require foundational knowledge.",
   },
   {
-    question: "How do I choose the right course?",
+    question: "How do I choose the right program?",
     answer:
-      "Choose based on your career goal, current skill level, interests, and the type of role or specialization you want to pursue.",
+      "Choose based on your career goal, current skill level, interests and the role or specialization you want to pursue.",
+  },
+  {
+    question: "Will I receive a certificate?",
+    answer:
+      "Certificate eligibility and requirements depend on the specific program and successful completion of required course milestones.",
   },
 ];
 
@@ -180,29 +263,34 @@ export const faqCategories = [
     title: "General",
     items: [
       {
-        question: "What is Digitechademy?",
+        question: "Who can join Digitechademy?",
         answer:
-          "Digitechademy is a career-focused training platform offering practical learning programs across digital marketing, programmatic advertising, cyber security, SEO, and performance marketing.",
-      },
-      {
-        question: "Who can join the courses?",
-        answer:
-          "Programs are suitable for beginners, students, working professionals, and career switchers depending on the course requirements.",
+          "Our programs are designed for beginners, students, working professionals and career switchers depending on the course and any stated prerequisites.",
       },
       {
         question: "Are the courses practical?",
         answer:
-          "Yes. Practical exercises, projects, case studies, and tool-based activities are incorporated where applicable.",
+          "Yes. Programs combine concepts with exercises, projects, case studies and tool-based activities where applicable.",
+      },
+      {
+        question: "Which programs does Digitechademy offer?",
+        answer:
+          "Our core focus is Digital Marketing, Programmatic Advertising and Cyber Security, with additional specializations as the academy grows.",
       },
       {
         question: "Do I need prior experience?",
         answer:
-          "Prerequisites vary by program. Beginner-friendly pathways are available for learners starting from the fundamentals.",
+          "Requirements vary by program. Beginner-friendly pathways are available, while advanced programs may require foundational knowledge.",
       },
       {
-        question: "How can I choose the right course?",
+        question: "How do I choose the right program?",
         answer:
-          "Start with your career goal, current skills, interests, and preferred specialization. Our team can also help you identify a suitable learning path.",
+          "Choose based on your career goal, current skill level, interests and the role or specialization you want to pursue.",
+      },
+      {
+        question: "Will I receive a certificate?",
+        answer:
+          "Certificate eligibility and requirements depend on the specific program and successful completion of required course milestones.",
       },
     ],
   },
@@ -271,7 +359,7 @@ export const faqCategories = [
       {
         question: "How do I enroll?",
         answer:
-          "Choose your preferred course and submit an enquiry. The Digitechademy team will guide you through the next steps.",
+          "Choose your preferred course and submit an enquiry. The DIGITECHADEMY team will guide you through the next steps.",
       },
       {
         question: "Can I speak with someone before enrolling?",

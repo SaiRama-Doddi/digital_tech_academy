@@ -1,240 +1,144 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { Quote, Star, ArrowRight, Check, CheckCircle2 } from "lucide-react";
+import {
+  Award,
+  BookOpen,
+  Briefcase,
+  CheckCircle2,
+  Cpu,
+  FileText,
+  Layers,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  ArrowRight,
+} from "lucide-react";
 
 import { PageHero } from "@/components/site/PageHero";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { TestimonialCard } from "@/components/site/TestimonialCard";
 import { BtnLink } from "@/components/site/Btn";
-import { cn } from "@/lib/utils";
 import testimonialAnanyaImg from "@/assets/testimonial-ananya.jpg";
-import { subscribeTestimonials } from "@/services/testimonialService";
 
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
     meta: [
-      { title: "Learner Experiences & Student Reviews | Digitechademy" },
+      { title: "Value & Trust Standards | DIGITECHADEMY" },
       {
         name: "description",
         content:
-          "Hear authentic feedback from learners about practical training, lab simulations, and job placement support across Cyber Security, Digital Marketing, and AdTech.",
+          "Our commitment to credibility, practical hands-on training, 10 dedicated mentors, 100% placement assistance, and authentic learner outcomes.",
       },
-      { property: "og:title", content: "Learner Experiences at Digitechademy" },
+      { property: "og:title", content: "Value & Trust Standards at DIGITECHADEMY" },
       {
         property: "og:description",
         content:
-          "Hear authentic feedback from learners about practical training, lab simulations, and job placement support across Cyber Security, Digital Marketing, and AdTech.",
+          "Discover our core learning standards, lab-driven methodology, 100% placement assistance framework, and authentic feedback policy.",
       },
       { property: "og:url", content: "/testimonials" },
     ],
     links: [{ rel: "canonical", href: "/testimonials" }],
   }),
-  component: TestimonialsPage,
+  component: TrustAndValuesPage,
 });
 
-const ratingStats = [
-  { value: "4.8 / 5", label: "Average learner rating" },
-  { value: "95%", label: "Would recommend us" },
-  { value: "500+", label: "Learners trained" },
-  { value: "20+", label: "Projects reviewed monthly" },
+const credibleMetrics = [
+  { value: "3k+", label: "Learners Mentored" },
+  { value: "10", label: "Dedicated Mentors" },
+  { value: "25+", label: "Practical Projects" },
+  { value: "100%", label: "Placement Assistance" },
 ];
 
-export type EnrichedReview = {
-  name: string;
-  course: string;
-  courseSlug: string;
-  rating: number;
-  quote: string;
-  initials: string;
-};
-
-const allReviews: EnrichedReview[] = [
-  // Cyber Security
+const trustPillars = [
   {
-    name: "Ananya",
-    course: "Cyber Security Course",
-    courseSlug: "cyber-security",
-    rating: 5,
-    initials: "A",
-    quote:
-      "The Cyber Security sessions helped me understand security concepts through practical examples instead of only theory.",
+    icon: ShieldCheck,
+    title: "100% Practical & Lab-Driven",
+    description:
+      "Every module pairs structured instruction with realistic simulations—Wireshark packet captures, live ad budgets, GA4 audits, and vulnerability scans.",
+    badge: "Hands-on First",
   },
   {
-    name: "Vikram",
-    course: "Cyber Security Course",
-    courseSlug: "cyber-security",
-    rating: 5,
-    initials: "V",
-    quote:
-      "Every concept was followed by a lab. That structure is what made it stick — we actually captured packets and configured SIEM rules.",
+    icon: Users,
+    title: "10 Dedicated Industry Mentors",
+    description:
+      "Learn directly from 10 experienced practitioners who review your lab outputs, critique your code and campaigns, and hold weekly 1-on-1 office hours.",
+    badge: "Personalized Support",
   },
   {
-    name: "Fatima",
-    course: "Cyber Security Course",
-    courseSlug: "cyber-security",
-    rating: 4,
-    initials: "F",
-    quote:
-      "Report writing practice was unexpected and turned out to be the most useful skill of all during technical interview rounds.",
-  },
-
-  // Digital Marketing
-  {
-    name: "Rahul",
-    course: "Digital Marketing Mastery",
-    courseSlug: "digital-marketing",
-    rating: 5,
-    initials: "R",
-    quote:
-      "The practical approach made a huge difference. I wasn't just learning concepts — I was actually setting up campaigns and ad groups.",
+    icon: Layers,
+    title: "Verified Capstone Portfolios",
+    description:
+      "Graduate with concrete, verifiable project repositories and campaign portfolios that you can walk through during technical job interviews.",
+    badge: "Portfolio Ready",
   },
   {
-    name: "Sneha",
-    course: "Digital Marketing Mastery",
-    courseSlug: "digital-marketing",
-    rating: 5,
-    initials: "S",
-    quote:
-      "Running real campaigns during the course gave me something concrete to show in digital marketing agency interviews.",
+    icon: Award,
+    title: "100% Placement Assistance",
+    description:
+      "Comprehensive career guidance including ATS resume revamping, LinkedIn optimization, and simulated technical mock interview drills.",
+    badge: "Career Support",
   },
   {
-    name: "Imran",
-    course: "Digital Marketing Mastery",
-    courseSlug: "digital-marketing",
-    rating: 4,
-    initials: "I",
-    quote:
-      "Analytics finally made sense once we worked through actual GA4 reports and Looker dashboards instead of static slides.",
-  },
-
-  // Programmatic Advertising
-  {
-    name: "Siddharth",
-    course: "Programmatic Advertising Course",
-    courseSlug: "programmatic-advertising",
-    rating: 5,
-    initials: "S",
-    quote:
-      "Demystified DSPs and real-time bidding completely. The campaign simulations, PMP deal setups, and audience data modules were invaluable.",
+    icon: BookOpen,
+    title: "Transparent & Credible Curriculum",
+    description:
+      "Syllabi strictly aligned with contemporary hiring expectations across Cyber Security, Digital Marketing, and Programmatic Advertising.",
+    badge: "Zero Fluff",
   },
   {
-    name: "Rhea",
-    course: "Programmatic Advertising Course",
-    courseSlug: "programmatic-advertising",
-    rating: 5,
-    initials: "R",
-    quote:
-      "Moved from basic paid search into enterprise media buying and audience data management thanks to this structured AdTech course.",
-  },
-
-  // Advanced SEO
-  {
-    name: "Karthik",
-    course: "Advanced SEO & Performance Marketing",
-    courseSlug: "advanced-seo",
-    rating: 5,
-    initials: "K",
-    quote:
-      "The audit workshops changed how I approach every client website now. Search crawling, indexing, and technical audits clicked completely.",
-  },
-  {
-    name: "Divya",
-    course: "Advanced SEO & Performance Marketing",
-    courseSlug: "advanced-seo",
-    rating: 5,
-    initials: "D",
-    quote:
-      "Short course, very dense and practical. The reporting templates, competitor gap analysis, and ranking workflows alone were worth it.",
-  },
-
-  // Ethical Hacking
-  {
-    name: "Meghna",
-    course: "Ethical Hacking & Security Fundamentals",
-    courseSlug: "ethical-hacking",
-    rating: 5,
-    initials: "M",
-    quote:
-      "I joined with zero Linux experience and finished genuinely comfortable in the terminal, reconnaissance tools, and penetration testing.",
-  },
-  {
-    name: "Rohit",
-    course: "Ethical Hacking & Security Fundamentals",
-    courseSlug: "ethical-hacking",
-    rating: 5,
-    initials: "R",
-    quote:
-      "Clear, ethical and very hands-on. The guided virtual labs and vulnerability assessment drills built real confidence for offensive security roles.",
+    icon: Sparkles,
+    title: "Small-Batch Learning Assurance",
+    description:
+      "Controlled cohort sizes ensuring every student gets ample screen-sharing time, individual query resolution, and dedicated mentor attention.",
+    badge: "Focused Attention",
   },
 ];
 
-const courseFilterOptions = [
-  { id: "all", label: "All Reviews" },
-  { id: "cyber-security", label: "Cyber Security" },
-  { id: "digital-marketing", label: "Digital Marketing" },
-  { id: "programmatic-advertising", label: "Programmatic Advertising" },
-  { id: "advanced-seo", label: "Advanced SEO" },
-  { id: "ethical-hacking", label: "Ethical Hacking" },
+const placementPhases = [
+  {
+    step: "01",
+    title: "Diagnostic & Skill Mapping",
+    description:
+      "Identify individual strengths and pinpoint technical gaps against current market requirements.",
+    icon: Cpu,
+  },
+  {
+    step: "02",
+    title: "ATS Resume & Profile Rebuild",
+    description:
+      "Restructure your resume and LinkedIn presence to highlight verified capstone projects and technical proficiencies.",
+    icon: FileText,
+  },
+  {
+    step: "03",
+    title: "Technical Mock Drills",
+    description:
+      "Simulate real interview scenarios with domain mentors, receiving actionable feedback on both technical depth and communication.",
+    icon: Users,
+  },
+  {
+    step: "04",
+    title: "Ongoing Mentorship Support",
+    description:
+      "Continuous guidance and application strategies until you secure your target role in the industry.",
+    icon: Briefcase,
+  },
 ];
 
-function TestimonialsPage() {
-  const [selectedCourse, setSelectedCourse] = useState<string>("all");
-  const [reviewsList, setReviewsList] = useState<EnrichedReview[]>(allReviews);
-
-  useEffect(() => {
-    const unsub = subscribeTestimonials((data) => {
-      if (data && data.length > 0) {
-        const dynamic: EnrichedReview[] = data.map((t) => ({
-          name: t.name,
-          course: t.course,
-          courseSlug: t.courseSlug || t.course.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-          rating: t.rating || 5,
-          quote: t.content,
-          initials: t.name.charAt(0).toUpperCase(),
-        }));
-        setReviewsList(dynamic);
-      }
-    });
-    return () => unsub();
-  }, []);
-
-  const filteredReviews =
-    selectedCourse === "all"
-      ? reviewsList
-      : reviewsList.filter((r) => r.courseSlug === selectedCourse || r.course.toLowerCase().includes(selectedCourse));
-
-  const featured = reviewsList.find((r) => r.rating === 5) || reviewsList[0] || allReviews[0]!;
-
+function TrustAndValuesPage() {
   return (
     <SiteLayout>
       {/* Section 1 — Hero */}
       <PageHero
-        eyebrow="TESTIMONIALS"
-        title="Learner Experiences at Digitechademy"
-        description="Hear from learners about their experience with practical training, structured learning, and career-focused programs."
+        eyebrow="VALUE & TRUST COMMITMENTS"
+        title="Credible Education Built on Real Skills"
+        description="Explore our verified learning standards, practical methodology, and career assistance commitments."
       />
 
-      {/* Section 2 — Introduction */}
-      <section className="border-b border-slate-200/80 bg-white py-8 sm:py-10 lg:py-12">
-        <div className="container-site max-w-4xl text-left" data-reveal>
-          <span className="text-xs font-black uppercase tracking-widest text-accent mb-2.5 block">
-            OUR COMMITMENT
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-navy leading-tight tracking-tight text-left">
-            Learning That Helps You Move Forward
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl font-normal text-left">
-            Our goal is to make learning practical, structured, and relevant so students can build skills they can continue to use beyond the classroom.
-          </p>
-        </div>
-      </section>
-
-      {/* Rating statistics */}
+      {/* Section 2 — Credible Metrics Strip */}
       <section className="border-b border-border bg-surface overflow-x-clip">
         <div className="container-site section-y-sm w-full min-w-0">
           <dl className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 w-full min-w-0">
-            {ratingStats.map((stat) => (
+            {credibleMetrics.map((stat) => (
               <div key={stat.label} data-reveal className="border-l border-border-strong pl-3 sm:pl-4 min-w-0">
                 <dd className="font-display text-2xl font-extrabold text-accent-foreground sm:text-3xl">
                   {stat.value}
@@ -248,155 +152,171 @@ function TestimonialsPage() {
         </div>
       </section>
 
-      {/* Featured testimonial with image beside it (Compact height) */}
-      <section className="bg-background py-4 sm:py-5 lg:py-6 overflow-x-clip">
-        <div className="container-site max-w-4xl xl:max-w-5xl mx-auto w-full min-w-0">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-stretch w-full min-w-0">
-            {/* Featured testimonial card (Compact, Responsive) */}
-            <figure
-              data-reveal
-              className="surface-navy relative overflow-hidden rounded-2xl border border-navy-600/80 p-4 sm:p-5 shadow-lg shadow-navy/20 flex flex-col justify-between min-h-[200px] lg:h-[220px] w-full min-w-0"
-            >
-              <div className="grid-lines absolute inset-0 opacity-30" aria-hidden="true" />
-              <div className="relative">
-                <Quote className="size-5 text-accent" aria-hidden="true" />
-                <blockquote className="mt-2 text-sm sm:text-base lg:text-[1.05rem] font-medium leading-relaxed text-navy-foreground text-left text-justify [text-align:justify]">
-                  {featured.quote}
-                </blockquote>
+      {/* Section 3 — Authentic Feedback Policy */}
+      <section className="bg-background py-8 sm:py-12 border-b border-slate-200/80">
+        <div className="container-site max-w-4xl">
+          <div
+            data-reveal
+            className="rounded-2xl border border-blue-200/90 bg-gradient-to-br from-blue-50/80 via-white to-sky-50/50 p-6 sm:p-8 shadow-sm"
+          >
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-700 mb-2">
+              <ShieldCheck className="size-4 text-blue-600" />
+              <span>Authentic Reviews Policy</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              Testimonials Must Be Genuine, Attributable &amp; Approved
+            </h2>
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews, or invent unverified statistics. We believe that true credibility comes from transparent educational delivery and verifiable student progress.
+            </p>
+            <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              As our current cohort learners complete their capstone defenses and transition into the workforce, verified and attributable student feedback will be published here with full authorization.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3 pt-4 border-t border-blue-100">
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                <CheckCircle2 className="size-4 text-emerald-600" />
+                <span>Zero Fabricated Quotes</span>
               </div>
-              <figcaption className="relative mt-3 pt-2.5 border-t border-navy-600/60 flex items-center gap-2.5 min-w-0">
-                <span className="grid size-9 place-items-center rounded-full bg-accent/20 text-xs sm:text-sm font-bold text-accent shrink-0">
-                  {featured.initials}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm sm:text-[15px] font-bold text-navy-foreground leading-tight truncate">{featured.name}</span>
-                  <span className="block text-xs sm:text-[12.5px] text-navy-muted truncate leading-tight mt-0.5">{featured.course}</span>
-                </span>
-                <span className="ml-auto flex gap-0.5 shrink-0" aria-label={`${featured.rating} out of 5`}>
-                  {Array.from({ length: featured.rating }).map((_, i) => (
-                    <Star key={i} className="size-3 fill-accent text-accent" aria-hidden="true" />
-                  ))}
-                </span>
-              </figcaption>
-            </figure>
-
-            {/* Related website/academy training image beside card (Matching compact height) */}
-            <div data-reveal className="relative overflow-hidden rounded-2xl border border-slate-200/80 shadow-md group min-h-[200px] lg:h-[220px] w-full min-w-0">
-              <img
-                src={testimonialAnanyaImg}
-                alt="Digital Tech Solution student in cyber security training lab"
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              />
-              {/* Floating verified badge */}
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-[10px] font-bold shadow-md border border-white/10">
-                <CheckCircle2 className="size-3 text-emerald-400" />
-                <span>Verified Alumni Story</span>
+              <span className="text-slate-300">•</span>
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                <CheckCircle2 className="size-4 text-emerald-600" />
+                <span>Attributable Alumni Feedback</span>
               </div>
-              {/* Bottom gradient caption */}
-              <div className="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent text-white flex items-center justify-between text-[10.5px]">
-                <span className="font-semibold text-slate-200">Cyber Security Hands-on Lab</span>
-                <span className="text-[10px] text-accent font-bold">100% Practical Training</span>
+              <span className="text-slate-300">•</span>
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                <CheckCircle2 className="size-4 text-emerald-600" />
+                <span>Verified Capstones</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Grid of testimonials with interactive course filters */}
-      <section className="bg-surface border-t border-slate-200/80 overflow-x-clip">
-        <div className="container-site section-y w-full min-w-0">
+      {/* Section 4 — The 6 Value & Trust Pillars */}
+      <section className="bg-surface py-10 sm:py-16 border-b border-slate-200/80">
+        <div className="container-site">
           <SectionHeading
-            eyebrow="FILTER BY COURSE"
-            title="What Our Students Say"
-            description="Explore authentic feedback filtered by specialized domain — select any course track below."
+            eyebrow="OUR COMMITMENTS"
+            title="The 6 Quality Standards That Define DIGITECHADEMY"
+            description="Every program we teach is built around transparent delivery, practical application, and verifiable student growth."
             align="left"
-            className="w-full min-w-0"
           />
 
-          {/* Interactive Course Filter Tabs */}
-          <div className="mt-6 sm:mt-8 w-full min-w-0" data-reveal>
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1.5 -mx-4 px-4 sm:mx-0 sm:px-0 w-auto max-w-full sm:flex-wrap sm:justify-start sm:gap-2.5">
-              {courseFilterOptions.map((tab) => {
-                const isActive = selectedCourse === tab.id;
-                const count =
-                  tab.id === "all"
-                    ? allReviews.length
-                    : allReviews.filter((r) => r.courseSlug === tab.id).length;
+          <div className="mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {trustPillars.map((pillar) => {
+              const PillarIcon = pillar.icon;
+              return (
+                <div
+                  key={pillar.title}
+                  data-reveal
+                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-md"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="grid size-12 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 transition-colors group-hover:bg-blue-600 group-hover:text-white">
+                        <PillarIcon className="size-6" />
+                      </span>
+                      <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                        {pillar.badge}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 text-lg font-bold text-slate-900 leading-snug">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                      {pillar.description}
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-600">
+                    <CheckCircle2 className="size-3.5 text-emerald-500" />
+                    <span>Institutional Standard</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setSelectedCourse(tab.id)}
-                    className={cn(
-                      "inline-flex items-center gap-2 rounded-xl px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap active:scale-[0.98]",
-                      isActive
-                        ? "bg-[#5455f6] text-white shadow-md shadow-indigo-500/25"
-                        : "bg-white text-slate-700 hover:bg-slate-100 hover:text-navy border border-slate-200/80 shadow-xs"
-                    )}
-                  >
-                    <span>{tab.label}</span>
-                    <span
-                      className={cn(
-                        "rounded-full px-2 py-0.5 text-[10.5px] sm:text-[11px] font-black leading-none",
-                        isActive
-                          ? "bg-white/20 text-white"
-                          : "bg-slate-100 text-slate-500"
-                      )}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+      {/* Section 5 — 100% Placement Assistance Framework */}
+      <section className="bg-background py-10 sm:py-16">
+        <div className="container-site max-w-5xl">
+          <SectionHeading
+            eyebrow="CAREER ACCELERATION"
+            title="Our 100% Placement Assistance Framework"
+            description="We do not make misleading guarantees. Instead, we provide exhaustive, 1-on-1 placement support designed to equip you with the technical capability and interview confidence required to succeed."
+            align="left"
+          />
+
+          <div className="mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {placementPhases.map((phase) => {
+              const PhaseIcon = phase.icon;
+              return (
+                <div
+                  key={phase.step}
+                  data-reveal
+                  className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl font-black text-blue-600">{phase.step}</span>
+                      <span className="grid size-8 place-items-center rounded-lg bg-blue-50 text-blue-600">
+                        <PhaseIcon className="size-4" />
+                      </span>
+                    </div>
+                    <h4 className="mt-3 text-sm sm:text-base font-bold text-slate-900">
+                      {phase.title}
+                    </h4>
+                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                      {phase.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Filter Status Bar */}
-          {selectedCourse !== "all" && (
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-indigo-50/80 border border-indigo-100 px-4 py-2.5 text-xs text-indigo-950 max-w-4xl mx-auto animate-in fade-in duration-150 w-full min-w-0">
-              <span className="font-medium">
-                Showing reviews for <strong className="font-bold text-indigo-700">{courseFilterOptions.find((f) => f.id === selectedCourse)?.label}</strong> ({filteredReviews.length} {filteredReviews.length === 1 ? "review" : "reviews"})
+          {/* Training classroom image and highlight banner */}
+          <div className="mt-10 rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white grid lg:grid-cols-12 items-center" data-reveal>
+            <div className="lg:col-span-5 h-56 lg:h-full min-h-[220px]">
+              <img
+                src={testimonialAnanyaImg}
+                alt="DIGITECHADEMY training lab classroom session"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="lg:col-span-7 p-6 sm:p-8">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[11px] font-bold mb-2">
+                <Sparkles className="size-3" />
+                Live Practical Labs
               </span>
-              <button
-                type="button"
-                onClick={() => setSelectedCourse("all")}
-                className="font-bold text-indigo-600 hover:text-indigo-800 underline underline-offset-2 cursor-pointer"
-              >
-                Show All Reviews
-              </button>
-            </div>
-          )}
-
-          {/* Filtered Grid Cards */}
-          <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3 w-full min-w-0">
-            {filteredReviews.map((item) => (
-              <div key={item.name + item.quote} data-reveal className="h-full w-full min-w-0">
-                <TestimonialCard
-                  name={item.name}
-                  course={item.course}
-                  rating={item.rating}
-                  quote={item.quote}
-                />
+              <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+                Experience Practical Learning Firsthand
+              </h3>
+              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                Join a live demo session before enrolling. Meet our mentors, test-drive our lab simulations, and evaluate whether our practical training approach fits your career aspirations.
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <BtnLink
+                  to="/request-call"
+                  variant="primary"
+                  size="md"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm"
+                >
+                  <span>Book a Free Demo Class</span>
+                  <ArrowRight className="size-4 ml-1.5" />
+                </BtnLink>
+                <BtnLink
+                  to="/courses"
+                  variant="outline"
+                  size="md"
+                  className="border-slate-300 text-slate-700 hover:bg-slate-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm"
+                >
+                  <span>Explore Courses</span>
+                </BtnLink>
               </div>
-            ))}
-          </div>
-
-          {/* Quick link to related course when filtered */}
-          {selectedCourse !== "all" && (
-            <div className="mt-8 sm:mt-10 flex justify-center w-full min-w-0 px-4" data-reveal>
-              <BtnLink
-                to="/courses/$slug"
-                params={{ slug: selectedCourse }}
-                variant="outline"
-                size="md"
-                className="w-full sm:w-auto border-indigo-200 bg-white text-indigo-700 hover:bg-indigo-50 font-bold px-6 h-11 rounded-xl shadow-xs inline-flex items-center justify-center gap-2"
-              >
-                <span>Explore {courseFilterOptions.find((f) => f.id === selectedCourse)?.label} Curriculum</span>
-                <ArrowRight className="size-4" />
-              </BtnLink>
             </div>
-          )}
+          </div>
         </div>
       </section>
     </SiteLayout>

@@ -39,104 +39,37 @@ export type TestimonialInput = {
 
 const TESTIMONIALS_STORAGE_KEY = "digital_tech_testimonials_db";
 
-export const DEFAULT_TESTIMONIALS: FirebaseTestimonial[] = [
-  {
-    id: "rev-1",
-    name: "Karthik Verma",
-    role: "SEO Specialist",
-    company: "TechNova Solutions",
-    course: "Digital Marketing Mastery",
-    courseSlug: "digital-marketing",
-    rating: 5,
-    content:
-      "The hands-on campaign simulations gave me the confidence to handle live client ad budgets.",
-    featured: true,
-    createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-  },
-  {
-    id: "rev-2",
-    name: "Sneha Patel",
-    role: "SOC Analyst Intern",
-    company: "CyberGuard Defense",
-    course: "Cyber Security & Ethical Hacking",
-    courseSlug: "cyber-security",
-    rating: 5,
-    content:
-      "Real lab environments with Wireshark and Metasploit prepared me directly for technical interviews.",
-    featured: true,
-    createdAt: new Date(Date.now() - 3600000 * 36).toISOString(),
-  },
-  {
-    id: "rev-3",
-    name: "Rahul Sharma",
-    role: "Digital Marketing Associate",
-    company: "GrowthX Media",
-    course: "Digital Marketing Mastery",
-    courseSlug: "digital-marketing",
-    rating: 5,
-    content:
-      "The practical approach made a huge difference. I wasn't just learning concepts — I was actually applying them.",
-    featured: true,
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-  },
-  {
-    id: "rev-4",
-    name: "Ananya Reddy",
-    role: "Security Researcher",
-    company: "CloudSecure",
-    course: "Cyber Security & Ethical Hacking",
-    courseSlug: "cyber-security",
-    rating: 5,
-    content:
-      "The Cyber Security sessions helped me understand security concepts through practical examples instead of only theory.",
-    featured: true,
-    createdAt: new Date(Date.now() - 3600000 * 18).toISOString(),
-  },
-  {
-    id: "rev-5",
-    name: "Divya Nair",
-    role: "Growth Marketer",
-    company: "AdVantage Agency",
-    course: "Advanced SEO & Performance Marketing",
-    courseSlug: "advanced-seo",
-    rating: 5,
-    content:
-      "Short course, very dense and practical. The reporting templates, competitor gap analysis, and ranking workflows alone were worth it.",
-    featured: false,
-    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
-  },
-  {
-    id: "rev-6",
-    name: "Rohit Kumar",
-    role: "Penetration Tester",
-    company: "CyberSafe Labs",
-    course: "Ethical Hacking & Security Fundamentals",
-    courseSlug: "ethical-hacking",
-    rating: 5,
-    content:
-      "Clear, ethical and very hands-on. The guided virtual labs and vulnerability assessment drills built real confidence for offensive security roles.",
-    featured: true,
-    createdAt: new Date(Date.now() - 3600000 * 6).toISOString(),
-  },
+export const DEFAULT_TESTIMONIALS: FirebaseTestimonial[] = [];
+
+export const DUMMY_TESTIMONIAL_IDS = [
+  "rev-1",
+  "rev-2",
+  "rev-3",
+  "rev-4",
+  "rev-5",
+  "rev-6",
 ];
 
 // Helper: Read local cached testimonials
 export function getLocalTestimonials(): FirebaseTestimonial[] {
-  if (typeof window === "undefined") return DEFAULT_TESTIMONIALS;
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(TESTIMONIALS_STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(DEFAULT_TESTIMONIALS));
-      return DEFAULT_TESTIMONIALS;
+      return [];
     }
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+    if (Array.isArray(parsed)) {
+      const cleaned = parsed.filter((r) => r && !DUMMY_TESTIMONIAL_IDS.includes(r.id));
+      if (cleaned.length !== parsed.length) {
+        saveLocalTestimonials(cleaned);
+      }
+      return cleaned;
     }
   } catch (err) {
     console.warn("Failed to read local testimonials cache:", err);
   }
-  return DEFAULT_TESTIMONIALS;
+  return [];
 }
 
 // Helper: Save local cached testimonials
@@ -147,6 +80,37 @@ export function saveLocalTestimonials(testimonials: FirebaseTestimonial[]) {
     window.dispatchEvent(new CustomEvent("dta_testimonials_updated", { detail: testimonials }));
   } catch (err) {
     console.warn("Failed to write local testimonials cache:", err);
+  }
+}
+
+/**
+ * Delete all dummy demo testimonials from Firebase and localStorage
+ */
+export async function deleteDummyTestimonialsFromFirebase(): Promise<number> {
+  let count = 0;
+  for (const id of DUMMY_TESTIMONIAL_IDS) {
+    try {
+      const docRef = doc(db, "testimonials", id);
+      await deleteDoc(docRef);
+      count++;
+    } catch {
+      // ignore
+    }
+  }
+  clearAllTestimonials();
+  return count;
+}
+
+/**
+ * Clear all testimonials from local storage cache
+ */
+export function clearAllTestimonials(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(TESTIMONIALS_STORAGE_KEY);
+    window.dispatchEvent(new CustomEvent("dta_testimonials_updated", { detail: [] }));
+  } catch (err) {
+    console.warn("Failed to clear testimonials cache:", err);
   }
 }
 
@@ -167,7 +131,7 @@ export async function addTestimonialToFirebase(
     rating: Number(input.rating) || 5,
     content: input.content.trim(),
     featured: Boolean(input.featured),
-    avatar: input.avatar,
+    avatar: input.avatar || "",
     createdAt: new Date().toISOString(),
   };
 
@@ -179,10 +143,13 @@ export async function addTestimonialToFirebase(
   // 2. Persist to Firestore
   try {
     const docRef = doc(db, "testimonials", newId);
-    await setDoc(docRef, {
-      ...item,
-      timestamp: Date.now(),
-    });
+    const firestoreData = Object.fromEntries(
+      Object.entries({
+        ...item,
+        timestamp: Date.now(),
+      }).filter(([_, v]) => v !== undefined)
+    );
+    await setDoc(docRef, firestoreData);
   } catch (err) {
     console.warn("Firestore error adding testimonial, saved locally:", err);
   }
@@ -267,6 +234,9 @@ export function subscribeTestimonials(
         if (!snapshot.empty) {
           const list: FirebaseTestimonial[] = [];
           snapshot.forEach((d) => {
+            if (DUMMY_TESTIMONIAL_IDS.includes(d.id)) {
+              return;
+            }
             const data = d.data() as Record<string, any>;
             list.push({
               id: d.id,
