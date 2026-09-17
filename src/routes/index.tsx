@@ -444,7 +444,7 @@ function UspTrustStrip() {
         </div>
 
         {/* Row 2: 4 Foundational USP Commitments */}
-        <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3.5">
+        <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
           {[
             {
               title: "Practical Training",
@@ -475,14 +475,14 @@ function UspTrustStrip() {
             return (
               <div
                 key={usp.title}
-                className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-slate-50/70 border border-slate-200/70"
+                className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-slate-50/70 border border-slate-200/70 hover:bg-slate-100/70 transition-colors"
               >
-                <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg border", usp.color)}>
+                <span className={cn("grid size-8 sm:size-9 shrink-0 place-items-center rounded-lg border", usp.color)}>
                   <UspIcon className="size-4" />
                 </span>
-                <div className="min-w-0">
-                  <p className="text-xs font-bold text-slate-800 truncate">{usp.title}</p>
-                  <p className="text-[10.5px] text-slate-500 truncate">{usp.text}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-[13px] font-bold text-slate-800 leading-snug">{usp.title}</p>
+                  <p className="text-[10.5px] sm:text-[11.5px] text-slate-500 leading-tight mt-0.5">{usp.text}</p>
                 </div>
               </div>
             );
