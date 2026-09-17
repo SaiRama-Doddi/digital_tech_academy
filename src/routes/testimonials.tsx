@@ -166,10 +166,10 @@ function TrustAndValuesPage() {
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               Testimonials Must Be Genuine, Attributable &amp; Approved
             </h2>
-            <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 font-normal">
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
               At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews, or invent unverified statistics. We believe that true credibility comes from transparent educational delivery and verifiable student progress.
             </p>
-            <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600 font-normal">
+            <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
               As our current cohort learners complete their capstone defenses and transition into the workforce, verified and attributable student feedback will be published here with full authorization.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3 pt-4 border-t border-blue-100">

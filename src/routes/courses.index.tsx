@@ -474,7 +474,7 @@ function CoursesPage() {
                             {course.title}
                           </h3>
                         </Link>
-                        <p className="mt-1.5 text-xs text-slate-600 leading-relaxed line-clamp-2">
+                        <p className="mt-1.5 text-xs text-slate-600 leading-relaxed text-justify line-clamp-2">
                           {course.description}
                         </p>
                       </div>
@@ -617,7 +617,7 @@ function CoursesPage() {
                         </div>
                       </div>
 
-                      <p className="mt-2.5 text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                      <p className="mt-2.5 text-xs text-slate-600 line-clamp-2 leading-relaxed text-justify">
                         {mentor.bio}
                       </p>
 

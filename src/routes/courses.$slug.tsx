@@ -937,7 +937,7 @@ function CourseDetailPage() {
                       <h3 className="text-base font-black text-navy group-hover:text-indigo-600 transition-colors line-clamp-1">
                         {otherCourse.title}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-600 line-clamp-2">
+                      <p className="mt-1 text-xs text-slate-600 line-clamp-2 text-justify">
                         {otherCourse.description}
                       </p>
                     </div>

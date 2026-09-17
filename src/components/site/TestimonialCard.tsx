@@ -40,7 +40,7 @@ export function TestimonialCard({ name, course, rating, quote, onDark, className
 
       <blockquote
         className={cn(
-          "flex-1 text-sm sm:text-[0.95rem] lg:text-[1rem] leading-relaxed break-words font-normal",
+          "flex-1 text-sm sm:text-[0.95rem] lg:text-[1rem] leading-relaxed break-words font-normal text-justify",
           onDark ? "text-navy-foreground/85" : "text-foreground/85",
         )}
       >

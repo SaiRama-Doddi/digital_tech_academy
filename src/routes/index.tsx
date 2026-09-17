@@ -1564,7 +1564,7 @@ function GenuineTestimonials() {
             <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
               Testimonials Must Be Genuine, Attributable &amp; Approved
             </h3>
-            <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+            <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
               At DIGITECHADEMY, we uphold strict standards of institutional credibility. We never use placeholder testimonials or manufactured reviews. As learners from our current cohorts finish their verified capstones and enter the workforce, their authorized journeys and feedback will be published here with full attribution.
             </p>
 

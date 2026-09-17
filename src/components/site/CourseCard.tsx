@@ -196,7 +196,7 @@ export function CourseCard({ course }: { course: Course | any }) {
 
         {/* Subtitle / Topics / Description - Fully Justified text with consistent alignment */}
         <div className="mt-2 w-full min-h-[58px] sm:min-h-[62px] flex items-start px-0.5">
-          <p className="w-full text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-3">
+          <p className="w-full text-[11px] sm:text-xs text-slate-600 leading-relaxed text-justify line-clamp-3">
             {course.description}
           </p>
         </div>
