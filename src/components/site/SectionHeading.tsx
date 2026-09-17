@@ -64,7 +64,7 @@ export function SectionHeading({
         <p
           className={cn(
             "text-xs sm:text-base leading-relaxed font-normal max-w-3xl",
-            align === "center" ? "mx-auto text-center" : "text-left",
+            align === "center" ? "mx-auto text-center" : "text-justify",
             onDark ? "text-navy-muted" : "text-muted-foreground",
             descriptionClassName,
           )}

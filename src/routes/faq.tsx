@@ -371,7 +371,7 @@ function FaqPage() {
                         >
                           <div className="overflow-hidden">
                             <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 border-t border-slate-100 mt-1">
-                              <p className="text-xs sm:text-sm leading-relaxed text-slate-600 font-normal pt-3">
+                              <p className="text-xs sm:text-sm leading-relaxed text-slate-600 font-normal pt-3 text-justify">
                                 {item.answer}
                               </p>
                             </div>

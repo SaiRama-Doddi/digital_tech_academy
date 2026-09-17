@@ -171,7 +171,7 @@ function PrivacyPolicyPage() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-100">
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify">
                     {sec.content}
                   </p>
                 </div>
