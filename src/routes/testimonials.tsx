@@ -203,13 +203,14 @@ function TrustAndValuesPage() {
           />
 
           <div className="mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {trustPillars.map((pillar) => {
+            {trustPillars.map((pillar, index) => {
               const PillarIcon = pillar.icon;
               return (
                 <div
                   key={pillar.title}
-                  data-reveal
-                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-md"
+                  data-reveal="left-to-right-and-bottom-to-up"
+                  style={{ "--reveal-delay": `${(index % 3) * 120}ms` } as React.CSSProperties}
+                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-xl"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-3">
@@ -249,22 +250,25 @@ function TrustAndValuesPage() {
           />
 
           <div className="mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {placementPhases.map((phase) => {
+            {placementPhases.map((phase, index) => {
               const PhaseIcon = phase.icon;
               return (
                 <div
                   key={phase.step}
-                  data-reveal
-                  className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs flex flex-col justify-between"
+                  data-reveal="left-to-right-and-bottom-to-up"
+                  style={{ "--reveal-delay": `${index * 120}ms` } as React.CSSProperties}
+                  className="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-blue-500/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none"
                 >
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-black text-blue-600">{phase.step}</span>
-                      <span className="grid size-8 place-items-center rounded-lg bg-blue-50 text-blue-600">
+                      <span className="text-xl font-black text-blue-600 transition-transform duration-300 group-hover:scale-110">
+                        {phase.step}
+                      </span>
+                      <span className="grid size-8 place-items-center rounded-lg bg-blue-50 text-blue-600 border border-blue-100 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-md">
                         <PhaseIcon className="size-4" />
                       </span>
                     </div>
-                    <h4 className="mt-3 text-sm sm:text-base font-bold text-slate-900">
+                    <h4 className="mt-3.5 text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {phase.title}
                     </h4>
                     <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal">

@@ -336,7 +336,7 @@
   }
   [data-reveal="left"],
   [data-reveal="left-to-right"] {
-    transform: translate3d(-40px, 0, 0);
+    transform: translate3d(-44px, 0, 0);
   }
   [data-reveal="top"],
   [data-reveal="top-to-bottom"],
@@ -350,11 +350,19 @@
   }
   [data-reveal="right"],
   [data-reveal="right-to-left"] {
-    transform: translate3d(36px, 0, 0);
+    transform: translate3d(40px, 0, 0);
   }
   [data-reveal="bottom"],
-  [data-reveal="bottom-to-top"] {
-    transform: translate3d(0, 36px, 0);
+  [data-reveal="bottom-to-top"],
+  [data-reveal="bottom-to-up"] {
+    transform: translate3d(0, 40px, 0);
+  }
+  [data-reveal="bottom-left"],
+  [data-reveal="left-and-bottom"],
+  [data-reveal="left-to-right-and-bottom-to-up"],
+  [data-reveal="bottom-to-up-and-left-to-right"],
+  [data-reveal="bottom-to-up-left-to-right"] {
+    transform: translate3d(-44px, 40px, 0) scale(0.96);
   }
   [data-reveal="bottom-right"],
   [data-reveal="bottom-to-up-right-to-left"],
