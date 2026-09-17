@@ -393,6 +393,26 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
+  /* Premium differentiator transition cards for all screens */
+  .differentiator-card {
+    will-change: transform, opacity, box-shadow, border-color;
+  }
+  .differentiator-card[data-reveal="left-to-right"] {
+    transform: translate3d(-28px, 0, 0);
+    opacity: 0;
+  }
+  .differentiator-card[data-reveal="left-to-right"].is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.32s ease,
+      border-color 0.28s ease,
+      background-color 0.28s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

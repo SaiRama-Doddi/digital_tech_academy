@@ -541,14 +541,16 @@ function WhyDigitechademy() {
         </div>
 
         {/* Right Column: Heading and 5 Exact Differentiators */}
-        <div className="lg:col-span-7" data-reveal="right">
-          <SectionHeading
-            eyebrow="WHY DIGITECHADEMY"
-            title="WHAT MAKES DIGITECHADEMY DIFFERENT?"
-            singleLine={false}
-            description="DIGITECHADEMY bridges the gap between academic theory and technical employability through practical, mentor-led training across Cyber Security, Digital Marketing, and Programmatic Advertising."
-            align="left"
-          />
+        <div className="lg:col-span-7">
+          <div data-reveal="right">
+            <SectionHeading
+              eyebrow="WHY DIGITECHADEMY"
+              title="WHAT MAKES DIGITECHADEMY DIFFERENT?"
+              singleLine={false}
+              description="DIGITECHADEMY bridges the gap between academic theory and technical employability through practical, mentor-led training across Cyber Security, Digital Marketing, and Programmatic Advertising."
+              align="left"
+            />
+          </div>
 
           <div className="mt-6 grid gap-2.5 sm:gap-3">
             {[
@@ -557,50 +559,106 @@ function WhyDigitechademy() {
                 desc: "Learn concepts through an industry-focused lens, not just theory.",
                 icon: Briefcase,
                 color: "bg-blue-50 text-blue-600 border-blue-100",
+                hoverBorder: "hover:border-blue-400/80",
+                hoverGlow: "hover:shadow-blue-500/10",
+                accentGradient: "group-hover:from-blue-50/60",
+                barColor: "bg-blue-600",
               },
               {
                 title: "Hands-On Practice",
                 desc: "Practice the skills you are learning through exercises and realistic scenarios.",
                 icon: Terminal,
                 color: "bg-indigo-50 text-indigo-600 border-indigo-100",
+                hoverBorder: "hover:border-indigo-400/80",
+                hoverGlow: "hover:shadow-indigo-500/10",
+                accentGradient: "group-hover:from-indigo-50/60",
+                barColor: "bg-indigo-600",
               },
               {
                 title: "Build Work You Can Talk About",
                 desc: "Use projects and practical outcomes to demonstrate what you can actually do.",
                 icon: Award,
                 color: "bg-amber-50 text-amber-600 border-amber-100",
+                hoverBorder: "hover:border-amber-400/80",
+                hoverGlow: "hover:shadow-amber-500/10",
+                accentGradient: "group-hover:from-amber-50/60",
+                barColor: "bg-amber-500",
               },
               {
                 title: "Industry-Relevant Skills",
                 desc: "Focus on tools, workflows and skills relevant to modern digital and technology roles.",
                 icon: Target,
                 color: "bg-sky-50 text-sky-600 border-sky-100",
+                hoverBorder: "hover:border-sky-400/80",
+                hoverGlow: "hover:shadow-sky-500/10",
+                accentGradient: "group-hover:from-sky-50/60",
+                barColor: "bg-sky-500",
               },
               {
                 title: "Guidance, Not Just Content",
                 desc: "Learn with structured guidance, feedback and practical direction.",
                 icon: Users,
                 color: "bg-emerald-50 text-emerald-600 border-emerald-100",
+                hoverBorder: "hover:border-emerald-400/80",
+                hoverGlow: "hover:shadow-emerald-500/10",
+                accentGradient: "group-hover:from-emerald-50/60",
+                barColor: "bg-emerald-500",
               },
-            ].map((item) => {
+            ].map((item, index) => {
               const ItemIcon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3 sm:p-3.5 shadow-2xs transition-all duration-200 hover:border-blue-300 hover:shadow-sm"
+                  data-reveal="left-to-right"
+                  style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
+                  className={cn(
+                    "differentiator-card group relative flex items-start gap-3 rounded-xl border border-slate-200/90 bg-white p-3 sm:p-3.5 shadow-2xs overflow-hidden",
+                    "transition-all duration-300 ease-out",
+                    "hover:translate-x-1.5 sm:hover:translate-x-2.5 hover:-translate-y-0.5 hover:shadow-md",
+                    "active:scale-[0.985] active:translate-x-0.5",
+                    item.hoverBorder,
+                    item.hoverGlow,
+                  )}
                 >
+                  {/* Interactive left accent bar */}
                   <span
                     className={cn(
-                      "grid size-7 sm:size-8 shrink-0 place-items-center rounded-lg border mt-0.5",
+                      "absolute left-0 top-0 bottom-0 w-1 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-1.5",
+                      item.barColor,
+                    )}
+                    aria-hidden="true"
+                  />
+
+                  {/* Subtle hover gradient background */}
+                  <div
+                    className={cn(
+                      "pointer-events-none absolute inset-0 bg-gradient-to-r via-white to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                      item.accentGradient,
+                    )}
+                    aria-hidden="true"
+                  />
+
+                  {/* Icon badge with interactive rotate & scale */}
+                  <span
+                    className={cn(
+                      "relative z-10 grid size-7.5 sm:size-8 shrink-0 place-items-center rounded-lg border mt-0.5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-2xs",
                       item.color,
                     )}
                   >
-                    <ItemIcon className="size-3.5 sm:size-4" aria-hidden="true" />
+                    <ItemIcon className="size-3.5 sm:size-4 transition-transform duration-300" aria-hidden="true" />
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
-                      {item.title}
-                    </h4>
+
+                  {/* Text Details */}
+                  <div className="relative z-10 min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug transition-colors duration-200 group-hover:text-blue-950">
+                        {item.title}
+                      </h4>
+                      <ChevronRight
+                        className="size-3.5 text-slate-400 opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 shrink-0 hidden sm:block"
+                        aria-hidden="true"
+                      />
+                    </div>
                     <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
                       {item.desc}
                     </p>
