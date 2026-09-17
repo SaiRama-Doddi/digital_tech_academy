@@ -74,7 +74,6 @@ import {
   addCourseToFirebase,
   updateCourseInFirebase,
   deleteCourseFromFirebase,
-  deleteDemoCoursesFromFirebase,
   clearAllCoursesFromFirebase,
 } from "@/services/courseService";
 import {
@@ -83,7 +82,6 @@ import {
   addEnquiryToFirebase,
   updateEnquiryInFirebase,
   deleteEnquiryFromFirebase,
-  deleteDummyEnquiriesFromFirebase,
   clearAllEnquiries,
 } from "@/services/enquiryService";
 import {
@@ -92,7 +90,6 @@ import {
   addTestimonialToFirebase,
   updateTestimonialInFirebase,
   deleteTestimonialFromFirebase,
-  deleteDummyTestimonialsFromFirebase,
   clearAllTestimonials,
 } from "@/services/testimonialService";
 import {
@@ -102,7 +99,6 @@ import {
   addMentorToFirebase,
   updateMentorInFirebase,
   deleteMentorFromFirebase,
-  deleteDemoMentorsFromFirebase,
   clearAllMentorsFromFirebase,
   getDefaultMentorAvatar,
 } from "@/services/mentorService";
@@ -4512,32 +4508,6 @@ function ManageFaqsTab() {
    TAB: SETTINGS
 ========================================================================= */
 function ManageSettingsTab({ session }: { session: AdminSession | null }) {
-  const [isPurging, setIsPurging] = useState(false);
-  const [purgeStatus, setPurgeStatus] = useState<string | null>(null);
-
-  const handlePurgeAllDummyData = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete all dummy data (demo courses, sample leads, sample reviews, and demo faculty mentors) from Firebase and local cache? Any custom content you created will be preserved."
-      )
-    ) {
-      return;
-    }
-    setIsPurging(true);
-    try {
-      await deleteDemoCoursesFromFirebase();
-      await deleteDummyEnquiriesFromFirebase();
-      await deleteDummyTestimonialsFromFirebase();
-      await deleteDemoMentorsFromFirebase();
-      setPurgeStatus("All dummy demo data (including demo faculty mentors) successfully purged from Firebase and local storage!");
-    } catch (err: any) {
-      setPurgeStatus(err?.message || "Failed to purge dummy data.");
-    } finally {
-      setIsPurging(false);
-      setTimeout(() => setPurgeStatus(null), 5000);
-    }
-  };
-
   return (
     <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
       <div className="border-b border-slate-100 pb-5 mb-6">
@@ -4548,42 +4518,6 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
       </div>
 
       <div className="grid gap-6">
-        {/* PURGE ALL DUMMY DATA CARD */}
-        <div className="border border-rose-200 rounded-2xl p-5 bg-gradient-to-r from-white via-rose-50/20 to-rose-50/40 shadow-xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <div className="grid size-10 place-items-center rounded-xl bg-rose-500 text-white shadow-md shadow-rose-500/20 shrink-0">
-                <Trash2 className="size-5" />
-              </div>
-              <div>
-                <h4 className="text-sm font-black text-slate-900">Delete All Dummy / Demo Data</h4>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Purge all pre-seeded demo courses, dummy enquiries, and sample student reviews from Firebase Firestore and browser cache.
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={handlePurgeAllDummyData}
-              disabled={isPurging}
-              className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-black rounded-xl shadow-md shadow-rose-500/20 transition-all cursor-pointer whitespace-nowrap self-start sm:self-center disabled:opacity-50 flex items-center gap-2"
-            >
-              {isPurging ? (
-                <RefreshCw className="size-3.5 animate-spin" />
-              ) : (
-                <Trash2 className="size-3.5" />
-              )}
-              <span>Purge All Dummy Data</span>
-            </button>
-          </div>
-          {purgeStatus && (
-            <div className="mt-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
-              <span>{purgeStatus}</span>
-            </div>
-          )}
-        </div>
 
         {/* ACTIVE SESSION CARD */}
         <div className="border border-slate-200/80 rounded-2xl p-5 bg-gradient-to-r from-slate-50 to-purple-50/30">
