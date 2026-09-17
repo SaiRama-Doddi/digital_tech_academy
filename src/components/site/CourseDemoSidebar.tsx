@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   CheckCircle2,
+  ChevronDown,
   Clock,
   GraduationCap,
   Loader2,
@@ -23,15 +24,11 @@ import {
   getLocalCachedCourses,
   type FirebaseCourse,
 } from "@/services/courseService";
-
-const countryCodes = [
-  { code: "+1", country: "US", flag: "🇺🇸", name: "United States" },
-  { code: "+91", country: "IN", flag: "🇮🇳", name: "India" },
-  { code: "+44", country: "GB", flag: "🇬🇧", name: "United Kingdom" },
-  { code: "+971", country: "AE", flag: "🇦🇪", name: "UAE" },
-  { code: "+1", country: "CA", flag: "🇨🇦", name: "Canada" },
-  { code: "+61", country: "AU", flag: "🇦🇺", name: "Australia" },
-];
+import {
+  CountryFlag,
+  COUNTRY_CODES,
+  type CountryCodeItem,
+} from "@/components/site/CountryFlag";
 
 interface CourseDemoSidebarProps {
   course?: Course;
@@ -40,8 +37,8 @@ interface CourseDemoSidebarProps {
 export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   const activeCourse = course || (courses[0] as Course);
   const [fullName, setFullName] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState<(typeof countryCodes)[number]>(
-    countryCodes[0] as (typeof countryCodes)[number]
+  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(
+    COUNTRY_CODES[0]
   );
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -123,7 +120,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
     setPhone("");
     setEmail("");
     setSelectedCourse(activeCourse.title || "Cyber Security Course");
-    setSelectedCountry(countryCodes[0] as (typeof countryCodes)[number]);
+    setSelectedCountry(COUNTRY_CODES[0]);
     setErrorMsg("");
     setIsSuccess(false);
   };
@@ -216,22 +213,28 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
 
               {/* Country Code + Phone */}
               <div className="flex gap-2">
-                <div className="relative shrink-0">
+                <div className="relative shrink-0 flex items-center">
                   <label htmlFor="course-sidebar-country" className="sr-only">
                     Country Code
                   </label>
+                  <div className="h-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-100 px-2.5 py-2 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
+                    <CountryFlag country={selectedCountry.country} />
+                    <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
+                    <ChevronDown className="size-3 text-slate-400 shrink-0 -ml-0.5" />
+                  </div>
                   <select
                     id="course-sidebar-country"
                     value={selectedCountry.country}
                     onChange={(e) => {
-                      const found = countryCodes.find((c) => c.country === e.target.value);
+                      const found = COUNTRY_CODES.find((c) => c.country === e.target.value);
                       if (found) setSelectedCountry(found);
                     }}
-                    className="h-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 px-2.5 py-2 text-xs sm:text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                    className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
+                    aria-label="Country Code"
                   >
-                    {countryCodes.map((c) => (
-                      <option key={`${c.country}-${c.code}`} value={c.country}>
-                        {c.flag} {c.code}
+                    {COUNTRY_CODES.map((c) => (
+                      <option key={`${c.country}-${c.code}`} value={c.country} className="text-slate-900 font-semibold">
+                        {c.name} ({c.code})
                       </option>
                     ))}
                   </select>
@@ -249,7 +252,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+1 (201) 555-0123"
+                    placeholder="Enter phone number"
                     className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   />
                 </div>

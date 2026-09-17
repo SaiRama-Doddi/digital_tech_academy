@@ -19,79 +19,11 @@ import {
 import { site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { addEnquiryToFirebase } from "@/services/enquiryService";
-
-function CountryFlag({ country, className = "w-4.5 h-3 rounded-[2px] shrink-0 shadow-2xs" }: { country: string; className?: string }) {
-  switch (country) {
-    case "IN":
-      return (
-        <svg className={className} viewBox="0 0 640 480" aria-hidden="true">
-          <path fill="#f93" d="M0 0h640v160H0z" />
-          <path fill="#fff" d="M0 160h640v160H0z" />
-          <path fill="#128807" d="M0 320h640v160H0z" />
-          <circle cx="320" cy="240" r="56" fill="none" stroke="#000080" strokeWidth="12" />
-        </svg>
-      );
-    case "US":
-      return (
-        <svg className={className} viewBox="0 0 640 480" aria-hidden="true">
-          <path fill="#bd3d44" d="M0 0h640v480H0z" />
-          <path stroke="#fff" strokeWidth="37" d="M0 55h640M0 129h640M0 203h640M0 277h640M0 351h640M0 425h640" />
-          <path fill="#192f5d" d="M0 0h260v222H0z" />
-        </svg>
-      );
-    case "GB":
-      return (
-        <svg className={className} viewBox="0 0 640 480" aria-hidden="true">
-          <path fill="#012169" d="M0 0h640v480H0z" />
-          <path fill="#fff" d="m0 0 640 480m0-480L0 480" stroke="#fff" strokeWidth="60" />
-          <path fill="#c8102e" d="m0 0 640 480m0-480L0 480" stroke="#c8102e" strokeWidth="36" />
-          <path fill="#fff" d="M270 0h100v480H270zM0 190h640v100H0z" />
-          <path fill="#c8102e" d="M290 0h60v480h-60zM0 210h640v60H0z" />
-        </svg>
-      );
-    case "AE":
-      return (
-        <svg className={className} viewBox="0 0 640 480" aria-hidden="true">
-          <path fill="#00732f" d="M0 0h640v160H0z" />
-          <path fill="#fff" d="M0 160h640v160H0z" />
-          <path fill="#000" d="M0 320h640v160H0z" />
-          <path fill="#f00" d="M0 0h160v480H0z" />
-        </svg>
-      );
-    case "CA":
-      return (
-        <svg className={className} viewBox="0 0 640 480" aria-hidden="true">
-          <path fill="#f00" d="M0 0h160v480H0zm480 0h160v480H480z" />
-          <path fill="#fff" d="M160 0h320v480H160z" />
-          <path fill="#f00" d="m320 120 16 48 40-16-16 40 48 16-36 28 8 52-44-24-16 56-16-56-44 24 8-52-36-28 48-16-16-40 40 16z" />
-        </svg>
-      );
-    case "AU":
-      return (
-        <svg className={className} viewBox="0 0 640 480" aria-hidden="true">
-          <path fill="#00008b" d="M0 0h640v480H0z" />
-          <path fill="#fff" d="M0 0h320v240H0z" />
-          <path fill="#cc0000" d="M130 0h60v240h-60zM0 90h320v60H0z" />
-          <circle cx="480" cy="140" r="14" fill="#fff" />
-          <circle cx="440" cy="240" r="14" fill="#fff" />
-          <circle cx="520" cy="260" r="14" fill="#fff" />
-          <circle cx="480" cy="340" r="14" fill="#fff" />
-          <circle cx="160" cy="360" r="28" fill="#fff" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
-
-const countryCodes = [
-  { code: "+91", country: "IN", name: "India" },
-  { code: "+1", country: "US", name: "United States" },
-  { code: "+44", country: "GB", name: "United Kingdom" },
-  { code: "+971", country: "AE", name: "UAE" },
-  { code: "+1", country: "CA", name: "Canada" },
-  { code: "+61", country: "AU", name: "Australia" },
-];
+import {
+  CountryFlag,
+  COUNTRY_CODES,
+  type CountryCodeItem,
+} from "@/components/site/CountryFlag";
 
 const availableCourses = [
   "Digital Marketing Mastery",
@@ -105,8 +37,8 @@ const availableCourses = [
 export function DemoClassModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [fullName, setFullName] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState<(typeof countryCodes)[number]>(
-    countryCodes[0] as (typeof countryCodes)[number]
+  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(
+    COUNTRY_CODES[0]
   );
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -151,7 +83,7 @@ export function DemoClassModal() {
     setEmail("");
     setCourse("");
     setErrorMsg("");
-    setSelectedCountry(countryCodes[0] as (typeof countryCodes)[number]);
+    setSelectedCountry(COUNTRY_CODES[0]);
     setIsSuccess(false);
   };
 
@@ -328,13 +260,13 @@ export function DemoClassModal() {
                       id="demo-country"
                       value={selectedCountry.country}
                       onChange={(e) => {
-                        const found = countryCodes.find((c) => c.country === e.target.value);
+                        const found = COUNTRY_CODES.find((c) => c.country === e.target.value);
                         if (found) setSelectedCountry(found);
                       }}
                       className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
                       aria-label="Country Code"
                     >
-                      {countryCodes.map((c) => (
+                      {COUNTRY_CODES.map((c) => (
                         <option key={`${c.country}-${c.code}`} value={c.country}>
                           {c.name} ({c.code})
                         </option>
