@@ -74,7 +74,6 @@ import {
   addCourseToFirebase,
   updateCourseInFirebase,
   deleteCourseFromFirebase,
-  seedDefaultCoursesToFirebase,
   deleteDemoCoursesFromFirebase,
   clearAllCoursesFromFirebase,
 } from "@/services/courseService";
@@ -1371,7 +1370,6 @@ function ManageCoursesTab() {
   const [courses, setCourses] = useState<FirebaseCourse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [isSeeding, setIsSeeding] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -1750,54 +1748,7 @@ function ManageCoursesTab() {
     }
   };
 
-  // Seed default courses
-  const handleSeedDefaults = async () => {
-    setIsSeeding(true);
-    try {
-      const res = await seedDefaultCoursesToFirebase();
-      setFeedback({
-        type: "success",
-        text: `Successfully synced ${res.count} default courses to Firebase!`,
-      });
-    } catch (err: any) {
-      setFeedback({
-        type: "error",
-        text: "Could not seed courses to Firestore directly. Local cache is loaded.",
-      });
-    } finally {
-      setIsSeeding(false);
-      setTimeout(() => setFeedback(null), 5000);
-    }
-  };
 
-  const [isDeletingDemo, setIsDeletingDemo] = useState(false);
-
-  // Delete all demo/dummy courses from Firebase and local cache
-  const handleDeleteDemoCourses = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete all 5 demo/dummy courses from Firebase and local cache? Any custom courses you created (like Full Stack Java) will be preserved."
-      )
-    ) {
-      return;
-    }
-    setIsDeletingDemo(true);
-    try {
-      const count = await deleteDemoCoursesFromFirebase();
-      setFeedback({
-        type: "success",
-        text: `Successfully deleted demo courses from Firebase catalog!`,
-      });
-    } catch (err: any) {
-      setFeedback({
-        type: "error",
-        text: err?.message || "Failed to remove demo courses.",
-      });
-    } finally {
-      setIsDeletingDemo(false);
-      setTimeout(() => setFeedback(null), 5000);
-    }
-  };
 
   // Dynamically calculate category statistics strictly according to the actual courses present
   const { availableCategories, categoryStats } = useMemo(() => {
@@ -1891,26 +1842,6 @@ function ManageCoursesTab() {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5">
-            <button
-              onClick={handleDeleteDemoCourses}
-              disabled={isDeletingDemo}
-              title="Delete the 5 standard demo courses from Firebase & local cache"
-              className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-            >
-              <Trash2 className="size-3.5 text-rose-600" />
-              <span>{isDeletingDemo ? "Deleting..." : "Delete Demo Courses"}</span>
-            </button>
-
-            <button
-              onClick={handleSeedDefaults}
-              disabled={isSeeding}
-              title="Populate Firebase Firestore with the standard 5 courses"
-              className="bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-[#b66dff] border border-slate-200 hover:border-purple-200 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-            >
-              <RefreshCw className={cn("size-3.5", isSeeding && "animate-spin text-[#b66dff]")} />
-              <span>{isSeeding ? "Syncing..." : "Seed Default Courses"}</span>
-            </button>
-
             <button
               onClick={() => handleOpenAddModal()}
               className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white text-xs font-black flex items-center gap-1.5 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 hover:opacity-95 transition-opacity cursor-pointer"
