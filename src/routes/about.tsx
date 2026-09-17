@@ -252,9 +252,9 @@ function AboutPage() {
                 iconBg: "bg-slate-100 text-slate-600 border border-slate-200/80",
                 accentBorder: "border-t-4 border-t-slate-300",
                 cardClass: "border-slate-200/90 bg-white/95 hover:border-slate-300 hover:shadow-xl",
-                text: "Learning was often separated from practical workplace experience. Students spent months memorizing slides without touching live ad budgets, real server infrastructure, or actual production tools.",
+                text: "Memorizing slides and isolated theory without exposure to live ad budgets, production servers, or real workplace tools.",
                 highlightIcon: "✕",
-                highlightText: "Disconnected from actual job workflows",
+                highlightText: "Disconnected from live tools",
                 highlightClass: "text-slate-500 bg-slate-50 border-slate-200/70 font-medium",
               },
               {
@@ -269,9 +269,9 @@ function AboutPage() {
                 accentBorder: "border-t-4 border-t-sky-500",
                 cardClass:
                   "border-2 border-sky-400/80 bg-gradient-to-b from-sky-50/40 via-white to-blue-50/25 shadow-xl shadow-sky-500/10 ring-4 ring-sky-400/15 hover:border-sky-400 hover:shadow-2xl hover:shadow-sky-500/25",
-                text: "DIGITECHADEMY brings structured learning, practical projects, tools, and guided application together so learners master real execution confidence, genuine problem-solving, and verified portfolio defenses.",
+                text: "Practical sandbox labs, live project execution, and 1-on-1 mentorship to build genuine workplace capability.",
                 highlightIcon: "✓",
-                highlightText: "Live sandboxes, real tools & 1-on-1 mentor guidance",
+                highlightText: "Live sandboxes & 1-on-1 mentoring",
                 highlightClass: "text-sky-900 bg-sky-50/90 border-sky-300 font-bold",
               },
               {
@@ -286,9 +286,9 @@ function AboutPage() {
                 accentBorder: "border-t-4 border-t-indigo-600",
                 cardClass:
                   "border-indigo-200/90 bg-gradient-to-b from-indigo-50/25 via-white to-slate-50/40 hover:border-indigo-400 hover:shadow-xl",
-                text: "We aim to help more learners build specialized digital skills, lead high-stakes campaigns and security operations, and confidently pursue evolving career opportunities in high-impact leadership roles.",
+                text: "Continuous skill upgrading, advanced specializations, and portfolio growth to step into senior tech roles.",
                 highlightIcon: "★",
-                highlightText: "Lifelong career acceleration & specialization mobility",
+                highlightText: "Lifelong career acceleration",
                 highlightClass: "text-indigo-950 bg-indigo-50/80 border-indigo-200 font-semibold",
               },
             ].map((item, index) => {
