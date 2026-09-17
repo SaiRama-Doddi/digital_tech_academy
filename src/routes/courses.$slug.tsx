@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect, type CSSProperties } from "react";
+import { useState, useEffect, useMemo, type CSSProperties } from "react";
 import { courses, type Course } from "@/data/courses";
 import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
@@ -95,34 +95,46 @@ const tabs: { id: TabType; label: string }[] = [
 ];
 
 function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
+  const cat = fbCourse.category || "Training";
+  const desc = fbCourse.description || "";
+  const longDesc = fbCourse.longDescription || fbCourse.about?.description || desc;
+  const courseTitle = fbCourse.title || "Program Details";
+  const courseSlug = fbCourse.slug || fbCourse.id;
+
   return {
-    id: fbCourse.id,
-    slug: fbCourse.slug,
-    title: fbCourse.title,
-    heroEyebrow: `${fbCourse.category.toUpperCase()} TRAINING`,
-    heroTitle: fbCourse.title,
-    heroDescription: fbCourse.description,
+    id: fbCourse.id || courseSlug,
+    slug: courseSlug,
+    title: courseTitle,
+    heroEyebrow: `${cat.toUpperCase()} TRAINING`,
+    heroTitle: courseTitle,
+    heroDescription: desc,
     primaryCta: "Enroll Now",
     secondaryCta: "Request a Call",
-    category: fbCourse.category as any,
-    description: fbCourse.description,
-    longDescription: fbCourse.longDescription || fbCourse.about?.description || fbCourse.description,
-    duration: fbCourse.duration,
-    level: fbCourse.level,
+    category: cat as any,
+    description: desc,
+    longDescription: longDesc,
+    duration: fbCourse.duration || "12 Weeks (120+ Hours)",
+    level: fbCourse.level || "Beginner to Advanced",
     mode: fbCourse.mode || "Classroom & Live Online",
     certificate: fbCourse.certificate || "Course completion certificate",
     image:
       fbCourse.image ||
-      (fbCourse.category === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg),
-    highlights: fbCourse.highlights || [],
+      (cat === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg),
+    highlights: Array.isArray(fbCourse.highlights) ? fbCourse.highlights : [],
     overview: {
-      heading: `Master ${fbCourse.title} with Expert Mentorship`,
-      description: fbCourse.about?.description || fbCourse.longDescription || fbCourse.description,
-      learn: fbCourse.about?.learn || [],
-      audience: fbCourse.about?.audience || [],
-      outcomes: fbCourse.about?.outcomes || [],
+      heading: `Master ${courseTitle} with Expert Mentorship`,
+      description: fbCourse.about?.description || longDesc,
+      learn: Array.isArray(fbCourse.about?.learn) ? fbCourse.about.learn : [],
+      audience: Array.isArray(fbCourse.about?.audience) ? fbCourse.about.audience : [],
+      outcomes: Array.isArray(fbCourse.about?.outcomes) ? fbCourse.about.outcomes : [],
     },
-    syllabus: fbCourse.syllabus || [],
+    syllabus: Array.isArray(fbCourse.syllabus)
+      ? fbCourse.syllabus.map((s, idx) => ({
+          module: s.module || `Module ${idx + 1}`,
+          title: s.title || `Module ${idx + 1}`,
+          topics: Array.isArray(s.topics) ? s.topics : [],
+        }))
+      : [],
     practicalTraining: [
       "Guided live laboratory walkthroughs",
       "Hands-on assignments after each module",
@@ -138,9 +150,12 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
     instructors: [
       {
         name: fbCourse.instructor || "Sai Rama",
-        role: `${fbCourse.category} Specialist`,
+        role: `${cat} Specialist`,
         experience: "8+ years in professional practice and instruction",
-        expertise: fbCourse.highlights?.slice(0, 4) || ["Practical Training", "Mentorship"],
+        expertise:
+          Array.isArray(fbCourse.highlights) && fbCourse.highlights.length > 0
+            ? fbCourse.highlights.slice(0, 4)
+            : ["Practical Training", "Mentorship"],
         image: digitalMarketingImg,
       },
     ],
@@ -155,7 +170,7 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
       ],
     },
     testimonials: [],
-    faqs: fbCourse.faqs || [],
+    faqs: Array.isArray(fbCourse.faqs) ? fbCourse.faqs : [],
   };
 }
 
@@ -229,9 +244,9 @@ function CourseDetailPage() {
     const list =
       allLiveCourses.length > 0
         ? allLiveCourses.filter(
-            (c) => c.slug !== currentSlug && c.id !== currentId && c.active !== false
+            (c) => c && c.slug && c.slug !== currentSlug && c.id !== currentId && c.active !== false
           )
-        : courses.filter((c) => c.slug !== currentSlug);
+        : courses.filter((c) => c && c.slug && c.slug !== currentSlug);
     return list.slice(0, 3);
   }, [allLiveCourses, course?.slug, course?.id, slug]);
 
@@ -331,7 +346,9 @@ function CourseDetailPage() {
                 </span>
                 <span className="text-slate-600">•</span>
                 <span className="text-slate-300">
-                  {course.duration.includes("h") ? course.duration : `${course.duration} (65h Live)`}
+                  {course.duration && (course.duration.includes("h") || course.duration.includes("H"))
+                    ? course.duration
+                    : `${course.duration || "12 Weeks"} (65h Live)`}
                 </span>
               </div>
             </div>
@@ -455,8 +472,8 @@ function CourseDetailPage() {
                   </div>
 
                   {/* What You'll Learn Section */}
-                  {((course.overview.whatYouLearnDetailed && course.overview.whatYouLearnDetailed.length > 0) ||
-                    (course.overview.learn && course.overview.learn.length > 0)) && (
+                  {((course.overview?.whatYouLearnDetailed && course.overview.whatYouLearnDetailed.length > 0) ||
+                    (course.overview?.learn && course.overview.learn.length > 0)) && (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
@@ -464,12 +481,12 @@ function CourseDetailPage() {
                           What You Will Learn
                         </h3>
                         <span className="text-xs font-bold text-slate-400">
-                          {course.overview.whatYouLearnDetailed?.length || course.overview.learn.length}{" "}
+                          {(course.overview?.whatYouLearnDetailed?.length || course.overview?.learn?.length || 0)}{" "}
                           Core Topics
                         </span>
                       </div>
 
-                      {course.overview.whatYouLearnDetailed ? (
+                      {course.overview?.whatYouLearnDetailed ? (
                         <div className="grid gap-3.5 sm:grid-cols-2">
                           {course.overview.whatYouLearnDetailed.map((item, idx) => (
                             <div
@@ -493,7 +510,7 @@ function CourseDetailPage() {
                       ) : (
                         <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
                           <ul className="grid gap-2.5 sm:grid-cols-2">
-                            {course.overview.learn.map((item) => (
+                            {(course.overview?.learn || []).map((item) => (
                               <li
                                 key={item}
                                 className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
@@ -509,20 +526,20 @@ function CourseDetailPage() {
                   )}
 
                   {/* Who Should Enroll */}
-                  {(course.overview.audienceDescription ||
-                    (course.overview.audience && course.overview.audience.length > 0)) && (
+                  {(course.overview?.audienceDescription ||
+                    (course.overview?.audience && course.overview.audience.length > 0)) && (
                     <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-3">
                       <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
                         <Users className="size-4 text-accent shrink-0" />
                         Who Should Attend This Training?
                       </h3>
-                      {course.overview.audienceDescription ? (
+                      {course.overview?.audienceDescription ? (
                         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
                           {course.overview.audienceDescription}
                         </p>
                       ) : (
                         <ul className="space-y-2">
-                          {course.overview.audience.map((item) => (
+                          {(course.overview?.audience || []).map((item) => (
                             <li
                               key={item}
                               className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
@@ -537,7 +554,7 @@ function CourseDetailPage() {
                   )}
 
                   {/* Career Readiness & Placement Outcomes */}
-                  {course.overview.outcomes && course.overview.outcomes.length > 0 && (
+                  {course.overview?.outcomes && course.overview.outcomes.length > 0 && (
                     <div className="rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-white p-6 shadow-sm space-y-3">
                       <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
                         <Award className="size-4 text-accent shrink-0" />
@@ -548,7 +565,7 @@ function CourseDetailPage() {
                         projects, and direct preparation for high-demand technical roles across the industry.
                       </p>
                       <div className="flex flex-wrap gap-2 pt-2">
-                        {course.overview.outcomes.map((item, i) => (
+                        {(course.overview.outcomes || []).map((item, i) => (
                           <span
                             key={i}
                             className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
@@ -588,7 +605,7 @@ function CourseDetailPage() {
                     </button>
                   </div>
 
-                  {course.syllabus.length === 0 ? (
+                  {(!course.syllabus || course.syllabus.length === 0) ? (
                     <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
                       <Layers className="size-10 text-slate-300 mx-auto mb-3" />
                       <h4 className="text-base font-bold text-navy">Curriculum Syllabus in Progress</h4>
@@ -633,7 +650,7 @@ function CourseDetailPage() {
                             {isExpanded && (
                               <div className="border-t border-slate-100 p-5 bg-white">
                                 <ul className="grid gap-2.5 sm:grid-cols-2">
-                                  {item.topics.map((topic, i) => (
+                                  {(item.topics || []).map((topic, i) => (
                                     <li
                                       key={i}
                                       className="flex items-center gap-2 text-xs sm:text-sm text-slate-600"
@@ -676,7 +693,7 @@ function CourseDetailPage() {
                         Practical Lab Training
                       </h4>
                       <ul className="space-y-2">
-                        {course.practicalTraining.map((item, i) => (
+                        {(course.practicalTraining || []).map((item, i) => (
                           <li key={i} className="flex gap-2 text-xs text-slate-600">
                             <Check className="size-3.5 shrink-0 text-emerald-600 mt-0.5" />
                             <span>{item}</span>
@@ -691,7 +708,7 @@ function CourseDetailPage() {
                         Real-World Projects
                       </h4>
                       <div className="space-y-2">
-                        {course.projects.map((project, i) => (
+                        {(course.projects || []).map((project, i) => (
                           <div
                             key={i}
                             className="border border-slate-100 rounded-xl p-3 bg-slate-50/50"
@@ -740,7 +757,7 @@ function CourseDetailPage() {
                       Your Instructors &amp; Mentors
                     </h4>
                     <div className="grid gap-4 sm:grid-cols-2">
-                      {course.instructors.map((item) => (
+                      {(course.instructors || []).map((item) => (
                         <div
                           key={item.name}
                           className="flex gap-3.5 border border-slate-200/80 rounded-2xl p-4 bg-white shadow-xs items-center"
@@ -779,7 +796,7 @@ function CourseDetailPage() {
                     </p>
                   </div>
 
-                  {course.faqs.length === 0 ? (
+                  {(!course.faqs || course.faqs.length === 0) ? (
                     <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
                       <HelpCircle className="size-10 text-slate-300 mx-auto mb-3" />
                       <h4 className="text-base font-bold text-navy">No FAQs Available Yet</h4>
@@ -789,7 +806,7 @@ function CourseDetailPage() {
                     </div>
                   ) : (
                     <div className="space-y-2.5">
-                      {course.faqs.map((faq, index) => {
+                      {(course.faqs || []).map((faq, index) => {
                         const isFaqExpanded = expandedFaq === index;
                         return (
                           <div
@@ -884,6 +901,7 @@ function CourseDetailPage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {relatedCourses.map((otherCourse) => {
+              if (!otherCourse || !otherCourse.slug) return null;
               const imageSrc =
                 otherCourse.image ||
                 (otherCourse.category === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg);
@@ -892,12 +910,13 @@ function CourseDetailPage() {
                   ? otherCourse.syllabus.length
                   : 6;
               const levelText =
-                otherCourse.level && otherCourse.level.includes(" to ")
+                otherCourse.level && typeof otherCourse.level === "string" && otherCourse.level.includes(" to ")
                   ? otherCourse.level.split(" to ")[0]
                   : otherCourse.level || "Beginner";
+              const otherSlug = otherCourse.slug || otherCourse.id;
               return (
                 <article
-                  key={otherCourse.id}
+                  key={otherCourse.id || otherSlug}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:border-indigo-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="relative aspect-[16/9] overflow-hidden bg-slate-900">
@@ -943,7 +962,7 @@ function CourseDetailPage() {
                     <div className="pt-2 border-t border-slate-100">
                       <BtnLink
                         to="/courses/$slug"
-                        params={{ slug: otherCourse.slug }}
+                        params={{ slug: otherSlug }}
                         variant="accent"
                         size="sm"
                         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs h-9 justify-center gap-1.5 shadow-xs"

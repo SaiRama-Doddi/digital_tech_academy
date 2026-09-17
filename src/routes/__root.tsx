@@ -46,14 +46,24 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+      <div className="max-w-xl text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
           This page didn't load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
+        {error && (
+          <div className="mt-4 p-4 text-left bg-rose-50 border border-rose-200 rounded-xl text-xs font-mono text-rose-700 overflow-x-auto max-h-60">
+            <p className="font-bold">{error.message || String(error)}</p>
+            {error.stack && (
+              <pre className="mt-2 whitespace-pre-wrap text-[11px] text-rose-600/80">
+                {error.stack}
+              </pre>
+            )}
+          </div>
+        )}
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
