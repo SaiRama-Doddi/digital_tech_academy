@@ -886,12 +886,14 @@ function ProgrammaticDifferentiator() {
               desc: "Turn campaign data into actionable media insights.",
               color: "bg-amber-500/15 text-amber-400 border-amber-400/30",
             },
-          ].map((item) => {
+          ].map((item, index) => {
             const ItemIcon = item.icon;
             return (
               <div
                 key={item.name}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/50 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-2 cursor-pointer"
+                data-reveal="left-to-right-and-bottom-to-up"
+                style={{ "--reveal-delay": `${(index % 3) * 120}ms` } as React.CSSProperties}
+                className="programmatic-pillar-card group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/50 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-2 cursor-pointer"
               >
                 {/* Top Accent Line */}
                 <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
@@ -907,7 +909,7 @@ function ProgrammaticDifferentiator() {
                 <h3 className="mt-3.5 text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
                   {item.name}
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 font-normal transition-colors duration-200">
+                <p className="mt-1 text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 font-normal transition-colors duration-200 text-justify">
                   {item.desc}
                 </p>
               </div>

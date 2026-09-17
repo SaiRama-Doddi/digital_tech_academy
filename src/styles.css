@@ -448,6 +448,26 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
+  /* Premium Programmatic pillar transition cards for all screens */
+  .programmatic-pillar-card {
+    will-change: transform, opacity, box-shadow, border-color;
+  }
+  .programmatic-pillar-card[data-reveal="left-to-right-and-bottom-to-up"] {
+    transform: translate3d(-36px, 32px, 0) scale(0.96);
+    opacity: 0;
+  }
+  .programmatic-pillar-card[data-reveal="left-to-right-and-bottom-to-up"].is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition:
+      opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s ease,
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
