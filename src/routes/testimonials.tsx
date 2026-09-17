@@ -131,7 +131,12 @@ function TrustAndValuesPage() {
       <PageHero
         eyebrow="VALUE & TRUST COMMITMENTS"
         title="Credible Education Built on Real Skills"
-        description="Explore our verified learning standards, practical methodology, and career assistance commitments."
+        description={
+          <>
+            Explore our verified learning standards, practical methodology,
+            <span className="block sm:inline"> and career assistance commitments.</span>
+          </>
+        }
       />
 
       {/* Section 2 — Credible Metrics Strip */}

@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 
 type PageHeroProps = {
   eyebrow?: string | undefined;
-  title: string;
-  description?: string | undefined;
+  title: ReactNode;
+  description?: ReactNode | undefined;
   children?: ReactNode | undefined;
   align?: "left" | "center" | undefined;
   className?: string | undefined;
@@ -58,7 +58,7 @@ export function PageHero({
 
           <h1
             className={cn(
-              "mt-2.5 sm:mt-3 text-xl sm:text-2xl md:text-3xl lg:text-[2.2rem] xl:text-[2.45rem] font-black leading-tight sm:leading-tight text-white tracking-tight sm:whitespace-nowrap text-left",
+              "mt-2.5 sm:mt-3 text-xl sm:text-2xl md:text-3xl lg:text-[2.2rem] xl:text-[2.45rem] font-black leading-tight sm:leading-tight text-white tracking-tight sm:whitespace-nowrap text-left [text-wrap:balance]",
               isCenter && "text-center mx-auto",
               titleClassName
             )}
@@ -69,7 +69,7 @@ export function PageHero({
           {description ? (
             <p
               className={cn(
-                "mt-1.5 sm:mt-2 text-xs sm:text-sm md:text-[15px] leading-relaxed text-slate-300 font-normal text-left whitespace-normal md:whitespace-nowrap w-full max-w-none",
+                "mt-1.5 sm:mt-2 text-xs sm:text-sm md:text-[15px] leading-relaxed text-slate-300 font-normal text-left whitespace-normal md:whitespace-nowrap w-full max-w-none [text-wrap:balance]",
                 isCenter && "text-center mx-auto",
                 descriptionClassName
               )}
