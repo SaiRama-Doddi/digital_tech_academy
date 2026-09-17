@@ -234,39 +234,47 @@ function RotatingTrustBadge() {
  */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/50 via-white to-slate-50/40 pb-8 pt-4 sm:pt-6 lg:pb-10 lg:pt-6">
-      {/* Soft ambient background glow */}
+    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/60 via-white to-slate-50/50 pb-10 pt-4 sm:pt-6 lg:pb-14 lg:pt-8 select-none">
+      {/* Tech grid texture overlay */}
       <div
-        className="pointer-events-none absolute right-[5%] top-[8%] size-[36rem] rounded-full bg-gradient-to-tr from-sky-200/40 to-blue-200/30 blur-3xl"
+        className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.08] pointer-events-none"
+        aria-hidden="true"
+      />
+
+      {/* Premium ambient glow orbs */}
+      <div
+        className="pointer-events-none absolute right-[5%] top-[5%] size-[38rem] rounded-full bg-gradient-to-tr from-sky-300/30 via-blue-200/20 to-transparent blur-3xl animate-pulse"
+        style={{ animationDuration: "8s" }}
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute left-[15%] top-[20%] size-[28rem] rounded-full bg-blue-100/25 blur-3xl"
+        className="pointer-events-none absolute left-[5%] top-[25%] size-[32rem] rounded-full bg-gradient-to-br from-indigo-200/25 via-blue-100/30 to-transparent blur-3xl animate-pulse"
+        style={{ animationDuration: "10s" }}
         aria-hidden="true"
       />
 
       <div className="container-site relative z-10 overflow-x-clip sm:overflow-visible">
-        <div className="grid lg:grid-cols-2 items-center gap-8 lg:gap-10 xl:gap-14 w-full">
-          {/* Left Column: Text & CTAs */}
-          <div className="w-full max-w-xl lg:max-w-2xl xl:max-w-3xl text-left flex flex-col justify-center min-w-0">
+        <div className="grid lg:grid-cols-12 items-center gap-8 lg:gap-10 xl:gap-14 w-full">
+          {/* Left Column: Text & CTAs (7 cols on lg/xl) */}
+          <div className="lg:col-span-7 w-full text-left flex flex-col justify-center min-w-0">
             {/* Eyebrow: INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED */}
             <div
-              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/80 bg-gradient-to-r from-blue-50/90 via-sky-50/60 to-indigo-50/90 px-2.5 py-1 sm:px-3.5 sm:py-1.5 shadow-[0_2px_10px_-2px_rgba(37,99,235,0.12)] backdrop-blur-md mb-3 sm:mb-4 w-fit select-none transition-all duration-300 hover:border-blue-300 hover:shadow-[0_4px_14px_-2px_rgba(37,99,235,0.18)]"
+              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/90 bg-gradient-to-r from-blue-50/95 via-sky-50/80 to-indigo-50/95 px-3 py-1.5 sm:px-4 sm:py-1.5 shadow-[0_2px_12px_-2px_rgba(37,99,235,0.14)] backdrop-blur-md mb-3.5 sm:mb-4 w-fit select-none transition-all duration-300 hover:border-blue-400 hover:shadow-[0_4px_16px_-2px_rgba(37,99,235,0.2)]"
               data-reveal
             >
               <span className="relative flex size-2 shrink-0">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-blue-500 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-blue-600" />
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 whitespace-nowrap">
+              <span className="text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 whitespace-nowrap">
                 INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED
               </span>
-              <Sparkles className="size-2.5 sm:size-3 text-blue-500/80 shrink-0" aria-hidden="true" />
+              <Sparkles className="size-3 text-amber-500 shrink-0 animate-pulse" aria-hidden="true" />
             </div>
 
-            {/* H1: MASTER THE SKILLS. BUILD REAL-WORLD EXPERIENCE. (Strictly 2 lines) */}
+            {/* H1: MASTER THE SKILLS. BUILD REAL-WORLD EXPERIENCE. */}
             <h1
-              className="text-[1.05rem] xs:text-[1.2rem] sm:text-[1.45rem] md:text-[1.75rem] lg:text-[1.65rem] xl:text-[2.05rem] 2xl:text-[2.25rem] font-black leading-[1.2] sm:leading-[1.15] tracking-tight text-slate-900"
+              className="text-[1.35rem] xs:text-[1.55rem] sm:text-[1.95rem] md:text-[2.25rem] lg:text-[2.15rem] xl:text-[2.55rem] 2xl:text-[2.85rem] font-black leading-[1.18] sm:leading-[1.12] tracking-tight text-slate-900 [text-wrap:balance]"
               data-reveal
               style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
             >
@@ -276,25 +284,33 @@ function Hero() {
               </span>
             </h1>
 
-            {/* Subheading: Learn Cyber Security, Programmatic Advertising & Digital Marketing from industry practitioners... */}
+            {/* Subheading */}
             <p
-              className="mt-3.5 sm:mt-4 text-xs sm:text-base text-slate-600 leading-relaxed max-w-xl font-normal"
+              className="mt-3.5 sm:mt-4 text-xs sm:text-[15px] lg:text-base text-slate-600 leading-relaxed max-w-2xl font-normal text-justify sm:text-left"
               data-reveal
               style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
             >
-              Learn Cyber Security, Programmatic Advertising &amp; Digital Marketing from industry practitioners through practical training, real-world scenarios, guided projects and hands-on learning.
+              Learn Cyber Security, Programmatic Advertising &amp; Digital Marketing from industry practitioners through practical training, real-world scenarios, guided capstone projects and hands-on tool learning.
             </p>
 
-            {/* Supporting line: Learn. Practice. Build. Become Industry Ready. */}
+            {/* Supporting Micro-Highlights Row */}
             <div
-              className="mt-3 sm:mt-3.5 inline-flex items-center gap-2 rounded-lg bg-blue-50/80 border border-blue-100/90 px-3 py-1.5 w-fit"
+              className="mt-3.5 sm:mt-4 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-bold text-slate-700"
               data-reveal
               style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
             >
-              <span className="size-1.5 rounded-full bg-blue-600 shrink-0" />
-              <span className="text-xs sm:text-[13px] font-bold text-blue-800 tracking-wide">
-                Learn. Practice. Build. Become Industry Ready.
-              </span>
+              <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50/90 border border-blue-200/70 px-2.5 py-1 text-blue-800 shadow-2xs">
+                <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
+                <span>Live Cloud Sandboxes</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50/90 border border-indigo-200/70 px-2.5 py-1 text-indigo-800 shadow-2xs">
+                <CheckCircle2 className="size-3.5 text-indigo-600 shrink-0" />
+                <span>10+ Dedicated Mentors</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50/90 border border-emerald-200/70 px-2.5 py-1 text-emerald-800 shadow-2xs">
+                <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0" />
+                <span>100% Placement Support</span>
+              </div>
             </div>
 
             {/* CTAs: Explore Programs / Talk to an Expert (Side-by-side on mobile) */}
@@ -307,64 +323,108 @@ function Hero() {
                 to="/courses"
                 variant="primary"
                 size="md"
-                className="flex-1 sm:flex-initial justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 sm:h-12 px-3 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center gap-1 sm:gap-2 group whitespace-nowrap"
+                className="flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-3.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap"
               >
                 <span>Explore Programs</span>
-                <ArrowRight className="size-3 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
+                <ArrowRight className="size-3.5 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
               </BtnLink>
 
               <BtnLink
                 to="/request-call"
                 variant="outline"
                 size="md"
-                className="flex-1 sm:flex-initial justify-center h-10 sm:h-12 px-2.5 sm:px-6 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 sm:gap-2 text-[11px] min-[380px]:text-xs sm:text-base active:scale-[0.98] cursor-pointer whitespace-nowrap"
+                className="flex-1 sm:flex-initial justify-center h-10.5 sm:h-12 px-3 sm:px-6 rounded-xl bg-white/95 hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 sm:gap-2 text-[11px] min-[380px]:text-xs sm:text-base active:scale-[0.98] cursor-pointer whitespace-nowrap"
               >
-                <span className="grid size-4.5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
-                  <PhoneCall className="size-2 sm:size-3" aria-hidden="true" />
+                <span className="grid size-5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
+                  <PhoneCall className="size-2.5 sm:size-3" aria-hidden="true" />
                 </span>
                 <span>Talk to an Expert</span>
               </BtnLink>
             </div>
 
-            {/* Rotating Trust Tag: Practical Training, Industry Mentorship, Real-World Projects, Career-Focused Learning */}
+            {/* Rotating Trust Tag */}
             <RotatingTrustBadge />
           </div>
 
-          {/* Right Column: Hero Visual Graphic */}
-          <div className="relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0 select-none">
+          {/* Right Column: Hero Visual Canvas & Interactive Floating HUD (5 cols on lg/xl) */}
+          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0 select-none">
             <div
-              className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-none rounded-3xl p-3 sm:p-4"
+              className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-none rounded-3xl p-2 sm:p-3 bg-gradient-to-tr from-sky-400/30 via-indigo-500/20 to-white/80 shadow-2xl shadow-slate-900/10 backdrop-blur-xl border border-white/90"
               data-reveal="right"
             >
-              {/* Central Hero Image */}
-              <div className="relative overflow-hidden rounded-2xl shadow-xl shadow-slate-900/10 border border-white/80 aspect-[16/11] sm:aspect-[16/10] bg-slate-950">
+              {/* Floating Top-Right HUD Badge: Active Lab Sandbox */}
+              <div className="absolute -top-3 sm:-top-4 -right-1 sm:-right-3 z-30 animate-float-slow pointer-events-none">
+                <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-2 shadow-lg shadow-slate-900/10 text-left">
+                  <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xs shrink-0">
+                    <Terminal className="size-4" />
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
+                      <span className="text-[10.5px] font-black uppercase tracking-wider text-slate-800">
+                        Virtual Cloud Lab
+                      </span>
+                    </div>
+                    <span className="block text-[9.5px] font-bold text-blue-600">
+                      DV360 • CM360 • Kali
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Central Hero Image Box */}
+              <div className="relative overflow-hidden rounded-2xl shadow-lg border border-slate-900/10 aspect-[16/11] sm:aspect-[16/10] bg-slate-950 group">
                 <img
                   src={heroImg}
-                  alt="DIGITECHADEMY training lab simulation"
-                  className="w-full h-full object-cover object-center transform transition-transform duration-700 hover:scale-105"
+                  alt="DIGITECHADEMY practical training lab simulation"
+                  className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
                   width={960}
                   height={600}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3 text-white flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[11px] font-bold tracking-wide uppercase">Live Cloud Sandbox Active</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+
+                {/* Bottom Live Console Bar */}
+                <div className="absolute bottom-2.5 left-3 right-3 text-white flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <span className="text-[10.5px] sm:text-[11px] font-bold tracking-wide uppercase truncate">
+                      Live Sandbox Active
+                    </span>
                   </div>
-                  <span className="text-[11px] font-semibold text-sky-300">100% Hands-On</span>
+                  <span className="inline-flex items-center gap-1 text-[10px] sm:text-[10.5px] font-extrabold text-sky-300 bg-white/10 px-2 py-0.5 rounded-md backdrop-blur-md shrink-0">
+                    <Award className="size-3 text-amber-400" />
+                    100% Practical
+                  </span>
+                </div>
+              </div>
+
+              {/* Floating Bottom-Left HUD Badge: Mentors & Rating */}
+              <div className="absolute -bottom-4 -left-2 sm:-left-4 z-30 animate-float-reverse pointer-events-none">
+                <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-2 shadow-lg shadow-slate-900/10 text-left">
+                  <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-xs shrink-0">
+                    <Users className="size-4" />
+                  </span>
+                  <div>
+                    <span className="block text-[10.5px] font-black text-slate-900">
+                      10+ Seasoned Mentors
+                    </span>
+                    <span className="block text-[9.5px] font-bold text-amber-600">
+                      ★ 4.9 Verified Student Rating
+                    </span>
+                  </div>
                 </div>
               </div>
 
               {/* Floating Bottom Trust Pill Strip */}
-              <div className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 z-30 w-max max-w-[94%] sm:max-w-none flex justify-center pointer-events-none">
-                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md px-2.5 sm:px-4 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-bold text-slate-800 text-center whitespace-nowrap">
-                  <span>Practical Training</span>
-                  <span className="text-slate-300 font-normal">•</span>
-                  <span>Industry Mentorship</span>
-                  <span className="text-slate-300 font-normal hidden min-[460px]:inline">•</span>
-                  <span className="hidden min-[460px]:inline">Real-World Projects</span>
-                  <span className="text-slate-300 font-normal hidden lg:inline">•</span>
-                  <span className="hidden lg:inline">Career-Focused</span>
+              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-max max-w-[94%] sm:max-w-none flex justify-center pointer-events-none">
+                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-slate-900/95 backdrop-blur-md border border-slate-700/80 shadow-xl px-3 sm:px-4.5 py-1 sm:py-1.5 text-[9.5px] sm:text-[11px] font-bold text-white text-center whitespace-nowrap">
+                  <span className="text-sky-400">Practical Training</span>
+                  <span className="text-slate-500 font-normal">•</span>
+                  <span className="text-indigo-300">Industry Mentorship</span>
+                  <span className="text-slate-500 font-normal hidden min-[460px]:inline">•</span>
+                  <span className="text-emerald-300 hidden min-[460px]:inline">Real Projects</span>
+                  <span className="text-slate-500 font-normal hidden lg:inline">•</span>
+                  <span className="text-amber-300 hidden lg:inline">Placement Ready</span>
                 </div>
               </div>
             </div>
