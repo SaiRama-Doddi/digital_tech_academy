@@ -477,6 +477,35 @@
     box-shadow: 0 20px 40px -15px rgba(22, 199, 255, 0.25), 0 0 0 1px rgba(56, 189, 248, 0.35);
   }
 
+  /* Premium Cyber Security step transition cards for all screens */
+  .cyber-step-card {
+    will-change: transform, opacity, box-shadow, border-color;
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease,
+      background-color 0.35s ease;
+  }
+  .cyber-step-card[data-reveal="left-to-right-and-bottom-to-up"] {
+    transform: translate3d(-36px, 34px, 0) scale(0.95);
+    opacity: 0;
+  }
+  .cyber-step-card[data-reveal="left-to-right-and-bottom-to-up"].is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition:
+      opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease,
+      background-color 0.35s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .cyber-step-card[data-reveal="left-to-right-and-bottom-to-up"].is-visible:hover {
+    transform: translate3d(0, -8px, 0) scale(1.02);
+    box-shadow: 0 22px 42px -15px rgba(37, 99, 235, 0.18), 0 0 0 1px rgba(59, 130, 246, 0.3);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

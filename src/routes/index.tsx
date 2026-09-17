@@ -1044,7 +1044,10 @@ function CyberSecurityDifferentiator() {
               desc: "Networking, operating systems and security fundamentals.",
               icon: ShieldCheck,
               badge: "Foundations",
-              color: "bg-blue-50 text-blue-600 border-blue-200",
+              dotColor: "bg-blue-500",
+              color: "bg-blue-50 text-blue-600 border-blue-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:shadow-[0_0_16px_rgba(37,99,235,0.35)]",
+              hoverGlow: "from-blue-50/70",
+              accentGradient: "from-blue-600 via-sky-500 to-indigo-600",
             },
             {
               step: "02",
@@ -1052,7 +1055,10 @@ function CyberSecurityDifferentiator() {
               desc: "Linux, web technologies and common security weaknesses.",
               icon: Terminal,
               badge: "Tooling & OS",
-              color: "bg-indigo-50 text-indigo-600 border-indigo-200",
+              dotColor: "bg-indigo-500",
+              color: "bg-indigo-50 text-indigo-600 border-indigo-200 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 group-hover:shadow-[0_0_16px_rgba(99,102,241,0.35)]",
+              hoverGlow: "from-indigo-50/70",
+              accentGradient: "from-indigo-600 via-purple-500 to-sky-500",
             },
             {
               step: "03",
@@ -1060,7 +1066,10 @@ function CyberSecurityDifferentiator() {
               desc: "Guided security exercises and labs.",
               icon: Cpu,
               badge: "Hands-on",
-              color: "bg-sky-50 text-sky-600 border-sky-200",
+              dotColor: "bg-sky-500",
+              color: "bg-sky-50 text-sky-600 border-sky-200 group-hover:bg-sky-600 group-hover:text-white group-hover:border-sky-600 group-hover:shadow-[0_0_16px_rgba(14,165,233,0.35)]",
+              hoverGlow: "from-sky-50/70",
+              accentGradient: "from-sky-500 via-teal-500 to-blue-600",
             },
             {
               step: "04",
@@ -1068,7 +1077,10 @@ function CyberSecurityDifferentiator() {
               desc: "Vulnerability assessment and ethical hacking methodologies.",
               icon: Lock,
               badge: "Assessment",
-              color: "bg-amber-50 text-amber-600 border-amber-200",
+              dotColor: "bg-amber-500",
+              color: "bg-amber-50 text-amber-600 border-amber-200 group-hover:bg-amber-500 group-hover:text-white group-hover:border-amber-500 group-hover:shadow-[0_0_16px_rgba(245,158,11,0.35)]",
+              hoverGlow: "from-amber-50/70",
+              accentGradient: "from-amber-500 via-orange-500 to-rose-500",
             },
             {
               step: "05",
@@ -1076,35 +1088,51 @@ function CyberSecurityDifferentiator() {
               desc: "Analyze realistic security scenarios.",
               icon: Target,
               badge: "Real Scenarios",
-              color: "bg-emerald-50 text-emerald-600 border-emerald-200",
+              dotColor: "bg-emerald-500",
+              color: "bg-emerald-50 text-emerald-600 border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.35)]",
+              hoverGlow: "from-emerald-50/70",
+              accentGradient: "from-emerald-500 via-teal-500 to-sky-500",
             },
-          ].map((item) => {
+          ].map((item, index) => {
             const ItemIcon = item.icon;
             return (
               <Link
                 key={item.step}
                 to="/courses/cyber-security"
-                className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-2 flex flex-col justify-between h-full cursor-pointer select-none active:scale-[0.98]"
+                data-reveal="left-to-right-and-bottom-to-up"
+                style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
+                className="cyber-step-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white hover:border-blue-400/80 cursor-pointer select-none active:scale-[0.985] h-full"
               >
                 {/* Top Animated Accent Border Gradient */}
-                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <div
+                  className={cn(
+                    "absolute top-0 inset-x-0 h-1 bg-gradient-to-r transition-transform duration-500 ease-out origin-left scale-x-0 group-hover:scale-x-100",
+                    item.accentGradient,
+                  )}
+                />
 
                 {/* Subtle Hover Radial Ambient Glow */}
-                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-blue-50/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div
+                  className={cn(
+                    "pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                    item.hoverGlow,
+                  )}
+                />
 
                 <div className="relative z-10">
                   <div className="flex items-center justify-between gap-2 mb-3">
                     <span className="font-display text-xs font-black text-blue-700 bg-blue-100/70 border border-blue-200 px-2.5 py-0.5 rounded-md transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:shadow-sm group-hover:shadow-blue-500/30 group-hover:scale-105">
                       {item.step}
                     </span>
-                    <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200/70 transition-all duration-300 group-hover:bg-blue-50 group-hover:text-blue-700 group-hover:border-blue-300">
-                      {item.badge}
+                    <span className="inline-flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-bold text-slate-600 uppercase tracking-wider bg-slate-50 px-2.5 py-0.5 rounded-full border border-slate-200/70 transition-all duration-300 group-hover:bg-blue-50 group-hover:text-blue-700 group-hover:border-blue-300">
+                      <span className={cn("size-1.5 rounded-full animate-pulse", item.dotColor)} />
+                      <span>{item.badge}</span>
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2.5 mt-2">
-                    <span className={cn("grid size-8.5 place-items-center rounded-xl border shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md", item.color)}>
-                      <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" />
+                    <span className={cn("grid size-8.5 place-items-center rounded-xl border shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6", item.color)}>
+                      <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
                     </span>
                     <h3 className="text-base font-black text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all duration-200">
                       {item.title}

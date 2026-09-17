@@ -373,9 +373,10 @@ function CoursesPage() {
             {/* LEFT COLUMN: Pill Tabs, Course Cards & Highlights                   */}
             {/* ------------------------------------------------------------------- */}
             <div className="space-y-7 w-full min-w-0">
-              {/* Category Pill Tabs */}
+              {/* Category Pill Tabs & Quick Action Bar */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200/80 pb-3 sm:pb-4 w-full min-w-0">
-                <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full min-w-0">
+                {/* Scrollable Category Filter Pills */}
+                <div className="flex items-center gap-1.5 sm:gap-2.5 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full min-w-0 pr-4 sm:pr-0">
                   {categoryTabs.map((tab) => {
                     const isActive = activeTab === tab.id;
                     return (
@@ -384,7 +385,7 @@ function CoursesPage() {
                         type="button"
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                          "rounded-xl px-3.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap active:scale-[0.98]",
+                          "rounded-xl px-3 sm:px-4.5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-[0.98]",
                           isActive
                             ? "bg-[#5455f6] text-white shadow-md shadow-indigo-500/25"
                             : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0]"
@@ -402,30 +403,34 @@ function CoursesPage() {
                       </button>
                     );
                   })}
+                </div>
 
+                {/* Right Action Tools: Meet Mentors & Download Prospectus */}
+                <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 flex-wrap sm:flex-nowrap">
                   {/* Button: Meet Your Mentors */}
                   <button
                     type="button"
                     onClick={scrollToMentors}
-                    className="rounded-xl px-3.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap bg-navy hover:bg-navy-800 text-white border border-sky-400/40 shadow-sm active:scale-[0.98] group"
+                    className="rounded-xl px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-navy hover:bg-navy-800 text-white border border-sky-400/40 shadow-sm active:scale-[0.98] group"
                     title="Explore expert mentors and faculty"
                   >
                     <Users className="size-3.5 sm:size-4 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                    <span>Meet Your Mentors</span>
+                    <span>Meet <span className="hidden sm:inline">Your </span>Mentors</span>
                     <span className="text-[0.7rem] px-1.5 py-0.5 rounded-md font-extrabold bg-sky-500/20 text-sky-300 border border-sky-400/30">
                       {liveMentors.length}
                     </span>
                   </button>
-                </div>
 
-                <button
-                  type="button"
-                  onClick={handleDownloadProspectus}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors py-1 cursor-pointer shrink-0 self-start sm:self-auto"
-                >
-                  <Download className="size-3.5" />
-                  <span>Download Prospectus</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={handleDownloadProspectus}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors py-1 cursor-pointer shrink-0"
+                  >
+                    <Download className="size-3.5" />
+                    <span className="hidden xs:inline">Download Prospectus</span>
+                    <span className="xs:hidden">Prospectus</span>
+                  </button>
+                </div>
               </div>
 
 
