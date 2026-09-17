@@ -714,7 +714,7 @@ function CoursesPage() {
                           )}
                         </button>
                         {isFaqExpanded && (
-                          <div className="border-t border-slate-100 p-3.5 sm:p-4 bg-slate-50/30 text-xs sm:text-sm lg:text-[0.95rem] text-slate-600 leading-relaxed">
+                          <div className="border-t border-slate-100 p-3.5 sm:p-4 bg-slate-50/30 text-xs sm:text-sm lg:text-[0.95rem] text-slate-600 leading-relaxed text-justify">
                             {faq.answer}
                           </div>
                         )}

@@ -55,7 +55,7 @@ export function FaqAccordion({
               )}
             >
               <div className="overflow-hidden">
-                <p className="px-5 pb-5 text-xs sm:text-sm lg:text-[0.95rem] leading-relaxed text-muted-foreground sm:px-6 sm:pb-6">
+                <p className="px-5 pb-5 text-xs sm:text-sm lg:text-[0.95rem] leading-relaxed text-muted-foreground sm:px-6 sm:pb-6 text-justify">
                   {item.answer}
                 </p>
               </div>

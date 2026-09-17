@@ -430,13 +430,13 @@ function CourseDetailPage() {
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Opening Lead Paragraph from screenshot */}
                   <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-sm space-y-4">
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-justify">
                       Our online {course.title} training and placement program is fully job-oriented
                       and includes real-time project work for hands-on learning. The{" "}
                       <strong className="text-navy">{displayTitle} Course</strong> is developed by
                       certified experts to deliver industry-ready skills.
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">
                       {course.longDescription || course.description}
                     </p>
                   </div>
@@ -680,7 +680,7 @@ function CourseDetailPage() {
                     <h3 className="text-base sm:text-lg font-black text-navy">
                       Program Overview &amp; Training Methodology
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">
                       {course.practicalLearning?.description || course.longDescription}
                     </p>
                   </div>
@@ -714,7 +714,7 @@ function CourseDetailPage() {
                             className="border border-slate-100 rounded-xl p-3 bg-slate-50/50"
                           >
                             <h5 className="text-xs font-bold text-navy">{project.title}</h5>
-                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed">
+                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed text-justify">
                               {project.summary}
                             </p>
                           </div>
@@ -732,7 +732,7 @@ function CourseDetailPage() {
                       <h4 className="text-base font-black text-navy">
                         {course.title} Authorized Certification
                       </h4>
-                      <p className="text-xs text-slate-600 leading-relaxed">
+                      <p className="text-xs text-slate-600 leading-relaxed text-justify">
                         Earn an industry-recognized certificate and verified digital credential
                         upon completing assessments, labs, and capstones. Add this credential
                         directly to LinkedIn.
@@ -828,7 +828,7 @@ function CourseDetailPage() {
                               )}
                             </button>
                             {isFaqExpanded && (
-                              <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                              <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">
                                 {faq.answer}
                               </div>
                             )}
