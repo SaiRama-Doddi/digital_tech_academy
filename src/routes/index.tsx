@@ -745,8 +745,8 @@ function CorePrograms() {
   return (
     <section id="courses" className="bg-surface py-10 sm:py-16 border-y border-slate-200/80 overflow-hidden">
       <div className="container-site">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8" data-reveal>
-          <div className="max-w-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 mb-8" data-reveal>
+          <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
             <SectionHeading
               eyebrow="CORE PROGRAMS"
               title="Career-Oriented Training Tracks"
@@ -756,7 +756,7 @@ function CorePrograms() {
           </div>
           <Link
             to="/courses"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors whitespace-nowrap self-start sm:self-end"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors whitespace-nowrap self-start sm:self-end shrink-0 pb-1"
           >
             <span>View All Course Details</span>
             <ArrowRight className="size-4" />

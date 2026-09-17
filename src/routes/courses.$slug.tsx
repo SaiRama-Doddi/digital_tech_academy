@@ -877,7 +877,7 @@ function CourseDetailPage() {
       <section className="bg-white py-12 border-t border-slate-200/80">
         <div className="container-site">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div>
+            <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
               <span className="text-xs font-black uppercase tracking-widest text-indigo-600">
                 RELATED PROGRAMS
               </span>

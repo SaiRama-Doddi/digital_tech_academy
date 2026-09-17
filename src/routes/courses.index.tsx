@@ -545,8 +545,8 @@ function CoursesPage() {
                 id="mentors-section"
                 className="space-y-4 pt-6 border-t border-slate-200/80 w-full min-w-0 scroll-mt-28"
               >
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-                  <div>
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                  <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
                     <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-sky-700 mb-1.5">
                       <Sparkles className="size-3 text-sky-600 animate-pulse" />
                       <span>Direct Mentorship Access</span>
@@ -554,7 +554,7 @@ function CoursesPage() {
                     <h3 className="text-base sm:text-xl lg:text-2xl font-black text-navy tracking-tight">
                       Meet Your Mentors &amp; Program Directors
                     </h3>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-none whitespace-normal md:whitespace-nowrap font-normal">
+                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                       Learn directly from seasoned practitioners who lead enterprise security perimeters, programmatic trading desks, and high-velocity digital marketing campaigns.
                     </p>
                   </div>
@@ -562,7 +562,7 @@ function CoursesPage() {
                   <Link
                     to="/about"
                     hash="mentors"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors shrink-0 py-1"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors shrink-0 py-1 whitespace-nowrap self-start sm:self-end"
                   >
                     <span>Full Faculty Profiles</span>
                     <ArrowRight className="size-3.5" />
