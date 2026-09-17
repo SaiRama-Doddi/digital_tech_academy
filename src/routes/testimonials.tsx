@@ -224,7 +224,7 @@ function TrustAndValuesPage() {
                     <h3 className="mt-4 text-lg font-bold text-slate-900 leading-snug">
                       {pillar.title}
                     </h3>
-                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
                       {pillar.description}
                     </p>
                   </div>
@@ -271,7 +271,7 @@ function TrustAndValuesPage() {
                     <h4 className="mt-3.5 text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {phase.title}
                     </h4>
-                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal">
+                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal text-justify">
                       {phase.description}
                     </p>
                   </div>
@@ -297,7 +297,7 @@ function TrustAndValuesPage() {
               <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
                 Experience Practical Learning Firsthand
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
                 Join a live demo session before enrolling. Meet our mentors, test-drive our lab simulations, and evaluate whether our practical training approach fits your career aspirations.
               </p>
               <div className="mt-5 flex flex-wrap items-center gap-3">

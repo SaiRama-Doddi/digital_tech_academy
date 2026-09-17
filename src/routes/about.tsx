@@ -179,7 +179,7 @@ function AboutPage() {
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-navy text-left break-words">
               Built to Make Digital Learning Practical
             </h2>
-            <p className="mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-slate-600 max-w-3xl font-normal">
+            <p className="mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-slate-600 max-w-3xl font-normal text-justify">
               DIGITECHADEMY makes professional digital training practical, accessible, and aligned with workplace requirements. Our structured curriculum connects fundamentals with real-world application so learners gain actionable skills.
             </p>
           </div>
@@ -350,7 +350,7 @@ function AboutPage() {
                     </div>
 
                     {/* Card Description */}
-                    <p className="mt-3 text-xs sm:text-[13px] leading-relaxed text-slate-600 font-normal">
+                    <p className="mt-3 text-xs sm:text-[13px] leading-relaxed text-slate-600 font-normal text-justify">
                       {item.text}
                     </p>
                   </div>
@@ -398,7 +398,7 @@ function AboutPage() {
               </span>
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">Our Vision</h2>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-300">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-300 text-justify">
               To build a trusted learning ecosystem where learners develop practical digital skills and thrive in modern tech roles.
             </p>
           </article>
@@ -414,7 +414,7 @@ function AboutPage() {
               </span>
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">Our Mission</h2>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-300">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-300 text-justify">
               To deliver hands-on, industry-relevant training that prepares learners with real skills, practical experience, and career confidence.
             </p>
           </article>

@@ -554,7 +554,7 @@ function CoursesPage() {
                     <h3 className="text-base sm:text-xl lg:text-2xl font-black text-navy tracking-tight">
                       Meet Your Mentors &amp; Program Directors
                     </h3>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
                       Learn directly from seasoned practitioners who lead enterprise security perimeters, programmatic trading desks, and high-velocity digital marketing campaigns.
                     </p>
                   </div>

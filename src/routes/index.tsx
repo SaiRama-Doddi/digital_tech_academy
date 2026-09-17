@@ -659,7 +659,7 @@ function WhyDigitechademy() {
                         aria-hidden="true"
                       />
                     </div>
-                    <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal">
+                    <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal text-justify">
                       {item.desc}
                     </p>
                   </div>
@@ -1052,7 +1052,7 @@ function CyberSecurityDifferentiator() {
                     </h3>
                   </div>
 
-                  <p className="mt-2.5 text-xs leading-relaxed text-slate-600 group-hover:text-slate-800 transition-colors duration-200 font-normal">
+                  <p className="mt-2.5 text-xs leading-relaxed text-slate-600 group-hover:text-slate-800 transition-colors duration-200 font-normal text-justify">
                     {item.desc}
                   </p>
                 </div>
@@ -1257,7 +1257,7 @@ function PracticalLearning() {
                         </h3>
                       </div>
 
-                      <p className="mt-1.5 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200">
+                      <p className="mt-1.5 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-justify">
                         {item.text}
                       </p>
                     </div>
@@ -1338,7 +1338,7 @@ function WhoIsThisFor() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
             Programs Structured for Distinct Career Aspirations
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify">
             Whether launching your first career, transitioning domains, or upgrading into high-paying specialized fields, DIGITECHADEMY provides clear, guided entry points.
           </p>
         </div>
@@ -1370,7 +1370,7 @@ function WhoIsThisFor() {
                     </h3>
                   </div>
 
-                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal">
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal text-justify">
                     {persona.desc}
                   </p>
                 </div>
@@ -1414,7 +1414,7 @@ function CareerReadiness() {
           <p className="mt-2 text-base sm:text-lg font-bold text-sky-400">
             Learn With Your Next Career Move In Mind.
           </p>
-          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal text-justify">
             Our programs are designed to help you understand industry concepts, practice practical skills, work through realistic scenarios, build project experience, prepare for technical and role-based interviews, and communicate your knowledge with confidence.
           </p>
         </div>
@@ -1477,7 +1477,7 @@ function CareerReadiness() {
                 <h4 className="mt-4 text-base font-bold text-white leading-snug">
                   {pillar.title}
                 </h4>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal text-justify">
                   {pillar.text}
                 </p>
               </div>

@@ -275,6 +275,28 @@
   }
 }
 
+@utility text-justify {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  text-align-last: left !important;
+  text-wrap: normal !important;
+}
+
+@utility text-left {
+  text-align: left !important;
+  text-align-last: left !important;
+}
+
+@utility text-center {
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+@utility text-right {
+  text-align: right !important;
+  text-align-last: right !important;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -299,11 +321,12 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  p {
+  p,
+  blockquote {
     text-align: justify;
     text-justify: inter-word;
     text-align-last: left;
-    text-wrap: pretty;
+    text-wrap: normal;
   }
 
   h1,
@@ -327,8 +350,9 @@
 
   .text-justify {
     text-align: justify !important;
-    text-justify: inter-word;
-    text-align-last: left;
+    text-justify: inter-word !important;
+    text-align-last: left !important;
+    text-wrap: normal !important;
   }
 
   /* Scroll reveal system */
@@ -441,3 +465,13 @@
     }
   }
 }
+
+.text-justify,
+[data-justify],
+p:not(.text-left):not(.text-center):not(.text-right):not(.whitespace-nowrap):not(.truncate) {
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
+  text-wrap: normal;
+}
+
