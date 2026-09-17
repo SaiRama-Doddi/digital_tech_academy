@@ -3,7 +3,7 @@ import { useState, useEffect, type CSSProperties } from "react";
 import { courses, type Course } from "@/data/courses";
 import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
-import { getCourseBySlug, subscribeCourses, type FirebaseCourse } from "@/services/courseService";
+import { getCourseBySlug, subscribeCourses, getLocalCachedCourses, type FirebaseCourse } from "@/services/courseService";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseDemoSidebar } from "@/components/site/CourseDemoSidebar";
@@ -32,11 +32,22 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/courses/$slug")({
   head: ({ params }) => {
-    const course = courses.find((c) => c.slug === params.slug);
+    const cached = typeof window !== "undefined" ? getLocalCachedCourses() : [];
+    const foundCached = cached.find((c) => c.slug === params.slug || c.id === params.slug);
+    const staticCourse = courses.find((c) => c.slug === params.slug);
+    const course = foundCached || staticCourse;
+    const fallbackTitle = params.slug
+      ? params.slug
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(" ")
+      : "Program Details";
     const title = course
-      ? `${course.heroTitle || course.title} | DIGITECHADEMY`
-      : "Course Not Found | DIGITECHADEMY";
-    const desc = course ? course.heroDescription || course.description : "";
+      ? `${course.title} | DIGITECHADEMY`
+      : `${fallbackTitle} Training Online | DIGITECHADEMY`;
+    const desc = course
+      ? course.description
+      : "Practical, mentor-led industry training program at DIGITECHADEMY.";
     return {
       meta: [
         { title },
@@ -44,7 +55,7 @@ export const Route = createFileRoute("/courses/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
       ],
-      links: [{ rel: "canonical", href: course ? `/courses/${course.slug}` : "" }],
+      links: [{ rel: "canonical", href: `/courses/${params.slug}` }],
     };
   },
   component: CourseDetailPage,
@@ -151,7 +162,21 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
 function CourseDetailPage() {
   const { slug } = Route.useParams();
   const staticCourse = courses.find((c) => c.slug === slug);
-  const [courseData, setCourseData] = useState<Course | null>(staticCourse || null);
+  const [courseData, setCourseData] = useState<Course | null>(() => {
+    if (staticCourse) return staticCourse;
+    if (typeof window !== "undefined") {
+      const cached = getLocalCachedCourses();
+      const found = cached.find((c) => c.slug === slug || c.id === slug);
+      if (found) return adaptFirebaseCourseToDetail(found);
+    }
+    return null;
+  });
+  const [allLiveCourses, setAllLiveCourses] = useState<FirebaseCourse[]>(() => {
+    if (typeof window !== "undefined") {
+      return getLocalCachedCourses();
+    }
+    return [];
+  });
   const [isLoadingDynamic, setIsLoadingDynamic] = useState(!courseData);
 
   const [activeTab, setActiveTab] = useState<TabType>("about");
@@ -171,6 +196,9 @@ function CourseDetailPage() {
     });
 
     const unsub = subscribeCourses((list) => {
+      if (list && list.length > 0) {
+        setAllLiveCourses(list);
+      }
       const found = list.find((c) => c.slug === slug || c.id === slug);
       if (found) {
         setCourseData(adaptFirebaseCourseToDetail(found));
@@ -181,13 +209,39 @@ function CourseDetailPage() {
 
   const course = courseData || staticCourse;
 
-  if (isLoadingDynamic) {
+  // Display title matching screenshot style (e.g. Cyber Security Training Online)
+  const displayTitle = course
+    ? course.title.toLowerCase().includes("online")
+      ? course.title
+      : `${course.title} Training Online`
+    : `${slug.replace(/-/g, " ")} Training Online`;
+
+  // Dynamically sync browser tab title with active course name
+  useEffect(() => {
+    if (course) {
+      document.title = `${displayTitle} | DIGITECHADEMY`;
+    }
+  }, [course, displayTitle]);
+
+  const relatedCourses = useMemo(() => {
+    const currentSlug = course?.slug || slug;
+    const currentId = course?.id || slug;
+    const list =
+      allLiveCourses.length > 0
+        ? allLiveCourses.filter(
+            (c) => c.slug !== currentSlug && c.id !== currentId && c.active !== false
+          )
+        : courses.filter((c) => c.slug !== currentSlug);
+    return list.slice(0, 3);
+  }, [allLiveCourses, course?.slug, course?.id, slug]);
+
+  if (isLoadingDynamic && !course) {
     return (
       <SiteLayout>
         <div className="container-site py-28 text-center">
           <div className="size-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <h2 className="text-xl font-bold text-slate-800">Loading Program Details...</h2>
-          <p className="mt-1 text-sm text-slate-500">Connecting to Firebase catalog</p>
+          <p className="mt-1 text-sm text-slate-500">Connecting to course catalog</p>
         </div>
       </SiteLayout>
     );
@@ -199,22 +253,17 @@ function CourseDetailPage() {
         <div className="container-site py-20 text-center">
           <h1 className="text-2xl font-bold text-foreground">Course Not Found</h1>
           <p className="mt-3 text-muted-foreground">
-            The program you are looking for does not exist.
+            The program you are looking for does not exist or has been updated.
           </p>
           <div className="mt-6">
             <BtnLink to="/courses" variant="primary">
-              Back to Courses
+              Browse All Courses
             </BtnLink>
           </div>
         </div>
       </SiteLayout>
     );
   }
-
-  // Display title matching screenshot style (e.g. Cyber Security Training Online)
-  const displayTitle = course.title.toLowerCase().includes("online")
-    ? course.title
-    : `${course.title} Training Online`;
 
   const scrollToDemoForm = () => {
     const el = document.getElementById("course-demo-sidebar");
@@ -834,16 +883,26 @@ function CourseDetailPage() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {courses
-              .filter((c) => c.slug !== course.slug)
-              .map((otherCourse) => (
+            {relatedCourses.map((otherCourse) => {
+              const imageSrc =
+                otherCourse.image ||
+                (otherCourse.category === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg);
+              const moduleCount =
+                otherCourse.syllabus && Array.isArray(otherCourse.syllabus)
+                  ? otherCourse.syllabus.length
+                  : 6;
+              const levelText =
+                otherCourse.level && otherCourse.level.includes(" to ")
+                  ? otherCourse.level.split(" to ")[0]
+                  : otherCourse.level || "Beginner";
+              return (
                 <article
                   key={otherCourse.id}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:border-indigo-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="relative aspect-[16/9] overflow-hidden bg-slate-900">
                     <img
-                      src={otherCourse.image}
+                      src={imageSrc}
                       alt={`${otherCourse.title} banner`}
                       loading="lazy"
                       className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -872,12 +931,12 @@ function CourseDetailPage() {
                       <span className="text-slate-300">&bull;</span>
                       <div className="flex items-center gap-1">
                         <Signal className="size-3.5 text-indigo-600" />
-                        <span>{otherCourse.level.split(" to ")[0]}</span>
+                        <span>{levelText}</span>
                       </div>
                       <span className="text-slate-300">&bull;</span>
                       <div className="flex items-center gap-1">
                         <BookOpen className="size-3.5 text-indigo-600" />
-                        <span>{otherCourse.syllabus.length} Modules</span>
+                        <span>{moduleCount} Modules</span>
                       </div>
                     </div>
 
@@ -895,7 +954,8 @@ function CourseDetailPage() {
                     </div>
                   </div>
                 </article>
-              ))}
+              );
+            })}
           </div>
         </div>
       </section>

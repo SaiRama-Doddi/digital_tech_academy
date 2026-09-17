@@ -14,16 +14,37 @@ import {
   Sparkles,
   Twitter,
   Youtube,
-} from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Logo } from "./Logo";
 import { courses } from "@/data/courses";
 import { navLinks, site, whatsappLink } from "@/lib/site";
+import {
+  subscribeCourses,
+  getLocalCachedCourses,
+  type FirebaseCourse,
+} from "@/services/courseService";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+
+  const [liveCourses, setLiveCourses] = useState<Array<{ id: string; slug: string; title: string; active?: boolean }>>(() => {
+    if (typeof window !== "undefined") {
+      const cached = getLocalCachedCourses();
+      if (cached.length > 0) return cached;
+    }
+    return courses;
+  });
+
+  useEffect(() => {
+    const unsub = subscribeCourses((list) => {
+      if (list && list.length > 0) {
+        setLiveCourses(list);
+      }
+    });
+    return () => unsub();
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -196,7 +217,10 @@ export function Footer() {
               </h3>
             </div>
             <ul className="space-y-2.5 text-xs sm:text-[13px]">
-              {courses.map((course) => (
+              {liveCourses
+                .filter((c) => c.active !== false)
+                .slice(0, 5)
+                .map((course) => (
                 <li key={course.slug} className="min-w-0">
                   <Link
                     to="/courses/$slug"

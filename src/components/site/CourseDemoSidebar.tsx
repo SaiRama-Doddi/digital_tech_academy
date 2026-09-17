@@ -18,6 +18,11 @@ import { Course, courses } from "@/data/courses";
 import { whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { addEnquiryToFirebase } from "@/services/enquiryService";
+import {
+  subscribeCourses,
+  getLocalCachedCourses,
+  type FirebaseCourse,
+} from "@/services/courseService";
 
 const countryCodes = [
   { code: "+1", country: "US", flag: "🇺🇸", name: "United States" },
@@ -44,6 +49,36 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const [liveCourseOptions, setLiveCourseOptions] = useState<Array<{ id: string; title: string }>>(() => {
+    if (typeof window !== "undefined") {
+      const cached = getLocalCachedCourses();
+      if (cached.length > 0) {
+        return cached.map((c) => ({ id: c.id, title: c.title }));
+      }
+    }
+    return courses.map((c) => ({ id: c.id, title: c.title }));
+  });
+
+  useEffect(() => {
+    const unsub = subscribeCourses((list) => {
+      if (list && list.length > 0) {
+        setLiveCourseOptions(
+          list
+            .filter((c) => c.active !== false)
+            .map((c) => ({ id: c.id, title: c.title }))
+        );
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  // Update selected course if activeCourse changes
+  useEffect(() => {
+    if (activeCourse?.title) {
+      setSelectedCourse(activeCourse.title);
+    }
+  }, [activeCourse?.title]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -252,7 +287,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   onChange={(e) => setSelectedCourse(e.target.value)}
                   className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-8 py-2.5 text-xs sm:text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                 >
-                  {courses.map((c) => (
+                  {liveCourseOptions.map((c) => (
                     <option key={c.id} value={c.title}>
                       {c.title}
                     </option>

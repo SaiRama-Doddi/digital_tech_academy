@@ -730,7 +730,11 @@ function CorePrograms() {
     return () => unsub();
   }, []);
 
-  const programCategories = ["All", "Cyber Security", "Digital Marketing", "Programmatic Advertising"];
+  const programCategories = useMemo(() => {
+    const active = liveCourses.filter((c) => c.active !== false);
+    const uniqueCats = Array.from(new Set(active.map((c) => c.category))).filter(Boolean);
+    return ["All", ...uniqueCats];
+  }, [liveCourses]);
 
   const displayedCourses = useMemo(() => {
     const active = liveCourses.filter((c) => c.active !== false);

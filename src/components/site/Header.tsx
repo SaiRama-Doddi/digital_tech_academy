@@ -13,12 +13,17 @@ import {
   TrendingUp,
   X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { Logo } from "./Logo";
 import { courses } from "@/data/courses";
 import { navLinks, site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import {
+  subscribeCourses,
+  getLocalCachedCourses,
+  type FirebaseCourse,
+} from "@/services/courseService";
 
 // All 9 navigation links
 const headerNavLinks = navLinks;
@@ -28,6 +33,63 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileCoursesOpen, setMobileCoursesOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  // Subscribe to live courses (from Firebase and local cache)
+  const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() => {
+    if (typeof window !== "undefined") {
+      const cached = getLocalCachedCourses();
+      if (cached.length > 0) return cached;
+    }
+    return courses.map((c) => ({
+      id: c.id,
+      slug: c.slug,
+      title: c.title,
+      category: c.category,
+      description: c.description,
+      duration: c.duration,
+      level: c.level,
+      instructor: c.instructors?.[0]?.name || "Sai Rama",
+      price: c.pricing?.fee || "₹24,999",
+      highlights: c.highlights || [],
+      students: 150,
+      active: true,
+      featured: true,
+      image: c.image || "",
+    }));
+  });
+
+  useEffect(() => {
+    const unsub = subscribeCourses((list) => {
+      if (list && list.length > 0) {
+        setLiveCourses(list);
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  const activeCourses = useMemo(() => {
+    return liveCourses.filter((c) => c.active !== false);
+  }, [liveCourses]);
+
+  const marketingCourses = useMemo(() => {
+    const subset = activeCourses.filter(
+      (c) =>
+        c.category === "Digital Marketing" ||
+        c.category === "Design & Creative" ||
+        c.category === "Business & Management"
+    );
+    return subset.length > 0 ? subset : activeCourses.slice(0, 2);
+  }, [activeCourses]);
+
+  const securityCourses = useMemo(() => {
+    const subset = activeCourses.filter(
+      (c) =>
+        c.category !== "Digital Marketing" &&
+        c.category !== "Design & Creative" &&
+        c.category !== "Business & Management"
+    );
+    return subset.length > 0 ? subset : activeCourses.slice(2);
+  }, [activeCourses]);
 
   // Scroll listener for sticky glassmorphism elevation
   useEffect(() => {
@@ -43,9 +105,6 @@ export function Header() {
   }, [pathname]);
 
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
-
-  const marketingCourses = courses.filter((c) => c.category === "Digital Marketing");
-  const securityCourses = courses.filter((c) => c.category === "Cyber Security");
 
   return (
     <div className="sticky top-0 z-50 w-full transition-all duration-300">
@@ -260,14 +319,14 @@ export function Header() {
                             </div>
                           </div>
 
-                          {/* Column 2: Cyber Security Suite */}
+                          {/* Column 2: Tech, Cyber Security & Development */}
                           <div className="space-y-1.5">
                             <div className="flex items-center gap-2 pb-1.5 border-b border-slate-100">
                               <span className="grid size-5.5 place-items-center rounded-lg bg-emerald-50 text-emerald-600">
                                 <ShieldCheck className="size-3.5" />
                               </span>
                               <span className="text-xs font-black uppercase tracking-wider text-slate-800">
-                                Cyber Security &amp; Defense
+                                Tech, Security &amp; Development
                               </span>
                             </div>
 
@@ -284,21 +343,14 @@ export function Header() {
                                       <span className="text-xs font-bold text-slate-800 group-hover/item:text-emerald-700 transition-colors truncate">
                                         {c.title}
                                       </span>
-                                      {c.slug === "cyber-security" && (
-                                        <span className="text-[8.5px] font-black uppercase px-1.5 py-0.2 rounded bg-blue-50 text-blue-600 border border-blue-200/70 shrink-0">
-                                          Job Track
-                                        </span>
-                                      )}
-                                      {c.slug === "ethical-hacking" && (
-                                        <span className="text-[8.5px] font-black uppercase px-1.5 py-0.2 rounded bg-rose-50 text-rose-600 border border-rose-200/70 shrink-0">
-                                          CEH Aligned
-                                        </span>
-                                      )}
+                                      <span className="text-[8.5px] font-black uppercase px-1.5 py-0.2 rounded bg-blue-50 text-blue-600 border border-blue-200/70 shrink-0">
+                                        {c.category}
+                                      </span>
                                     </div>
                                     <p className="text-[10.5px] text-slate-500 font-normal line-clamp-1 mt-0.5">
-                                      {c.slug === "cyber-security"
+                                      {c.description || (c.slug === "cyber-security"
                                         ? "SOC Analyst, Network Security & SIEM"
-                                        : "Hands-on Kali Labs & Web Penetration"}
+                                        : "Practical Hands-on Training & Placement")}
                                     </p>
                                     <span className="inline-block mt-0.5 text-[9.5px] text-slate-400 font-medium">
                                       {c.duration}
@@ -485,7 +537,7 @@ export function Header() {
                           <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400 px-1">
                             Select Track
                           </span>
-                          {courses.map((c) => (
+                          {activeCourses.map((c) => (
                             <Link
                               key={c.slug}
                               to="/courses/$slug"
