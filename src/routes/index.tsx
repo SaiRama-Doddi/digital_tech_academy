@@ -206,7 +206,7 @@ function RotatingTrustBadge() {
     >
       <div
         className={cn(
-          "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 shadow-xs transition-all duration-500 select-none",
+          "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 shadow-xs transition-all duration-500",
           current.badgeClass
         )}
         onMouseEnter={() => setIsPaused(true)}
@@ -234,7 +234,7 @@ function RotatingTrustBadge() {
  */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/60 via-white to-slate-50/50 pb-10 pt-4 sm:pt-6 lg:pb-14 lg:pt-8 select-none">
+    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/60 via-white to-slate-50/50 pb-10 pt-4 sm:pt-6 lg:pb-14 lg:pt-8">
       {/* Tech grid texture overlay */}
       <div
         className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.08] pointer-events-none"
@@ -259,7 +259,7 @@ function Hero() {
           <div className="lg:col-span-7 w-full text-left flex flex-col justify-center min-w-0">
             {/* Eyebrow: INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED */}
             <div
-              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/90 bg-gradient-to-r from-blue-50/95 via-sky-50/80 to-indigo-50/95 px-3 py-1.5 sm:px-4 sm:py-1.5 shadow-[0_2px_12px_-2px_rgba(37,99,235,0.14)] backdrop-blur-md mb-3.5 sm:mb-4 w-fit select-none transition-all duration-300 hover:border-blue-400 hover:shadow-[0_4px_16px_-2px_rgba(37,99,235,0.2)]"
+              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/90 bg-gradient-to-r from-blue-50/95 via-sky-50/80 to-indigo-50/95 px-3 py-1.5 sm:px-4 sm:py-1.5 shadow-[0_2px_12px_-2px_rgba(37,99,235,0.14)] backdrop-blur-md mb-3.5 sm:mb-4 w-fit transition-all duration-300 hover:border-blue-400 hover:shadow-[0_4px_16px_-2px_rgba(37,99,235,0.2)]"
               data-reveal
             >
               <span className="relative flex size-2 shrink-0">
@@ -347,7 +347,7 @@ function Hero() {
           </div>
 
           {/* Right Column: Hero Visual Canvas & Interactive Floating HUD (5 cols on lg/xl) */}
-          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0 select-none">
+          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0">
             <div
               className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-none rounded-3xl p-2 sm:p-3 bg-gradient-to-tr from-sky-400/30 via-indigo-500/20 to-white/80 shadow-2xl shadow-slate-900/10 backdrop-blur-xl border border-white/90"
               data-reveal="right"
@@ -442,7 +442,7 @@ function Hero() {
  */
 function UspTrustStrip() {
   return (
-    <section className="bg-white border-y border-slate-200/80 py-6 sm:py-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] select-none">
+    <section className="bg-white border-y border-slate-200/80 py-6 sm:py-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)]">
       <div className="container-site">
         {/* Row 1: Key Credible Statistics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:divide-x lg:divide-slate-200/80">
@@ -971,7 +971,7 @@ function ProgrammaticDifferentiator() {
                 key={item.name}
                 data-reveal="left-to-right-and-bottom-to-up"
                 style={{ "--reveal-delay": `${(index % 3) * 120}ms` } as React.CSSProperties}
-                className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-pointer select-none active:scale-[0.985]"
+                className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-pointer active:scale-[0.985]"
               >
                 {/* Top Accent Gradient Line that glides open */}
                 <div
@@ -1161,7 +1161,7 @@ function CyberSecurityDifferentiator() {
                 to="/courses/cyber-security"
                 data-reveal="left-to-right-and-bottom-to-up"
                 style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
-                className="cyber-step-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white hover:border-blue-400/80 cursor-pointer select-none active:scale-[0.985] h-full"
+                className="cyber-step-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white hover:border-blue-400/80 cursor-pointer active:scale-[0.985] h-full"
               >
                 {/* Top Animated Accent Border Gradient */}
                 <div
@@ -1345,7 +1345,7 @@ function PracticalLearning() {
                   key={item.title}
                   onClick={() => setActiveCard(index)}
                   className={cn(
-                    "group relative overflow-hidden rounded-2xl border p-4 sm:p-4.5 shadow-xs transition-all duration-300 ease-out cursor-pointer select-none active:scale-[0.99] flex flex-col justify-between",
+                    "group relative overflow-hidden rounded-2xl border p-4 sm:p-4.5 shadow-xs transition-all duration-300 ease-out cursor-pointer active:scale-[0.99] flex flex-col justify-between",
                     isActive
                       ? "border-blue-500 bg-white shadow-xl shadow-blue-500/10 -translate-y-1.5 ring-1 ring-blue-400/40"
                       : "border-slate-200/90 bg-white/90 hover:border-blue-400 hover:bg-white hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5",
@@ -1810,7 +1810,7 @@ function FaqSection() {
  */
 function FinalCta() {
   return (
-    <section className="surface-navy relative py-8 sm:py-12 overflow-hidden select-none">
+    <section className="surface-navy relative py-8 sm:py-12 overflow-hidden">
       <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
       <div
         className="pointer-events-none absolute -right-16 -top-16 size-72 rounded-full bg-blue-600/15 blur-2xl"

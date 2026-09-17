@@ -187,7 +187,7 @@ function AboutPage() {
       </section>
 
       {/* Section 4 — Then / Now / Next */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50/80 via-white to-slate-50/50 py-12 sm:py-16 lg:py-20 border-t border-b border-slate-200/70 select-none">
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50/80 via-white to-slate-50/50 py-12 sm:py-16 lg:py-20 border-t border-b border-slate-200/70">
         {/* Ambient Glows & Grid */}
         <div className="grid-lines absolute inset-0 opacity-[0.15] pointer-events-none" aria-hidden="true" />
         <div

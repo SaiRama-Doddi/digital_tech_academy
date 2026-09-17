@@ -262,7 +262,7 @@ function TrustAndValuesPage() {
                   key={phase.step}
                   data-reveal="left-to-right-and-bottom-to-up"
                   style={{ "--reveal-delay": `${index * 120}ms` } as React.CSSProperties}
-                  className="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-blue-500/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none"
+                  className="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-blue-500/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
                 >
                   <div>
                     <div className="flex items-center justify-between">

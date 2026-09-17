@@ -55,7 +55,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#020712] text-slate-300 border-t border-sky-500/20 overflow-hidden select-none">
+    <footer className="relative bg-[#020712] text-slate-300 border-t border-sky-500/20 overflow-hidden">
       {/* ========================================================================= */}
       {/* 1. TOP AMBIENT GLOW & MULTI-STOP BORDER                                   */}
       {/* ========================================================================= */}
