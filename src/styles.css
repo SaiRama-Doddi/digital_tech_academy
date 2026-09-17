@@ -402,18 +402,22 @@
   text-align-last: right !important;
 }
 
+@utility sticky-nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
   }
 
-  html,
-  body {
-    overflow-x: clip;
-    max-width: 100%;
-  }
-
   html {
+    overflow-x: clip;
+    width: 100%;
+    max-width: 100%;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-tap-highlight-color: transparent;
@@ -424,6 +428,10 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    min-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   p,
@@ -515,6 +523,26 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
+  /* On mobile viewports (< 640px), keep reveals vertical only to prevent horizontal blowout */
+  @media (max-width: 639px) {
+    [data-reveal],
+    [data-reveal="left"],
+    [data-reveal="left-to-right"],
+    [data-reveal="right"],
+    [data-reveal="right-to-left"],
+    [data-reveal="top-left"],
+    [data-reveal="bottom-left"],
+    [data-reveal="bottom-right"],
+    [data-reveal="left-and-top"],
+    [data-reveal="left-and-bottom"],
+    [data-reveal="right-and-bottom"] {
+      transform: translate3d(0, 18px, 0);
+    }
+    [data-reveal].is-visible {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
   /* Premium progression transition specific styles */
   .progression-card {
     will-change: transform, opacity, box-shadow;
@@ -600,6 +628,26 @@
 
   .animate-programmatic-marquee:hover,
   .animate-programmatic-marquee:active {
+    animation-play-state: paused;
+  }
+
+  /* Smooth continuous ticker animation for announcement bar */
+  @keyframes announcement-marquee {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .animate-announcement-marquee {
+    animation: announcement-marquee 15s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-announcement-marquee:hover,
+  .animate-announcement-marquee:active {
     animation-play-state: paused;
   }
 

@@ -373,24 +373,24 @@ function HeroInteractiveSandbox() {
     >
       {/* Ambient background glow behind HUD */}
       <div
-        className="pointer-events-none absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600/20 via-sky-500/20 to-indigo-600/20 blur-xl opacity-75 animate-pulse-glow"
+        className="pointer-events-none absolute inset-0 sm:-inset-2 rounded-3xl bg-gradient-to-r from-blue-600/20 via-sky-500/20 to-indigo-600/20 blur-xl opacity-75 animate-pulse-glow"
         aria-hidden="true"
       />
 
       {/* Floating Top-Right HUD Badge: Active Lab Sandbox */}
-      <div className="absolute -top-3.5 -right-2 sm:-right-4 z-30 animate-float-slow pointer-events-none">
-        <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-1.5 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
-          <span className="grid size-7 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xs shrink-0">
-            <Terminal className="size-3.5 sm:size-4" />
+      <div className="absolute -top-3.5 right-1 sm:-right-3 z-30 animate-float-slow pointer-events-none max-w-[calc(100%-1rem)]">
+        <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
+          <span className="grid size-6 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xs shrink-0">
+            <Terminal className="size-3 sm:size-4" />
           </span>
-          <div>
+          <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-[10px] sm:text-[10.5px] font-black uppercase tracking-wider text-slate-800">
+              <span className="size-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+              <span className="text-[9px] sm:text-[10.5px] font-black uppercase tracking-wider text-slate-800 truncate">
                 Virtual Cloud Sandbox
               </span>
             </div>
-            <span className="block text-[9px] sm:text-[9.5px] font-bold text-blue-600">
+            <span className="block text-[8.5px] sm:text-[9.5px] font-bold text-blue-600 truncate">
               DV360 • CM360 • Kali • GA4
             </span>
           </div>
@@ -406,20 +406,20 @@ function HeroInteractiveSandbox() {
         />
 
         {/* Console Header Bar */}
-        <div className="flex items-center justify-between border-b border-slate-800/90 bg-slate-900/90 px-3.5 py-2.5 sm:px-4 sm:py-3">
+        <div className="flex items-center justify-between border-b border-slate-800/90 bg-slate-900/90 px-3 py-2.5 sm:px-4 sm:py-3 gap-1">
           {/* Mac-style Window Controls */}
-          <div className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-rose-500/90" />
-            <span className="size-2.5 rounded-full bg-amber-500/90" />
-            <span className="size-2.5 rounded-full bg-emerald-500/90" />
-            <span className="ml-2 text-[10.5px] sm:text-xs font-mono font-bold text-slate-400 flex items-center gap-1.5">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              digitechademy-live-terminal
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="size-2 sm:size-2.5 rounded-full bg-rose-500/90 shrink-0" />
+            <span className="size-2 sm:size-2.5 rounded-full bg-amber-500/90 shrink-0" />
+            <span className="size-2 sm:size-2.5 rounded-full bg-emerald-500/90 shrink-0" />
+            <span className="ml-1.5 text-[10px] sm:text-xs font-mono font-bold text-slate-400 flex items-center gap-1.5 truncate">
+              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <span className="hidden sm:inline">digitechademy-</span>live-terminal
             </span>
           </div>
 
           {/* Interactive Simulation Switcher Tabs */}
-          <div className="flex items-center gap-1 rounded-xl bg-slate-950/80 p-1 border border-slate-800/80">
+          <div className="flex items-center gap-1 rounded-xl bg-slate-950/80 p-0.5 sm:p-1 border border-slate-800/80 shrink-0">
             {(["cyber", "programmatic", "growth"] as const).map((tab) => {
               const tabConf = SANDBOX_CONFIGS[tab];
               const TabIcon = tabConf.icon;
@@ -606,30 +606,30 @@ function HeroInteractiveSandbox() {
       </div>
 
       {/* Floating Bottom-Left HUD Badge: Mentors & Rating */}
-      <div className="absolute -bottom-4 -left-2 sm:-left-4 z-30 animate-float-reverse pointer-events-none">
-        <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-1.5 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
-          <span className="grid size-7 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-xs shrink-0">
-            <Users className="size-3.5 sm:size-4" />
+      <div className="absolute -bottom-4 left-2 sm:-left-3 z-30 animate-float-reverse pointer-events-none max-w-[calc(100%-1rem)]">
+        <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
+          <span className="grid size-6 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-xs shrink-0">
+            <Users className="size-3 sm:size-4" />
           </span>
-          <div>
-            <span className="block text-[10px] sm:text-[10.5px] font-black text-slate-900">
-              10+ Seasoned Mentors
+          <div className="min-w-0">
+            <span className="block text-[9.5px] sm:text-[10.5px] font-black text-slate-900 leading-tight truncate">
+              10+ Mentors
             </span>
-            <span className="block text-[9px] sm:text-[9.5px] font-bold text-amber-600">
-              ★ 4.9 Verified Student Rating
+            <span className="block text-[8.5px] sm:text-[9.5px] font-bold text-amber-600 leading-tight truncate">
+              ★ 4.9 Rating
             </span>
           </div>
         </div>
       </div>
 
       {/* Floating Bottom Trust Pill Strip */}
-      <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-max max-w-[94%] sm:max-w-none flex justify-center pointer-events-none">
-        <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-slate-900/95 backdrop-blur-md border border-slate-700/80 shadow-xl px-3 sm:px-4 py-1 text-[9px] sm:text-[10.5px] font-bold text-white text-center whitespace-nowrap">
+      <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-max max-w-[calc(100%-1.5rem)] flex justify-center pointer-events-none">
+        <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-slate-900/95 backdrop-blur-md border border-slate-700/80 shadow-xl px-2.5 sm:px-4 py-1 text-[8.5px] min-[360px]:text-[9px] sm:text-[10.5px] font-bold text-white text-center whitespace-nowrap">
           <span className="text-sky-400">Practical Training</span>
           <span className="text-slate-500 font-normal">•</span>
-          <span className="text-indigo-300">Industry Mentorship</span>
-          <span className="text-slate-500 font-normal hidden min-[460px]:inline">•</span>
-          <span className="text-emerald-300 hidden min-[460px]:inline">Real Projects</span>
+          <span className="text-indigo-300">Mentorship</span>
+          <span className="text-slate-500 font-normal hidden min-[440px]:inline">•</span>
+          <span className="text-emerald-300 hidden min-[440px]:inline">Real Projects</span>
           <span className="text-slate-500 font-normal hidden lg:inline">•</span>
           <span className="text-amber-300 hidden lg:inline">Placement Ready</span>
         </div>
@@ -661,17 +661,17 @@ function Hero() {
 
       {/* Premium ambient glow orbs */}
       <div
-        className="pointer-events-none absolute right-[5%] top-[5%] size-[38rem] rounded-full bg-gradient-to-tr from-sky-300/35 via-blue-200/25 to-transparent blur-3xl animate-pulse-glow"
+        className="pointer-events-none absolute right-[-5%] sm:right-[5%] top-[5%] size-[18rem] sm:size-[38rem] rounded-full bg-gradient-to-tr from-sky-300/35 via-blue-200/25 to-transparent blur-3xl animate-pulse-glow"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute left-[5%] top-[20%] size-[32rem] rounded-full bg-gradient-to-br from-indigo-200/30 via-blue-100/35 to-transparent blur-3xl animate-pulse-glow"
+        className="pointer-events-none absolute left-[-5%] sm:left-[5%] top-[20%] size-[16rem] sm:size-[32rem] rounded-full bg-gradient-to-br from-indigo-200/30 via-blue-100/35 to-transparent blur-3xl animate-pulse-glow"
         style={{ animationDelay: "2s" }}
         aria-hidden="true"
       />
 
-      <div className="container-site relative z-10 overflow-x-clip sm:overflow-visible">
-        <div className="grid lg:grid-cols-12 items-center gap-8 lg:gap-10 xl:gap-14 w-full">
+      <div className="container-site relative z-10">
+        <div className="grid lg:grid-cols-12 items-center gap-8 lg:gap-8 xl:gap-14 w-full">
           {/* Left Column: Text & CTAs (7 cols on lg/xl) */}
           <div className="lg:col-span-7 w-full text-left flex flex-col justify-center min-w-0">
             {/* Eyebrow: INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED */}
@@ -683,7 +683,7 @@ function Hero() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 whitespace-nowrap">
+              <span className="text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 truncate">
                 INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED
               </span>
               <Sparkles className="size-3 text-amber-500 shrink-0 animate-pulse" aria-hidden="true" />
@@ -691,16 +691,16 @@ function Hero() {
 
             {/* Dynamic Animated H1 */}
             <h1
-              className="text-[1.35rem] xs:text-[1.55rem] sm:text-[1.95rem] md:text-[2.25rem] lg:text-[2.15rem] xl:text-[2.55rem] 2xl:text-[2.85rem] font-black leading-[1.18] sm:leading-[1.12] tracking-tight text-slate-900 [text-wrap:balance]"
+              className="text-[1.12rem] xs:text-[1.26rem] sm:text-[1.65rem] md:text-[1.85rem] lg:text-[1.8rem] xl:text-[2.15rem] 2xl:text-[2.4rem] font-black leading-[1.18] sm:leading-[1.14] tracking-tight text-slate-900"
               data-reveal
               style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
             >
-              <span className="block whitespace-nowrap">MASTER THE SKILLS.</span>
+              <span className="block">MASTER THE SKILLS.</span>
               <span
                 key={currentDomain.id}
                 className={cn(
-                  "block text-transparent bg-clip-text bg-gradient-to-r whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-500",
-                  currentDomain.accentGradient
+                  "block text-transparent bg-clip-text bg-gradient-to-r break-words sm:break-normal animate-in fade-in slide-in-from-bottom-2 duration-500",
+                  currentDomain.accentGradient,
                 )}
               >
                 {currentDomain.headlinePart2}
@@ -716,25 +716,21 @@ function Hero() {
               Learn Cyber Security, Programmatic Advertising &amp; Digital Marketing from industry practitioners through practical training, real-world scenarios, guided capstone projects and hands-on tool learning.
             </p>
 
-            {/* Supporting Micro-Highlights Row */}
+            {/* Official Supporting Line: Learn. Practice. Build. Become Industry Ready. */}
             <div
-              className="mt-3.5 sm:mt-4 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-bold text-slate-700"
+              className="mt-3 sm:mt-3.5 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-50/95 via-indigo-50/80 to-sky-50/90 border border-blue-200/90 px-3.5 py-1.5 shadow-2xs w-fit max-w-full"
               data-reveal
-              style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
+              style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
             >
-              <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50/90 border border-blue-200/70 px-2.5 py-1 text-blue-800 shadow-2xs hover:border-blue-400 hover:shadow-sm transition-all duration-200">
-                <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
-                <span>Live Cloud Sandboxes</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50/90 border border-indigo-200/70 px-2.5 py-1 text-indigo-800 shadow-2xs hover:border-indigo-400 hover:shadow-sm transition-all duration-200">
-                <CheckCircle2 className="size-3.5 text-indigo-600 shrink-0" />
-                <span>10+ Dedicated Mentors</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50/90 border border-emerald-200/70 px-2.5 py-1 text-emerald-800 shadow-2xs hover:border-emerald-400 hover:shadow-sm transition-all duration-200">
-                <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0" />
-                <span>100% Placement Support</span>
-              </div>
+              <span className="relative flex size-2 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-blue-600" />
+              </span>
+              <span className="text-xs sm:text-[13px] font-extrabold text-blue-900 tracking-wide truncate">
+                Learn. Practice. Build. Become Industry Ready.
+              </span>
             </div>
+
 
             {/* CTAs: Explore Programs / Talk to an Expert (Side-by-side on mobile) */}
             <div
@@ -746,14 +742,14 @@ function Hero() {
                 to="/courses"
                 variant="primary"
                 size="md"
-                className="relative overflow-hidden flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-3.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap"
+                className="relative overflow-hidden flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-2.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap min-w-0"
               >
                 {/* Subtle Shimmer Slide Effect */}
                 <div
                   className="pointer-events-none absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 animate-shimmer-slide"
                   aria-hidden="true"
                 />
-                <span className="relative z-10">Explore Programs</span>
+                <span className="relative z-10 truncate">Explore Programs</span>
                 <ArrowRight className="relative z-10 size-3.5 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
               </BtnLink>
 
@@ -761,12 +757,12 @@ function Hero() {
                 to="/request-call"
                 variant="outline"
                 size="md"
-                className="flex-1 sm:flex-initial justify-center h-10.5 sm:h-12 px-3 sm:px-6 rounded-xl bg-white/95 hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 sm:gap-2 text-[11px] min-[380px]:text-xs sm:text-base active:scale-[0.98] cursor-pointer whitespace-nowrap"
+                className="flex-1 sm:flex-initial justify-center h-10.5 sm:h-12 px-2.5 sm:px-6 rounded-xl bg-white/95 hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 sm:gap-2 text-[11px] min-[380px]:text-xs sm:text-base active:scale-[0.98] cursor-pointer whitespace-nowrap min-w-0"
               >
                 <span className="grid size-5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
                   <PhoneCall className="size-2.5 sm:size-3" aria-hidden="true" />
                 </span>
-                <span>Talk to an Expert</span>
+                <span className="truncate">Talk to an Expert</span>
               </BtnLink>
             </div>
 
@@ -794,58 +790,58 @@ function UspTrustStrip() {
     <section className="bg-white border-y border-slate-200/80 py-6 sm:py-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)]">
       <div className="container-site">
         {/* Row 1: Key Credible Statistics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:divide-x lg:divide-slate-200/80">
-          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
-            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
-              <Users className="size-5" aria-hidden="true" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 lg:divide-x lg:divide-slate-200/80">
+          <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
+              <Users className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+              <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
                 <CountUp value={3} suffix="k+" />
               </p>
-              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate">
                 Learners Mentored
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
-            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 shadow-xs">
-              <UserCheck className="size-5" aria-hidden="true" />
+          <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 shadow-xs">
+              <UserCheck className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+              <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
                 <CountUp value={10} suffix="" />
               </p>
-              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate">
                 Dedicated Mentors
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
-            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-sky-50 text-sky-600 border border-sky-100 shadow-xs">
-              <Cpu className="size-5" aria-hidden="true" />
+          <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-sky-50 text-sky-600 border border-sky-100 shadow-xs">
+              <Cpu className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+              <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
                 <CountUp value={25} suffix="+" />
               </p>
-              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate">
                 Practical Projects
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 px-1 sm:px-4" data-reveal>
-            <span className="grid size-10 sm:size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-xs">
-              <Award className="size-5" aria-hidden="true" />
+          <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-xs">
+              <Award className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="text-xl sm:text-2xl font-black text-slate-900 leading-none">
+              <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
                 <CountUp value={100} suffix="%" />
               </p>
-              <p className="text-xs font-semibold text-slate-500 mt-1 leading-tight">
+              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate">
                 Placement Assistance
               </p>
             </div>
@@ -1367,7 +1363,7 @@ function ProgrammaticDifferentiator() {
               <span>GO BEYOND BASIC DIGITAL MARKETING</span>
             </div>
 
-            <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight whitespace-nowrap">
+            <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight">
               Learn Programmatic Advertising{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
                 From the Inside Out

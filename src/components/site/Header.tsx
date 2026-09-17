@@ -2,14 +2,11 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   ArrowRight,
   ArrowUpRight,
-  Award,
-  CheckCircle2,
   ChevronDown,
   Menu,
   MessageCircle,
   Phone,
   ShieldCheck,
-  Sparkles,
   TrendingUp,
   X,
 } from "lucide-react";
@@ -36,10 +33,6 @@ export function Header() {
 
   // Subscribe to live courses (from Firebase and local cache)
   const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() => {
-    if (typeof window !== "undefined") {
-      const cached = getLocalCachedCourses();
-      if (cached.length > 0) return cached;
-    }
     return courses.map((c) => ({
       id: c.id,
       slug: c.slug,
@@ -59,6 +52,10 @@ export function Header() {
   });
 
   useEffect(() => {
+    const cached = getLocalCachedCourses();
+    if (cached && cached.length > 0) {
+      setLiveCourses(cached);
+    }
     const unsub = subscribeCourses((list) => {
       if (list && list.length > 0) {
         setLiveCourses(list);
@@ -71,24 +68,33 @@ export function Header() {
     return liveCourses.filter((c) => c.active !== false);
   }, [liveCourses]);
 
-  const marketingCourses = useMemo(() => {
-    const subset = activeCourses.filter(
-      (c) =>
-        c.category === "Digital Marketing" ||
-        c.category === "Design & Creative" ||
-        c.category === "Business & Management"
+  const isTechOrDev = (c: FirebaseCourse) => {
+    const text = `${c.title} ${c.slug} ${c.category}`.toLowerCase();
+    return (
+      c.category === "Cyber Security" ||
+      c.category === "Web Development" ||
+      c.category === "Data Analytics" ||
+      text.includes("security") ||
+      text.includes("hacking") ||
+      text.includes("cyber") ||
+      text.includes("java") ||
+      text.includes("python") ||
+      text.includes("developer") ||
+      text.includes("development") ||
+      text.includes("full stack") ||
+      text.includes("cloud") ||
+      text.includes("devops")
     );
-    return subset.length > 0 ? subset : activeCourses.slice(0, 2);
+  };
+
+  const marketingCourses = useMemo(() => {
+    const subset = activeCourses.filter((c) => !isTechOrDev(c));
+    return subset.length > 0 ? subset : activeCourses.slice(0, 3);
   }, [activeCourses]);
 
   const securityCourses = useMemo(() => {
-    const subset = activeCourses.filter(
-      (c) =>
-        c.category !== "Digital Marketing" &&
-        c.category !== "Design & Creative" &&
-        c.category !== "Business & Management"
-    );
-    return subset.length > 0 ? subset : activeCourses.slice(2);
+    const subset = activeCourses.filter((c) => isTechOrDev(c));
+    return subset.length > 0 ? subset : activeCourses.slice(3);
   }, [activeCourses]);
 
   // Scroll listener for sticky glassmorphism elevation
@@ -102,67 +108,152 @@ export function Header() {
   // Auto-close drawers on route change
   useEffect(() => {
     setMobileOpen(false);
+    setMobileCoursesOpen(false);
   }, [pathname]);
+
+  // Lock body scroll when mobile menu drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
 
   return (
-    <div className="sticky top-0 z-50 w-full transition-all duration-300">
+    <>
       {/* ========================================================================= */}
-      {/* 1. TOP ANNOUNCEMENT SUPER-BAR (Responsive & Smoothly Collapsible on Scroll)*/}
+      {/* 1. TOP ANNOUNCEMENT SUPER-BAR (Responsive across all screens)             */}
       {/* ========================================================================= */}
-      <div
-        className={cn(
-          "w-full bg-gradient-to-r from-slate-950 via-[#07132b] to-slate-950 text-slate-300 border-b transition-all duration-300 select-none overflow-hidden",
-          scrolled
-            ? "max-h-0 py-0 opacity-0 border-b-transparent pointer-events-none"
-            : "max-h-12 py-2 opacity-100 border-white/[0.08] text-xs font-medium",
-        )}
-      >
+      <div className="w-full bg-gradient-to-r from-slate-950 via-[#07132b] to-slate-950 text-slate-300 border-b border-white/[0.08] text-xs font-medium select-none py-2 sm:py-2.5">
         <div className="container-site">
-          {/* Mobile view (< sm) */}
-          <div className="flex sm:hidden items-center justify-between gap-1 text-[11px] font-semibold py-1">
-            <div className="flex items-center gap-1.5 shrink-0">
-              <span className="relative flex size-1.5">
+          {/* Mobile view (< sm / < 640px) */}
+          <div className="flex sm:hidden items-center justify-between gap-1.5 text-[10px] font-semibold min-w-0 w-full">
+            {/* Left: Admissions Open (fixed live status badge) */}
+            <div className="flex items-center gap-1 shrink-0">
+              <span className="relative flex size-1.5 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
               </span>
-              <span className="font-bold text-emerald-400 uppercase tracking-wider text-[10px]">
-                Admissions Open 2026
+              <span className="font-extrabold text-emerald-400 uppercase tracking-wider text-[8.5px] min-[360px]:text-[9.5px] whitespace-nowrap">
+                Admissions Open
               </span>
+              <span className="text-slate-500 shrink-0 select-none text-[9px]" aria-hidden="true">•</span>
             </div>
-            <Link
-              to="/courses"
-              className="inline-flex items-center gap-1 text-slate-300 hover:text-white shrink-0 group ml-auto"
-            >
-              <span className="hidden min-[480px]:inline text-slate-300 truncate text-[10.5px]">
-                • New Batches Starting Soon
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2.5 py-0.5 text-[9.5px] font-bold text-sky-300 group-hover:bg-blue-600 group-hover:text-white shrink-0 transition-colors">
+
+            {/* Center: Smooth Scrolling Ticker for "New Batches Starting Soon" */}
+            <div className="relative overflow-hidden flex-1 min-w-0 h-4.5 flex items-center mx-1 [mask-image:linear-gradient(to_right,transparent,black_6px,black_calc(100%-6px),transparent)]">
+              <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused] active:[animation-play-state:paused]">
+                {/* Track Item 1 */}
+                <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]">
+                  <span className="text-slate-200 font-medium whitespace-nowrap">
+                    New Batches Starting Soon
+                  </span>
+                  <span className="text-amber-400/90 font-bold whitespace-nowrap">
+                    • Limited Seats Available
+                  </span>
+                  <span className="text-sky-300 font-semibold whitespace-nowrap">
+                    • Weekend &amp; Weekday Batches
+                  </span>
+                  <span className="text-slate-600 select-none" aria-hidden="true">•</span>
+                </div>
+                {/* Track Item 2 (Duplicate for seamless loop) */}
+                <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]" aria-hidden="true">
+                  <span className="text-slate-200 font-medium whitespace-nowrap">
+                    New Batches Starting Soon
+                  </span>
+                  <span className="text-amber-400/90 font-bold whitespace-nowrap">
+                    • Limited Seats Available
+                  </span>
+                  <span className="text-sky-300 font-semibold whitespace-nowrap">
+                    • Weekend &amp; Weekday Batches
+                  </span>
+                  <span className="text-slate-600 select-none" aria-hidden="true">•</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Quick actions (Explore pill & WhatsApp) */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <Link
+                to="/courses"
+                className="hidden min-[480px]:inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2.5 py-0.5 text-[9.5px] font-bold text-sky-300 hover:bg-blue-600 hover:text-white shrink-0 transition-colors whitespace-nowrap"
+              >
                 <span>Explore Programs</span>
                 <ArrowRight className="size-2.5" />
-              </span>
-            </Link>
+              </Link>
+              <Link
+                to="/courses"
+                className="inline-flex min-[480px]:hidden items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2 py-0.5 text-[9px] font-bold text-sky-300 hover:bg-blue-600 hover:text-white shrink-0 transition-colors whitespace-nowrap"
+              >
+                <span>Explore</span>
+                <ArrowRight className="size-2.5" />
+              </Link>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="grid size-6 place-items-center rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white transition-colors shrink-0"
+              >
+                <MessageCircle className="size-3" />
+              </a>
+            </div>
           </div>
 
-          {/* Tablet & Desktop view (>= sm) */}
-          <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-center gap-3">
-            {/* Left/Center: The Announcement + CTA */}
-            <div className="lg:col-span-8 flex items-center gap-2.5">
+          {/* Tablet & Desktop view (>= 640px / sm) */}
+          <div className="hidden sm:flex items-center justify-between gap-3 w-full">
+            {/* Left/Center: The Announcement + Ticker + CTA */}
+            <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
               <span className="relative flex size-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="font-bold text-emerald-400 tracking-wide text-[11px] uppercase whitespace-nowrap">
+              <span className="font-extrabold text-emerald-400 tracking-wider text-[11px] uppercase whitespace-nowrap shrink-0">
                 Admissions Open 2026
               </span>
-              <span className="text-slate-600" aria-hidden="true">•</span>
-              <span className="text-slate-200 text-[11px] whitespace-nowrap font-medium">
-                New Batches Starting Soon
-              </span>
+              <span className="text-slate-600 shrink-0 select-none text-[11px]" aria-hidden="true">•</span>
+
+              {/* Scrolling Ticker for New Batches Starting Soon */}
+              <div className="relative overflow-hidden flex-1 max-w-[320px] lg:max-w-[400px] xl:max-w-[480px] h-4.5 flex items-center [mask-image:linear-gradient(to_right,transparent,black_8px,black_calc(100%-8px),transparent)]">
+                <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused]">
+                  {/* Track Item 1 */}
+                  <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]">
+                    <span className="text-slate-200 font-medium whitespace-nowrap">
+                      New Batches Starting Soon
+                    </span>
+                    <span className="text-amber-300 font-bold whitespace-nowrap">
+                      • Limited Seats Available
+                    </span>
+                    <span className="text-sky-300 font-medium whitespace-nowrap">
+                      • Fast-Track Weekend &amp; Weekday Batches
+                    </span>
+                    <span className="text-slate-600 select-none" aria-hidden="true">•</span>
+                  </div>
+                  {/* Track Item 2 (Duplicate for seamless loop) */}
+                  <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]" aria-hidden="true">
+                    <span className="text-slate-200 font-medium whitespace-nowrap">
+                      New Batches Starting Soon
+                    </span>
+                    <span className="text-amber-300 font-bold whitespace-nowrap">
+                      • Limited Seats Available
+                    </span>
+                    <span className="text-sky-300 font-medium whitespace-nowrap">
+                      • Fast-Track Weekend &amp; Weekday Batches
+                    </span>
+                    <span className="text-slate-600 select-none" aria-hidden="true">•</span>
+                  </div>
+                </div>
+              </div>
+
               <Link
                 to="/courses"
-                className="group inline-flex items-center gap-1.5 ml-1 px-2.5 py-0.5 rounded-full bg-blue-500/20 hover:bg-blue-600 border border-blue-400/30 hover:border-blue-500 text-sky-300 hover:text-white text-[10.5px] font-bold transition-all whitespace-nowrap shadow-2xs"
+                className="group inline-flex items-center gap-1.5 ml-1 px-2.5 py-0.5 rounded-full bg-blue-500/20 hover:bg-blue-600 border border-blue-400/30 hover:border-blue-500 text-sky-300 hover:text-white text-[10.5px] font-bold transition-all whitespace-nowrap shrink-0 shadow-2xs"
               >
                 <span>Explore Programs</span>
                 <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
@@ -170,22 +261,23 @@ export function Header() {
             </div>
 
             {/* Right: Hotline & WhatsApp shortcuts */}
-            <div className="lg:col-span-4 flex items-center justify-end gap-2.5 text-[11px]">
+            <div className="flex items-center gap-2 shrink-0 text-[11px]">
               <a
                 href={site.phoneHref}
-                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] hover:bg-blue-600/20 border border-white/[0.08] hover:border-blue-400/40 text-slate-200 hover:text-white transition-all whitespace-nowrap"
+                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] hover:bg-blue-600/20 border border-white/[0.08] hover:border-blue-400/40 text-slate-200 hover:text-white transition-all whitespace-nowrap shrink-0"
               >
                 <span className="grid size-3.5 place-items-center rounded-full bg-blue-600/30 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
                   <Phone className="size-2" />
                 </span>
-                <span className="font-semibold text-[10.5px]">{site.phone}</span>
+                <span className="font-semibold text-[10.5px] hidden xl:inline">{site.phone}</span>
+                <span className="font-semibold text-[10.5px] xl:hidden">Call</span>
               </a>
-              <span className="h-3 w-px bg-white/10" aria-hidden="true" />
+              <span className="h-3 w-px bg-white/10 shrink-0" aria-hidden="true" />
               <a
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 hover:text-emerald-200 transition-all font-semibold text-[10.5px] whitespace-nowrap"
+                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 hover:text-emerald-200 transition-all font-semibold text-[10.5px] whitespace-nowrap shrink-0"
               >
                 <span className="grid size-3.5 place-items-center rounded-full bg-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all shrink-0">
                   <MessageCircle className="size-2" />
@@ -198,23 +290,23 @@ export function Header() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. MAIN FLOATING FROSTED GLASS HEADER                                      */}
+      {/* 2. MAIN FLOATING FROSTED GLASS NAVBAR (Sticky across all screens & devices)*/}
       {/* ========================================================================= */}
       <header
         className={cn(
-          "w-full transition-all duration-300 ease-in-out",
+          "sticky top-0 z-50 w-full transition-all duration-300 ease-in-out sticky-nav",
           mobileOpen
             ? "border-b border-slate-200 bg-white shadow-md"
             : scrolled
-              ? "border-b border-slate-200/90 bg-white sm:bg-white/95 shadow-[0_6px_24px_-4px_rgba(15,23,42,0.12)] backdrop-blur-2xl"
-              : "border-b border-slate-200/60 bg-white sm:bg-white/90 shadow-[0_2px_16px_-3px_rgba(15,23,42,0.04)] backdrop-blur-xl",
+              ? "border-b border-slate-200/90 bg-white/95 shadow-[0_6px_24px_-4px_rgba(15,23,42,0.12)] backdrop-blur-2xl"
+              : "border-b border-slate-200/60 bg-white/90 shadow-[0_2px_16px_-3px_rgba(15,23,42,0.04)] backdrop-blur-xl",
         )}
       >
         <div
           className={cn(
             "container-site relative z-50 flex items-center justify-between gap-2 xl:gap-6 transition-all duration-300",
             mobileOpen ? "bg-white" : "",
-            scrolled ? "h-16" : "h-17 lg:h-20",
+            scrolled ? "h-16" : "h-16 sm:h-18 lg:h-20",
           )}
         >
           {/* Logo (Shrink-0 and fully responsive) */}
@@ -247,76 +339,68 @@ export function Header() {
                     </Link>
 
                     {/* PROGRAMS MEGA MENU DROPDOWN (Centered & Constrained to never overflow) */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[680px] xl:w-[740px] max-w-[calc(100vw-2rem)] opacity-0 translate-y-2 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-200 z-50 pointer-events-none group-hover/nav:pointer-events-auto">
-                      <div className="rounded-3xl border border-slate-200/90 bg-white/98 p-5 xl:p-6 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18)] backdrop-blur-2xl ring-1 ring-black/[0.03] overflow-hidden">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[840px] xl:w-[900px] max-w-[calc(100vw-2rem)] opacity-0 translate-y-2 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-300 ease-out z-50 pointer-events-none group-hover/nav:pointer-events-auto">
+                      <div className="relative rounded-3xl border border-slate-200 bg-white p-5 xl:p-6 shadow-[0_25px_80px_-15px_rgba(15,23,42,0.22),0_0_0_1px_rgba(226,232,240,0.9)] ring-1 ring-black/[0.03] overflow-hidden">
+                        {/* Subtle Top Accent Hairline */}
+                        <div className="absolute top-0 inset-x-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 z-20" />
+
                         {/* Mega Menu Top Header */}
-                        <div className="flex items-center justify-between pb-3 mb-3.5 border-b border-slate-100">
+                        <div className="flex items-center justify-between pb-3 mb-3.5 border-b border-slate-100 relative z-10">
                           <div>
-                            <span className="block text-xs font-black uppercase tracking-widest text-blue-600">
-                              Career-Focused Training Tracks
-                            </span>
-                            <span className="text-[11.5px] text-slate-500 font-normal">
+                            <div className="flex items-center gap-2">
+                              <span className="relative flex size-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full size-2 bg-blue-600"></span>
+                              </span>
+                              <span className="block text-[11.5px] font-black uppercase tracking-[0.15em] text-blue-600">
+                                Career-Focused Training Tracks
+                              </span>
+                            </div>
+                            <p className="text-[12px] text-slate-500 font-normal mt-0.5">
                               Curricula crafted for direct IT hiring &amp; placement
-                            </span>
+                            </p>
                           </div>
                           <Link
                             to="/courses"
-                            className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-indigo-600 hover:underline transition-colors whitespace-nowrap"
+                            className="group/all inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50/80 hover:bg-blue-100 text-xs font-bold text-blue-700 transition-all duration-200 border border-blue-100/80 hover:border-blue-200 shadow-2xs whitespace-nowrap"
                           >
                             <span>All Programs Directory</span>
-                            <ArrowRight className="size-3.5" />
+                            <ArrowRight className="size-3.5 group-hover/all:translate-x-0.5 transition-transform" />
                           </Link>
                         </div>
 
                         {/* Two Columns: Marketing vs Security */}
-                        <div className="grid grid-cols-2 gap-4 xl:gap-6">
-                          {/* Column 1: Digital Marketing */}
+                        <div className="grid grid-cols-2 gap-5 xl:gap-6 relative z-10">
+                          {/* Column 1: Digital Marketing Suite */}
                           <div className="space-y-1.5">
-                            <div className="flex items-center gap-2 pb-1.5 border-b border-slate-100">
-                              <span className="grid size-5.5 place-items-center rounded-lg bg-blue-50 text-blue-600">
-                                <TrendingUp className="size-3.5" />
-                              </span>
-                              <span className="text-xs font-black uppercase tracking-wider text-slate-800">
-                                Digital Marketing Suite
+                            <div className="flex items-center justify-between pb-2 mb-1.5 border-b border-slate-100">
+                              <div className="flex items-center gap-2">
+                                <span className="grid size-6 place-items-center rounded-lg bg-blue-50 text-blue-600 border border-blue-100 shadow-2xs">
+                                  <TrendingUp className="size-3.5" />
+                                </span>
+                                <span className="text-[11.5px] font-black uppercase tracking-wider text-slate-800">
+                                  Digital Marketing Suite
+                                </span>
+                              </div>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                {marketingCourses.length} Tracks
                               </span>
                             </div>
 
                             <div className="space-y-1">
-                              {marketingCourses.map((c) => (
+                              {marketingCourses.slice(0, 3).map((c) => (
                                 <Link
                                   key={c.slug}
                                   to="/courses/$slug"
                                   params={{ slug: c.slug }}
-                                  className="group/item flex items-start justify-between rounded-xl p-2 hover:bg-gradient-to-r hover:from-blue-50/70 hover:to-indigo-50/40 border border-transparent hover:border-blue-100 transition-all duration-200"
+                                  className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-gradient-to-r hover:from-blue-50/70 hover:via-indigo-50/30 hover:to-transparent border border-transparent hover:border-blue-100 transition-all duration-200"
                                 >
-                                  <div className="pr-1.5 min-w-0">
-                                    <div className="flex items-center gap-1.5 flex-wrap">
-                                      <span className="text-xs font-bold text-slate-800 group-hover/item:text-blue-600 transition-colors truncate">
-                                        {c.title}
-                                      </span>
-                                      {c.slug === "digital-marketing" && (
-                                        <span className="text-[8.5px] font-black uppercase px-1.5 py-0.2 rounded bg-amber-50 text-amber-600 border border-amber-200/70 shrink-0">
-                                          Popular
-                                        </span>
-                                      )}
-                                      {c.slug === "programmatic-advertising" && (
-                                        <span className="text-[8.5px] font-black uppercase px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-600 border border-indigo-200/70 shrink-0">
-                                          High Demand
-                                        </span>
-                                      )}
-                                    </div>
-                                    <p className="text-[10.5px] text-slate-500 font-normal line-clamp-1 mt-0.5">
-                                      {c.slug === "digital-marketing"
-                                        ? "Meta Ads, Google SEM, SEO & GA4"
-                                        : c.slug === "programmatic-advertising"
-                                          ? "DSP, SSP, DV360 & Real-Time Bidding"
-                                          : "Technical SEO, Schema & Organic Traffic"}
-                                    </p>
-                                    <span className="inline-block mt-0.5 text-[9.5px] text-slate-400 font-medium">
-                                      {c.duration}
-                                    </span>
-                                  </div>
-                                  <ArrowUpRight className="size-3.5 text-slate-300 group-hover/item:text-blue-600 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-all shrink-0 mt-0.5" />
+                                  <span className="text-[13px] font-bold text-slate-850 group-hover/item:text-blue-600 transition-colors leading-snug pr-2">
+                                    {c.title}
+                                  </span>
+                                  <span className="size-6 rounded-full bg-slate-100/80 group-hover/item:bg-blue-600 text-slate-400 group-hover/item:text-white grid place-items-center transition-all duration-200 shrink-0 shadow-2xs group-hover/item:shadow-sm group-hover/item:scale-105">
+                                    <ArrowUpRight className="size-3.5 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-transform" />
+                                  </span>
                                 </Link>
                               ))}
                             </div>
@@ -324,88 +408,38 @@ export function Header() {
 
                           {/* Column 2: Tech, Cyber Security & Development */}
                           <div className="space-y-1.5">
-                            <div className="flex items-center gap-2 pb-1.5 border-b border-slate-100">
-                              <span className="grid size-5.5 place-items-center rounded-lg bg-emerald-50 text-emerald-600">
-                                <ShieldCheck className="size-3.5" />
-                              </span>
-                              <span className="text-xs font-black uppercase tracking-wider text-slate-800">
-                                Tech, Security &amp; Development
+                            <div className="flex items-center justify-between pb-2 mb-1.5 border-b border-slate-100">
+                              <div className="flex items-center gap-2">
+                                <span className="grid size-6 place-items-center rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-2xs">
+                                  <ShieldCheck className="size-3.5" />
+                                </span>
+                                <span className="text-[11.5px] font-black uppercase tracking-wider text-slate-800">
+                                  Tech, Security &amp; Development
+                                </span>
+                              </div>
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                {securityCourses.length} Tracks
                               </span>
                             </div>
 
                             <div className="space-y-1">
-                              {securityCourses.map((c) => (
+                              {securityCourses.slice(0, 3).map((c) => (
                                 <Link
                                   key={c.slug}
                                   to="/courses/$slug"
                                   params={{ slug: c.slug }}
-                                  className="group/item flex items-start justify-between rounded-xl p-2 hover:bg-gradient-to-r hover:from-emerald-50/70 hover:to-teal-50/40 border border-transparent hover:border-emerald-100 transition-all duration-200"
+                                  className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-gradient-to-r hover:from-emerald-50/70 hover:via-teal-50/30 hover:to-transparent border border-transparent hover:border-emerald-100 transition-all duration-200"
                                 >
-                                  <div className="pr-1.5 min-w-0">
-                                    <div className="flex items-center gap-1.5 flex-wrap">
-                                      <span className="text-xs font-bold text-slate-800 group-hover/item:text-emerald-700 transition-colors truncate">
-                                        {c.title}
-                                      </span>
-                                      <span className="text-[8.5px] font-black uppercase px-1.5 py-0.2 rounded bg-blue-50 text-blue-600 border border-blue-200/70 shrink-0">
-                                        {c.category}
-                                      </span>
-                                    </div>
-                                    <p className="text-[10.5px] text-slate-500 font-normal line-clamp-1 mt-0.5">
-                                      {c.description || (c.slug === "cyber-security"
-                                        ? "SOC Analyst, Network Security & SIEM"
-                                        : "Practical Hands-on Training & Placement")}
-                                    </p>
-                                    <span className="inline-block mt-0.5 text-[9.5px] text-slate-400 font-medium">
-                                      {c.duration}
-                                    </span>
-                                  </div>
-                                  <ArrowUpRight className="size-3.5 text-slate-300 group-hover/item:text-emerald-600 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-all shrink-0 mt-0.5" />
+                                  <span className="text-[13px] font-bold text-slate-850 group-hover/item:text-emerald-700 transition-colors leading-snug pr-2">
+                                    {c.title}
+                                  </span>
+                                  <span className="size-6 rounded-full bg-slate-100/80 group-hover/item:bg-emerald-600 text-slate-400 group-hover/item:text-white grid place-items-center transition-all duration-200 shrink-0 shadow-2xs group-hover/item:shadow-sm group-hover/item:scale-105">
+                                    <ArrowUpRight className="size-3.5 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-transform" />
+                                  </span>
                                 </Link>
                               ))}
-
-                              {/* Highlight Card inside Mega Menu */}
-                              <div className="rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 p-2.5 text-white shadow-md relative overflow-hidden mt-2 border border-white/10">
-                                <div className="relative z-10 flex items-center justify-between gap-2">
-                                  <div>
-                                    <div className="flex items-center gap-1 text-[10.5px] font-extrabold text-accent">
-                                      <Sparkles className="size-3" />
-                                      <span>100% Placement Assistance</span>
-                                    </div>
-                                    <p className="text-[9.5px] text-slate-300 mt-0.5">
-                                      Dedicated resume reviews &amp; mock interviews.
-                                    </p>
-                                  </div>
-                                  <Link
-                                    to="/request-call"
-                                    className="shrink-0 text-[9.5px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded-lg shadow-sm transition-all whitespace-nowrap"
-                                  >
-                                    Free Demo
-                                  </Link>
-                                </div>
-                              </div>
                             </div>
                           </div>
-                        </div>
-
-                        {/* Mega Menu Footer Strip */}
-                        <div className="mt-3.5 -mx-5 -mb-5 xl:-mx-6 xl:-mb-6 px-5 xl:px-6 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[10.5px] text-slate-600">
-                          <div className="flex items-center gap-3">
-                            <span className="inline-flex items-center gap-1 font-semibold text-slate-700">
-                              <CheckCircle2 className="size-3 text-emerald-600" />
-                              10 Dedicated Mentors
-                            </span>
-                            <span className="inline-flex items-center gap-1 font-semibold text-slate-700">
-                              <Award className="size-3 text-amber-500" />
-                              100% Practical Labs
-                            </span>
-                          </div>
-                          <Link
-                            to="/courses"
-                            className="font-bold text-blue-600 hover:underline inline-flex items-center gap-1"
-                          >
-                            <span>Explore All Programs</span>
-                            <ArrowRight className="size-3" />
-                          </Link>
                         </div>
                       </div>
                     </div>
@@ -449,8 +483,15 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Mobile Right Controls: Premium Glassmorphic Hamburger Toggle */}
+          {/* Mobile & Tablet Right Controls: Premium Glassmorphic Hamburger Toggle + Tablet CTA */}
           <div className="flex items-center gap-2 lg:hidden shrink-0">
+            <Link
+              to="/courses"
+              className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs active:scale-[0.98] transition-all cursor-pointer select-none"
+            >
+              <span>Explore Programs</span>
+              <ArrowRight className="size-3 text-white/90" />
+            </Link>
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
@@ -594,16 +635,16 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile Backdrop Overlay (Positioned behind header & mobile drawer, dimming only the page beneath) */}
+      {/* Mobile Backdrop Overlay (Positioned behind sticky header & mobile drawer, dimming page beneath) */}
       {mobileOpen && (
         <button
           type="button"
           aria-label="Close mobile navigation"
           tabIndex={-1}
           onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 -z-10 bg-slate-950/60 backdrop-blur-xs lg:hidden cursor-pointer"
+          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs lg:hidden cursor-pointer"
         />
       )}
-    </div>
+    </>
   );
 }

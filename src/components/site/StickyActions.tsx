@@ -12,12 +12,12 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function StickyActions() {
   return (
-    <div className="fixed bottom-3 right-3 z-40 flex flex-col gap-2.5 sm:bottom-6 sm:right-6 sm:gap-3">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col gap-2.5 sm:gap-3 pointer-events-none select-none">
       {/* Sticky Call Button with Original Phone Blue Color */}
       <a
         href={site.phoneHref}
         aria-label={`Call ${site.name}`}
-        className="group relative grid size-10 sm:size-12 place-items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white shadow-[0_4px_16px_rgba(37,99,235,0.4)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.6)] transition-all duration-300 hover:scale-110 active:scale-95 animate-call-pulse"
+        className="pointer-events-auto group relative grid size-10 sm:size-12 place-items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white shadow-[0_4px_16px_rgba(37,99,235,0.4)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.6)] transition-all duration-300 hover:scale-110 active:scale-95 animate-call-pulse shrink-0"
       >
         <Phone className="size-4 sm:size-5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
         <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-lg bg-slate-900/95 backdrop-blur-sm border border-blue-500/30 px-3 py-1.5 text-xs font-semibold text-white shadow-xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:flex items-center gap-1.5">
@@ -32,7 +32,7 @@ export function StickyActions() {
         target="_blank"
         rel="noreferrer"
         aria-label="Enquire on WhatsApp"
-        className="group relative grid size-10 sm:size-12 place-items-center rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-[0_4px_16px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_22px_rgba(37,211,102,0.65)] transition-all duration-300 hover:scale-110 active:scale-95 animate-whatsapp-pulse"
+        className="pointer-events-auto group relative grid size-10 sm:size-12 place-items-center rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-[0_4px_16px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_22px_rgba(37,211,102,0.65)] transition-all duration-300 hover:scale-110 active:scale-95 animate-whatsapp-pulse shrink-0"
       >
         <WhatsAppIcon className="size-5 sm:size-6 transition-transform duration-300 group-hover:scale-110" />
         <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-lg bg-slate-900/95 backdrop-blur-sm border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-white shadow-xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:flex items-center gap-1.5">
