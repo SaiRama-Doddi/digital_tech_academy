@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  Activity,
   ArrowRight,
   Award,
   BarChart3,
@@ -11,15 +12,18 @@ import {
   ChevronRight,
   Cpu,
   FileText,
+  Globe,
   GraduationCap,
   HelpCircle,
   Layers,
+  LineChart,
   Lock,
   Megaphone,
   PhoneCall,
   Play,
   Radio,
   Server,
+  Shield,
   ShieldCheck,
   Sparkles,
   Target,
@@ -27,6 +31,7 @@ import {
   TrendingUp,
   UserCheck,
   Users,
+  Zap,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -229,27 +234,442 @@ function RotatingTrustBadge() {
 
 /**
  * =========================================================================
- * 3. HERO
+ * 3. HERO & ANIMATED INTERACTIVE LAB SIMULATOR
  * =========================================================================
  */
-function Hero() {
+const HERO_DOMAINS = [
+  {
+    id: "cyber",
+    headlinePart1: "MASTER THE SKILLS.",
+    headlinePart2: "CYBER SECURITY DEFENSE.",
+    tagline: "Learn ethical hacking, SOC analysis, and Kali Linux sandboxes from seasoned practitioners.",
+    accentGradient: "from-blue-600 via-cyan-500 to-indigo-600",
+    badgeLabel: "CYBER SECURITY • SOC LABS",
+    badgeColor: "border-blue-300 bg-blue-50/90 text-blue-700",
+  },
+  {
+    id: "programmatic",
+    headlinePart1: "MASTER THE SKILLS.",
+    headlinePart2: "PROGRAMMATIC ADVERTISING.",
+    tagline: "Master DV360 DSP, CM360 ad serving, real-time bidding, and programmatic campaign strategies.",
+    accentGradient: "from-indigo-600 via-purple-600 to-sky-500",
+    badgeLabel: "PROGRAMMATIC ADVERTISING • DV360",
+    badgeColor: "border-indigo-300 bg-indigo-50/90 text-indigo-700",
+  },
+  {
+    id: "growth",
+    headlinePart1: "MASTER THE SKILLS.",
+    headlinePart2: "PERFORMANCE MARKETING.",
+    tagline: "Execute Google Ads, Meta campaigns, and GA4 analytics to drive measurable business growth.",
+    accentGradient: "from-emerald-600 via-teal-600 to-blue-600",
+    badgeLabel: "DIGITAL MARKETING • GA4 ANALYTICS",
+    badgeColor: "border-emerald-300 bg-emerald-50/90 text-emerald-700",
+  },
+];
+
+type SandboxTabId = "cyber" | "programmatic" | "growth";
+
+interface SandboxConfig {
+  id: SandboxTabId;
+  label: string;
+  icon: typeof ShieldCheck;
+  tag: string;
+  terminalPrompt: string;
+  logs: string[];
+  metrics: { label: string; value: string; color: string }[];
+  highlight: string;
+}
+
+const SANDBOX_CONFIGS: Record<SandboxTabId, SandboxConfig> = {
+  cyber: {
+    id: "cyber",
+    label: "Cyber SOC",
+    icon: Shield,
+    tag: "KALI 2026.1 • SECURE",
+    terminalPrompt: "kali@sandbox:~$ sys_soc_monitor --live",
+    logs: [
+      "[09:44:02] INITIALIZING KALI VIRTUAL SANDBOX...",
+      "[09:44:03] PORT 443 (TLS) ENCRYPTED • 0 EXPOSURE",
+      "[09:44:04] MITRE ATT&CK SCAN: THREAT ISOLATED",
+      "[09:44:05] DEFENSE STATUS: PASS (0 BREACHES)",
+    ],
+    metrics: [
+      { label: "SOC Latency", value: "12ms", color: "text-emerald-400" },
+      { label: "Threat Index", value: "0 Breaches", color: "text-sky-400" },
+      { label: "Live Labs", value: "24+ Active", color: "text-amber-400" },
+    ],
+    highlight: "100% Practical Attack & Defense Scenarios",
+  },
+  programmatic: {
+    id: "programmatic",
+    label: "DV360 DSP",
+    icon: BarChart3,
+    tag: "RTB ENGINE • LIVE",
+    terminalPrompt: "dv360@dsp:~$ stream_bids --qps=48k",
+    logs: [
+      "[09:44:02] CONNECTING GOOGLE AD MANAGER DSP...",
+      "[09:44:03] INCOMING BID STREAM: 48,250 QPS",
+      "[09:44:04] CM360 FLOODLIGHT TAG VERIFIED [200 OK]",
+      "[09:44:05] BID OPTIMIZATION: $2.42 CPM [WIN]",
+    ],
+    metrics: [
+      { label: "Bid Velocity", value: "48.2k QPS", color: "text-cyan-400" },
+      { label: "Win Rate", value: "94.6%", color: "text-emerald-400" },
+      { label: "ROAS Index", value: "4.8x Lift", color: "text-amber-400" },
+    ],
+    highlight: "Live Production DV360 & CM360 Console",
+  },
+  growth: {
+    id: "growth",
+    label: "Growth Engine",
+    icon: TrendingUp,
+    tag: "GA4 STREAM • ACTIVE",
+    terminalPrompt: "growth@engine:~$ run_attribution --multi-touch",
+    logs: [
+      "[09:44:02] SYNCING GOOGLE ADS + META PIXEL...",
+      "[09:44:03] HIGH-INTENT AUDIENCE CLUSTER IDENTIFIED",
+      "[09:44:04] MULTI-TOUCH ATTRIBUTION MODEL CALCULATED",
+      "[09:44:05] CONVERSION LIFT: +34% (CAC -22%)",
+    ],
+    metrics: [
+      { label: "Conversion Lift", value: "+34%", color: "text-emerald-400" },
+      { label: "Ad Spend ROAS", value: "5.2x", color: "text-sky-400" },
+      { label: "Tracking Health", value: "100% Verified", color: "text-amber-400" },
+    ],
+    highlight: "Full-Funnel Omnichannel Strategy & GA4",
+  },
+};
+
+function HeroInteractiveSandbox() {
+  const [activeTab, setActiveTab] = useState<SandboxTabId>("cyber");
+  const [isPaused, setIsPaused] = useState(false);
+  const [pulseTick, setPulseTick] = useState(0);
+
+  // Auto-cycle tabs every 6 seconds unless user pauses / clicks
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveTab((prev) => {
+        if (prev === "cyber") return "programmatic";
+        if (prev === "programmatic") return "growth";
+        return "cyber";
+      });
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  // Micro-tick for live animation pulse
+  useEffect(() => {
+    const tick = setInterval(() => {
+      setPulseTick((prev) => (prev + 1) % 100);
+    }, 2000);
+    return () => clearInterval(tick);
+  }, []);
+
+  const config = SANDBOX_CONFIGS[activeTab];
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/60 via-white to-slate-50/50 pb-10 pt-4 sm:pt-6 lg:pb-14 lg:pt-8">
-      {/* Tech grid texture overlay */}
+    <div
+      className="relative w-full max-w-[540px] lg:max-w-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Ambient background glow behind HUD */}
       <div
-        className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.08] pointer-events-none"
+        className="pointer-events-none absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600/20 via-sky-500/20 to-indigo-600/20 blur-xl opacity-75 animate-pulse-glow"
+        aria-hidden="true"
+      />
+
+      {/* Floating Top-Right HUD Badge: Active Lab Sandbox */}
+      <div className="absolute -top-3.5 -right-2 sm:-right-4 z-30 animate-float-slow pointer-events-none">
+        <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-1.5 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
+          <span className="grid size-7 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xs shrink-0">
+            <Terminal className="size-3.5 sm:size-4" />
+          </span>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
+              <span className="text-[10px] sm:text-[10.5px] font-black uppercase tracking-wider text-slate-800">
+                Virtual Cloud Sandbox
+              </span>
+            </div>
+            <span className="block text-[9px] sm:text-[9.5px] font-bold text-blue-600">
+              DV360 • CM360 • Kali • GA4
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Glassmorphic Terminal Window */}
+      <div className="relative overflow-hidden rounded-3xl border border-slate-800/80 bg-slate-950 shadow-2xl shadow-slate-950/50 backdrop-blur-xl">
+        {/* Subtle laser scanline moving down */}
+        <div
+          className="pointer-events-none absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent animate-scanline z-20"
+          aria-hidden="true"
+        />
+
+        {/* Console Header Bar */}
+        <div className="flex items-center justify-between border-b border-slate-800/90 bg-slate-900/90 px-3.5 py-2.5 sm:px-4 sm:py-3">
+          {/* Mac-style Window Controls */}
+          <div className="flex items-center gap-1.5">
+            <span className="size-2.5 rounded-full bg-rose-500/90" />
+            <span className="size-2.5 rounded-full bg-amber-500/90" />
+            <span className="size-2.5 rounded-full bg-emerald-500/90" />
+            <span className="ml-2 text-[10.5px] sm:text-xs font-mono font-bold text-slate-400 flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              digitechademy-live-terminal
+            </span>
+          </div>
+
+          {/* Interactive Simulation Switcher Tabs */}
+          <div className="flex items-center gap-1 rounded-xl bg-slate-950/80 p-1 border border-slate-800/80">
+            {(["cyber", "programmatic", "growth"] as const).map((tab) => {
+              const tabConf = SANDBOX_CONFIGS[tab];
+              const TabIcon = tabConf.icon;
+              const isActive = activeTab === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  type="button"
+                  className={cn(
+                    "flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] sm:text-[11px] font-bold transition-all duration-200 cursor-pointer",
+                    isActive
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-500/30"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                  )}
+                >
+                  <TabIcon className="size-3 shrink-0" />
+                  <span className="hidden xs:inline">{tabConf.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Live Simulation Workspace */}
+        <div className="p-4 sm:p-5 text-slate-200 relative min-h-[290px] sm:min-h-[320px] flex flex-col justify-between">
+          {/* Top Live Status & Highlight Pill */}
+          <div className="flex items-center justify-between gap-2 border-b border-slate-800/70 pb-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="grid size-6 place-items-center rounded-lg bg-blue-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
+                <config.icon className="size-3.5" />
+              </div>
+              <span className="font-mono text-xs font-bold text-slate-200 truncate">
+                {config.label} Simulation
+              </span>
+            </div>
+            <span className="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+              <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
+              {config.tag}
+            </span>
+          </div>
+
+          {/* Center Visual: Dynamic Animated Graphic per Mode */}
+          <div className="my-3 grid sm:grid-cols-12 gap-3 items-center">
+            {/* Left Graphic Sandbox Visualizer (5 cols on sm) */}
+            <div className="sm:col-span-5 flex justify-center items-center">
+              {activeTab === "cyber" && (
+                /* Cyber Security Radar Scanner Visual */
+                <div className="relative size-28 sm:size-32 rounded-full border border-cyan-500/30 bg-slate-950 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+                  {/* Concentric rings */}
+                  <div className="absolute inset-2 rounded-full border border-cyan-500/20" />
+                  <div className="absolute inset-5 rounded-full border border-cyan-500/20" />
+                  <div className="absolute inset-8 rounded-full border border-cyan-500/20" />
+                  {/* Crosshairs */}
+                  <div className="absolute inset-x-0 top-1/2 h-px bg-cyan-500/20" />
+                  <div className="absolute inset-y-0 left-1/2 w-px bg-cyan-500/20" />
+                  {/* Sweeping Radar Beam */}
+                  <div className="absolute inset-0 animate-radar-sweep origin-center">
+                    <div className="w-1/2 h-1/2 bg-gradient-to-br from-cyan-400/40 via-cyan-500/10 to-transparent rounded-tl-full" />
+                  </div>
+                  {/* Glowing Target Blips */}
+                  <span className="absolute top-6 right-7 size-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
+                  <span className="absolute bottom-6 left-8 size-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8]" />
+                  <span className="relative z-10 grid size-8 place-items-center rounded-full bg-slate-900 border border-cyan-400 text-cyan-300 text-[9px] font-mono font-bold shadow-md">
+                    SOC
+                  </span>
+                </div>
+              )}
+
+              {activeTab === "programmatic" && (
+                /* Programmatic DV360 Real-Time Auction Bidding Visual */
+                <div className="w-full h-28 sm:h-32 rounded-2xl border border-indigo-500/30 bg-slate-950 p-2.5 flex flex-col justify-between shadow-[0_0_20px_rgba(99,102,241,0.15)]">
+                  <div className="flex items-center justify-between text-[9px] font-mono text-indigo-300">
+                    <span>DSP BID STREAM</span>
+                    <span className="text-emerald-400 font-bold">● RTB ACTIVE</span>
+                  </div>
+                  {/* Animated Wave Bars */}
+                  <div className="flex items-end justify-between gap-1.5 h-14 px-1">
+                    {[40, 75, 55, 95, 65, 85, 45, 90, 70].map((h, i) => (
+                      <div
+                        key={i}
+                        className="w-full rounded-t-sm bg-gradient-to-t from-indigo-600 via-sky-400 to-cyan-300 transition-all duration-500"
+                        style={{
+                          height: `${Math.min(100, Math.max(25, h + ((pulseTick * (i + 1)) % 30) - 15))}%`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between text-[9px] font-mono font-bold text-slate-400 bg-slate-900/90 rounded px-1.5 py-0.5">
+                    <span>WIN CPM: $2.42</span>
+                    <span className="text-cyan-400">48.2k QPS</span>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "growth" && (
+                /* Growth Engine Attribution Funnel Visual */
+                <div className="w-full h-28 sm:h-32 rounded-2xl border border-emerald-500/30 bg-slate-950 p-2.5 flex flex-col justify-between shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+                  <div className="flex items-center justify-between text-[9px] font-mono text-emerald-300">
+                    <span>OMNICHANNEL ATTRIBUTION</span>
+                    <span className="text-emerald-400 font-bold">+34% ROAS</span>
+                  </div>
+                  {/* Multi-tier Funnel Step Bars */}
+                  <div className="flex flex-col gap-1.5 py-1">
+                    <div className="space-y-0.5">
+                      <div className="flex justify-between text-[8.5px] font-mono text-slate-400">
+                        <span>Awareness (Google Ads)</span>
+                        <span>100%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="h-full w-full bg-gradient-to-r from-blue-500 to-cyan-400 animate-shimmer-slide" />
+                      </div>
+                    </div>
+                    <div className="space-y-0.5">
+                      <div className="flex justify-between text-[8.5px] font-mono text-slate-400">
+                        <span>Intent (Meta Retargeting)</span>
+                        <span>76%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="h-full w-[76%] bg-gradient-to-r from-indigo-500 to-purple-400" />
+                      </div>
+                    </div>
+                    <div className="space-y-0.5">
+                      <div className="flex justify-between text-[8.5px] font-mono text-emerald-300 font-bold">
+                        <span>Conversion (GA4 Event)</span>
+                        <span>34% Lift</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="h-full w-[48%] bg-gradient-to-r from-emerald-400 to-teal-300 shadow-[0_0_8px_#34d399]" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Right Telemetry Terminal Logs (7 cols on sm) */}
+            <div className="sm:col-span-7 rounded-2xl bg-slate-900/90 border border-slate-800 p-2.5 sm:p-3 font-mono text-[10px] sm:text-[11px] leading-relaxed space-y-1">
+              <div className="text-cyan-400 font-bold flex items-center gap-1 mb-1">
+                <span>{config.terminalPrompt}</span>
+                <span className="inline-block w-1.5 h-3 bg-cyan-400 animate-terminal-cursor" />
+              </div>
+              {config.logs.map((log, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "transition-all duration-300",
+                    i === config.logs.length - 1
+                      ? "text-emerald-300 font-bold"
+                      : "text-slate-400"
+                  )}
+                >
+                  {log}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Telemetry Metrics Strip */}
+          <div className="grid grid-cols-3 gap-2 border-t border-slate-800/70 pt-2.5 mt-1 text-center">
+            {config.metrics.map((m, i) => (
+              <div key={i} className="rounded-xl bg-slate-900/70 border border-slate-800/80 p-1.5">
+                <span className="block text-[9px] sm:text-[9.5px] font-medium text-slate-400">
+                  {m.label}
+                </span>
+                <span className={cn("block text-xs sm:text-sm font-black font-mono mt-0.5", m.color)}>
+                  {m.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Live Console Bottom Bar */}
+        <div className="flex items-center justify-between border-t border-slate-800/90 bg-slate-900/95 px-3 py-2 text-[10px] font-mono text-slate-400">
+          <div className="flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <span className="text-slate-300 font-bold">{config.highlight}</span>
+          </div>
+          <span className="text-sky-400 hover:text-sky-300 font-semibold cursor-pointer select-none">
+            Interactive Console ⚡
+          </span>
+        </div>
+      </div>
+
+      {/* Floating Bottom-Left HUD Badge: Mentors & Rating */}
+      <div className="absolute -bottom-4 -left-2 sm:-left-4 z-30 animate-float-reverse pointer-events-none">
+        <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-1.5 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
+          <span className="grid size-7 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-xs shrink-0">
+            <Users className="size-3.5 sm:size-4" />
+          </span>
+          <div>
+            <span className="block text-[10px] sm:text-[10.5px] font-black text-slate-900">
+              10+ Seasoned Mentors
+            </span>
+            <span className="block text-[9px] sm:text-[9.5px] font-bold text-amber-600">
+              ★ 4.9 Verified Student Rating
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Bottom Trust Pill Strip */}
+      <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-max max-w-[94%] sm:max-w-none flex justify-center pointer-events-none">
+        <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-slate-900/95 backdrop-blur-md border border-slate-700/80 shadow-xl px-3 sm:px-4 py-1 text-[9px] sm:text-[10.5px] font-bold text-white text-center whitespace-nowrap">
+          <span className="text-sky-400">Practical Training</span>
+          <span className="text-slate-500 font-normal">•</span>
+          <span className="text-indigo-300">Industry Mentorship</span>
+          <span className="text-slate-500 font-normal hidden min-[460px]:inline">•</span>
+          <span className="text-emerald-300 hidden min-[460px]:inline">Real Projects</span>
+          <span className="text-slate-500 font-normal hidden lg:inline">•</span>
+          <span className="text-amber-300 hidden lg:inline">Placement Ready</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Hero() {
+  const [domainIndex, setDomainIndex] = useState(0);
+
+  // Auto-cycle headline domain every 3.6s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDomainIndex((prev) => (prev + 1) % HERO_DOMAINS.length);
+    }, 3600);
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentDomain = HERO_DOMAINS[domainIndex] ?? HERO_DOMAINS[0]!;
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/70 via-white to-slate-50/60 pb-12 pt-4 sm:pt-6 lg:pb-16 lg:pt-8">
+      {/* High-tech matrix background grid overlay */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.09] pointer-events-none"
         aria-hidden="true"
       />
 
       {/* Premium ambient glow orbs */}
       <div
-        className="pointer-events-none absolute right-[5%] top-[5%] size-[38rem] rounded-full bg-gradient-to-tr from-sky-300/30 via-blue-200/20 to-transparent blur-3xl animate-pulse"
-        style={{ animationDuration: "8s" }}
+        className="pointer-events-none absolute right-[5%] top-[5%] size-[38rem] rounded-full bg-gradient-to-tr from-sky-300/35 via-blue-200/25 to-transparent blur-3xl animate-pulse-glow"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute left-[5%] top-[25%] size-[32rem] rounded-full bg-gradient-to-br from-indigo-200/25 via-blue-100/30 to-transparent blur-3xl animate-pulse"
-        style={{ animationDuration: "10s" }}
+        className="pointer-events-none absolute left-[5%] top-[20%] size-[32rem] rounded-full bg-gradient-to-br from-indigo-200/30 via-blue-100/35 to-transparent blur-3xl animate-pulse-glow"
+        style={{ animationDelay: "2s" }}
         aria-hidden="true"
       />
 
@@ -259,7 +679,7 @@ function Hero() {
           <div className="lg:col-span-7 w-full text-left flex flex-col justify-center min-w-0">
             {/* Eyebrow: INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED */}
             <div
-              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/90 bg-gradient-to-r from-blue-50/95 via-sky-50/80 to-indigo-50/95 px-3 py-1.5 sm:px-4 sm:py-1.5 shadow-[0_2px_12px_-2px_rgba(37,99,235,0.14)] backdrop-blur-md mb-3.5 sm:mb-4 w-fit transition-all duration-300 hover:border-blue-400 hover:shadow-[0_4px_16px_-2px_rgba(37,99,235,0.2)]"
+              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/90 bg-gradient-to-r from-blue-50/95 via-sky-50/80 to-indigo-50/95 px-3 py-1.5 sm:px-4 sm:py-1.5 shadow-[0_2px_12px_-2px_rgba(37,99,235,0.14)] backdrop-blur-md mb-3 sm:mb-3.5 w-fit transition-all duration-300 hover:border-blue-400 hover:shadow-[0_4px_16px_-2px_rgba(37,99,235,0.2)]"
               data-reveal
             >
               <span className="relative flex size-2 shrink-0">
@@ -272,15 +692,21 @@ function Hero() {
               <Sparkles className="size-3 text-amber-500 shrink-0 animate-pulse" aria-hidden="true" />
             </div>
 
-            {/* H1: MASTER THE SKILLS. BUILD REAL-WORLD EXPERIENCE. */}
+            {/* Dynamic Animated H1 */}
             <h1
               className="text-[1.35rem] xs:text-[1.55rem] sm:text-[1.95rem] md:text-[2.25rem] lg:text-[2.15rem] xl:text-[2.55rem] 2xl:text-[2.85rem] font-black leading-[1.18] sm:leading-[1.12] tracking-tight text-slate-900 [text-wrap:balance]"
               data-reveal
               style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
             >
               <span className="block whitespace-nowrap">MASTER THE SKILLS.</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 whitespace-nowrap">
-                BUILD REAL-WORLD EXPERIENCE.
+              <span
+                key={currentDomain.id}
+                className={cn(
+                  "block text-transparent bg-clip-text bg-gradient-to-r whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-500",
+                  currentDomain.accentGradient
+                )}
+              >
+                {currentDomain.headlinePart2}
               </span>
             </h1>
 
@@ -299,15 +725,15 @@ function Hero() {
               data-reveal
               style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
             >
-              <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50/90 border border-blue-200/70 px-2.5 py-1 text-blue-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50/90 border border-blue-200/70 px-2.5 py-1 text-blue-800 shadow-2xs hover:border-blue-400 hover:shadow-sm transition-all duration-200">
                 <CheckCircle2 className="size-3.5 text-blue-600 shrink-0" />
                 <span>Live Cloud Sandboxes</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50/90 border border-indigo-200/70 px-2.5 py-1 text-indigo-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50/90 border border-indigo-200/70 px-2.5 py-1 text-indigo-800 shadow-2xs hover:border-indigo-400 hover:shadow-sm transition-all duration-200">
                 <CheckCircle2 className="size-3.5 text-indigo-600 shrink-0" />
                 <span>10+ Dedicated Mentors</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50/90 border border-emerald-200/70 px-2.5 py-1 text-emerald-800 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50/90 border border-emerald-200/70 px-2.5 py-1 text-emerald-800 shadow-2xs hover:border-emerald-400 hover:shadow-sm transition-all duration-200">
                 <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0" />
                 <span>100% Placement Support</span>
               </div>
@@ -323,10 +749,15 @@ function Hero() {
                 to="/courses"
                 variant="primary"
                 size="md"
-                className="flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-3.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap"
+                className="relative overflow-hidden flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-3.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap"
               >
-                <span>Explore Programs</span>
-                <ArrowRight className="size-3.5 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
+                {/* Subtle Shimmer Slide Effect */}
+                <div
+                  className="pointer-events-none absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 animate-shimmer-slide"
+                  aria-hidden="true"
+                />
+                <span className="relative z-10">Explore Programs</span>
+                <ArrowRight className="relative z-10 size-3.5 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
               </BtnLink>
 
               <BtnLink
@@ -346,88 +777,9 @@ function Hero() {
             <RotatingTrustBadge />
           </div>
 
-          {/* Right Column: Hero Visual Canvas & Interactive Floating HUD (5 cols on lg/xl) */}
-          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0">
-            <div
-              className="relative w-full max-w-[480px] sm:max-w-[540px] lg:max-w-none rounded-3xl p-2 sm:p-3 bg-gradient-to-tr from-sky-400/30 via-indigo-500/20 to-white/80 shadow-2xl shadow-slate-900/10 backdrop-blur-xl border border-white/90"
-              data-reveal="right"
-            >
-              {/* Floating Top-Right HUD Badge: Active Lab Sandbox */}
-              <div className="absolute -top-3 sm:-top-4 -right-1 sm:-right-3 z-30 animate-float-slow pointer-events-none">
-                <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-2 shadow-lg shadow-slate-900/10 text-left">
-                  <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xs shrink-0">
-                    <Terminal className="size-4" />
-                  </span>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
-                      <span className="text-[10.5px] font-black uppercase tracking-wider text-slate-800">
-                        Virtual Cloud Lab
-                      </span>
-                    </div>
-                    <span className="block text-[9.5px] font-bold text-blue-600">
-                      DV360 • CM360 • Kali
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Central Hero Image Box */}
-              <div className="relative overflow-hidden rounded-2xl shadow-lg border border-slate-900/10 aspect-[16/11] sm:aspect-[16/10] bg-slate-950 group">
-                <img
-                  src={heroImg}
-                  alt="DIGITECHADEMY practical training lab simulation"
-                  className="w-full h-full object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
-                  width={960}
-                  height={600}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
-
-                {/* Bottom Live Console Bar */}
-                <div className="absolute bottom-2.5 left-3 right-3 text-white flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                    <span className="text-[10.5px] sm:text-[11px] font-bold tracking-wide uppercase truncate">
-                      Live Sandbox Active
-                    </span>
-                  </div>
-                  <span className="inline-flex items-center gap-1 text-[10px] sm:text-[10.5px] font-extrabold text-sky-300 bg-white/10 px-2 py-0.5 rounded-md backdrop-blur-md shrink-0">
-                    <Award className="size-3 text-amber-400" />
-                    100% Practical
-                  </span>
-                </div>
-              </div>
-
-              {/* Floating Bottom-Left HUD Badge: Mentors & Rating */}
-              <div className="absolute -bottom-4 -left-2 sm:-left-4 z-30 animate-float-reverse pointer-events-none">
-                <div className="pointer-events-auto flex items-center gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-3 py-2 shadow-lg shadow-slate-900/10 text-left">
-                  <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-xs shrink-0">
-                    <Users className="size-4" />
-                  </span>
-                  <div>
-                    <span className="block text-[10.5px] font-black text-slate-900">
-                      10+ Seasoned Mentors
-                    </span>
-                    <span className="block text-[9.5px] font-bold text-amber-600">
-                      ★ 4.9 Verified Student Rating
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Bottom Trust Pill Strip */}
-              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 w-max max-w-[94%] sm:max-w-none flex justify-center pointer-events-none">
-                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-slate-900/95 backdrop-blur-md border border-slate-700/80 shadow-xl px-3 sm:px-4.5 py-1 sm:py-1.5 text-[9.5px] sm:text-[11px] font-bold text-white text-center whitespace-nowrap">
-                  <span className="text-sky-400">Practical Training</span>
-                  <span className="text-slate-500 font-normal">•</span>
-                  <span className="text-indigo-300">Industry Mentorship</span>
-                  <span className="text-slate-500 font-normal hidden min-[460px]:inline">•</span>
-                  <span className="text-emerald-300 hidden min-[460px]:inline">Real Projects</span>
-                  <span className="text-slate-500 font-normal hidden lg:inline">•</span>
-                  <span className="text-amber-300 hidden lg:inline">Placement Ready</span>
-                </div>
-              </div>
-            </div>
+          {/* Right Column: Interactive Animated Lab Sandbox (5 cols on lg/xl) */}
+          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0" data-reveal="right">
+            <HeroInteractiveSandbox />
           </div>
         </div>
       </div>
