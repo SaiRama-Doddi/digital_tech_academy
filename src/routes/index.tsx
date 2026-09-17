@@ -356,15 +356,15 @@ function Hero() {
               </div>
 
               {/* Floating Bottom Trust Pill Strip */}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-30 w-full max-w-full px-2 sm:max-w-none flex justify-center pointer-events-none">
-                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md px-3 sm:px-4 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-bold text-slate-800 text-center whitespace-nowrap">
+              <div className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 z-30 w-max max-w-[94%] sm:max-w-none flex justify-center pointer-events-none">
+                <div className="pointer-events-auto inline-flex items-center justify-center gap-1.5 sm:gap-2.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md px-2.5 sm:px-4 py-1 sm:py-1.5 text-[9px] sm:text-[11px] font-bold text-slate-800 text-center whitespace-nowrap">
                   <span>Practical Training</span>
                   <span className="text-slate-300 font-normal">•</span>
                   <span>Industry Mentorship</span>
-                  <span className="text-slate-300 font-normal">•</span>
-                  <span>Real-World Projects</span>
-                  <span className="text-slate-300 font-normal">•</span>
-                  <span>Career-Focused</span>
+                  <span className="text-slate-300 font-normal hidden min-[460px]:inline">•</span>
+                  <span className="hidden min-[460px]:inline">Real-World Projects</span>
+                  <span className="text-slate-300 font-normal hidden lg:inline">•</span>
+                  <span className="hidden lg:inline">Career-Focused</span>
                 </div>
               </div>
             </div>
