@@ -451,9 +451,14 @@
   /* Premium Programmatic pillar transition cards for all screens */
   .programmatic-pillar-card {
     will-change: transform, opacity, box-shadow, border-color;
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease,
+      background-color 0.35s ease;
   }
   .programmatic-pillar-card[data-reveal="left-to-right-and-bottom-to-up"] {
-    transform: translate3d(-36px, 32px, 0) scale(0.96);
+    transform: translate3d(-40px, 36px, 0) scale(0.95);
     opacity: 0;
   }
   .programmatic-pillar-card[data-reveal="left-to-right-and-bottom-to-up"].is-visible {
@@ -462,10 +467,14 @@
     transition:
       opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.35s ease,
-      border-color 0.3s ease,
-      background-color 0.3s ease;
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease,
+      background-color 0.35s ease;
     transition-delay: var(--reveal-delay, 0ms);
+  }
+  .programmatic-pillar-card[data-reveal="left-to-right-and-bottom-to-up"].is-visible:hover {
+    transform: translate3d(0, -8px, 0) scale(1.02);
+    box-shadow: 0 20px 40px -15px rgba(22, 199, 255, 0.25), 0 0 0 1px rgba(56, 189, 248, 0.35);
   }
 
   @media (prefers-reduced-motion: reduce) {

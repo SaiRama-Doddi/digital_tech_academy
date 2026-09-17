@@ -847,44 +847,62 @@ function ProgrammaticDifferentiator() {
             {
               icon: Radio,
               badge: "Demand Side Platform",
+              dotColor: "bg-sky-400",
               name: "DV360",
               desc: "Campaign planning, targeting, bidding and optimization.",
-              color: "bg-sky-500/15 text-sky-400 border-sky-400/30",
+              color: "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
+              hoverGlow: "from-sky-500/10",
+              accentGradient: "from-sky-400 via-blue-500 to-indigo-500",
             },
             {
               icon: Server,
               badge: "Ad Server & Tracking",
+              dotColor: "bg-blue-400",
               name: "CM360",
               desc: "Ad serving, tracking, attribution and campaign measurement.",
-              color: "bg-blue-500/15 text-blue-400 border-blue-400/30",
+              color: "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
+              hoverGlow: "from-blue-500/10",
+              accentGradient: "from-blue-400 via-indigo-500 to-sky-400",
             },
             {
               icon: Play,
               badge: "Video & Discovery",
+              dotColor: "bg-red-400",
               name: "YouTube Advertising",
               desc: "Audience strategy, video campaigns and performance analysis.",
-              color: "bg-red-500/15 text-red-400 border-red-400/30",
+              color: "bg-red-500/15 text-red-400 border-red-400/30 group-hover:bg-red-500 group-hover:text-white group-hover:border-red-400 group-hover:shadow-[0_0_18px_rgba(239,68,68,0.4)]",
+              hoverGlow: "from-red-500/10",
+              accentGradient: "from-red-400 via-rose-500 to-amber-400",
             },
             {
               icon: Target,
               badge: "Audience Strategy",
+              dotColor: "bg-indigo-400",
               name: "Audience & Targeting",
               desc: "Understand how audiences are built, segmented and activated.",
-              color: "bg-indigo-500/15 text-indigo-400 border-indigo-400/30",
+              color: "bg-indigo-500/15 text-indigo-400 border-indigo-400/30 group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-400 group-hover:shadow-[0_0_18px_rgba(99,102,241,0.4)]",
+              hoverGlow: "from-indigo-500/10",
+              accentGradient: "from-indigo-400 via-purple-500 to-sky-400",
             },
             {
               icon: TrendingUp,
               badge: "Media Trader Decisions",
+              dotColor: "bg-emerald-400",
               name: "Optimization",
               desc: "Learn how traders identify performance issues and make optimization decisions.",
-              color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30",
+              color: "bg-emerald-500/15 text-emerald-400 border-emerald-400/30 group-hover:bg-emerald-500 group-hover:text-slate-950 group-hover:border-emerald-400 group-hover:shadow-[0_0_18px_rgba(16,185,129,0.4)]",
+              hoverGlow: "from-emerald-500/10",
+              accentGradient: "from-emerald-400 via-teal-500 to-sky-400",
             },
             {
               icon: BarChart3,
               badge: "Analytics & Attribution",
+              dotColor: "bg-amber-400",
               name: "Reporting & Measurement",
               desc: "Turn campaign data into actionable media insights.",
-              color: "bg-amber-500/15 text-amber-400 border-amber-400/30",
+              color: "bg-amber-500/15 text-amber-400 border-amber-400/30 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-400 group-hover:shadow-[0_0_18px_rgba(245,158,11,0.4)]",
+              hoverGlow: "from-amber-500/10",
+              accentGradient: "from-amber-400 via-orange-500 to-rose-400",
             },
           ].map((item, index) => {
             const ItemIcon = item.icon;
@@ -893,25 +911,64 @@ function ProgrammaticDifferentiator() {
                 key={item.name}
                 data-reveal="left-to-right-and-bottom-to-up"
                 style={{ "--reveal-delay": `${(index % 3) * 120}ms` } as React.CSSProperties}
-                className="programmatic-pillar-card group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/50 hover:shadow-xl hover:shadow-sky-500/10 hover:-translate-y-2 cursor-pointer"
+                className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-pointer select-none active:scale-[0.985]"
               >
-                {/* Top Accent Line */}
-                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                {/* Top Accent Gradient Line that glides open */}
+                <div
+                  className={cn(
+                    "absolute top-0 inset-x-0 h-1 bg-gradient-to-r transition-transform duration-500 ease-out origin-left scale-x-0 group-hover:scale-x-100",
+                    item.accentGradient,
+                  )}
+                />
 
-                <div className="flex items-center justify-between">
-                  <span className={cn("grid size-9 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md", item.color)}>
-                    <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" />
+                {/* Subtle Ambient Glow on Hover */}
+                <div
+                  className={cn(
+                    "pointer-events-none absolute inset-0 bg-gradient-to-b via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+                    item.hoverGlow,
+                  )}
+                  aria-hidden="true"
+                />
+
+                <div>
+                  {/* Card Top Row: Icon Badge & Platform Pill */}
+                  <div className="relative z-10 flex items-center justify-between gap-2">
+                    <span
+                      className={cn(
+                        "grid size-9 sm:size-9.5 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6",
+                        item.color,
+                      )}
+                    >
+                      <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-bold text-slate-300 uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10 transition-all duration-300 group-hover:border-sky-400/50 group-hover:text-white group-hover:bg-white/10">
+                      <span className={cn("size-1.5 rounded-full animate-pulse", item.dotColor)} />
+                      <span>{item.badge}</span>
+                    </span>
+                  </div>
+
+                  {/* Title & Description */}
+                  <div className="relative z-10 mt-3.5">
+                    <h3 className="text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
+                      {item.name}
+                    </h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-slate-300 group-hover:text-slate-100 font-normal transition-colors duration-200 text-justify">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom Interactive Micro Standard Indicator */}
+                <div className="relative z-10 mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10.5px] font-semibold text-slate-400 group-hover:text-sky-300 transition-colors">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="size-3 text-emerald-400" />
+                    <span>Industry Framework</span>
                   </span>
-                  <span className="text-[9.5px] font-bold text-slate-300 uppercase tracking-wider bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10 transition-colors duration-300 group-hover:border-sky-400/40 group-hover:text-white">
-                    {item.badge}
+                  <span className="flex items-center gap-0.5 text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <span>Explore Track</span>
+                    <ChevronRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                   </span>
                 </div>
-                <h3 className="mt-3.5 text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
-                  {item.name}
-                </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 font-normal transition-colors duration-200 text-justify">
-                  {item.desc}
-                </p>
               </div>
             );
           })}
