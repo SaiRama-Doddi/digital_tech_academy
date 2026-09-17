@@ -14,6 +14,7 @@ import {
   Sparkles,
   Twitter,
   Youtube,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { Logo } from "./Logo";
