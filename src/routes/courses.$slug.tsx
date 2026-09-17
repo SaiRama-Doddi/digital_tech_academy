@@ -430,13 +430,13 @@ function CourseDetailPage() {
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Opening Lead Paragraph from screenshot */}
                   <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-sm space-y-4">
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                       Our online {course.title} training and placement program is fully job-oriented
                       and includes real-time project work for hands-on learning. The{" "}
                       <strong className="text-navy">{displayTitle} Course</strong> is developed by
                       certified experts to deliver industry-ready skills.
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                       {course.longDescription || course.description}
                     </p>
                   </div>
@@ -501,7 +501,7 @@ function CourseDetailPage() {
                                   {item.title}
                                 </h4>
                               </div>
-                              <p className="text-xs text-slate-600 leading-relaxed pl-9 text-justify [text-align:justify] [text-justify:inter-word]">
+                              <p className="text-xs text-slate-600 leading-relaxed pl-9">
                                 {item.description}
                               </p>
                             </div>
@@ -534,7 +534,7 @@ function CourseDetailPage() {
                         Who Should Attend This Training?
                       </h3>
                       {course.overview?.audienceDescription ? (
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                           {course.overview.audienceDescription}
                         </p>
                       ) : (
@@ -560,7 +560,7 @@ function CourseDetailPage() {
                         <Award className="size-4 text-accent shrink-0" />
                         Career Outcomes &amp; Skills Acquired
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                         Graduates from this program gain working competence, resume-ready portfolio
                         projects, and direct preparation for high-demand technical roles across the industry.
                       </p>
@@ -680,7 +680,7 @@ function CourseDetailPage() {
                     <h3 className="text-base sm:text-lg font-black text-navy">
                       Program Overview &amp; Training Methodology
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                       {course.practicalLearning?.description || course.longDescription}
                     </p>
                   </div>
@@ -714,7 +714,7 @@ function CourseDetailPage() {
                             className="border border-slate-100 rounded-xl p-3 bg-slate-50/50"
                           >
                             <h5 className="text-xs font-bold text-navy">{project.title}</h5>
-                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed">
                               {project.summary}
                             </p>
                           </div>
@@ -732,7 +732,7 @@ function CourseDetailPage() {
                       <h4 className="text-base font-black text-navy">
                         {course.title} Authorized Certification
                       </h4>
-                      <p className="text-xs text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                      <p className="text-xs text-slate-600 leading-relaxed">
                         Earn an industry-recognized certificate and verified digital credential
                         upon completing assessments, labs, and capstones. Add this credential
                         directly to LinkedIn.
@@ -828,7 +828,7 @@ function CourseDetailPage() {
                               )}
                             </button>
                             {isFaqExpanded && (
-                              <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                              <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 {faq.answer}
                               </div>
                             )}
@@ -884,7 +884,7 @@ function CourseDetailPage() {
               <h2 className="text-2xl sm:text-3xl font-black text-navy mt-1">
                 Explore Other Professional Programs
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl text-justify [text-align:justify] [text-justify:inter-word]">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
                 Looking to explore other career disciplines? Browse our other high-demand certification training courses with live mentors and hands-on labs.
               </p>
             </div>
@@ -937,7 +937,7 @@ function CourseDetailPage() {
                       <h3 className="text-base font-black text-navy group-hover:text-indigo-600 transition-colors line-clamp-1">
                         {otherCourse.title}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-600 line-clamp-2 text-justify [text-align:justify] [text-justify:inter-word]">
+                      <p className="mt-1 text-xs text-slate-600 line-clamp-2">
                         {otherCourse.description}
                       </p>
                     </div>

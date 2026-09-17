@@ -88,7 +88,7 @@ export function Footer() {
                 <span className="text-slate-600">•</span>
                 <span>Cyber Security</span>
               </div>
-              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md font-normal">
                 Digitechademy is a practical learning platform focused on helping learners build relevant digital and technology skills through structured training, practical learning and expert guidance.
               </p>
               <p className="mt-2 text-xs font-bold text-sky-300 tracking-wide">
@@ -105,7 +105,7 @@ export function Footer() {
               <h4 className="text-sm font-bold text-white tracking-wide">
                 Get Practical Career Insights
               </h4>
-              <p className="mt-1 text-xs text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              <p className="mt-1 text-xs text-slate-300 leading-relaxed font-normal">
                 Free cheatsheets, curriculum updates, and interview roadmaps delivered weekly.
               </p>
 

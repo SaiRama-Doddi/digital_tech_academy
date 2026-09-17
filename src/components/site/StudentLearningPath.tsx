@@ -399,7 +399,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
               </h3>
 
               {/* Short, punchy description */}
-              <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed font-normal">
                 {currentStage.description}
               </p>
 
@@ -445,7 +445,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                         <p className="text-[11px] sm:text-xs font-bold text-white leading-snug">
                           {comp.title}
                         </p>
-                        <p className="text-[10px] sm:text-[11.5px] text-slate-300 leading-normal mt-0.5 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                        <p className="text-[10px] sm:text-[11.5px] text-slate-300 leading-normal mt-0.5 font-normal">
                           {comp.desc}
                         </p>
                       </div>

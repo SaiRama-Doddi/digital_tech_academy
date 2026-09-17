@@ -242,7 +242,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
                   </h3>
 
                   {/* Body Text */}
-                  <p className="mt-2 text-[11px] xl:text-xs leading-relaxed text-slate-300 font-normal text-justify line-clamp-4">
+                  <p className="mt-2 text-[11px] xl:text-xs leading-relaxed text-slate-300 font-normal line-clamp-4">
                     {item.text}
                   </p>
 
@@ -349,7 +349,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
               </div>
 
               <h3 className="mt-1 text-base font-bold text-white">{item.title}</h3>
-              <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed text-justify">
+              <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {item.text}
               </p>
 

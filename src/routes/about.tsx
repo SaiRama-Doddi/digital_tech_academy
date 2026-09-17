@@ -179,7 +179,7 @@ function AboutPage() {
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-navy text-left break-words">
               Built to Make Digital Learning Practical
             </h2>
-            <p className="mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-slate-600 max-w-3xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-slate-600 max-w-3xl font-normal">
               DIGITECHADEMY makes professional digital training practical, accessible, and aligned with workplace requirements. Our structured curriculum connects fundamentals with real-world application so learners gain actionable skills.
             </p>
           </div>
@@ -206,7 +206,7 @@ function AboutPage() {
               Then <span className="text-slate-300 font-light mx-1">/</span> Now{" "}
               <span className="text-slate-300 font-light mx-1">/</span> Next
             </h2>
-            <p className="mt-3 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-3 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-normal">
               How digital skill education shifted from isolated theoretical memorization into live, production-grade sandboxes and high-velocity career specializations.
             </p>
           </div>
@@ -350,7 +350,7 @@ function AboutPage() {
                     </div>
 
                     {/* Card Description */}
-                    <p className="mt-3 text-xs sm:text-[13px] leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="mt-3 text-xs sm:text-[13px] leading-relaxed text-slate-600 font-normal">
                       {item.text}
                     </p>
                   </div>
@@ -398,7 +398,7 @@ function AboutPage() {
               </span>
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">Our Vision</h2>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-300 text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-300">
               To build a trusted learning ecosystem where learners develop practical digital skills and thrive in modern tech roles.
             </p>
           </article>
@@ -414,7 +414,7 @@ function AboutPage() {
               </span>
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">Our Mission</h2>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-300 text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-300">
               To deliver hands-on, industry-relevant training that prepares learners with real skills, practical experience, and career confidence.
             </p>
           </article>
@@ -446,7 +446,7 @@ function AboutPage() {
               MEET THE MINDS BEHIND YOUR GROWTH.
             </h2>
 
-            <p className="mt-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
               Learn directly from experienced practitioners who bring authentic agency, AdTech, and enterprise security battle-tested knowledge into every interactive lecture and sandbox lab. Click on any mentor to explore their detailed background and expertise.
             </p>
           </div>
@@ -641,7 +641,7 @@ function AboutPage() {
                   <Sparkles className="size-3.5" />
                   <span>About {selectedMentor.name.split(" ")[0]}</span>
                 </h4>
-                <p className="text-xs sm:text-sm leading-relaxed text-slate-200 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-200 font-normal">
                   {selectedMentor.fullBio}
                 </p>
               </div>
@@ -737,7 +737,7 @@ function AboutPage() {
                   </span>
                   <div>
                     <h3 className="text-xs sm:text-lg font-bold text-navy leading-snug">{item.title}</h3>
-                    <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm leading-relaxed text-slate-600 text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm leading-relaxed text-slate-600">
                       {item.text}
                     </p>
                   </div>

@@ -46,7 +46,7 @@ function RequestCallPage() {
           <aside className="flex flex-col gap-4" data-reveal="right">
             <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.03)]">
               <h2 className="text-base font-extrabold text-slate-800">Prefer to talk right away?</h2>
-              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-500 text-justify">
+              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-500">
                 Call us during working hours or send a WhatsApp message — both reach the admissions
                 team directly.
               </p>

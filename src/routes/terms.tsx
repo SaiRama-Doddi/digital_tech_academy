@@ -134,7 +134,7 @@ function TermsPage() {
                 <p className="text-xs text-slate-400 font-medium">Last updated: September 2026</p>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
               Welcome to <strong className="font-black text-navy">DIGITECHADEMY</strong>. By accessing
               our website, browsing our curriculum, submitting course enquiries, or registering for
               training programs, you acknowledge and agree to the following terms and conditions.
@@ -170,7 +170,7 @@ function TermsPage() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-100">
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
                     {sec.content}
                   </p>
                 </div>
@@ -196,7 +196,7 @@ function TermsPage() {
                 <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
                   Have Questions Regarding These Terms?
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
                   Speak with our admissions and administrative support team for any clarification on course
                   policies, schedules, or enrollment conditions.
                 </p>

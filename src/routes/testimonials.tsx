@@ -166,10 +166,10 @@ function TrustAndValuesPage() {
             <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               Testimonials Must Be Genuine, Attributable &amp; Approved
             </h2>
-            <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 font-normal">
               At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews, or invent unverified statistics. We believe that true credibility comes from transparent educational delivery and verifiable student progress.
             </p>
-            <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600 font-normal">
               As our current cohort learners complete their capstone defenses and transition into the workforce, verified and attributable student feedback will be published here with full authorization.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3 pt-4 border-t border-blue-100">
@@ -223,7 +223,7 @@ function TrustAndValuesPage() {
                     <h3 className="mt-4 text-lg font-bold text-slate-900 leading-snug">
                       {pillar.title}
                     </h3>
-                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                       {pillar.description}
                     </p>
                   </div>
@@ -267,7 +267,7 @@ function TrustAndValuesPage() {
                     <h4 className="mt-3 text-sm sm:text-base font-bold text-slate-900">
                       {phase.title}
                     </h4>
-                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal">
                       {phase.description}
                     </p>
                   </div>
@@ -293,7 +293,7 @@ function TrustAndValuesPage() {
               <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
                 Experience Practical Learning Firsthand
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                 Join a live demo session before enrolling. Meet our mentors, test-drive our lab simulations, and evaluate whether our practical training approach fits your career aspirations.
               </p>
               <div className="mt-5 flex flex-wrap items-center gap-3">

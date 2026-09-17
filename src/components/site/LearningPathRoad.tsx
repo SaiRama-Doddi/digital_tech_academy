@@ -612,8 +612,8 @@ function RoadCard({
           {step.title}
         </h4>
 
-        {/* Description with justified content */}
-        <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-600 font-normal text-justify">
+        {/* Description */}
+        <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-600 font-normal">
           {step.description}
         </p>
       </div>

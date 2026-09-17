@@ -474,7 +474,7 @@ function CoursesPage() {
                             {course.title}
                           </h3>
                         </Link>
-                        <p className="mt-1.5 text-xs text-slate-600 leading-relaxed text-justify line-clamp-2">
+                        <p className="mt-1.5 text-xs text-slate-600 leading-relaxed line-clamp-2">
                           {course.description}
                         </p>
                       </div>
@@ -554,7 +554,7 @@ function CoursesPage() {
                     <h3 className="text-base sm:text-xl lg:text-2xl font-black text-navy tracking-tight">
                       Meet Your Mentors &amp; Program Directors
                     </h3>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-none whitespace-normal md:whitespace-nowrap font-normal">
                       Learn directly from seasoned practitioners who lead enterprise security perimeters, programmatic trading desks, and high-velocity digital marketing campaigns.
                     </p>
                   </div>
@@ -617,7 +617,7 @@ function CoursesPage() {
                         </div>
                       </div>
 
-                      <p className="mt-2.5 text-xs text-slate-600 line-clamp-2 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                      <p className="mt-2.5 text-xs text-slate-600 line-clamp-2 leading-relaxed">
                         {mentor.bio}
                       </p>
 
@@ -709,7 +709,7 @@ function CoursesPage() {
                           )}
                         </button>
                         {isFaqExpanded && (
-                          <div className="border-t border-slate-100 p-3.5 sm:p-4 bg-slate-50/30 text-xs sm:text-sm lg:text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                          <div className="border-t border-slate-100 p-3.5 sm:p-4 bg-slate-50/30 text-xs sm:text-sm lg:text-[0.95rem] text-slate-600 leading-relaxed">
                             {faq.answer}
                           </div>
                         )}
@@ -810,7 +810,7 @@ function CoursesPage() {
                   <Sparkles className="size-3.5" />
                   <span>About {selectedMentor.name.split(" ")[0]}</span>
                 </h4>
-                <p className="text-xs sm:text-sm leading-relaxed text-slate-200 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-200 font-normal">
                   {selectedMentor.fullBio}
                 </p>
               </div>

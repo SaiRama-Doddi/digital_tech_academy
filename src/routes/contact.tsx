@@ -98,7 +98,7 @@ function ContactPage() {
                   <h2 className="text-base sm:text-lg font-black text-navy leading-tight">
                     {card.title}
                   </h2>
-                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify]">
+                  <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                     {card.description}
                   </p>
                 </div>
@@ -115,7 +115,7 @@ function ContactPage() {
                       {card.value}
                     </a>
                   ) : (
-                    <p className="text-xs sm:text-[13px] font-bold text-navy leading-relaxed text-justify [text-align:justify]">
+                    <p className="text-xs sm:text-[13px] font-bold text-navy leading-relaxed">
                       {card.value}
                     </p>
                   )}
@@ -209,7 +209,7 @@ function ContactPage() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-left">
             Not Sure Which Course Is Right for You?
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
             Share your current experience, career goal, and area of interest. Our team can help you identify a suitable learning path.
           </p>
           <div className="mt-8 flex items-center justify-start">

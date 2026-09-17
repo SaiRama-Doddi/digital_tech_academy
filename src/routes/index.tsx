@@ -278,7 +278,7 @@ function Hero() {
 
             {/* Subheading: Learn Cyber Security, Programmatic Advertising & Digital Marketing from industry practitioners... */}
             <p
-              className="mt-3.5 sm:mt-4 text-xs sm:text-base text-slate-600 leading-relaxed max-w-lg font-normal text-justify [text-align:justify] [text-justify:inter-word]"
+              className="mt-3.5 sm:mt-4 text-xs sm:text-base text-slate-600 leading-relaxed max-w-xl font-normal"
               data-reveal
               style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
             >
@@ -659,7 +659,7 @@ function WhyDigitechademy() {
                         aria-hidden="true"
                       />
                     </div>
-                    <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                    <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal">
                       {item.desc}
                     </p>
                   </div>
@@ -831,7 +831,7 @@ function ProgrammaticDifferentiator() {
             </span>
           </h2>
 
-          <div className="mt-3.5 space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          <div className="mt-3.5 space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
             <p>
               Programmatic advertising isn't just about running ads. It's about understanding audiences, inventory, bidding, targeting, pacing, optimization, measurement and media performance.
             </p>
@@ -907,7 +907,7 @@ function ProgrammaticDifferentiator() {
                 <h3 className="mt-3.5 text-sm sm:text-base font-black text-white group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all duration-200">
                   {item.name}
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 font-normal transition-colors duration-200 text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="mt-1 text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 font-normal transition-colors duration-200">
                   {item.desc}
                 </p>
               </div>
@@ -971,7 +971,7 @@ function CyberSecurityDifferentiator() {
             </span>
           </h2>
 
-          <p className="mt-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          <p className="mt-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl font-normal">
             Cyber Security is not learned by memorizing definitions. Learn how systems work, where vulnerabilities occur and how security professionals identify, analyze and respond to security risks.
           </p>
         </div>
@@ -1052,7 +1052,7 @@ function CyberSecurityDifferentiator() {
                     </h3>
                   </div>
 
-                  <p className="mt-2.5 text-xs leading-relaxed text-slate-600 group-hover:text-slate-800 transition-colors duration-200 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                  <p className="mt-2.5 text-xs leading-relaxed text-slate-600 group-hover:text-slate-800 transition-colors duration-200 font-normal">
                     {item.desc}
                   </p>
                 </div>
@@ -1164,7 +1164,7 @@ function PracticalLearning() {
               Learn By Solving Real-World Problems.
             </p>
 
-            <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
               At Digitechademy, practical learning is not an optional add-on. You'll work through exercises, projects, case studies, tools and realistic scenarios designed to help you understand how professionals approach real problems.
             </p>
 
@@ -1257,7 +1257,7 @@ function PracticalLearning() {
                         </h3>
                       </div>
 
-                      <p className="mt-1.5 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-justify [text-align:justify] [text-justify:inter-word]">
+                      <p className="mt-1.5 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200">
                         {item.text}
                       </p>
                     </div>
@@ -1338,7 +1338,7 @@ function WhoIsThisFor() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
             Programs Structured for Distinct Career Aspirations
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
             Whether launching your first career, transitioning domains, or upgrading into high-paying specialized fields, DIGITECHADEMY provides clear, guided entry points.
           </p>
         </div>
@@ -1370,7 +1370,7 @@ function WhoIsThisFor() {
                     </h3>
                   </div>
 
-                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 font-normal">
                     {persona.desc}
                   </p>
                 </div>
@@ -1414,7 +1414,7 @@ function CareerReadiness() {
           <p className="mt-2 text-base sm:text-lg font-bold text-sky-400">
             Learn With Your Next Career Move In Mind.
           </p>
-          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
             Our programs are designed to help you understand industry concepts, practice practical skills, work through realistic scenarios, build project experience, prepare for technical and role-based interviews, and communicate your knowledge with confidence.
           </p>
         </div>
@@ -1477,7 +1477,7 @@ function CareerReadiness() {
                 <h4 className="mt-4 text-base font-bold text-white leading-snug">
                   {pillar.title}
                 </h4>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                   {pillar.text}
                 </p>
               </div>
@@ -1564,7 +1564,7 @@ function GenuineTestimonials() {
             <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
               Testimonials Must Be Genuine, Attributable &amp; Approved
             </h3>
-            <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
               At DIGITECHADEMY, we uphold strict standards of institutional credibility. We never use placeholder testimonials or manufactured reviews. As learners from our current cohorts finish their verified capstones and enter the workforce, their authorized journeys and feedback will be published here with full attribution.
             </p>
 
@@ -1622,7 +1622,7 @@ function FaqSection() {
             Frequently Asked Questions
           </h2>
 
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
             Find clear, straightforward answers about eligibility, hands-on learning, offered programs, prerequisites, and certifications at DIGITECHADEMY.
           </p>
 
@@ -1687,7 +1687,7 @@ function FinalCta() {
           </span>
         </h2>
 
-        <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+        <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl mx-auto font-normal">
           Whether you're starting your career, switching fields or upgrading your existing skills, Digitechademy helps you move from learning concepts to applying them with confidence.
         </p>
 

@@ -134,7 +134,7 @@ function PrivacyPolicyPage() {
                 <p className="text-xs text-slate-400 font-medium">Last updated: September 2026</p>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
               At <strong className="font-black text-navy">DIGITECHADEMY</strong>, accessible from our
               website, protecting the privacy of our prospective students, enrolled learners, and visitors
               is essential to our educational mission. This document outlines how data and technology are
@@ -171,7 +171,7 @@ function PrivacyPolicyPage() {
                 </div>
 
                 <div className="pt-2 border-t border-slate-100">
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify [text-align:justify] [text-justify:inter-word]">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
                     {sec.content}
                   </p>
                 </div>
@@ -197,7 +197,7 @@ function PrivacyPolicyPage() {
                 <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
                   Have Questions About Our Privacy Practices?
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed text-justify [text-align:justify] [text-justify:inter-word]">
+                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
                   Speak with our admissions and administrative support team for any questions regarding your
                   information, courses, or enrollment.
                 </p>

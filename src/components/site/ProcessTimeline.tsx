@@ -65,7 +65,7 @@ export function ProcessTimeline({
             {step.title}
           </h3>
           {step.text ? (
-            <p className={cn("mt-2 text-xs sm:text-[13px] leading-relaxed text-justify", onDark ? "text-slate-300" : "text-slate-600")}>
+            <p className={cn("mt-2 text-xs sm:text-[13px] leading-relaxed", onDark ? "text-slate-300" : "text-slate-600")}>
               {step.text}
             </p>
           ) : null}
