@@ -1230,13 +1230,13 @@ function ProgrammaticDifferentiator() {
       />
 
       <div className="container-site relative z-10">
-        <div className="max-w-3xl" data-reveal>
+        <div className="max-w-4xl lg:max-w-6xl" data-reveal>
           <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-sky-300 mb-3 backdrop-blur-xs">
             <Radio className="size-3 text-sky-400 animate-pulse" />
             <span>GO BEYOND BASIC DIGITAL MARKETING</span>
           </div>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] font-black text-white leading-tight tracking-tight">
+          <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight whitespace-nowrap">
             Learn Programmatic Advertising{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
               From the Inside Out
