@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, MessageCircle, Phone, ArrowRight } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
-import { BtnAnchor, BtnLink } from "@/components/site/Btn";
+import { BtnAnchor } from "@/components/site/Btn";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { PageHero } from "@/components/site/PageHero";
 import { RequestCallForm } from "@/components/site/RequestCallForm";
@@ -78,7 +78,7 @@ function ContactPage() {
 
       {/* Section 2 — Contact Options */}
       <section className="bg-background">
-        <div className="container-site py-6 sm:py-8 lg:py-10">
+        <div className="container-site py-5 sm:py-6 lg:py-7">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
               <article
@@ -135,7 +135,7 @@ function ContactPage() {
 
       {/* Section 3 — Enquiry Form */}
       <section className="bg-surface">
-        <div className="container-site py-8 sm:py-10 lg:py-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+        <div className="container-site py-6 sm:py-8 lg:py-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
           <div data-reveal="left">
             <SectionHeading
               eyebrow="ENQUIRY FORM"
@@ -186,42 +186,6 @@ function ContactPage() {
                 Call Us
               </BtnAnchor>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4 — Support */}
-      <section className="surface-navy relative overflow-hidden py-10 sm:py-12 lg:py-14 border-t border-navy-700/60">
-        <div className="grid-lines absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true" />
-        <div
-          className="pointer-events-none absolute -right-20 -bottom-20 size-[28rem] rounded-full bg-accent/15 blur-3xl"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -left-20 -top-20 size-[28rem] rounded-full bg-blue-500/10 blur-3xl"
-          aria-hidden="true"
-        />
-
-        <div className="container-site relative z-10 text-left max-w-4xl" data-reveal>
-          <span className="inline-block text-xs font-black uppercase tracking-widest text-accent mb-3">
-            ACADEMIC SUPPORT
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight text-left">
-            Not Sure Which Course Is Right for You?
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
-            Share your current experience, career goal, and area of interest. Our team can help you identify a suitable learning path.
-          </p>
-          <div className="mt-8 flex items-center justify-start">
-            <BtnLink
-              to="/request-call"
-              variant="accent"
-              size="lg"
-              className="bg-accent hover:brightness-110 text-slate-950 font-black h-13 px-8 text-base rounded-xl shadow-lg shadow-accent/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
-            >
-              <span>Talk to an Expert</span>
-              <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-            </BtnLink>
           </div>
         </div>
       </section>

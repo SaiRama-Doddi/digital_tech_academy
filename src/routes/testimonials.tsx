@@ -158,7 +158,7 @@ function TrustAndValuesPage() {
       </section>
 
       {/* Section 3 — Authentic Feedback Policy */}
-      <section className="bg-background py-8 sm:py-12 border-b border-slate-200/80">
+      <section className="bg-background py-6 sm:py-8 border-b border-slate-200/80">
         <div className="container-site max-w-4xl">
           <div
             data-reveal
@@ -198,7 +198,7 @@ function TrustAndValuesPage() {
       </section>
 
       {/* Section 4 — The 6 Value & Trust Pillars */}
-      <section className="bg-surface py-10 sm:py-16 border-b border-slate-200/80">
+      <section className="bg-surface py-6 sm:py-8 lg:py-10 border-b border-slate-200/80">
         <div className="container-site">
           <SectionHeading
             eyebrow="OUR COMMITMENTS"
@@ -207,7 +207,7 @@ function TrustAndValuesPage() {
             align="left"
           />
 
-          <div className="mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-5 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {trustPillars.map((pillar, index) => {
               const PillarIcon = pillar.icon;
               return (
@@ -245,7 +245,7 @@ function TrustAndValuesPage() {
       </section>
 
       {/* Section 5 — 100% Placement Assistance Framework */}
-      <section className="bg-background py-10 sm:py-16">
+      <section className="bg-background py-6 sm:py-8 lg:py-10">
         <div className="container-site max-w-5xl">
           <SectionHeading
             eyebrow="CAREER ACCELERATION"
@@ -254,7 +254,7 @@ function TrustAndValuesPage() {
             align="left"
           />
 
-          <div className="mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-5 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {placementPhases.map((phase, index) => {
               const PhaseIcon = phase.icon;
               return (

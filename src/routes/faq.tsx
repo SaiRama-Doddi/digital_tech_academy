@@ -13,10 +13,7 @@ import {
   Phone,
   Plus,
   Radio,
-  Search,
   ShieldCheck,
-  Sparkles,
-  X,
 } from "lucide-react";
 
 import { PageHero } from "@/components/site/PageHero";
@@ -63,18 +60,7 @@ const categoryColors: Record<string, { bg: string; text: string; border: string 
   "Enrollment & Support": { bg: "bg-rose-500/10", text: "text-rose-600", border: "border-rose-300/40" },
 };
 
-const popularKeywords = [
-  "DV360",
-  "Certification",
-  "Google Ads",
-  "Practical Labs",
-  "Cyber Security",
-  "Beginner",
-  "Admissions",
-];
-
 function FaqPage() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({
     "Who can join Digitechademy?": true,
@@ -90,19 +76,11 @@ function FaqPage() {
     );
   }, []);
 
-  // Filtered list based on search and selected category
+  // Filtered list based on selected category
   const filteredItems = useMemo(() => {
-    return allFaqItems.filter((item) => {
-      const matchesCat = activeCategory === "All" || item.category === activeCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        item.question.toLowerCase().includes(q) ||
-        item.answer.toLowerCase().includes(q) ||
-        item.category.toLowerCase().includes(q);
-      return matchesCat && matchesSearch;
-    });
-  }, [allFaqItems, activeCategory, searchQuery]);
+    if (activeCategory === "All") return allFaqItems;
+    return allFaqItems.filter((item) => item.category === activeCategory);
+  }, [allFaqItems, activeCategory]);
 
   // Compute count per category
   const categoryCounts = useMemo(() => {
@@ -141,60 +119,13 @@ function FaqPage() {
         description="Clear answers about DIGITECHADEMY courses, practical labs, tools, certification, and admissions."
       />
 
-      <section className="bg-gradient-to-b from-slate-50/70 via-white to-slate-50/50 py-8 sm:py-12">
+      <section className="bg-gradient-to-b from-slate-50/70 via-white to-slate-50/50 py-6 sm:py-8">
         <div className="container-site">
           {/* ========================================================================= */}
-          {/* 1. INTERACTIVE SEARCH & POPULAR TOPICS HEADER BAR                        */}
+          {/* 1. CATEGORY FILTER TABS                                                   */}
           {/* ========================================================================= */}
-          <div className="max-w-3xl mx-auto mb-8 sm:mb-10 text-center" data-reveal>
-            {/* Search Input Box */}
-            <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
-                <Search className="size-5" />
-              </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search questions, topics, tools (e.g. DV360, Labs, Fees)..."
-                className="w-full pl-12 sm:pl-13 pr-10 sm:pr-12 py-3.5 sm:py-4 rounded-2xl border border-slate-200/90 bg-white text-slate-800 placeholder-slate-400 text-xs sm:text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
-                  aria-label="Clear search"
-                >
-                  <X className="size-4" />
-                </button>
-              )}
-            </div>
-
-            {/* Popular Search Keywords */}
-            <div className="mt-3.5 flex flex-wrap items-center justify-center gap-1.5 text-xs">
-              <span className="text-slate-400 font-semibold mr-1 text-[11px] flex items-center gap-1">
-                <Sparkles className="size-3 text-amber-500" />
-                Popular:
-              </span>
-              {popularKeywords.map((kw) => (
-                <button
-                  key={kw}
-                  type="button"
-                  onClick={() => setSearchQuery(kw)}
-                  className="rounded-full bg-slate-100 hover:bg-blue-50 hover:text-blue-700 border border-slate-200/70 hover:border-blue-300/60 px-2.5 py-0.5 text-[11px] font-medium text-slate-600 transition-colors cursor-pointer"
-                >
-                  {kw}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* ========================================================================= */}
-          {/* 2. CATEGORY FILTER TABS                                                   */}
-          {/* ========================================================================= */}
-          <div className="max-w-5xl mx-auto mb-8 px-4 sm:px-0" data-reveal>
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 p-1">
+          <div className="max-w-6xl mx-auto mb-5 px-2 sm:px-0" data-reveal>
+            <div className="flex items-center justify-start md:justify-center gap-1.5 sm:gap-2 p-1 overflow-x-auto no-scrollbar whitespace-nowrap">
               {["All", ...faqCategories.map((c) => c.title)].map((cat) => {
                 const isActive = activeCategory === cat;
                 const IconComp = categoryIcons[cat] || HelpCircle;
@@ -208,7 +139,7 @@ function FaqPage() {
                       setActiveCategory(cat);
                     }}
                     className={cn(
-                      "inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs",
+                      "inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs whitespace-nowrap",
                       isActive
                         ? "bg-slate-900 text-white shadow-md shadow-slate-900/15 ring-2 ring-slate-900/10"
                         : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 hover:border-slate-300"
@@ -240,12 +171,6 @@ function FaqPage() {
               <div className="flex items-center justify-between pb-2 border-b border-slate-200/80 text-xs">
                 <div className="text-slate-500 font-semibold">
                   Showing <span className="text-slate-900 font-bold">{filteredItems.length}</span> questions
-                  {searchQuery && (
-                    <span>
-                      {" "}
-                      for &ldquo;<strong className="text-blue-600">{searchQuery}</strong>&rdquo;
-                    </span>
-                  )}
                 </div>
                 <div className="flex items-center gap-3">
                   <button
@@ -270,26 +195,22 @@ function FaqPage() {
               {filteredItems.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center space-y-3">
                   <div className="grid size-12 mx-auto place-items-center rounded-full bg-slate-100 text-slate-400">
-                    <Search className="size-6" />
+                    <HelpCircle className="size-6" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-800">No matching questions found</h3>
+                  <h3 className="text-base font-bold text-slate-800">No questions found in this category</h3>
                   <p className="text-xs text-slate-500 max-w-md mx-auto">
-                    We couldn&apos;t find any questions matching &ldquo;{searchQuery}&rdquo;. Try using different
-                    keywords or reach out to our team directly.
+                    Please select another category or reach out to our team directly.
                   </p>
                   <div className="pt-2 flex items-center justify-center gap-3">
                     <button
                       type="button"
-                      onClick={() => {
-                        setSearchQuery("");
-                        setActiveCategory("All");
-                      }}
+                      onClick={() => setActiveCategory("All")}
                       className="rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 transition-colors cursor-pointer"
                     >
-                      Reset Filters
+                      Show All Questions
                     </button>
                     <a
-                      href={whatsappLink(`Hi DIGITECHADEMY, I have a question: ${searchQuery}`)}
+                      href={whatsappLink("Hi DIGITECHADEMY, I have a question about your courses.")}
                       target="_blank"
                       rel="noreferrer"
                       className="rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 transition-colors inline-flex items-center gap-1.5"
@@ -385,7 +306,7 @@ function FaqPage() {
             </div>
 
             {/* Right Column: Sticky Support & Help Box */}
-            <aside className="lg:sticky lg:top-24 space-y-4" data-reveal="right">
+            <aside className="lg:sticky lg:top-[185px] xl:top-[190px] space-y-4" data-reveal="right">
               {/* Card 1: Direct Support Card */}
               <div className="rounded-2xl border border-sky-400/30 bg-gradient-to-br from-[#091738] via-[#061126] to-[#040b1a] p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
                 <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-blue-500/15 blur-2xl" />
@@ -452,6 +373,7 @@ function FaqPage() {
                   <li>
                     <Link
                       to="/about"
+                      hash="mentors"
                       className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 text-slate-800 hover:text-blue-600 transition-colors"
                     >
                       <span>Meet Our Faculty</span>

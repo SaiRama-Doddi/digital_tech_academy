@@ -10,6 +10,7 @@ import {
   Briefcase,
   Award,
   Sparkles,
+  Radio,
 } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,12 @@ import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import advancedSeoImg from "@/assets/course-advanced-seo.jpg";
 import ethicalHackingImg from "@/assets/course-ethical-hacking.jpg";
 import programmaticAdvertisingImg from "@/assets/course-programmatic-advertising.jpg";
+import { normalizeCourseCategory } from "@/services/courseService";
+
+export function getCourseCategory(course: any): string {
+  if (!course) return "Certification";
+  return normalizeCourseCategory(course.category, course.title, course.slug);
+}
 
 export function getCourseImage(course: any): string {
   if (course?.image && typeof course.image === "string" && course.image.length > 5) {
@@ -63,6 +70,22 @@ export function getCourseImage(course: any): string {
 // Helper to determine the theme styling based on category and title
 function getCourseTheme(category = "", title = "") {
   const text = `${category} ${title}`.toLowerCase();
+
+  if (
+    text.includes("programmatic") ||
+    text.includes("adtech") ||
+    text.includes("dv360") ||
+    text.includes("cm360")
+  ) {
+    return {
+      bgGradient: "from-sky-50/80 via-white to-sky-50/30",
+      borderColor: "border-sky-100 hover:border-sky-300",
+      iconBg: "bg-sky-100 text-sky-600",
+      badgeBg: "bg-sky-50 text-sky-700 border-sky-200",
+      btnBg: "bg-sky-100/90 text-sky-600 group-hover:bg-sky-600 group-hover:text-white",
+      icon: Radio,
+    };
+  }
 
   if (
     text.includes("market") ||
@@ -180,7 +203,8 @@ function getCourseTheme(category = "", title = "") {
 
 export function CourseCard({ course }: { course: Course | any }) {
   const navigate = useNavigate();
-  const theme = getCourseTheme(course.category, course.title);
+  const displayCategory = getCourseCategory(course);
+  const theme = getCourseTheme(displayCategory, course.title);
   const IconComponent = theme.icon;
   const courseImage = getCourseImage(course);
 
@@ -223,7 +247,7 @@ export function CourseCard({ course }: { course: Course | any }) {
               theme.badgeBg,
             )}
           >
-            {course.category || "Certification"}
+            {displayCategory}
           </span>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-slate-200/80 text-[9.5px] font-bold text-slate-700 shadow-xs backdrop-blur-md">
             <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -303,7 +327,7 @@ export function CourseCard({ course }: { course: Course | any }) {
         </div>
 
         <div className="flex items-center gap-1 text-[11px] font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
-          <span>{course.primaryCta || "Explore Track"}</span>
+          <span>{course.primaryCta || "View Course"}</span>
           <span
             className={cn(
               "grid size-6 place-items-center rounded-lg transition-all duration-200 shadow-xs ml-1",

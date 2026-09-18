@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Activity,
+  ArrowLeft,
   ArrowRight,
   Award,
   BarChart3,
@@ -42,6 +43,7 @@ import { BtnLink } from "@/components/site/Btn";
 import { CourseCard } from "@/components/site/CourseCard";
 import { CountUp } from "@/components/site/CountUp";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
+import { FinalCta } from "@/components/site/FinalCta";
 import { DemoClassModal } from "@/components/site/DemoClassModal";
 import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
@@ -49,7 +51,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { homeFaqs, practicalTraining, whoIsForAudience } from "@/data/content";
 import { courses } from "@/data/courses";
-import { subscribeCourses, type FirebaseCourse } from "@/services/courseService";
+import { subscribeCourses, normalizeCourseCategory, type FirebaseCourse } from "@/services/courseService";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -144,6 +146,9 @@ function Home() {
 
       {/* 14. FAQ */}
       <FaqSection />
+
+      {/* 15. Final CTA */}
+      <FinalCta />
 
       {/* Interactive Global Demo Class Modal */}
       <DemoClassModal />
@@ -652,7 +657,7 @@ function Hero() {
   const currentDomain = HERO_DOMAINS[domainIndex] ?? HERO_DOMAINS[0]!;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/70 via-white to-slate-50/60 pb-12 pt-4 sm:pt-6 lg:pb-16 lg:pt-8">
+    <section className="relative overflow-hidden bg-gradient-to-b from-sky-50/70 via-white to-slate-50/60 pb-6 pt-3 sm:pt-4 lg:pb-8 lg:pt-6">
       {/* High-tech matrix background grid overlay */}
       <div
         className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.09] pointer-events-none"
@@ -787,7 +792,7 @@ function Hero() {
  */
 function UspTrustStrip() {
   return (
-    <section className="bg-white border-y border-slate-200/80 py-6 sm:py-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)]">
+    <section className="bg-white border-y border-slate-200/80 py-4 sm:py-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)]">
       <div className="container-site">
         {/* Row 1: Key Credible Statistics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 lg:divide-x lg:divide-slate-200/80">
@@ -905,8 +910,8 @@ function UspTrustStrip() {
  */
 function WhyDigitechademy() {
   return (
-    <section className="bg-background py-10 sm:py-16 overflow-hidden border-b border-slate-200/60">
-      <div className="container-site grid items-center gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+    <section className="bg-background py-7 sm:py-10 overflow-hidden border-b border-slate-200/60">
+      <div className="container-site grid items-center gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-10">
         {/* Left Column: Visual graphic */}
         <div className="relative lg:col-span-5" data-reveal="left">
           <div className="overflow-hidden rounded-3xl border border-slate-200/80 shadow-xl bg-slate-950 aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] relative">
@@ -1085,6 +1090,7 @@ function WhyDigitechademy() {
 
             <BtnLink
               to="/about"
+              hash="mentors"
               variant="outline"
               size="md"
               className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm"
@@ -1103,14 +1109,132 @@ function WhyDigitechademy() {
  * 6. CORE PROGRAMS
  * =========================================================================
  */
+type DomainTrack = {
+  id: string;
+  name: string;
+  eyebrow: string;
+  badgeStyle: string;
+  title: string;
+  description: string;
+  icon: typeof ShieldCheck;
+  iconBg: string;
+  cardBorder: string;
+  cardHoverBorder: string;
+  cardBg: string;
+  hoverShadow: string;
+  btnHoverBg: string;
+  skills: string[];
+};
+
+const DOMAIN_TRACKS: DomainTrack[] = [
+  {
+    id: "cyber-security",
+    name: "Cyber Security",
+    eyebrow: "DEFENSE & ETHICAL HACKING",
+    badgeStyle: "bg-amber-50 text-amber-800 border-amber-200/90",
+    title: "Cyber Security",
+    description:
+      "Master network defense, Linux administration, vulnerability assessment, and real-world ethical security testing.",
+    icon: ShieldCheck,
+    iconBg: "bg-amber-100 text-amber-700 ring-1 ring-amber-200/80",
+    cardBorder: "border-amber-200/80",
+    cardHoverBorder: "hover:border-amber-400",
+    cardBg: "bg-gradient-to-b from-amber-50/40 via-white to-amber-50/15",
+    hoverShadow: "hover:shadow-xl hover:shadow-amber-500/10",
+    btnHoverBg: "group-hover:bg-amber-600",
+    skills: ["Ethical Hacking", "Network Defense", "Vulnerability Assessment", "Linux Security"],
+  },
+  {
+    id: "digital-marketing",
+    name: "Digital Marketing",
+    eyebrow: "GROWTH & PERFORMANCE",
+    badgeStyle: "bg-rose-50 text-rose-800 border-rose-200/90",
+    title: "Digital Marketing",
+    description:
+      "Drive measurable business growth across SEO, paid advertising campaigns, social media, and conversion analytics.",
+    icon: Megaphone,
+    iconBg: "bg-rose-100 text-rose-700 ring-1 ring-rose-200/80",
+    cardBorder: "border-rose-200/80",
+    cardHoverBorder: "hover:border-rose-400",
+    cardBg: "bg-gradient-to-b from-rose-50/40 via-white to-rose-50/15",
+    hoverShadow: "hover:shadow-xl hover:shadow-rose-500/10",
+    btnHoverBg: "group-hover:bg-rose-600",
+    skills: ["SEO Strategy", "Google & Meta Ads", "Social Media", "Conversion Analytics"],
+  },
+  {
+    id: "programmatic-advertising",
+    name: "Programmatic Advertising",
+    eyebrow: "ADTECH & REAL-TIME BIDDING",
+    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200/90",
+    title: "Programmatic Advertising",
+    description:
+      "Specialized enterprise media buying, real-time bidding (RTB), demand-side platforms (DV360), and AdTech analytics.",
+    icon: Radio,
+    iconBg: "bg-sky-100 text-sky-700 ring-1 ring-sky-200/80",
+    cardBorder: "border-sky-200/80",
+    cardHoverBorder: "hover:border-sky-400",
+    cardBg: "bg-gradient-to-b from-sky-50/40 via-white to-sky-50/15",
+    hoverShadow: "hover:shadow-xl hover:shadow-sky-500/10",
+    btnHoverBg: "group-hover:bg-sky-600",
+    skills: ["DV360 & CM360", "Real-Time Bidding", "Audience Targeting", "DSP & SSP Platforms"],
+  },
+];
+
+function matchesDomain(course: FirebaseCourse, domainName: string): boolean {
+  const cat = (course.category || "").toLowerCase();
+  const slug = (course.slug || "").toLowerCase();
+  const title = (course.title || "").toLowerCase();
+
+  if (domainName === "Cyber Security") {
+    return (
+      cat.includes("cyber") ||
+      cat.includes("security") ||
+      slug.includes("cyber") ||
+      slug.includes("hack") ||
+      title.includes("cyber") ||
+      title.includes("hack")
+    );
+  }
+
+  if (domainName === "Programmatic Advertising") {
+    return (
+      cat.includes("programmatic") ||
+      slug.includes("programmatic") ||
+      title.includes("programmatic") ||
+      slug.includes("adtech") ||
+      title.includes("adtech")
+    );
+  }
+
+  if (domainName === "Digital Marketing") {
+    if (
+      cat.includes("programmatic") ||
+      slug.includes("programmatic") ||
+      title.includes("programmatic")
+    ) {
+      return false;
+    }
+    return (
+      cat.includes("market") ||
+      slug.includes("digital-market") ||
+      slug.includes("seo") ||
+      title.includes("market") ||
+      title.includes("seo")
+    );
+  }
+
+  return false;
+}
+
 function CorePrograms() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() =>
     courses.map((c) => ({
       id: c.id,
       slug: c.slug,
       title: c.title,
-      category: c.category,
+      category: normalizeCourseCategory(c.category, c.title, c.slug),
       description: c.description,
       duration: c.duration,
       level: c.level,
@@ -1134,70 +1258,223 @@ function CorePrograms() {
     return () => unsub();
   }, []);
 
-  const programCategories = useMemo(() => {
-    const active = liveCourses.filter((c) => c.active !== false);
-    const uniqueCats = Array.from(new Set(active.map((c) => c.category))).filter(Boolean);
-    return ["All", ...uniqueCats];
+  const activeCourses = useMemo(() => {
+    return liveCourses.filter((c) => c.active !== false);
   }, [liveCourses]);
 
+  // Dynamic counts for each domain
+  const domainCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const track of DOMAIN_TRACKS) {
+      counts[track.name] = activeCourses.filter((c) => matchesDomain(c, track.name)).length;
+    }
+    return counts;
+  }, [activeCourses]);
+
   const displayedCourses = useMemo(() => {
-    const active = liveCourses.filter((c) => c.active !== false);
-    if (selectedCategory === "All") return active;
-    return active.filter((c) => c.category.toLowerCase() === selectedCategory.toLowerCase());
-  }, [liveCourses, selectedCategory]);
+    if (!selectedDomain) return [];
+    return activeCourses.filter((c) => matchesDomain(c, selectedDomain));
+  }, [activeCourses, selectedDomain]);
+
+  const handleSelectDomain = (domainName: string | null) => {
+    setSelectedDomain(domainName);
+    if (sectionRef.current) {
+      const topOffset = -70;
+      const y = sectionRef.current.getBoundingClientRect().top + window.pageYOffset + topOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
+  const selectedTrack = DOMAIN_TRACKS.find((t) => t.name === selectedDomain);
 
   return (
-    <section id="courses" className="bg-surface py-10 sm:py-16 border-y border-slate-200/80 overflow-hidden">
+    <section
+      id="courses"
+      ref={sectionRef}
+      className="bg-surface py-7 sm:py-10 border-y border-slate-200/80 overflow-hidden"
+    >
       <div className="container-site">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 mb-8" data-reveal>
-          <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
-            <SectionHeading
-              eyebrow="CORE PROGRAMS"
-              title="Career-Oriented Training Tracks"
-              description="Choose an industry-aligned program crafted for real-world technical competency, hands-on lab practice, and comprehensive placement support."
-              align="left"
-            />
+        {/* Section Header: Title on Left, Link Up on Right */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-2 sm:mb-2.5" data-reveal>
+          <div className="min-w-0">
+            <div className="eyebrow text-[11px] sm:text-xs inline-flex items-center gap-2 text-accent-foreground/70 mb-1.5">
+              <span className="h-px w-5 sm:w-6 bg-accent" aria-hidden="true" />
+              <span className="text-foreground/60 font-bold uppercase tracking-wider">CORE PROGRAMS</span>
+            </div>
+            <h2 className="text-xl sm:text-[1.35rem] md:text-[1.8rem] lg:text-[2.25rem] xl:text-[2.6rem] font-extrabold tracking-tight text-foreground leading-tight">
+              Career-Oriented Training Tracks
+            </h2>
           </div>
           <Link
             to="/courses"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors whitespace-nowrap self-start sm:self-end shrink-0 pb-1"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors whitespace-nowrap self-start sm:self-center shrink-0"
           >
             <span>View All Course Details</span>
             <ArrowRight className="size-4" />
           </Link>
         </div>
+        <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-5xl mb-5 sm:mb-6" data-reveal>
+          Select a specialized domain to explore dedicated hands-on programs, live lab environments, and job-ready technical curriculums.
+        </p>
 
-        {/* Category Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 mb-8" data-reveal>
-          {programCategories.map((cat) => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={cn(
-                  "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap",
-                  isActive
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-500/20"
-                    : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80"
-                )}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
+        {/* View 1: 3 Domain Cards (Default View) */}
+        {!selectedDomain ? (
+          <div className="grid gap-6 md:grid-cols-3 animate-in fade-in duration-300">
+            {DOMAIN_TRACKS.map((track) => {
+              const TrackIcon = track.icon;
+              const count = domainCounts[track.name] || 0;
 
-        {/* Course Cards Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {displayedCourses.map((course) => (
-            <CourseCard
-              key={course.id || course.slug}
-              course={course as any}
-            />
-          ))}
-        </div>
+              return (
+                <div
+                  key={track.id}
+                  onClick={() => handleSelectDomain(track.name)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleSelectDomain(track.name);
+                    }
+                  }}
+                  className={cn(
+                    "group relative flex flex-col justify-between rounded-2xl p-6 sm:p-7 transition-all duration-300 cursor-pointer border shadow-xs",
+                    track.cardBorder,
+                    track.cardHoverBorder,
+                    track.cardBg,
+                    track.hoverShadow,
+                    "hover:-translate-y-1.5 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                  )}
+                >
+                  <div>
+                    {/* Top Row: Icon & Eyebrow Badge */}
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <div className={cn("size-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105", track.iconBg)}>
+                        <TrackIcon className="size-6" />
+                      </div>
+                      <span className={cn("inline-flex items-center px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider border", track.badgeStyle)}>
+                        {track.eyebrow}
+                      </span>
+                    </div>
+
+                    {/* Domain Title */}
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2.5 group-hover:text-blue-600 transition-colors">
+                      {track.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+                      {track.description}
+                    </p>
+
+                    {/* Key Skills Pills */}
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
+                      {track.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-white/90 text-slate-700 border border-slate-200/80 shadow-2xs"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom Action Footer */}
+                  <div className="pt-4 border-t border-slate-200/70 flex items-center justify-between gap-3">
+                    <span className="text-xs font-semibold text-slate-500">
+                      {count} {count === 1 ? "Program Available" : "Programs Available"}
+                    </span>
+                    <span className={cn("inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white bg-slate-900 px-3.5 py-2 rounded-xl transition-all duration-200 shadow-xs", track.btnHoverBg)}>
+                      <span>Explore Courses</span>
+                      <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* View 2: Selected Domain Courses View */
+          <div className="space-y-6 animate-in fade-in duration-300">
+            {/* Top Navigation & Domain Switcher Bar */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+              {/* Back to All Domains Button & Current Title */}
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleSelectDomain(null)}
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-800 hover:bg-blue-50 hover:text-blue-600 border border-slate-200/90 transition-colors cursor-pointer group"
+                >
+                  <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                  <span>Back to All Domains</span>
+                </button>
+
+                <div className="h-5 w-px bg-slate-200 hidden sm:block" />
+
+                <div className="flex items-center gap-2">
+                  {selectedTrack && (
+                    <span className={cn("inline-flex items-center justify-center size-7 rounded-lg", selectedTrack.iconBg)}>
+                      <selectedTrack.icon className="size-4" />
+                    </span>
+                  )}
+                  <span className="text-sm sm:text-base font-bold text-slate-900">
+                    {selectedDomain}
+                  </span>
+                  <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+                    {displayedCourses.length} {displayedCourses.length === 1 ? "course" : "courses"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Quick Switcher Domain Tabs */}
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                {DOMAIN_TRACKS.map((t) => {
+                  const isActive = selectedDomain === t.name;
+                  const count = domainCounts[t.name] || 0;
+                  return (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => handleSelectDomain(t.name)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap",
+                        isActive
+                          ? "bg-blue-600 text-white shadow-xs"
+                          : "bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/70"
+                      )}
+                    >
+                      {t.name} ({count})
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Matching Courses Grid */}
+            {displayedCourses.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {displayedCourses.map((course) => (
+                  <CourseCard
+                    key={course.id || course.slug}
+                    course={course as any}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 px-4 bg-white rounded-2xl border border-slate-200/80">
+                <p className="text-slate-600 text-sm mb-4">No active courses currently available in this domain.</p>
+                <button
+                  type="button"
+                  onClick={() => handleSelectDomain(null)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                >
+                  <ArrowLeft className="size-4" />
+                  <span>Return to Domain Overview</span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1280,7 +1557,7 @@ function ProgrammaticDifferentiator() {
     return (
       <div
         key={key}
-        className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-pointer active:scale-[0.985] w-[290px] sm:w-[330px] md:w-[350px] shrink-0 min-h-[220px]"
+        className="programmatic-pillar-card group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 transition-all duration-300 ease-out hover:bg-white/[0.09] hover:border-sky-400/60 cursor-default w-[290px] sm:w-[330px] md:w-[350px] shrink-0 min-h-[220px]"
       >
         {/* Top Accent Gradient Line that glides open */}
         <div
@@ -1327,15 +1604,11 @@ function ProgrammaticDifferentiator() {
           </div>
         </div>
 
-        {/* Bottom Interactive Micro Standard Indicator */}
-        <div className="relative z-10 mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[10.5px] font-semibold text-slate-400 group-hover:text-sky-300 transition-colors">
+        {/* Bottom Micro Standard Indicator */}
+        <div className="relative z-10 mt-4 pt-3 border-t border-white/10 flex items-center text-[10.5px] font-semibold text-slate-400 group-hover:text-sky-300 transition-colors">
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="size-3 text-emerald-400" />
             <span>Industry Framework</span>
-          </span>
-          <span className="flex items-center gap-0.5 text-[10px] uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <span>Explore Track</span>
-            <ChevronRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
           </span>
         </div>
       </div>
@@ -1343,7 +1616,7 @@ function ProgrammaticDifferentiator() {
   };
 
   return (
-    <section id="programmatic-differentiator" className="surface-navy relative py-12 sm:py-20 overflow-hidden">
+    <section id="programmatic-differentiator" className="surface-navy relative py-7 sm:py-10 overflow-hidden">
       <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
       <div
         className="pointer-events-none absolute -left-20 -bottom-20 size-[32rem] rounded-full bg-blue-600/15 blur-3xl"
@@ -1362,26 +1635,22 @@ function ProgrammaticDifferentiator() {
               <span>GO BEYOND BASIC DIGITAL MARKETING</span>
             </div>
 
-            <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight">
+            <h2 className="text-[1.15rem] min-[400px]:text-[1.3rem] sm:text-[1.75rem] md:text-[2.1rem] lg:text-[2.45rem] xl:text-[2.75rem] font-black text-white leading-tight tracking-tight whitespace-normal sm:whitespace-nowrap">
               Learn Programmatic Advertising{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300">
                 From the Inside Out
               </span>
             </h2>
 
-            <p className="mt-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
+            <p className="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-5xl">
               Programmatic advertising isn't just about running ads. It's about understanding audiences, inventory, bidding, targeting, pacing, optimization, measurement and media performance.
             </p>
           </div>
 
-          <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sky-300 text-xs font-semibold shrink-0 mb-1 backdrop-blur-xs">
-            <span className="size-2 rounded-full bg-sky-400 animate-pulse" />
-            <span>Auto-Scrolling • Hover to pause</span>
-          </div>
         </div>
 
         {/* Auto-scrolling Single-Row Platform Pillars Marquee */}
-        <div className="relative mt-8 -mx-4 sm:-mx-6 px-4 sm:px-6 overflow-hidden py-3" data-reveal>
+        <div className="relative mt-5 -mx-4 sm:-mx-6 px-4 sm:px-6 overflow-hidden py-2" data-reveal>
           {/* Subtle gradient edge fades */}
           <div
             className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-[var(--navy)] via-[var(--navy)]/80 to-transparent"
@@ -1406,18 +1675,18 @@ function ProgrammaticDifferentiator() {
 
         {/* Signature Statement Banner */}
         <div
-          className="mt-8 rounded-2xl border border-sky-400/30 bg-gradient-to-r from-blue-950/90 via-[#071a40]/90 to-indigo-950/90 p-5 sm:p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden"
+          className="mt-4 rounded-xl sm:rounded-2xl border border-sky-400/30 bg-gradient-to-r from-blue-950/90 via-[#071a40]/90 to-indigo-950/90 p-3.5 sm:p-4.5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 relative overflow-hidden"
           data-reveal
         >
           <div className="flex items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-md">
-              <Sparkles className="size-5" />
+            <span className="grid size-9 sm:size-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-md">
+              <Sparkles className="size-4.5" />
             </span>
             <div>
               <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-sky-400">
                 Signature Programmatic Philosophy
               </span>
-              <p className="text-sm sm:text-base font-black text-white tracking-wide mt-0.5 uppercase">
+              <p className="text-xs sm:text-sm md:text-[15px] font-black text-white tracking-wide mt-0.5 uppercase">
                 DON’T JUST LEARN PROGRAMMATIC. LEARN HOW PROGRAMMATIC PROFESSIONALS THINK.
               </p>
             </div>
@@ -1427,11 +1696,11 @@ function ProgrammaticDifferentiator() {
             to="/courses/$slug"
             params={{ slug: "programmatic-advertising" }}
             variant="primary"
-            size="md"
-            className="bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap shadow-md shadow-sky-500/30"
+            size="sm"
+            className="bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-[13px] shrink-0 whitespace-nowrap shadow-md shadow-sky-500/30 flex items-center gap-1.5"
           >
             <span>Explore Programmatic Masterclass</span>
-            <ArrowRight className="size-4 ml-1.5" />
+            <ArrowRight className="size-3.5" />
           </BtnLink>
         </div>
       </div>
@@ -1446,28 +1715,28 @@ function ProgrammaticDifferentiator() {
  */
 function CyberSecurityDifferentiator() {
   return (
-    <section className="bg-white py-12 sm:py-20 border-b border-slate-200/80 overflow-hidden">
+    <section className="bg-white py-7 sm:py-10 border-b border-slate-200/80 overflow-hidden">
       <div className="container-site">
-        <div className="max-w-3xl" data-reveal>
+        <div className="max-w-5xl lg:max-w-6xl" data-reveal>
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-blue-700 mb-3 backdrop-blur-xs">
             <ShieldCheck className="size-3.5 text-blue-600" />
             <span>THINK LIKE A DEFENDER. TEST LIKE AN ETHICAL HACKER.</span>
           </div>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] font-black text-slate-900 leading-tight tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[2.4rem] xl:text-[2.6rem] font-black text-slate-900 leading-tight tracking-tight whitespace-normal sm:whitespace-nowrap">
             Build Practical{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600">
               Cyber Security Skills
             </span>
           </h2>
 
-          <p className="mt-3.5 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl font-normal">
+          <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-5xl">
             Cyber Security is not learned by memorizing definitions. Learn how systems work, where vulnerabilities occur and how security professionals identify, analyze and respond to security risks.
           </p>
         </div>
 
         {/* 5 Progressive Steps Grid */}
-        <div className="mt-8 grid gap-3.5 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-5 grid gap-3.5 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {[
             {
               step: "01",
@@ -1591,18 +1860,18 @@ function CyberSecurityDifferentiator() {
 
         {/* Closing Line Banner */}
         <div
-          className="mt-8 rounded-2xl border border-blue-200/90 bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-sky-50/80 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm"
+          className="mt-6 rounded-xl sm:rounded-2xl border border-blue-200/90 bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-sky-50/80 p-3.5 sm:p-4.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 shadow-sm"
           data-reveal
         >
           <div className="flex items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
-              <ShieldCheck className="size-5.5" />
+            <span className="grid size-9 sm:size-10 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
+              <ShieldCheck className="size-4.5" />
             </span>
             <div>
               <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-blue-700">
                 The Practical Pathway
               </span>
-              <p className="text-sm sm:text-base font-black text-slate-900 tracking-tight mt-0.5">
+              <p className="text-xs sm:text-sm md:text-base font-black text-slate-900 tracking-tight mt-0.5">
                 From Security Fundamentals to Practical Confidence.
               </p>
             </div>
@@ -1612,11 +1881,11 @@ function CyberSecurityDifferentiator() {
             to="/courses/$slug"
             params={{ slug: "cyber-security" }}
             variant="primary"
-            size="md"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap shadow-sm"
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-[13px] shrink-0 whitespace-nowrap shadow-sm flex items-center gap-1.5"
           >
             <span>Explore Cyber Security Track</span>
-            <ArrowRight className="size-4 ml-1.5" />
+            <ArrowRight className="size-3.5" />
           </BtnLink>
         </div>
       </div>
@@ -1631,7 +1900,7 @@ function CyberSecurityDifferentiator() {
  */
 function DigitechademyLearningMethod() {
   return (
-    <section id="methodology" className="surface-navy relative py-12 sm:py-18 overflow-hidden border-t border-navy-700/60">
+    <section id="methodology" className="surface-navy relative py-7 sm:py-10 overflow-hidden border-t border-navy-700/60">
       <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
       <div className="container-site relative z-10">
         <SectionHeading
@@ -1641,7 +1910,9 @@ function DigitechademyLearningMethod() {
           align="left"
           onDark
         />
-        <div className="mt-8">
+
+        {/* 5-Step Progressive Learning Path Component */}
+        <div className="mt-5" data-reveal>
           <StudentLearningPath />
         </div>
       </div>
@@ -1651,13 +1922,14 @@ function DigitechademyLearningMethod() {
 
 /**
  * =========================================================================
- * 10. PRACTICAL LEARNING
+ * 10. PRACTICAL LEARNING — "DON'T JUST WATCH. DO."
  * =========================================================================
  */
 function PracticalLearning() {
-  const [activeCard, setActiveCard] = useState<number>(0);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [activeCard, setActiveCard] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
+  // Auto-cycle through the cards every 2.8s when not hovered
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -1667,64 +1939,63 @@ function PracticalLearning() {
   }, [isPaused]);
 
   return (
-    <section className="bg-surface py-12 sm:py-16 overflow-hidden border-b border-slate-200/80">
+    <section className="bg-surface py-7 sm:py-10 overflow-hidden border-b border-slate-200/80">
       <div className="container-site">
-        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-14">
-          <div data-reveal="left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
+        {/* Header Row: Title & Badges on Left, Action Buttons Up on Right */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3" data-reveal="left">
+          <div className="min-w-0 text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-2">
               <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
               PRACTICAL LEARNING
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight whitespace-normal sm:whitespace-nowrap">
               DON’T JUST WATCH. DO.
             </h2>
 
-            <p className="mt-2 text-base sm:text-lg font-bold text-blue-600">
+            <p className="mt-1 text-sm sm:text-base font-bold text-blue-600">
               Learn By Solving Real-World Problems.
             </p>
-
-            <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-              At Digitechademy, practical learning is not an optional add-on. You'll work through exercises, projects, case studies, tools and realistic scenarios designed to help you understand how professionals approach real problems.
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <BtnLink
-                to="/courses"
-                variant="primary"
-                size="md"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 px-6 rounded-xl inline-flex items-center gap-2 shadow-sm text-xs sm:text-sm"
-              >
-                <span>Explore Hands-On Syllabus</span>
-                <ArrowRight className="size-4" />
-              </BtnLink>
-
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold">
-                <span className="size-2 rounded-full bg-emerald-500 animate-ping" />
-                <span>Pillar {activeCard + 1} of {practicalTraining.length}</span>
-              </div>
-            </div>
           </div>
 
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 gap-3.5"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {practicalTraining.map((item, index) => {
-              const isActive = index === activeCard;
-              return (
-                <article
-                  key={item.title}
-                  onClick={() => setActiveCard(index)}
-                  className={cn(
-                    "group relative overflow-hidden rounded-2xl border p-4 sm:p-4.5 shadow-xs transition-all duration-300 ease-out cursor-pointer active:scale-[0.99] flex flex-col justify-between",
-                    isActive
-                      ? "border-blue-500 bg-white shadow-xl shadow-blue-500/10 -translate-y-1.5 ring-1 ring-blue-400/40"
-                      : "border-slate-200/90 bg-white/90 hover:border-blue-400 hover:bg-white hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5",
-                    index === 4 ? "sm:col-span-2" : ""
-                  )}
-                >
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0 self-start md:self-center">
+            <BtnLink
+              to="/courses"
+              variant="primary"
+              size="md"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-10 sm:h-11 px-5 sm:px-6 rounded-xl inline-flex items-center gap-2 shadow-sm text-xs sm:text-sm"
+            >
+              <span>Explore Hands-On Syllabus</span>
+              <ArrowRight className="size-4" />
+            </BtnLink>
+          </div>
+        </div>
+
+        {/* Paragraph brought below across full width, wrapping cleanly */}
+        <p className="mb-5 sm:mb-6 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-5xl" data-reveal="left">
+          At Digitechademy, practical learning is not an optional add-on. You'll work through exercises, projects, case studies, tools and realistic scenarios designed to help you understand how professionals approach real problems.
+        </p>
+
+        {/* 5 Practical Learning Cards Grid Across Full Width */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 items-stretch"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {practicalTraining.map((item, index) => {
+            const isActive = index === activeCard;
+            return (
+              <article
+                key={item.title}
+                onClick={() => setActiveCard(index)}
+                className={cn(
+                  "group relative overflow-hidden rounded-2xl border p-4 sm:p-4.5 shadow-xs transition-all duration-300 ease-out cursor-pointer active:scale-[0.99] flex flex-col justify-between",
+                  isActive
+                    ? "border-blue-500 bg-white shadow-xl shadow-blue-500/10 -translate-y-1.5 ring-1 ring-blue-400/40"
+                    : "border-slate-200/90 bg-white/90 hover:border-blue-400 hover:bg-white hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5",
+                  index === 4 ? "sm:col-span-2 lg:col-span-1" : ""
+                )}
+              >
                   {/* Top Animated Accent Border Gradient */}
                   <div
                     className={cn(
@@ -1741,77 +2012,39 @@ function PracticalLearning() {
                     )}
                   />
 
-                  <div className="relative z-10 flex items-start gap-3.5">
-                    <span
-                      className={cn(
-                        "grid size-10 shrink-0 place-items-center rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md",
-                        isActive
-                          ? "bg-blue-600 text-white shadow-md shadow-blue-500/30 scale-105 rotate-3"
-                          : "bg-blue-50 text-blue-600 border border-blue-100 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600"
-                      )}
-                    >
-                      <Icon name={item.icon} className="size-5 transition-transform duration-300 group-hover:scale-110" />
-                    </span>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            "text-[10px] font-bold px-1.5 py-0.5 rounded-md border transition-all duration-300",
-                            isActive
-                              ? "bg-blue-600 text-white border-blue-600 shadow-xs shadow-blue-500/30 scale-105"
-                              : "bg-blue-50 text-blue-700 border-blue-200/80 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 group-hover:shadow-xs group-hover:scale-105"
-                          )}
-                        >
-                          0{index + 1}
-                        </span>
-                        <h3
-                          className={cn(
-                            "text-sm font-black leading-tight transition-all duration-200",
-                            isActive
-                              ? "text-blue-700 translate-x-0.5"
-                              : "text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5"
-                          )}
-                        >
-                          {item.title}
-                        </h3>
-                      </div>
-
-                      <p className="mt-1.5 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-justify">
-                        {item.text}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Bottom Indicator */}
-                  <div className="relative z-10 mt-3.5 pt-2.5 border-t border-slate-100/80 flex items-center justify-between text-[10.5px] font-bold transition-colors">
-                    <span
-                      className={cn(
-                        "uppercase tracking-wider transition-colors",
-                        isActive ? "text-blue-600" : "text-slate-400 group-hover:text-blue-600"
-                      )}
-                    >
-                      {isActive ? "Pillar Active" : `Pillar 0${index + 1}`}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="text-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        {isActive ? "Selected" : "Select"}
-                      </span>
-                      <ArrowRight
+                  <div className="relative z-10 flex flex-col">
+                    <div className="flex items-center gap-2.5">
+                      <span
                         className={cn(
-                          "size-3.5 transition-transform duration-300",
+                          "grid size-8 sm:size-8.5 shrink-0 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md",
                           isActive
-                            ? "translate-x-1 text-blue-600"
-                            : "text-slate-300 group-hover:translate-x-1 group-hover:text-blue-600"
+                            ? "bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/30 scale-105 rotate-3"
+                            : "bg-blue-50 text-blue-600 border-blue-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600"
                         )}
-                      />
-                    </span>
+                      >
+                        <Icon name={item.icon} className="size-4 sm:size-4.5 transition-transform duration-300 group-hover:scale-110" />
+                      </span>
+
+                      <h3
+                        className={cn(
+                          "text-xs sm:text-[13px] font-black leading-tight transition-all duration-200 min-w-0 flex-1",
+                          isActive
+                            ? "text-blue-700 translate-x-0.5"
+                            : "text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5"
+                        )}
+                      >
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    <p className="mt-2 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-left">
+                      {item.text}
+                    </p>
                   </div>
                 </article>
               );
             })}
           </div>
-        </div>
 
         {/* Closing Line Callout */}
         <div className="mt-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-3.5 sm:p-4.5 text-white shadow-md border border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
@@ -1848,22 +2081,22 @@ function PracticalLearning() {
  */
 function WhoIsThisFor() {
   return (
-    <section className="bg-white py-12 sm:py-18 overflow-hidden border-b border-slate-200/80">
+    <section className="bg-white py-7 sm:py-10 overflow-hidden border-b border-slate-200/80">
       <div className="container-site">
-        <div className="max-w-3xl" data-reveal="left">
+        <div className="max-w-5xl lg:max-w-6xl" data-reveal="left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
             <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
             WHO IS DIGITECHADEMY FOR?
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-[1.85rem] lg:text-[2.25rem] xl:text-[2.6rem] font-black text-slate-900 tracking-tight leading-tight whitespace-normal sm:whitespace-nowrap">
             Programs Structured for Distinct Career Aspirations
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify">
+          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-5xl">
             Whether launching your first career, transitioning domains, or upgrading into high-paying specialized fields, DIGITECHADEMY provides clear, guided entry points.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-5 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {whoIsForAudience.map((persona, index) => {
             return (
               <div
@@ -1920,29 +2153,31 @@ function WhoIsThisFor() {
  */
 function CareerReadiness() {
   return (
-    <section className="surface-navy relative py-12 sm:py-18 overflow-hidden">
+    <section className="surface-navy relative py-7 sm:py-10 overflow-hidden">
       <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
       <div className="container-site relative z-10">
-        <div className="max-w-4xl" data-reveal="left">
+        <div className="max-w-5xl lg:max-w-6xl" data-reveal="left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-bold tracking-wider uppercase mb-3">
             <span className="size-2 rounded-full bg-blue-400 animate-pulse" />
             CAREER READINESS
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+          <h2 className="text-xl sm:text-2xl md:text-[1.85rem] lg:text-[2.25rem] xl:text-[2.5rem] font-black text-white tracking-tight leading-tight whitespace-normal sm:whitespace-nowrap">
             BUILD SKILLS WITH YOUR NEXT CAREER MOVE IN MIND
           </h2>
           <p className="mt-2 text-base sm:text-lg font-bold text-sky-400">
             Learn With Your Next Career Move In Mind.
           </p>
-          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal text-justify">
-            Our programs are designed to help you understand industry concepts, practice practical skills, work through realistic scenarios, build project experience, prepare for technical and role-based interviews, and communicate your knowledge with confidence.
+          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-4xl lg:max-w-5xl">
+            Our programs are designed to help you understand industry concepts, practice practical skills, work through realistic scenarios,
+            <br className="hidden md:inline" />{" "}
+            build project experience, prepare for technical and role-based interviews, and communicate your knowledge with confidence.
           </p>
         </div>
 
         {/* Formula / Truth Card */}
         <div
           data-reveal
-          className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-5 sm:p-6 shadow-xl"
+          className="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-4 sm:p-5 shadow-xl"
         >
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
@@ -2019,17 +2254,18 @@ function GenuineTestimonials() {
   const verifiedReviews: Array<{ name: string; course: string; quote: string; verified: boolean }> = [];
 
   return (
-    <section className="bg-surface py-12 sm:py-16 border-y border-slate-200/80 overflow-hidden">
-      <div className="container-site max-w-5xl">
+    <section className="bg-surface py-7 sm:py-9 border-y border-slate-200/80 overflow-hidden">
+      <div className="container-site">
         <SectionHeading
           eyebrow="GENUINE TESTIMONIALS POLICY"
           title="Authentic Reviews Policy & Trust Standards"
-          description="Credibility is our foundational principle. We do not publish fabricated quotes, fake student personas, or unverified star ratings."
+          description="We publish only genuine, verified student feedback — zero fabricated quotes or unverified star ratings."
+          descriptionClassName="max-w-none text-left whitespace-normal sm:whitespace-nowrap"
           align="left"
         />
 
         {verifiedReviews.length > 0 ? (
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {verifiedReviews.map((rev, i) => (
               <div key={i} className="p-5 rounded-2xl bg-white border border-slate-200">
                 <p className="text-xs text-slate-600 italic">"{rev.quote}"</p>
@@ -2041,7 +2277,7 @@ function GenuineTestimonials() {
         ) : (
           <div
             data-reveal
-            className="mt-8 rounded-2xl border border-blue-200/90 bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/60 p-6 sm:p-8 shadow-xs"
+            className="mt-6 rounded-2xl border border-blue-200/90 bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/60 p-5 sm:p-7 shadow-xs"
           >
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-700 mb-2">
               <ShieldCheck className="size-4 text-blue-600" />
@@ -2050,11 +2286,11 @@ function GenuineTestimonials() {
             <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
               Testimonials Must Be Genuine, Attributable &amp; Approved
             </h3>
-            <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
-              At DIGITECHADEMY, we uphold strict standards of institutional credibility. We never use placeholder testimonials or manufactured reviews. As learners from our current cohorts finish their verified capstones and enter the workforce, their authorized journeys and feedback will be published here with full attribution.
+            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+              We never use placeholder reviews. Verified student feedback and capstone outcomes will be published here with authorized attribution.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-blue-100">
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-blue-100">
               <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700">
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="size-4 text-emerald-600" />
@@ -2095,29 +2331,43 @@ function GenuineTestimonials() {
  * =========================================================================
  */
 function FaqSection() {
+  const midIndex = Math.ceil(homeFaqs.length / 2);
+  const leftFaqs = homeFaqs.slice(0, midIndex);
+  const rightFaqs = homeFaqs.slice(midIndex);
+
   return (
-    <section className="bg-white py-12 sm:py-18 overflow-hidden border-b border-slate-200/80">
-      <div className="container-site grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-14">
-        <div data-reveal="left" className="lg:sticky lg:top-24 self-start">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
-            <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-            FAQ — QUESTIONS &amp; ANSWERS
+    <section className="relative bg-slate-50/70 py-7 sm:py-10 overflow-hidden border-b border-slate-200/80">
+      {/* Soft ambient gradient accents */}
+      <div
+        className="pointer-events-none absolute -top-24 -left-24 size-80 rounded-full bg-blue-500/5 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-24 -right-24 size-80 rounded-full bg-sky-500/5 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div className="container-site relative z-10">
+        {/* Section Header: Title on Left, Action Buttons Up on Right */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3" data-reveal="top">
+          <div className="min-w-0 text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/70 border border-blue-200 text-blue-800 text-xs font-bold tracking-wider uppercase mb-2">
+              <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+              FAQ — QUESTIONS &amp; ANSWERS
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight whitespace-normal sm:whitespace-nowrap">
+              Frequently Asked Questions
+            </h2>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight text-left">
-            Frequently Asked Questions
-          </h2>
-
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-left">
-            Find clear, straightforward answers about eligibility, hands-on learning, offered programs, prerequisites, and certifications at DIGITECHADEMY.
-          </p>
-
-          <div className="mt-6 flex items-center gap-3">
+          {/* Buttons placed up on the right */}
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0 self-start md:self-center">
             <BtnLink
               to="/faq"
               variant="outline"
               size="md"
-              className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-xs"
+              className="border-slate-300 text-slate-800 hover:bg-slate-100/80 font-bold px-4.5 py-2.5 rounded-xl text-xs sm:text-sm shadow-xs"
             >
               <span>View All Questions</span>
               <ArrowRight className="size-3.5 ml-1.5" />
@@ -2127,15 +2377,22 @@ function FaqSection() {
               to="/contact"
               variant="outline"
               size="md"
-              className="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm border border-blue-200"
+              className="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold px-4.5 py-2.5 rounded-xl text-xs sm:text-sm border border-blue-200 shadow-xs"
             >
               <span>Ask a Counselor</span>
             </BtnLink>
           </div>
         </div>
 
-        <div data-reveal="right">
-          <FaqAccordion items={homeFaqs} />
+        {/* Paragraph brought below across full width, wrapping cleanly */}
+        <p className="mb-5 sm:mb-6 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-5xl" data-reveal="top">
+          Find clear, straightforward answers about eligibility, hands-on learning, offered programs, prerequisites, and certifications at DIGITECHADEMY.
+        </p>
+
+        {/* FAQs Side by Side in 2 Balanced Columns */}
+        <div className="grid gap-5 lg:gap-6 md:grid-cols-2 items-start" data-reveal="bottom">
+          <FaqAccordion items={leftFaqs} defaultOpen={0} />
+          <FaqAccordion items={rightFaqs} defaultOpen={null} />
         </div>
       </div>
     </section>

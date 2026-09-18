@@ -17,34 +17,40 @@ export function FaqAccordion({
   const [open, setOpen] = useState<number | null>(defaultOpen);
 
   return (
-    <div className={cn("divide-y divide-border overflow-hidden rounded-xl border border-border bg-card", className)}>
+    <div className={cn("divide-y divide-slate-200/80 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs", className)}>
       {items.map((item, index) => {
         const isOpen = open === index;
         return (
-          <div key={item.question} data-reveal>
+          <div
+            key={item.question}
+            data-reveal
+            className={cn("transition-colors duration-200", isOpen ? "bg-blue-50/20" : "bg-white")}
+          >
             <h3>
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : index)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-surface sm:px-6 sm:py-5"
+                className="group flex w-full items-center justify-between gap-3.5 px-4.5 py-3.5 text-left transition-colors hover:bg-slate-50/80 sm:px-5.5 sm:py-4"
               >
                 <span
                   className={cn(
-                    "text-sm sm:text-base lg:text-[1.05rem] font-bold transition-colors leading-snug",
-                    isOpen ? "text-accent-foreground" : "text-foreground",
+                    "text-sm sm:text-[0.95rem] font-bold transition-colors leading-snug",
+                    isOpen ? "text-blue-700" : "text-slate-800 group-hover:text-blue-600",
                   )}
                 >
                   {item.question}
                 </span>
                 <span
                   className={cn(
-                    "grid size-8 shrink-0 place-items-center rounded-md border transition-colors",
-                    isOpen ? "border-accent bg-accent text-accent-foreground" : "border-border text-muted-foreground",
+                    "grid size-7 sm:size-7.5 shrink-0 place-items-center rounded-lg border transition-all duration-200",
+                    isOpen
+                      ? "border-blue-500 bg-blue-600 text-white shadow-xs shadow-blue-500/30"
+                      : "border-slate-200 bg-slate-50 text-slate-500 group-hover:border-slate-300 group-hover:text-slate-700",
                   )}
                   aria-hidden="true"
                 >
-                  {isOpen ? <Minus className="size-4" /> : <Plus className="size-4" />}
+                  {isOpen ? <Minus className="size-3.5" /> : <Plus className="size-3.5" />}
                 </span>
               </button>
             </h3>
@@ -55,7 +61,7 @@ export function FaqAccordion({
               )}
             >
               <div className="overflow-hidden">
-                <p className="px-5 pb-5 text-xs sm:text-sm lg:text-[0.95rem] leading-relaxed text-muted-foreground sm:px-6 sm:pb-6 text-justify">
+                <p className="px-4.5 pb-3.5 sm:px-5.5 sm:pb-4.5 pt-0.5 text-left text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                   {item.answer}
                 </p>
               </div>

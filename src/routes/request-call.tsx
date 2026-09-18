@@ -38,7 +38,7 @@ function RequestCallPage() {
       />
 
       <section className="bg-background">
-        <div className="container-site py-6 sm:py-8 lg:py-10 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+        <div className="container-site py-5 sm:py-6 lg:py-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
           <div data-reveal="left">
             <RequestCallForm />
           </div>

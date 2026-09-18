@@ -1061,17 +1061,6 @@ function ManageEnquiriesTab() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
-          {/* Delete Demo Leads Button */}
-          <button
-            onClick={handleDeleteDemoLeads}
-            disabled={isDeletingDemoLeads}
-            className="border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
-            title="Purge all demo / sample student leads"
-          >
-            <Trash2 className="size-3.5 text-rose-500" />
-            <span>{isDeletingDemoLeads ? "Purging..." : "Clear Demo Leads"}</span>
-          </button>
-
           {/* Export CSV Button */}
           <button
             onClick={handleExportCSV}
@@ -1377,7 +1366,7 @@ function ManageCoursesTab() {
 
   // Form State
   const [formTitle, setFormTitle] = useState("");
-  const [formCategory, setFormCategory] = useState<string>("Digital Marketing");
+  const [formCategory, setFormCategory] = useState<string>("Cyber Security");
   const [formCustomCategory, setFormCustomCategory] = useState("");
   const [formSlug, setFormSlug] = useState("");
   const [formDuration, setFormDuration] = useState("12 Weeks (120+ Hours)");
@@ -1430,18 +1419,12 @@ function ManageCoursesTab() {
   // Category badge styles mapping for visual delight
   const getCategoryBadgeClass = (category: string) => {
     switch (category) {
-      case "Digital Marketing":
-        return "bg-rose-50 text-rose-700 border-rose-200";
-      case "Web Development":
-        return "bg-emerald-50 text-emerald-700 border-emerald-200";
-      case "Data Analytics":
-        return "bg-purple-50 text-purple-700 border-purple-200";
       case "Cyber Security":
         return "bg-amber-50 text-amber-700 border-amber-200";
-      case "Design & Creative":
+      case "Digital Marketing":
+        return "bg-rose-50 text-rose-700 border-rose-200";
+      case "Programmatic Advertising":
         return "bg-sky-50 text-sky-700 border-sky-200";
-      case "Business & Management":
-        return "bg-pink-50 text-pink-700 border-pink-200";
       default:
         return "bg-slate-50 text-slate-700 border-slate-200";
     }
@@ -1452,7 +1435,7 @@ function ManageCoursesTab() {
     setEditingCourse(null);
     setCourseModalTab("basic");
     setFormTitle("");
-    const cat = defaultCategory || (selectedCategory !== "All" ? selectedCategory : "Digital Marketing");
+    const cat = defaultCategory || (selectedCategory !== "All" ? selectedCategory : "Cyber Security");
     setFormCategory(cat);
     setFormCustomCategory("");
     setFormSlug("");
@@ -2952,16 +2935,6 @@ function ManageTestimonialsTab() {
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
             <button
-              onClick={handleDeleteDemoReviews}
-              disabled={isDeletingDemoReviews}
-              className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl transition-all cursor-pointer disabled:opacity-50"
-              title="Delete all demo student reviews"
-            >
-              <Trash2 className="size-3.5 text-rose-600" />
-              <span>{isDeletingDemoReviews ? "Cleaning..." : "Clear Demo Reviews"}</span>
-            </button>
-
-            <button
               onClick={handleOpenAdd}
               className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black flex items-center gap-2 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer transition-all"
             >
@@ -3658,18 +3631,6 @@ function ManageInstructorsTab() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-          {/* Delete Demo Mentors Button */}
-          <button
-            type="button"
-            onClick={handleDeleteDemoMentors}
-            disabled={isDeletingDemo}
-            title="Delete all demo mentors (Arjun, Priya, Vikram, Sneha, Karthik) from Firebase and cache"
-            className="border border-rose-200 hover:bg-rose-50 text-rose-600 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
-          >
-            <Trash2 className={`size-3.5 text-rose-500 ${isDeletingDemo ? "animate-spin" : ""}`} />
-            <span>{isDeletingDemo ? "Deleting..." : "Delete Demo Mentors"}</span>
-          </button>
-
           {/* Add Mentor Button */}
           <button
             type="button"

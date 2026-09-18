@@ -198,6 +198,14 @@ function CourseDetailPage() {
   const [expandedModule, setExpandedModule] = useState<number | null>(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [isHeroScrolled, setIsHeroScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsHeroScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Subscribe to live course updates
   useEffect(() => {
@@ -286,7 +294,7 @@ function CourseDetailPage() {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
       const nameInput = document.getElementById("course-sidebar-name");
       if (nameInput) {
-        setTimeout(() => nameInput.focus(), 500);
+        setTimeout(() => nameInput.focus({ preventScroll: true }), 500);
       }
     }
   };
@@ -313,12 +321,17 @@ function CourseDetailPage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION (Compact Sticky Navy Background)                           */}
       {/* ========================================================================= */}
-      <section className="bg-[#0b1633] text-white py-4 sm:py-5 border-b border-navy-800 sticky top-16 z-20 shadow-md backdrop-blur-xl relative overflow-hidden">
+      <section
+        className={cn(
+          "bg-[#0b1633] text-white border-b border-navy-800 sticky top-16 z-20 backdrop-blur-xl overflow-hidden transition-all duration-300 ease-in-out",
+          isHeroScrolled ? "py-2 sm:py-2.5 shadow-lg bg-[#070f26]/95 border-sky-500/30" : "py-4 sm:py-5 shadow-md"
+        )}
+      >
         {/* Subtle background circuit / grid glow */}
         <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
 
         <div className="container-site relative z-10">
-          <div className="max-w-5xl space-y-2.5">
+          <div className={cn("max-w-5xl transition-all duration-300", isHeroScrolled ? "space-y-1.5" : "space-y-2.5")}>
             {/* Breadcrumb & Social Proof Row */}
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
               <nav
@@ -356,10 +369,22 @@ function CourseDetailPage() {
             {/* Course Main Title & Demo CTA */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-0.5">
               <div>
-                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-black tracking-tight text-white leading-tight sm:whitespace-nowrap">
+                <h1
+                  className={cn(
+                    "font-black tracking-tight text-white leading-tight sm:whitespace-nowrap transition-all duration-300 ease-in-out",
+                    isHeroScrolled
+                      ? "text-base sm:text-lg md:text-xl lg:text-[1.35rem]"
+                      : "text-lg sm:text-xl md:text-2xl lg:text-[1.85rem]"
+                  )}
+                >
                   {displayTitle}
                 </h1>
-                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap">
+                <p
+                  className={cn(
+                    "leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap transition-all duration-300 ease-in-out text-slate-300",
+                    isHeroScrolled ? "mt-0.5 text-[11px] sm:text-xs" : "mt-1 text-xs sm:text-sm"
+                  )}
+                >
                   {course.category === "Cyber Security"
                     ? "Comprehensive practical training for mastering essential Cyber Security skills remotely."
                     : course.heroDescription || course.description}
@@ -370,9 +395,12 @@ function CourseDetailPage() {
                 <button
                   type="button"
                   onClick={scrollToDemoForm}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 px-4 py-2 text-xs font-black text-slate-950 shadow-md transition-all cursor-pointer"
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 font-black text-slate-950 shadow-md transition-all cursor-pointer",
+                    isHeroScrolled ? "px-3 py-1.5 text-[11px]" : "px-4 py-2 text-xs"
+                  )}
                 >
-                  <UserPlus className="size-3.5" />
+                  <UserPlus className={cn(isHeroScrolled ? "size-3" : "size-3.5")} />
                   <span>Join Free Demo</span>
                 </button>
               </div>
@@ -392,9 +420,9 @@ function CourseDetailPage() {
       {/* ========================================================================= */}
       {/* 2. MAIN CONTENT AREA (Tabs on Left + Sticky Demo Sidebar on Right)         */}
       {/* ========================================================================= */}
-      <section className="bg-slate-50/60 py-8">
+      <section className="bg-slate-50/60 py-4 sm:py-6">
         <div className="container-site">
-          <div className="grid gap-8 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start">
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start">
             
             {/* ------------------------------------------------------------------- */}
             {/* LEFT COLUMN: Horizontal Tabs & Tab Panels                           */}
@@ -863,7 +891,7 @@ function CourseDetailPage() {
             {/* ------------------------------------------------------------------- */}
             {/* RIGHT COLUMN: Video Demo Card + JOIN FREE DEMO CLASS Form           */}
             {/* ------------------------------------------------------------------- */}
-            <aside className="lg:sticky lg:top-24">
+            <aside className="lg:sticky lg:top-[180px] xl:top-[185px] w-full min-w-0">
               <CourseDemoSidebar course={course} />
             </aside>
 
@@ -874,9 +902,9 @@ function CourseDetailPage() {
       {/* ========================================================================= */}
       {/* 2.5 EXPLORE OTHER COURSES SECTION                                          */}
       {/* ========================================================================= */}
-      <section className="bg-white py-12 border-t border-slate-200/80">
+      <section className="bg-white py-6 sm:py-8 border-t border-slate-200/80">
         <div className="container-site">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-5">
             <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
               <span className="text-xs font-black uppercase tracking-widest text-indigo-600">
                 RELATED PROGRAMS

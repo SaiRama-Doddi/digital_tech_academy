@@ -31,7 +31,7 @@ export function SectionHeading({
         "flex w-full flex-col gap-2 sm:gap-3",
         align === "center"
           ? "mx-auto items-center text-center max-w-5xl lg:max-w-6xl xl:max-w-7xl"
-          : "items-start text-left max-w-5xl lg:max-w-6xl xl:max-w-7xl",
+          : "items-start text-left w-full max-w-none",
         className,
       )}
       data-reveal
@@ -63,8 +63,9 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "text-xs sm:text-base leading-relaxed font-normal max-w-3xl",
-            align === "center" ? "mx-auto text-center" : "text-justify",
+            "text-xs sm:text-sm md:text-base leading-relaxed font-normal w-full max-w-none",
+            singleLine ? "whitespace-normal sm:whitespace-nowrap" : "",
+            align === "center" ? "mx-auto text-center" : "text-left",
             onDark ? "text-navy-muted" : "text-muted-foreground",
             descriptionClassName,
           )}

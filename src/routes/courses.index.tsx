@@ -5,12 +5,12 @@ import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import {
   subscribeCourses,
-  POPULAR_COURSE_CATEGORIES,
   type FirebaseCourse,
 } from "@/services/courseService";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseDemoSidebar } from "@/components/site/CourseDemoSidebar";
+import { getCourseCategory, getCourseImage } from "@/components/site/CourseCard";
 import {
   Award,
   BookOpen,
@@ -137,6 +137,14 @@ function CoursesPage() {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const [liveMentors, setLiveMentors] = useState<FirebaseMentor[]>([]);
   const [selectedMentor, setSelectedMentor] = useState<FirebaseMentor | null>(null);
+  const [isHeroScrolled, setIsHeroScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsHeroScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Subscribe to live mentors from Firebase
   useEffect(() => {
@@ -235,26 +243,13 @@ function CoursesPage() {
     return active.filter((c) => c.category.toLowerCase() === activeTab.toLowerCase());
   }, [coursesList, activeTab]);
 
-  const getCourseImage = (c: FirebaseCourse) => {
-    if (c.image && c.image.length > 5) return c.image;
-    if (
-      c.category.toLowerCase().includes("cyber") ||
-      c.category.toLowerCase().includes("security") ||
-      c.slug.includes("cyber") ||
-      c.slug.includes("hack")
-    ) {
-      return cyberSecurityImg;
-    }
-    return digitalMarketingImg;
-  };
-
   const scrollToDemoForm = () => {
     const el = document.getElementById("course-demo-sidebar");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
       const nameInput = document.getElementById("course-sidebar-name");
       if (nameInput) {
-        setTimeout(() => nameInput.focus(), 500);
+        setTimeout(() => nameInput.focus({ preventScroll: true }), 500);
       }
     }
   };
@@ -297,12 +292,17 @@ function CoursesPage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION (Compact Sticky Navy Banner)                                */}
       {/* ========================================================================= */}
-      <section className="bg-[#0b1633] text-white py-4 sm:py-5 border-b border-navy-800 sticky top-16 z-20 shadow-md backdrop-blur-xl relative overflow-hidden">
+      <section
+        className={cn(
+          "bg-[#0b1633] text-white border-b border-navy-800 sticky top-16 z-20 backdrop-blur-xl overflow-hidden transition-all duration-300 ease-in-out",
+          isHeroScrolled ? "py-2 sm:py-2.5 shadow-lg bg-[#070f26]/95 border-sky-500/30" : "py-4 sm:py-5 shadow-md"
+        )}
+      >
         {/* Subtle background circuit / grid glow */}
         <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
 
         <div className="container-site relative z-10">
-          <div className="max-w-5xl space-y-2.5">
+          <div className={cn("max-w-5xl transition-all duration-300", isHeroScrolled ? "space-y-1.5" : "space-y-2.5")}>
             {/* Top Row: Breadcrumb & Social Proof Badges */}
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
               <nav
@@ -330,26 +330,42 @@ function CoursesPage() {
             </div>
 
             {/* Title & Action Row */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-0.5">
-              <div>
-                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-black tracking-tight text-white leading-tight sm:whitespace-nowrap">
+            <div className="pt-0.5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1.5">
+                <h1
+                  className={cn(
+                    "font-black tracking-tight text-white leading-tight transition-all duration-300 ease-in-out",
+                    isHeroScrolled
+                      ? "text-base sm:text-lg md:text-xl lg:text-[1.35rem]"
+                      : "text-lg sm:text-xl md:text-2xl lg:text-[1.85rem]"
+                  )}
+                >
                   Practical Courses for Today&apos;s Digital Careers
                 </h1>
-                <p className="mt-1 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap">
-                  Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic Advertising.
-                </p>
+
+                <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
+                  <button
+                    type="button"
+                    onClick={scrollToDemoForm}
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 font-black text-slate-950 shadow-md transition-all cursor-pointer whitespace-nowrap",
+                      isHeroScrolled ? "px-3 py-1.5 text-[11px]" : "px-4 py-2 text-xs"
+                    )}
+                  >
+                    <UserPlus className={cn(isHeroScrolled ? "size-3" : "size-3.5")} />
+                    <span>Join Free Demo</span>
+                  </button>
+                </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={scrollToDemoForm}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 px-4 py-2 text-xs font-black text-slate-950 shadow-md transition-all cursor-pointer"
-                >
-                  <UserPlus className="size-3.5" />
-                  <span>Join Free Demo</span>
-                </button>
-              </div>
+              <p
+                className={cn(
+                  "leading-relaxed font-normal max-w-4xl text-slate-300 transition-all duration-300 ease-in-out",
+                  isHeroScrolled ? "text-[11px] sm:text-xs" : "text-xs sm:text-sm"
+                )}
+              >
+                Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic Advertising.
+              </p>
             </div>
 
             {/* Prospectus Notice Toast */}
@@ -366,17 +382,57 @@ function CoursesPage() {
       {/* ========================================================================= */}
       {/* 2. MAIN CONTENT AREA (Course Cards on Left + Sticky Demo Sidebar on Right)  */}
       {/* ========================================================================= */}
-      <section id="programs-grid" className="bg-slate-50/60 py-8 overflow-x-clip">
+      <section id="programs-grid" className="bg-slate-50/60 py-4 sm:py-6 overflow-x-clip">
         <div className="container-site">
-          <div className="grid gap-8 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start w-full min-w-0">
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start w-full min-w-0">
             {/* ------------------------------------------------------------------- */}
             {/* LEFT COLUMN: Pill Tabs, Course Cards & Highlights                   */}
             {/* ------------------------------------------------------------------- */}
-            <div className="space-y-7 w-full min-w-0">
+            <div className="space-y-5 w-full min-w-0">
               {/* Category Pill Tabs & Quick Action Bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200/80 pb-3 sm:pb-4 w-full min-w-0">
-                {/* Scrollable Category Filter Pills */}
-                <div className="flex items-center gap-1.5 sm:gap-2.5 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full min-w-0 pr-4 sm:pr-0">
+              <div className="space-y-3.5 border-b border-slate-200/80 pb-3.5 w-full min-w-0">
+                {/* Top Row: Section Label / Program Count on Left, Mentors & Prospectus Actions on Right */}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-black uppercase tracking-wider text-slate-700">
+                      Filter Programs
+                    </span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-xs font-semibold text-slate-500">
+                      Showing <strong className="text-slate-800 font-bold">{visibleCourses.length}</strong> {visibleCourses.length === 1 ? "track" : "tracks"}
+                    </span>
+                  </div>
+
+                  {/* Right Action Tools: Meet Mentors & Download Prospectus */}
+                  <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                    {/* Button: Meet Your Mentors */}
+                    <button
+                      type="button"
+                      onClick={scrollToMentors}
+                      className="rounded-xl px-3 sm:px-3.5 py-1.5 text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-navy hover:bg-navy-800 text-white border border-sky-400/40 shadow-sm active:scale-[0.98] group"
+                      title="Explore expert mentors and faculty"
+                    >
+                      <Users className="size-3.5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                      <span>Meet Mentors</span>
+                      <span className="text-[0.7rem] px-1.5 py-0.2 rounded-md font-extrabold bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                        {liveMentors.length}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleDownloadProspectus}
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white hover:border-indigo-300 hover:text-indigo-600 px-3 py-1.5 text-xs font-bold text-slate-700 transition-colors cursor-pointer shrink-0 shadow-2xs"
+                    >
+                      <Download className="size-3.5 text-indigo-600" />
+                      <span className="hidden xs:inline">Download Prospectus</span>
+                      <span className="xs:hidden">Prospectus</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Bottom Row: Full-Width Category Filter Pills (Wraps on Desktop/Tablet, Smooth Scroll on Small Mobile) */}
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-0.5 w-full min-w-0 sm:flex-wrap">
                   {categoryTabs.map((tab) => {
                     const isActive = activeTab === tab.id;
                     return (
@@ -385,7 +441,7 @@ function CoursesPage() {
                         type="button"
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                          "rounded-xl px-3 sm:px-4.5 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-[0.98]",
+                          "rounded-xl px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-[0.98]",
                           isActive
                             ? "bg-[#5455f6] text-white shadow-md shadow-indigo-500/25"
                             : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0]"
@@ -403,33 +459,6 @@ function CoursesPage() {
                       </button>
                     );
                   })}
-                </div>
-
-                {/* Right Action Tools: Meet Mentors & Download Prospectus */}
-                <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 flex-wrap sm:flex-nowrap">
-                  {/* Button: Meet Your Mentors */}
-                  <button
-                    type="button"
-                    onClick={scrollToMentors}
-                    className="rounded-xl px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-navy hover:bg-navy-800 text-white border border-sky-400/40 shadow-sm active:scale-[0.98] group"
-                    title="Explore expert mentors and faculty"
-                  >
-                    <Users className="size-3.5 sm:size-4 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                    <span>Meet <span className="hidden sm:inline">Your </span>Mentors</span>
-                    <span className="text-[0.7rem] px-1.5 py-0.5 rounded-md font-extrabold bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                      {liveMentors.length}
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleDownloadProspectus}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors py-1 cursor-pointer shrink-0"
-                  >
-                    <Download className="size-3.5" />
-                    <span className="hidden xs:inline">Download Prospectus</span>
-                    <span className="xs:hidden">Prospectus</span>
-                  </button>
                 </div>
               </div>
 
@@ -459,7 +488,7 @@ function CoursesPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
                       <span className="absolute left-3 top-3 rounded-md bg-[#0b1633]/90 px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wider text-amber-300 border border-white/10 backdrop-blur-sm">
-                        {course.category}
+                        {getCourseCategory(course)}
                       </span>
                       <span className="absolute right-3 top-3 rounded-md bg-white/90 px-2 py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-slate-900 shadow-sm">
                         ONLINE &bull; LIVE
@@ -728,7 +757,7 @@ function CoursesPage() {
             {/* ------------------------------------------------------------------- */}
             {/* RIGHT COLUMN: Video Demo Card + JOIN FREE DEMO CLASS Form           */}
             {/* ------------------------------------------------------------------- */}
-            <aside className="lg:sticky lg:top-24 w-full min-w-0">
+            <aside className="lg:sticky lg:top-[180px] xl:top-[185px] w-full min-w-0">
               <CourseDemoSidebar />
             </aside>
           </div>

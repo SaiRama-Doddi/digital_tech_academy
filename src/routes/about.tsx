@@ -5,7 +5,6 @@ import {
   Briefcase,
   CheckCircle2,
   Compass,
-  History,
   Layers,
   MessageCircle,
   Sparkles,
@@ -83,6 +82,29 @@ function AboutPage() {
     return () => unsub();
   }, []);
 
+  // Handle smooth scroll when navigating with hash #mentors or when hash changes
+  useEffect(() => {
+    const scrollToMentorsSection = () => {
+      if (typeof window !== "undefined" && window.location.hash.toLowerCase().includes("mentor")) {
+        const el = document.getElementById("mentors");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
+    scrollToMentorsSection();
+    const timer1 = setTimeout(scrollToMentorsSection, 150);
+    const timer2 = setTimeout(scrollToMentorsSection, 450);
+
+    window.addEventListener("hashchange", scrollToMentorsSection);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener("hashchange", scrollToMentorsSection);
+    };
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -115,7 +137,7 @@ function AboutPage() {
 
       {/* Section 2 — Introduction */}
       <section className="bg-background">
-        <div className="container-site py-8 sm:py-10 lg:py-12 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="container-site py-6 sm:py-8 lg:py-10 grid items-center gap-6 lg:grid-cols-2 lg:gap-10">
           <div className="overflow-hidden rounded-2xl border border-slate-200/80 shadow-md" data-reveal="left">
             <img
               src={aboutImg}
@@ -169,213 +191,8 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Section 3 — Our Story */}
-      <section className="bg-surface border-t border-slate-200/80">
-        <div className="container-site py-6 sm:py-8 lg:py-10">
-          <div className="max-w-4xl lg:max-w-5xl text-left" data-reveal>
-            <span className="inline-block text-xs font-black uppercase tracking-widest text-accent mb-2">
-              OUR STORY
-            </span>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-navy text-left break-words">
-              Built to Make Digital Learning Practical
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm lg:text-base leading-relaxed text-slate-600 max-w-3xl font-normal text-justify">
-              DIGITECHADEMY makes professional digital training practical, accessible, and aligned with workplace requirements. Our structured curriculum connects fundamentals with real-world application so learners gain actionable skills.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4 — Then / Now / Next */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50/80 via-white to-slate-50/50 py-12 sm:py-16 lg:py-20 border-t border-b border-slate-200/70">
-        {/* Ambient Glows & Grid */}
-        <div className="grid-lines absolute inset-0 opacity-[0.15] pointer-events-none" aria-hidden="true" />
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-[34rem] rounded-full bg-sky-400/8 blur-3xl"
-          aria-hidden="true"
-        />
-
-        <div className="container-site relative z-10">
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10" data-reveal="top-to-bottom">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3 shadow-xs">
-              <span className="size-1.5 rounded-full bg-blue-600 animate-pulse" />
-              THE PROGRESSION • EVOLUTION OF LEARNING
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-slate-900 text-center">
-              Then <span className="text-slate-300 font-light mx-1">/</span> Now{" "}
-              <span className="text-slate-300 font-light mx-1">/</span> Next
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-normal">
-              How digital skill education shifted from isolated theoretical memorization into live, production-grade sandboxes and high-velocity career specializations.
-            </p>
-          </div>
-
-          {/* Horizontal Milestone Progression Rail (Left-to-Right Flow) */}
-          <div
-            className="max-w-4xl mx-auto mb-8 hidden md:flex items-center justify-between px-6 relative"
-            data-reveal="left-to-right"
-          >
-            {/* Connecting Flow Track */}
-            <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-[2px] bg-gradient-to-r from-slate-200 via-sky-400 to-indigo-300 -z-0" />
-
-            {/* Step 1 */}
-            <div className="flex items-center gap-2 bg-white px-3.5 py-1 rounded-full border border-slate-200 text-[11px] font-bold text-slate-500 relative z-10 shadow-xs">
-              <span className="size-2 rounded-full bg-slate-400" />
-              <span>PHASE 01 • LEGACY GAP</span>
-            </div>
-
-            {/* Step 2 (Active Standard) */}
-            <div className="flex items-center gap-2 bg-sky-50 px-4 py-1.5 rounded-full border border-sky-400 text-xs font-black text-sky-700 relative z-10 shadow-md shadow-sky-500/15 ring-2 ring-sky-400/20">
-              <span className="size-2 rounded-full bg-sky-500 animate-pulse" />
-              <span>PHASE 02 • ACTIVE STANDARD</span>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex items-center gap-2 bg-white px-3.5 py-1 rounded-full border border-indigo-200 text-[11px] font-bold text-indigo-700 relative z-10 shadow-xs">
-              <span className="size-2 rounded-full bg-indigo-500" />
-              <span>PHASE 03 • FUTURE MASTERY</span>
-            </div>
-          </div>
-
-          {/* 3 Premium Progression Cards */}
-          <div className="grid gap-6 sm:grid-cols-3 max-w-6xl mx-auto items-stretch">
-            {[
-              {
-                stage: "Then",
-                phaseLabel: "PHASE 01",
-                subtitle: "Traditional Education Gap",
-                tagline: "Theory Without Application",
-                icon: History,
-                watermark: "01",
-                badgeClass: "bg-slate-100 text-slate-700 border-slate-200",
-                iconBg: "bg-slate-100 text-slate-600 border border-slate-200/80",
-                accentBorder: "border-t-4 border-t-slate-300",
-                cardClass: "border-slate-200/90 bg-white/95 hover:border-slate-300 hover:shadow-xl",
-                text: "Memorizing slides and isolated theory without exposure to live ad budgets, production servers, or real workplace tools.",
-                highlightIcon: "✕",
-                highlightText: "Disconnected from live tools",
-                highlightClass: "text-slate-500 bg-slate-50 border-slate-200/70 font-medium",
-              },
-              {
-                stage: "Now",
-                phaseLabel: "PHASE 02",
-                subtitle: "The DIGITECHADEMY Standard",
-                tagline: "100% Practical & Mentored",
-                icon: Sparkles,
-                watermark: "02",
-                badgeClass: "bg-sky-500 text-white border-sky-400 shadow-xs shadow-sky-500/30",
-                iconBg: "bg-gradient-to-tr from-sky-500 to-blue-600 text-white shadow-md shadow-sky-500/30",
-                accentBorder: "border-t-4 border-t-sky-500",
-                cardClass:
-                  "border-2 border-sky-400/80 bg-gradient-to-b from-sky-50/40 via-white to-blue-50/25 shadow-xl shadow-sky-500/10 ring-4 ring-sky-400/15 hover:border-sky-400 hover:shadow-2xl hover:shadow-sky-500/25",
-                text: "Practical sandbox labs, live project execution, and 1-on-1 mentorship to build genuine workplace capability.",
-                highlightIcon: "✓",
-                highlightText: "Live sandboxes & 1-on-1 mentoring",
-                highlightClass: "text-sky-900 bg-sky-50/90 border-sky-300 font-bold",
-              },
-              {
-                stage: "Next",
-                phaseLabel: "PHASE 03",
-                subtitle: "Continuous Career Evolution",
-                tagline: "Specialization & Leadership",
-                icon: TrendingUp,
-                watermark: "03",
-                badgeClass: "bg-slate-900 text-white border-slate-800 shadow-xs",
-                iconBg: "bg-indigo-50 text-indigo-600 border border-indigo-200",
-                accentBorder: "border-t-4 border-t-indigo-600",
-                cardClass:
-                  "border-indigo-200/90 bg-gradient-to-b from-indigo-50/25 via-white to-slate-50/40 hover:border-indigo-400 hover:shadow-xl",
-                text: "Continuous skill upgrading, advanced specializations, and portfolio growth to step into senior tech roles.",
-                highlightIcon: "★",
-                highlightText: "Lifelong career acceleration",
-                highlightClass: "text-indigo-950 bg-indigo-50/80 border-indigo-200 font-semibold",
-              },
-            ].map((item, index) => {
-              const IconComp = item.icon;
-              return (
-                <article
-                  key={item.stage}
-                  data-reveal="up-to-bottom-left-to-right"
-                  style={{ "--reveal-delay": `${index * 160}ms` } as React.CSSProperties}
-                  className={cn(
-                    "progression-card group relative flex flex-col justify-between gap-5 rounded-2xl border p-6 sm:p-7 shadow-xs overflow-hidden transition-all duration-300 hover:-translate-y-2",
-                    item.accentBorder,
-                    item.cardClass
-                  )}
-                >
-                  {/* Subtle Background Watermark Step Number */}
-                  <span
-                    className="pointer-events-none absolute right-4 top-3 text-5xl font-black opacity-[0.07] font-mono select-none"
-                    aria-hidden="true"
-                  >
-                    {item.watermark}
-                  </span>
-
-                  <div>
-                    {/* Card Header Bar */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            "inline-flex items-center rounded-full px-3 py-0.5 text-[11px] uppercase tracking-wider border font-black",
-                            item.badgeClass
-                          )}
-                        >
-                          {item.stage}
-                        </span>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                          {item.phaseLabel}
-                        </span>
-                      </div>
-
-                      <span
-                        className={cn(
-                          "grid size-9 place-items-center rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3",
-                          item.iconBg
-                        )}
-                      >
-                        <IconComp className="size-4.5" aria-hidden="true" />
-                      </span>
-                    </div>
-
-                    {/* Card Titles */}
-                    <div className="mt-4">
-                      <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                        {item.subtitle}
-                      </h3>
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">
-                        {item.tagline}
-                      </p>
-                    </div>
-
-                    {/* Card Description */}
-                    <p className="mt-3 text-xs sm:text-[13px] leading-relaxed text-slate-600 font-normal text-justify">
-                      {item.text}
-                    </p>
-                  </div>
-
-                  {/* Card Bottom Key Takeaway Badge */}
-                  <div
-                    className={cn(
-                      "pt-3 mt-4 border-t flex items-center gap-2 rounded-xl px-3 py-2 text-xs border",
-                      item.highlightClass
-                    )}
-                  >
-                    <span className="size-4 rounded-full grid place-items-center text-[10px] shrink-0 font-bold">
-                      {item.highlightIcon}
-                    </span>
-                    <span className="truncate text-[11px]">{item.highlightText}</span>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* Section 5 — Vision & Section 6 — Mission */}
-      <section className="surface-navy relative overflow-hidden py-8 sm:py-10 lg:py-12 border-t border-navy-700/60">
+      <section className="surface-navy relative overflow-hidden py-6 sm:py-8 lg:py-10 border-t border-navy-700/60">
         <div className="grid-lines absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true" />
         <div
           className="pointer-events-none absolute -right-20 -top-20 size-[28rem] rounded-full bg-accent/10 blur-3xl"
@@ -424,7 +241,7 @@ function AboutPage() {
       {/* ========================================================================= */}
       {/* SECTION 26 — ABOUT US: MEET THE MINDS BEHIND YOUR GROWTH (5 Mentor Cards) */}
       {/* ========================================================================= */}
-      <section id="mentors" className="surface-navy relative py-12 sm:py-20 overflow-hidden border-t border-sky-500/20 scroll-mt-20">
+      <section id="mentors" className="surface-navy relative py-8 sm:py-10 lg:py-12 overflow-hidden border-t border-sky-500/20 scroll-mt-[165px] sm:scroll-mt-[175px]">
         <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
         <div
           className="pointer-events-none absolute -left-20 -bottom-20 size-[32rem] rounded-full bg-blue-600/15 blur-3xl"
@@ -436,18 +253,20 @@ function AboutPage() {
         />
 
         <div className="container-site relative z-10">
-          <div className="max-w-3xl mb-10" data-reveal>
+          <div className="max-w-4xl mb-5 sm:mb-6" data-reveal>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-3 py-1 text-[10.5px] font-black uppercase tracking-[0.14em] text-sky-300 mb-3 backdrop-blur-xs">
               <Sparkles className="size-3 text-sky-400 animate-pulse" />
               <span>EXPERT FACULTY &amp; MENTORS</span>
             </div>
 
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] font-black text-white leading-tight tracking-tight uppercase">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[2.4rem] xl:text-[2.6rem] font-black text-white leading-tight tracking-tight uppercase whitespace-normal sm:whitespace-nowrap">
               MEET THE MINDS BEHIND YOUR GROWTH.
             </h2>
 
-            <p className="mt-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl font-normal">
-              Learn directly from experienced practitioners who bring authentic agency, AdTech, and enterprise security battle-tested knowledge into every interactive lecture and sandbox lab. Click on any mentor to explore their detailed background and expertise.
+            <p className="mt-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-4xl font-normal">
+              Learn directly from experienced practitioners who bring authentic agency, AdTech, and enterprise security battle-tested knowledge
+              <br className="hidden md:inline" />{" "}
+              into every interactive lecture and sandbox lab. Click on any mentor to explore their detailed background and expertise.
             </p>
           </div>
 
@@ -717,12 +536,12 @@ function AboutPage() {
 
       {/* Section 8 — Why Learners Choose Us */}
       <section className="bg-surface border-t border-slate-200/80">
-        <div className="container-site py-8 sm:py-10 lg:py-12">
+        <div className="container-site py-6 sm:py-8 lg:py-10">
           <SectionHeading
             eyebrow="WHY LEARNERS CHOOSE US"
             title="Why Learners Choose Us"
           />
-          <div className="mt-8 sm:mt-10 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
+          <div className="mt-6 sm:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-2">
             {whyLearnersChooseUs.map((item, index) => {
               const IconComp = item.icon;
               return (
@@ -730,14 +549,18 @@ function AboutPage() {
                   key={item.title}
                   data-reveal={index % 2 === 0 ? "left" : "top"}
                   style={{ "--reveal-delay": `${(index % 2) * 120 + Math.floor(index / 2) * 80}ms` } as React.CSSProperties}
-                  className="group flex flex-col justify-between gap-2.5 sm:gap-4 rounded-xl sm:rounded-2xl border border-slate-200/80 bg-white p-3 sm:p-7 shadow-xs sm:shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-navy/5"
+                  className="group relative flex flex-col justify-between rounded-xl sm:rounded-2xl border border-slate-200/90 bg-white pt-5 sm:pt-6 pb-3.5 sm:pb-5 px-3.5 sm:px-5 shadow-xs sm:shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-navy/5"
                 >
-                  <span className="grid size-9 sm:size-12 place-items-center rounded-lg sm:rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-110">
-                    <IconComp className="size-4.5 sm:size-6 text-accent" aria-hidden="true" />
-                  </span>
+                  {/* Icon badge placed on the top border */}
+                  <div className="absolute -top-4 sm:-top-5 left-3.5 sm:left-5 z-10">
+                    <span className="grid size-8 sm:size-10 place-items-center rounded-lg sm:rounded-xl bg-sky-50 text-accent border border-accent/30 shadow-xs ring-4 ring-white transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-white group-hover:border-accent">
+                      <IconComp className="size-4 sm:size-5" aria-hidden="true" />
+                    </span>
+                  </div>
+
                   <div>
-                    <h3 className="text-xs sm:text-lg font-bold text-navy leading-snug">{item.title}</h3>
-                    <p className="mt-1.5 sm:mt-2 text-[11px] sm:text-sm leading-relaxed text-slate-600">
+                    <h3 className="text-xs sm:text-base font-bold text-navy leading-snug mt-0.5 sm:mt-1">{item.title}</h3>
+                    <p className="mt-1 sm:mt-1.5 text-[11px] sm:text-xs md:text-sm leading-relaxed text-slate-600">
                       {item.text}
                     </p>
                   </div>

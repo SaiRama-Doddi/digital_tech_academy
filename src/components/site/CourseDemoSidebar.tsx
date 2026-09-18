@@ -125,7 +125,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   };
 
   return (
-    <div id="course-demo-sidebar" className="w-full">
+    <div id="course-demo-sidebar" className="w-full scroll-mt-[190px]">
       {/* Embedded Lead Capture Form Card (JOIN FREE DEMO CLASS) */}
       <div className="relative rounded-2xl sm:rounded-[24px] border border-slate-200/90 bg-white/95 backdrop-blur-xl p-4 sm:p-6 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.12),0_0_0_1px_rgba(255,255,255,0.8)] transition-all overflow-hidden w-full min-w-0">
         {/* Top Beveled Edge Glow Strip */}

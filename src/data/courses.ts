@@ -6,7 +6,7 @@ import programmaticAdvertisingImg from "@/assets/course-programmatic-advertising
 import arjunImg from "@/assets/instructor-arjun.jpg";
 import priyaImg from "@/assets/instructor-priya.jpg";
 
-export type CourseCategory = "Digital Marketing" | "Cyber Security";
+export type CourseCategory = "Digital Marketing" | "Cyber Security" | "Programmatic Advertising";
 
 export type Instructor = {
   name: string;
@@ -355,7 +355,7 @@ export const courses: Course[] = [
     secondaryCta: "Talk to an Expert",
     audienceText: "Digital marketers, media planners, aspiring programmatic specialists and professionals moving into AdTech.",
     learningJourney: "Plan → Launch → Optimize → Measure",
-    category: "Digital Marketing",
+    category: "Programmatic Advertising",
     description:
       "Go beyond basic digital advertising and learn how programmatic campaigns are planned, launched, monitored and optimized across DV360, CM360, YouTube, audience targeting, bidding, measurement and reporting.",
     longDescription:

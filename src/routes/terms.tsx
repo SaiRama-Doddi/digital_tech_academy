@@ -116,12 +116,12 @@ function TermsPage() {
       />
 
       {/* Main Content */}
-      <section className="bg-background py-8 sm:py-10 lg:py-12">
+      <section className="bg-background py-6 sm:py-8">
         <div className="container-site max-w-4xl">
           {/* Agreement Intro Card */}
           <div
             data-reveal
-            className="mb-10 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm"
+            className="mb-6 rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-sm"
           >
             <div className="flex items-center gap-3 mb-3">
               <span className="grid size-10 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20">

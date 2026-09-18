@@ -2,15 +2,11 @@ import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   ChevronRight,
-  Instagram,
-  Linkedin,
   Mail,
   MapPin,
   MessageCircle,
   Phone,
   PhoneCall,
-  Twitter,
-  Youtube,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -22,6 +18,60 @@ import {
   getLocalCachedCourses,
   type FirebaseCourse,
 } from "@/services/courseService";
+
+function OfficialLinkedInIcon({ className = "size-9.5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <rect width="36" height="36" rx="8" fill="#0A66C2" />
+      <circle cx="10.5" cy="10" r="2.2" fill="#FFFFFF" />
+      <path
+        d="M8.5 14.5H12.5V26.5H8.5V14.5ZM15 14.5H18.8V16.3C19.4 15.1 20.9 14.2 22.7 14.2C26.3 14.2 27.5 16.4 27.5 20V26.5H23.5V20.5C23.5 18.8 23 17.5 21.5 17.5C20 17.5 19.3 18.7 19.3 20.3V26.5H15V14.5Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}
+
+function OfficialTwitterIcon({ className = "size-9.5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <rect width="36" height="36" rx="8" fill="#1DA1F2" />
+      <path
+        d="M28.5 12.6c-.9.4-1.8.7-2.8.8 1-.6 1.8-1.6 2.1-2.8-.9.6-2 1-3.1 1.2-.9-.9-2.2-1.5-3.6-1.5-2.7 0-4.9 2.2-4.9 4.9 0 .4 0 .8.1 1.1-4.1-.2-7.8-2.2-10.2-5.2-.4.7-.6 1.6-.6 2.5 0 1.7.9 3.2 2.2 4.1-.8 0-1.6-.2-2.3-.6v.1c0 2.4 1.7 4.4 4 4.8-.4.1-.9.2-1.3.2-.3 0-.7 0-1-.1.6 2 2.5 3.5 4.7 3.5-1.7 1.3-3.9 2.1-6.2 2.1-.4 0-.8 0-1.2-.1 2.2 1.4 4.9 2.3 7.7 2.3 9.2 0 14.3-7.6 14.3-14.3v-.6c1-.8 1.8-1.7 2.5-2.7z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}
+
+function OfficialInstagramIcon({ className = "size-9.5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="footer-ig-radial" cx="30%" cy="107%" r="110%">
+          <stop offset="0%" stopColor="#fdf497" />
+          <stop offset="5%" stopColor="#fdf497" />
+          <stop offset="45%" stopColor="#fd5949" />
+          <stop offset="60%" stopColor="#d6249f" />
+          <stop offset="90%" stopColor="#285AEB" />
+        </radialGradient>
+      </defs>
+      <rect width="36" height="36" rx="8" fill="url(#footer-ig-radial)" />
+      <rect x="8.5" y="8.5" width="19" height="19" rx="5.5" stroke="#FFFFFF" strokeWidth="2" fill="none" />
+      <circle cx="18" cy="18" r="4.8" stroke="#FFFFFF" strokeWidth="2" fill="none" />
+      <circle cx="23.2" cy="12.8" r="1.2" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+function OfficialYouTubeIcon({ className = "size-9.5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <rect width="36" height="36" rx="8" fill="#FF0000" />
+      <path d="M15 13L24 18L15 23V13Z" fill="#FFFFFF" />
+    </svg>
+  );
+}
 
 export function Footer() {
   const [liveCourses, setLiveCourses] = useState<Array<{ id: string; slug: string; title: string; active?: boolean }>>(courses);
@@ -60,7 +110,7 @@ export function Footer() {
       {/* ========================================================================= */}
       {/* 2. MAIN MULTI-COLUMN FOOTER                                               */}
       {/* ========================================================================= */}
-      <div className="container-site relative z-10 py-10 sm:py-12 lg:py-16">
+      <div className="container-site relative z-10 py-8 sm:py-10">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-12 xl:gap-10">
           {/* Column 1: Brand & Description (4 cols on lg/xl) */}
           <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-4 min-w-0">
@@ -85,28 +135,28 @@ export function Footer() {
             <div className="flex items-center gap-2.5">
               {[
                 {
-                  icon: Linkedin,
+                  icon: OfficialLinkedInIcon,
                   label: "LinkedIn",
                   href: "https://linkedin.com",
-                  colors: "border-[#0077b5]/35 bg-[#0077b5]/15 text-[#38bdf8] hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] hover:shadow-[#0077b5]/40",
+                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(10,102,194,0.65)]",
                 },
                 {
-                  icon: Twitter,
+                  icon: OfficialTwitterIcon,
                   label: "Twitter",
                   href: "https://twitter.com",
-                  colors: "border-sky-400/35 bg-sky-500/15 text-sky-400 hover:bg-sky-500 hover:text-white hover:border-sky-400 hover:shadow-sky-500/40",
+                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(29,161,242,0.65)]",
                 },
                 {
-                  icon: Instagram,
+                  icon: OfficialInstagramIcon,
                   label: "Instagram",
                   href: "https://instagram.com",
-                  colors: "border-pink-500/35 bg-pink-500/15 text-pink-400 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-pink-500 hover:to-purple-600 hover:text-white hover:border-pink-400 hover:shadow-pink-500/40",
+                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(225,48,108,0.65)]",
                 },
                 {
-                  icon: Youtube,
+                  icon: OfficialYouTubeIcon,
                   label: "YouTube",
                   href: "https://youtube.com",
-                  colors: "border-red-500/35 bg-red-500/15 text-red-500 hover:bg-red-600 hover:text-white hover:border-red-500 hover:shadow-red-500/40",
+                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(255,0,0,0.65)]",
                 },
               ].map((social) => {
                 const IconComp = social.icon;
@@ -117,9 +167,9 @@ export function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Follow us on ${social.label}`}
-                    className={`grid size-9.5 place-items-center rounded-xl border transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 ${social.colors}`}
+                    className={`group relative rounded-xl transition-all duration-200 hover:-translate-y-1 hover:scale-105 active:scale-95 shadow-md ${social.hoverShadow}`}
                   >
-                    <IconComp className="size-4" />
+                    <IconComp className="size-9.5 rounded-xl block" />
                   </a>
                 );
               })}
@@ -258,25 +308,7 @@ export function Footer() {
             <span className="text-sky-400 font-semibold tracking-wider">LEARN • GROW • ACHIEVE</span>
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[11.5px] text-slate-400">
-            <Link to="/" className="transition-colors hover:text-sky-300">Home</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/about" className="transition-colors hover:text-sky-300">About</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/courses" className="transition-colors hover:text-sky-300">Programs</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/courses/$slug" params={{ slug: "digital-marketing" }} className="transition-colors hover:text-sky-300">Digital Marketing</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/courses/$slug" params={{ slug: "programmatic-advertising" }} className="transition-colors hover:text-sky-300">Programmatic Advertising</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/courses/$slug" params={{ slug: "cyber-security" }} className="transition-colors hover:text-sky-300">Cyber Security</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/testimonials" className="transition-colors hover:text-sky-300">Resources</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/faq" className="transition-colors hover:text-sky-300">FAQ</Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/contact" className="transition-colors hover:text-sky-300">Contact</Link>
-            <span className="text-slate-700">|</span>
+          <div className="flex items-center gap-x-3 text-[11.5px] text-slate-400">
             <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">Privacy Policy</Link>
             <span className="text-slate-700">|</span>
             <Link to="/terms" className="transition-colors hover:text-sky-300">Terms &amp; Conditions</Link>

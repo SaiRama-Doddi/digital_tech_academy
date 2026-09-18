@@ -295,7 +295,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
       {/* ========================================================================= */}
       {/* 1. COMPACT STEPPER RAIL (Auto-advances sequentially)                      */}
       {/* ========================================================================= */}
-      <div className="grid grid-cols-5 gap-1 sm:gap-2 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl bg-[#07152b]/90 border border-sky-500/20 backdrop-blur-md shadow-lg">
+      <div className="grid grid-cols-5 sm:grid-cols-[1fr_1.35fr_1fr_1fr_1.05fr] gap-1 sm:gap-1.5 md:gap-2 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl bg-[#07152b]/90 border border-sky-500/20 backdrop-blur-md shadow-lg">
         {stages.map((stg, idx) => {
           const isActive = idx === activeStageIndex;
           const StepIcon = stg.icon;
@@ -306,7 +306,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
               type="button"
               onClick={() => selectStage(idx)}
               className={cn(
-                "group relative flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2.5 rounded-lg sm:rounded-xl px-0.5 sm:px-3 py-1 sm:py-2.5 text-center sm:text-left transition-all duration-200 cursor-pointer focus:outline-none min-w-0",
+                "group relative flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 md:gap-2 rounded-lg sm:rounded-xl px-0.5 sm:px-2 md:px-2.5 lg:px-3 py-1 sm:py-2.5 text-center sm:text-left transition-all duration-200 cursor-pointer focus:outline-none min-w-0",
                 isActive
                   ? "bg-[#0f2347] border border-sky-400/60 shadow-md shadow-sky-500/10"
                   : "bg-transparent border border-transparent hover:bg-[#0b1c38]",
@@ -315,7 +315,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
               {/* Step indicator */}
               <div
                 className={cn(
-                  "grid size-6.5 sm:size-9 shrink-0 place-items-center rounded-md sm:rounded-lg text-white font-bold text-xs transition-transform duration-200",
+                  "grid size-6.5 sm:size-7.5 md:size-8 lg:size-9 shrink-0 place-items-center rounded-md sm:rounded-lg text-white font-bold text-xs transition-transform duration-200",
                   isActive
                     ? `bg-gradient-to-br ${stg.color.gradient} shadow-sm scale-105`
                     : "bg-[#0b1d38] border border-slate-700 text-slate-400",
@@ -336,7 +336,10 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 </span>
                 <p
                   className={cn(
-                    "text-[8px] xs:text-[9px] sm:text-[12px] md:text-[13px] font-bold tracking-tight leading-tight sm:leading-snug mt-0 sm:mt-0.5 break-words line-clamp-2 sm:line-clamp-none sm:whitespace-nowrap",
+                    "text-[8px] xs:text-[9px] sm:text-[11px] md:text-[12px] lg:text-[13px] font-bold tracking-tight leading-tight sm:leading-snug mt-0 sm:mt-0.5 [text-wrap:balance]",
+                    stg.id === "action"
+                      ? "sm:whitespace-normal md:whitespace-nowrap"
+                      : "sm:whitespace-nowrap",
                     isActive ? "text-white" : "text-slate-300 group-hover:text-white",
                   )}
                 >

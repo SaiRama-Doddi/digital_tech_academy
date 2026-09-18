@@ -14,15 +14,60 @@ import { db } from "@/lib/firebase";
 import { courses as defaultStaticCourses, type Course } from "@/data/courses";
 
 export const POPULAR_COURSE_CATEGORIES = [
-  "Digital Marketing",
-  "Web Development",
-  "Data Analytics",
   "Cyber Security",
-  "Design & Creative",
-  "Business & Management",
+  "Digital Marketing",
+  "Programmatic Advertising",
 ] as const;
 
 export type PopularCategory = (typeof POPULAR_COURSE_CATEGORIES)[number];
+
+/**
+ * Normalizes course category strictly according to course content, title, and slug.
+ */
+export function normalizeCourseCategory(category?: string, title?: string, slug?: string): string {
+  const t = (title || "").toLowerCase();
+  const s = (slug || "").toLowerCase();
+  const c = (category || "").toLowerCase();
+
+  // 1. Programmatic Advertising
+  if (
+    t.includes("programmatic") ||
+    s.includes("programmatic") ||
+    t.includes("adtech") ||
+    s.includes("adtech") ||
+    c.includes("programmatic") ||
+    c.includes("adtech")
+  ) {
+    return "Programmatic Advertising";
+  }
+
+  // 2. Cyber Security
+  if (
+    t.includes("cyber") ||
+    s.includes("cyber") ||
+    t.includes("security") ||
+    s.includes("security") ||
+    t.includes("hacking") ||
+    s.includes("hacking") ||
+    c.includes("cyber") ||
+    c.includes("security")
+  ) {
+    return "Cyber Security";
+  }
+
+  // 3. Digital Marketing
+  if (
+    t.includes("marketing") ||
+    s.includes("marketing") ||
+    t.includes("seo") ||
+    s.includes("seo") ||
+    c.includes("marketing")
+  ) {
+    return "Digital Marketing";
+  }
+
+  return category || "Digital Marketing";
+}
 
 export interface FirebaseCourse {
   id: string;
@@ -62,7 +107,7 @@ function mapStaticCourse(c: Course): FirebaseCourse {
     id: c.id,
     slug: c.slug,
     title: c.title,
-    category: c.category,
+    category: normalizeCourseCategory(c.category, c.title, c.slug),
     description: c.description,
     longDescription: c.longDescription,
     about: {
@@ -118,7 +163,10 @@ export function getLocalCachedCourses(): FirebaseCourse[] {
           c.slug !== "full-stack-java" &&
           !c.title?.toLowerCase().includes("full stack java") &&
           c.id !== "testing",
-      );
+      ).map((c: any) => ({
+        ...c,
+        category: normalizeCourseCategory(c.category, c.title, c.slug),
+      }));
     }
     return [];
   } catch {
@@ -184,11 +232,21 @@ export async function getCoursesFromFirebase(): Promise<FirebaseCourse[]> {
     if (!snapshot.empty) {
       const coursesFromDb: FirebaseCourse[] = snapshot.docs.map((docSnap) => {
         const data = docSnap.data();
+        const rawCategory = data['category'] || "";
+        const rawTitle = data['title'] || "Untitled Course";
+        const rawSlug = data['slug'] || docSnap.id;
+        const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
+
+        // Auto-heal in Firestore if category was stored incorrectly
+        if (rawCategory !== category && (category === "Programmatic Advertising" || category === "Cyber Security")) {
+          updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
+        }
+
         return {
           id: docSnap.id,
-          slug: data['slug'] || docSnap.id,
-          title: data['title'] || "Untitled Course",
-          category: data['category'] || "Digital Marketing",
+          slug: rawSlug,
+          title: rawTitle,
+          category,
           description: data['description'] || "",
           longDescription: data['longDescription'] || data['description'] || "",
           about: data['about'] || {
@@ -242,11 +300,21 @@ export function subscribeCourses(
         if (!snapshot.empty) {
           const list: FirebaseCourse[] = snapshot.docs.map((docSnap) => {
             const data = docSnap.data();
+            const rawCategory = data['category'] || "";
+            const rawTitle = data['title'] || "Untitled Course";
+            const rawSlug = data['slug'] || docSnap.id;
+            const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
+
+            // Auto-heal in Firestore if category was stored incorrectly
+            if (rawCategory !== category && (category === "Programmatic Advertising" || category === "Cyber Security")) {
+              updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
+            }
+
             return {
               id: docSnap.id,
-              slug: data['slug'] || docSnap.id,
-              title: data['title'] || "Untitled Course",
-              category: data['category'] || "Digital Marketing",
+              slug: rawSlug,
+              title: rawTitle,
+              category,
               description: data['description'] || "",
               longDescription: data['longDescription'] || data['description'] || "",
               about: data['about'] || {

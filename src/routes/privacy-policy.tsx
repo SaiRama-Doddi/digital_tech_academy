@@ -116,12 +116,12 @@ function PrivacyPolicyPage() {
       />
 
       {/* Main Content */}
-      <section className="bg-background py-8 sm:py-10 lg:py-12">
+      <section className="bg-background py-6 sm:py-8">
         <div className="container-site max-w-4xl">
           {/* Policy Intro Card */}
           <div
             data-reveal
-            className="mb-10 rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm"
+            className="mb-6 rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-sm"
           >
             <div className="flex items-center gap-3 mb-3">
               <span className="grid size-10 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20">
@@ -143,15 +143,15 @@ function PrivacyPolicyPage() {
           </div>
 
           {/* Structured Policy Sections */}
-          <div className="space-y-6">
+          <div className="space-y-5">
             {sections.map((sec) => (
               <article
                 key={sec.number}
                 data-reveal
                 id={`section-${sec.number}`}
-                className="hover-lift group rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:border-accent/40 hover:shadow-md"
+                className="hover-lift group rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-sm transition-all duration-300 hover:border-accent/40 hover:shadow-md"
               >
-                <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-start justify-between gap-4 mb-3">
                   <div className="flex items-center gap-3">
                     <span className="grid size-10 place-items-center rounded-xl bg-accent/15 text-accent border border-accent/20 transition-transform duration-300 group-hover:scale-105">
                       <sec.icon className="size-5" aria-hidden="true" />
@@ -182,7 +182,7 @@ function PrivacyPolicyPage() {
           {/* Support & Contact Card */}
           <div
             data-reveal
-            className="mt-12 surface-navy relative overflow-hidden rounded-2xl p-8 sm:p-10 border border-navy-700/60 shadow-lg text-center sm:text-left"
+            className="mt-8 surface-navy relative overflow-hidden rounded-2xl p-6 sm:p-8 border border-navy-700/60 shadow-lg text-center sm:text-left"
           >
             <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
             <div
