@@ -52,6 +52,22 @@ export const DUMMY_ENQUIRY_IDS = [
   "enq-sample-2",
 ];
 
+export const DUMMY_ENQUIRY_NAMES = [
+  "Rahul Sharma",
+  "Sneha Patel",
+  "Vikram Reddy",
+  "Pooja Verma",
+  "Demo Lead",
+  "Sample Student",
+];
+
+export function isDummyEnquiry(item: { id?: string; name?: string } | null | undefined): boolean {
+  if (!item) return false;
+  if (item.id && (DUMMY_ENQUIRY_IDS.includes(item.id) || item.id.startsWith("enq-sample"))) return true;
+  if (item.name && DUMMY_ENQUIRY_NAMES.includes(item.name.trim())) return true;
+  return false;
+}
+
 // Helper: read cached enquiries
 function getLocalEnquiries(): FirebaseEnquiry[] {
   if (typeof window === "undefined") return [];
@@ -61,9 +77,7 @@ function getLocalEnquiries(): FirebaseEnquiry[] {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
         // Filter out dummy sample leads
-        const cleaned = parsed.filter(
-          (item) => item && !DUMMY_ENQUIRY_IDS.includes(item.id) && !item.id?.startsWith("enq-sample")
-        );
+        const cleaned = parsed.filter((item) => !isDummyEnquiry(item));
         if (cleaned.length !== parsed.length) {
           saveLocalEnquiries(cleaned);
         }
@@ -77,9 +91,7 @@ function getLocalEnquiries(): FirebaseEnquiry[] {
       const parsed = JSON.parse(legacy);
       if (Array.isArray(parsed) && parsed.length > 0) {
         const cleaned = parsed
-          .filter(
-            (item) => item && !DUMMY_ENQUIRY_IDS.includes(item.id) && !item.id?.startsWith("enq-sample")
-          )
+          .filter((item) => !isDummyEnquiry(item))
           .map((item) => ({
             id: item.id || `enq-${Date.now()}`,
             name: item.name || "Anonymous",
@@ -102,8 +114,8 @@ function getLocalEnquiries(): FirebaseEnquiry[] {
   return [];
 }
 
-// Helper: save local enquiries
-function saveLocalEnquiries(enquiries: FirebaseEnquiry[]) {
+// Helper: write cached enquiries
+function saveLocalEnquiries(enquiries: FirebaseEnquiry[]): void {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(ENQUIRIES_STORAGE_KEY, JSON.stringify(enquiries));
@@ -128,7 +140,27 @@ export async function deleteDummyEnquiriesFromFirebase(): Promise<number> {
       // ignore
     }
   }
-  clearAllEnquiries();
+
+  // Also search Firestore for dummy names
+  try {
+    const colRef = collection(db, "enquiries");
+    const snap = await getDocs(colRef);
+    for (const d of snap.docs) {
+      const data = d.data() as Record<string, any>;
+      const name = String(data["name"] || "").trim();
+      if (DUMMY_ENQUIRY_IDS.includes(d.id) || d.id.startsWith("enq-sample") || DUMMY_ENQUIRY_NAMES.includes(name)) {
+        await deleteDoc(doc(db, "enquiries", d.id));
+        count++;
+      }
+    }
+  } catch (err) {
+    console.warn("Failed to delete dummy enquiries from Firestore:", err);
+  }
+
+  // Clean local storage cache: keep real leads, remove only dummy ones
+  const cached = getLocalEnquiries();
+  const cleaned = cached.filter((e) => !isDummyEnquiry(e));
+  saveLocalEnquiries(cleaned);
   return count;
 }
 
@@ -218,10 +250,10 @@ export function subscribeEnquiries(
         if (!snapshot.empty) {
           const list: FirebaseEnquiry[] = [];
           snapshot.forEach((d) => {
-            if (DUMMY_ENQUIRY_IDS.includes(d.id) || d.id.startsWith("enq-sample")) {
+            const data = d.data() as Record<string, any>;
+            if (isDummyEnquiry({ id: d.id, name: data["name"] })) {
               return;
             }
-            const data = d.data() as Record<string, any>;
             list.push({
               id: d.id,
               name: String(data["name"] || "Anonymous"),

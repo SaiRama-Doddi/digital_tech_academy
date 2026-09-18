@@ -82,6 +82,8 @@ import {
   addEnquiryToFirebase,
   updateEnquiryInFirebase,
   deleteEnquiryFromFirebase,
+  deleteDummyEnquiriesFromFirebase,
+  isDummyEnquiry,
   clearAllEnquiries,
 } from "@/services/enquiryService";
 import {
@@ -90,6 +92,8 @@ import {
   addTestimonialToFirebase,
   updateTestimonialInFirebase,
   deleteTestimonialFromFirebase,
+  deleteDummyTestimonialsFromFirebase,
+  isDummyTestimonial,
   clearAllTestimonials,
 } from "@/services/testimonialService";
 import {
@@ -201,19 +205,18 @@ function AdminDashboardPage() {
   const [liveEnquiries, setLiveEnquiries] = useState<FirebaseEnquiry[]>([]);
   const [courses, setCourses] = useState<FirebaseCourse[]>([]);
 
-  // Automatic cleanup of legacy sample dummy items from browser storage on mount
+  // Automatic cleanup of legacy sample dummy items from Firebase & browser storage on mount
   useEffect(() => {
+    deleteDummyEnquiriesFromFirebase().catch(() => {});
+    deleteDummyTestimonialsFromFirebase().catch(() => {});
+    deleteDemoMentorsFromFirebase().catch(() => {});
+
     try {
       const enqRaw = localStorage.getItem("digital_tech_enquiries_db");
       if (enqRaw) {
         const parsed = JSON.parse(enqRaw);
         if (Array.isArray(parsed)) {
-          const cleaned = parsed.filter(
-            (e) =>
-              e &&
-              !["enq-101", "enq-102", "enq-103", "enq-104"].includes(e.id) &&
-              !e.id?.startsWith("enq-sample")
-          );
+          const cleaned = parsed.filter((e) => !isDummyEnquiry(e));
           if (cleaned.length !== parsed.length) {
             localStorage.setItem("digital_tech_enquiries_db", JSON.stringify(cleaned));
             localStorage.setItem("dta_enquiries", JSON.stringify(cleaned));
@@ -224,11 +227,7 @@ function AdminDashboardPage() {
       if (testRaw) {
         const parsed = JSON.parse(testRaw);
         if (Array.isArray(parsed)) {
-          const cleaned = parsed.filter(
-            (r) =>
-              r &&
-              !["rev-1", "rev-2", "rev-3", "rev-4", "rev-5", "rev-6"].includes(r.id)
-          );
+          const cleaned = parsed.filter((r) => !isDummyTestimonial(r));
           if (cleaned.length !== parsed.length) {
             localStorage.setItem("digital_tech_testimonials_db", JSON.stringify(cleaned));
           }
@@ -1063,6 +1062,22 @@ function ManageEnquiriesTab() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+          {/* Delete Demo Leads Button */}
+          <button
+            type="button"
+            onClick={handleDeleteDemoLeads}
+            disabled={isDeletingDemoLeads}
+            className="border border-rose-200 hover:bg-rose-50 text-rose-600 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
+            title="Delete all dummy/sample leads"
+          >
+            {isDeletingDemoLeads ? (
+              <RefreshCw className="size-3.5 animate-spin" />
+            ) : (
+              <Trash2 className="size-3.5" />
+            )}
+            <span>Delete Demo Leads</span>
+          </button>
+
           {/* Export CSV Button */}
           <button
             onClick={handleExportCSV}
@@ -2937,6 +2952,21 @@ function ManageTestimonialsTab() {
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
             <button
+              type="button"
+              onClick={handleDeleteDemoReviews}
+              disabled={isDeletingDemoReviews}
+              className="border border-rose-200 hover:bg-rose-50 text-rose-600 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
+              title="Delete all demo student reviews"
+            >
+              {isDeletingDemoReviews ? (
+                <RefreshCw className="size-3.5 animate-spin" />
+              ) : (
+                <Trash2 className="size-3.5" />
+              )}
+              <span>Delete Demo Reviews</span>
+            </button>
+
+            <button
               onClick={handleOpenAdd}
               className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black flex items-center gap-2 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer transition-all"
             >
@@ -3633,6 +3663,22 @@ function ManageInstructorsTab() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          {/* Delete Demo Mentors Button */}
+          <button
+            type="button"
+            onClick={handleDeleteDemoMentors}
+            disabled={isDeletingDemo}
+            className="border border-rose-200 hover:bg-rose-50 text-rose-600 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl cursor-pointer transition-all disabled:opacity-50"
+            title="Delete all demo mentors from database"
+          >
+            {isDeletingDemo ? (
+              <RefreshCw className="size-3.5 animate-spin" />
+            ) : (
+              <Trash2 className="size-3.5" />
+            )}
+            <span>Delete Demo Mentors</span>
+          </button>
+
           {/* Add Mentor Button */}
           <button
             type="button"
@@ -4471,6 +4517,33 @@ function ManageFaqsTab() {
    TAB: SETTINGS
 ========================================================================= */
 function ManageSettingsTab({ session }: { session: AdminSession | null }) {
+  const [isPurging, setIsPurging] = useState(false);
+  const [purgeStatus, setPurgeStatus] = useState<string | null>(null);
+
+  const handlePurgeAllDummyData = async () => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete all dummy data (sample leads, sample student reviews, and demo faculty mentors) from Firebase Firestore and local browser cache? Any real website submissions and custom content will be preserved."
+      )
+    ) {
+      return;
+    }
+    setIsPurging(true);
+    try {
+      const eCount = await deleteDummyEnquiriesFromFirebase();
+      const tCount = await deleteDummyTestimonialsFromFirebase();
+      const mCount = await deleteDemoMentorsFromFirebase();
+      setPurgeStatus(
+        `All dummy data purged successfully from Firebase and local cache! (Cleaned ${eCount} dummy leads, ${tCount} dummy reviews, ${mCount} demo mentors).`
+      );
+    } catch (err: any) {
+      setPurgeStatus(err?.message || "Failed to purge dummy data.");
+    } finally {
+      setIsPurging(false);
+      setTimeout(() => setPurgeStatus(null), 6000);
+    }
+  };
+
   return (
     <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
       <div className="border-b border-slate-100 pb-5 mb-6">
@@ -4481,6 +4554,42 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
       </div>
 
       <div className="grid gap-6">
+        {/* PURGE ALL DUMMY DATA CARD */}
+        <div className="border border-rose-200 rounded-2xl p-5 bg-gradient-to-r from-white via-rose-50/20 to-rose-50/40 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="grid size-10 place-items-center rounded-xl bg-rose-500 text-white shadow-md shadow-rose-500/20 shrink-0">
+                <Trash2 className="size-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-slate-900">Delete All Dummy / Demo Data</h4>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Permanently purge all pre-seeded dummy enquiries, sample student reviews, and demo faculty mentors from Firebase Firestore and browser cache.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handlePurgeAllDummyData}
+              disabled={isPurging}
+              className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-black rounded-xl shadow-md shadow-rose-500/20 transition-all cursor-pointer whitespace-nowrap self-start sm:self-center disabled:opacity-50 flex items-center gap-2"
+            >
+              {isPurging ? (
+                <RefreshCw className="size-3.5 animate-spin" />
+              ) : (
+                <Trash2 className="size-3.5" />
+              )}
+              <span>Purge All Dummy Data</span>
+            </button>
+          </div>
+          {purgeStatus && (
+            <div className="mt-3 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center gap-2">
+              <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+              <span>{purgeStatus}</span>
+            </div>
+          )}
+        </div>
 
         {/* ACTIVE SESSION CARD */}
         <div className="border border-slate-200/80 rounded-2xl p-5 bg-gradient-to-r from-slate-50 to-purple-50/30">

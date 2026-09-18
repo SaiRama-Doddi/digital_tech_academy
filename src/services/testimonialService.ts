@@ -50,6 +50,22 @@ export const DUMMY_TESTIMONIAL_IDS = [
   "rev-6",
 ];
 
+export const DUMMY_TESTIMONIAL_NAMES = [
+  "Ramesh K.",
+  "Deepika V.",
+  "Praveen M.",
+  "Harika R.",
+  "Suresh B.",
+  "Kavitha T.",
+];
+
+export function isDummyTestimonial(item: { id?: string; name?: string } | null | undefined): boolean {
+  if (!item) return false;
+  if (item.id && DUMMY_TESTIMONIAL_IDS.includes(item.id)) return true;
+  if (item.name && DUMMY_TESTIMONIAL_NAMES.includes(item.name.trim())) return true;
+  return false;
+}
+
 // Helper: Read local cached testimonials
 export function getLocalTestimonials(): FirebaseTestimonial[] {
   if (typeof window === "undefined") return [];
@@ -60,7 +76,7 @@ export function getLocalTestimonials(): FirebaseTestimonial[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      const cleaned = parsed.filter((r) => r && !DUMMY_TESTIMONIAL_IDS.includes(r.id));
+      const cleaned = parsed.filter((r) => !isDummyTestimonial(r));
       if (cleaned.length !== parsed.length) {
         saveLocalTestimonials(cleaned);
       }
@@ -97,7 +113,25 @@ export async function deleteDummyTestimonialsFromFirebase(): Promise<number> {
       // ignore
     }
   }
-  clearAllTestimonials();
+
+  try {
+    const colRef = collection(db, "testimonials");
+    const snap = await getDocs(colRef);
+    for (const d of snap.docs) {
+      const data = d.data() as Record<string, any>;
+      const name = String(data["name"] || "").trim();
+      if (DUMMY_TESTIMONIAL_IDS.includes(d.id) || DUMMY_TESTIMONIAL_NAMES.includes(name)) {
+        await deleteDoc(doc(db, "testimonials", d.id));
+        count++;
+      }
+    }
+  } catch (err) {
+    console.warn("Failed to delete dummy testimonials from Firestore:", err);
+  }
+
+  const cached = getLocalTestimonials();
+  const cleaned = cached.filter((r) => !isDummyTestimonial(r));
+  saveLocalTestimonials(cleaned);
   return count;
 }
 
@@ -234,10 +268,10 @@ export function subscribeTestimonials(
         if (!snapshot.empty) {
           const list: FirebaseTestimonial[] = [];
           snapshot.forEach((d) => {
-            if (DUMMY_TESTIMONIAL_IDS.includes(d.id)) {
+            const data = d.data() as Record<string, any>;
+            if (isDummyTestimonial({ id: d.id, name: data["name"] })) {
               return;
             }
-            const data = d.data() as Record<string, any>;
             list.push({
               id: d.id,
               name: String(data["name"] || "Anonymous Student"),
