@@ -192,39 +192,47 @@ function TrustAndValuesPage() {
       </section>
 
       {/* Section 3 — Authentic Feedback Policy */}
-      <section className="bg-background py-6 sm:py-8 border-b border-slate-200/80">
-        <div className="container-site max-w-4xl">
+      <section className="bg-background py-6 sm:py-8 lg:py-10 border-b border-slate-200/80">
+        <div className="container-site">
           <div
             data-reveal
-            className="rounded-2xl border border-blue-200/90 bg-gradient-to-br from-blue-50/80 via-white to-sky-50/50 p-6 sm:p-8 shadow-sm"
+            className="rounded-2xl sm:rounded-3xl border border-blue-200/90 bg-gradient-to-br from-blue-50/80 via-white to-sky-50/50 p-6 sm:p-8 lg:p-10 shadow-sm"
           >
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-700 mb-2">
-              <ShieldCheck className="size-4 text-blue-600" />
-              <span>Authentic Reviews Policy</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              Testimonials Must Be Genuine, Attributable &amp; Approved
-            </h2>
-            <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
-              At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews, or invent unverified statistics. We believe that true credibility comes from transparent educational delivery and verifiable student progress.
-            </p>
-            <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
-              As our current cohort learners complete their capstone defenses and transition into the workforce, verified and attributable student feedback will be published here with full authorization.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3 pt-4 border-t border-blue-100">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                <CheckCircle2 className="size-4 text-emerald-600" />
-                <span>Zero Fabricated Quotes</span>
+            <div className="grid gap-6 lg:grid-cols-[1.15fr_1fr] lg:gap-10 items-center">
+              {/* Left Column: Eyebrow, Title & Verification Pills */}
+              <div>
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/60 px-3 py-1 rounded-full mb-3">
+                  <ShieldCheck className="size-4 text-blue-600" />
+                  <span>Authentic Reviews Policy</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                  Testimonials Must Be Genuine, Attributable &amp; Approved
+                </h2>
+
+                <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2.5 pt-5 border-t border-blue-100/80">
+                  <div className="flex items-center gap-2 rounded-xl bg-white/90 border border-slate-200/80 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-2xs">
+                    <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                    <span>Zero Fabricated Quotes</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-white/90 border border-slate-200/80 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-2xs">
+                    <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                    <span>Attributable Alumni Feedback</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-xl bg-white/90 border border-slate-200/80 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-2xs">
+                    <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                    <span>Verified Capstones</span>
+                  </div>
+                </div>
               </div>
-              <span className="text-slate-300">•</span>
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                <CheckCircle2 className="size-4 text-emerald-600" />
-                <span>Attributable Alumni Feedback</span>
-              </div>
-              <span className="text-slate-300">•</span>
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                <CheckCircle2 className="size-4 text-emerald-600" />
-                <span>Verified Capstones</span>
+
+              {/* Right Column: Narrative paragraphs */}
+              <div className="space-y-4 lg:border-l lg:border-blue-100 lg:pl-10">
+                <p className="text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
+                  At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews, or invent unverified statistics. We believe that true credibility comes from transparent educational delivery and verifiable student progress.
+                </p>
+                <p className="text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
+                  As our current cohort learners complete their capstone defenses and transition into the workforce, verified and attributable student feedback will be published here with full authorization.
+                </p>
               </div>
             </div>
           </div>
