@@ -6,6 +6,7 @@ import {
   Menu,
   MessageCircle,
   Phone,
+  Radio,
   ShieldCheck,
   TrendingUp,
   X,
@@ -22,7 +23,29 @@ import {
   type FirebaseCourse,
 } from "@/services/courseService";
 
-// All 9 navigation links
+// Core courses displayed in navbar courses dropdown
+const coreCourseNavItems = [
+  {
+    label: "Digital Marketing",
+    to: "/courses/digital-marketing",
+    icon: TrendingUp,
+    iconColor: "bg-rose-50 text-rose-600 border-rose-100",
+  },
+  {
+    label: "Programmatic Advertising",
+    to: "/courses/programmatic-advertising",
+    icon: Radio,
+    iconColor: "bg-sky-50 text-sky-600 border-sky-100",
+  },
+  {
+    label: "Cyber Security",
+    to: "/courses/cyber-security",
+    icon: ShieldCheck,
+    iconColor: "bg-amber-50 text-amber-600 border-amber-100",
+  },
+];
+
+// All navigation links
 const headerNavLinks = navLinks;
 
 export function Header() {
@@ -65,25 +88,25 @@ export function Header() {
   }, []);
 
   const activeCourses = useMemo(() => {
-    return liveCourses.filter((c) => c.active !== false);
+    return liveCourses.filter(
+      (c) =>
+        c.active !== false &&
+        c.id !== "full-stack-java" &&
+        c.slug !== "full-stack-java" &&
+        !c.title?.toLowerCase().includes("full stack java") &&
+        c.id !== "testing",
+    );
   }, [liveCourses]);
 
   const isTechOrDev = (c: FirebaseCourse) => {
     const text = `${c.title} ${c.slug} ${c.category}`.toLowerCase();
     return (
       c.category === "Cyber Security" ||
-      c.category === "Web Development" ||
-      c.category === "Data Analytics" ||
       text.includes("security") ||
       text.includes("hacking") ||
       text.includes("cyber") ||
-      text.includes("java") ||
-      text.includes("python") ||
-      text.includes("developer") ||
-      text.includes("development") ||
-      text.includes("full stack") ||
-      text.includes("cloud") ||
-      text.includes("devops")
+      text.includes("soc") ||
+      text.includes("ethical")
     );
   };
 
@@ -315,10 +338,10 @@ export function Header() {
           {/* Desktop Navigation Links (Responsive spacing & Premium Active Pills) */}
           <nav aria-label="Main navigation" className="hidden items-center gap-0.5 xl:gap-1 lg:flex h-full">
             {headerNavLinks.map((link) => {
-              if (link.label === "Programs") {
+              if (link.label === "Courses" || link.label === "Programs") {
                 return (
                   <div key={link.to} className="relative group/nav h-full flex items-center">
-                    {/* Programs Dropdown Trigger Button */}
+                    {/* Courses Dropdown Trigger Button */}
                     <Link
                       to={link.to}
                       className={cn(
@@ -338,108 +361,40 @@ export function Header() {
                       </span>
                     </Link>
 
-                    {/* PROGRAMS MEGA MENU DROPDOWN (Centered & Constrained to never overflow) */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[840px] xl:w-[900px] max-w-[calc(100vw-2rem)] opacity-0 translate-y-2 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-300 ease-out z-50 pointer-events-none group-hover/nav:pointer-events-auto">
-                      <div className="relative rounded-3xl border border-slate-200 bg-white p-5 xl:p-6 shadow-[0_25px_80px_-15px_rgba(15,23,42,0.22),0_0_0_1px_rgba(226,232,240,0.9)] ring-1 ring-black/[0.03] overflow-hidden">
-                        {/* Subtle Top Accent Hairline */}
-                        <div className="absolute top-0 inset-x-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 z-20" />
+                    {/* COURSES DROPDOWN: ONLY Digital Marketing | Programmatic Advertising | Cyber Security */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-72 sm:w-80 opacity-0 translate-y-2 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-300 ease-out z-50 pointer-events-none group-hover/nav:pointer-events-auto">
+                      <div className="relative rounded-2xl border border-slate-200/90 bg-white/98 backdrop-blur-xl p-2 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.18)] ring-1 ring-black/[0.04] overflow-hidden">
+                        {/* Top Accent Hairline */}
+                        <div className="absolute top-0 inset-x-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-400" />
 
-                        {/* Mega Menu Top Header */}
-                        <div className="flex items-center justify-between pb-3 mb-3.5 border-b border-slate-100 relative z-10">
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="relative flex size-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full size-2 bg-blue-600"></span>
-                              </span>
-                              <span className="block text-[11.5px] font-black uppercase tracking-[0.15em] text-blue-600">
-                                Career-Focused Training Tracks
-                              </span>
-                            </div>
-                            <p className="text-[12px] text-slate-500 font-normal mt-0.5">
-                              Curricula crafted for direct IT hiring &amp; placement
-                            </p>
-                          </div>
-                          <Link
-                            to="/courses"
-                            className="group/all inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50/80 hover:bg-blue-100 text-xs font-bold text-blue-700 transition-all duration-200 border border-blue-100/80 hover:border-blue-200 shadow-2xs whitespace-nowrap"
-                          >
-                            <span>All Programs Directory</span>
-                            <ArrowRight className="size-3.5 group-hover/all:translate-x-0.5 transition-transform" />
-                          </Link>
-                        </div>
-
-                        {/* Two Columns: Marketing vs Security */}
-                        <div className="grid grid-cols-2 gap-5 xl:gap-6 relative z-10">
-                          {/* Column 1: Digital Marketing Suite */}
-                          <div className="space-y-1.5">
-                            <div className="flex items-center justify-between pb-2 mb-1.5 border-b border-slate-100">
-                              <div className="flex items-center gap-2">
-                                <span className="grid size-6 place-items-center rounded-lg bg-blue-50 text-blue-600 border border-blue-100 shadow-2xs">
-                                  <TrendingUp className="size-3.5" />
-                                </span>
-                                <span className="text-[11.5px] font-black uppercase tracking-wider text-slate-800">
-                                  Digital Marketing Suite
-                                </span>
-                              </div>
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                {marketingCourses.length} Tracks
-                              </span>
-                            </div>
-
-                            <div className="space-y-1">
-                              {marketingCourses.slice(0, 3).map((c) => (
-                                <Link
-                                  key={c.slug}
-                                  to="/courses/$slug"
-                                  params={{ slug: c.slug }}
-                                  className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-gradient-to-r hover:from-blue-50/70 hover:via-indigo-50/30 hover:to-transparent border border-transparent hover:border-blue-100 transition-all duration-200"
-                                >
-                                  <span className="text-[13px] font-bold text-slate-850 group-hover/item:text-blue-600 transition-colors leading-snug pr-2">
-                                    {c.title}
+                        <div className="space-y-1 pt-1">
+                          {coreCourseNavItems.map((item) => {
+                            const ItemIcon = item.icon;
+                            return (
+                              <Link
+                                key={item.to}
+                                to={item.to}
+                                className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-gradient-to-r hover:from-blue-50/80 hover:via-indigo-50/40 hover:to-transparent border border-transparent hover:border-blue-100 transition-all duration-200"
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <span
+                                    className={cn(
+                                      "grid size-8.5 place-items-center rounded-xl border transition-all duration-200 group-hover/item:scale-105 shadow-2xs shrink-0",
+                                      item.iconColor,
+                                    )}
+                                  >
+                                    <ItemIcon className="size-4" />
                                   </span>
-                                  <span className="size-6 rounded-full bg-slate-100/80 group-hover/item:bg-blue-600 text-slate-400 group-hover/item:text-white grid place-items-center transition-all duration-200 shrink-0 shadow-2xs group-hover/item:shadow-sm group-hover/item:scale-105">
-                                    <ArrowUpRight className="size-3.5 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-transform" />
+                                  <span className="text-[13.5px] font-bold text-slate-800 group-hover/item:text-blue-600 transition-colors leading-snug">
+                                    {item.label}
                                   </span>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Column 2: Tech, Cyber Security & Development */}
-                          <div className="space-y-1.5">
-                            <div className="flex items-center justify-between pb-2 mb-1.5 border-b border-slate-100">
-                              <div className="flex items-center gap-2">
-                                <span className="grid size-6 place-items-center rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-2xs">
-                                  <ShieldCheck className="size-3.5" />
+                                </div>
+                                <span className="size-6 rounded-full bg-slate-100/80 group-hover/item:bg-blue-600 text-slate-400 group-hover/item:text-white grid place-items-center transition-all duration-200 shrink-0 shadow-2xs group-hover/item:shadow-sm group-hover/item:scale-105">
+                                  <ArrowUpRight className="size-3.5 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-transform" />
                                 </span>
-                                <span className="text-[11.5px] font-black uppercase tracking-wider text-slate-800">
-                                  Tech, Security &amp; Development
-                                </span>
-                              </div>
-                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                {securityCourses.length} Tracks
-                              </span>
-                            </div>
-
-                            <div className="space-y-1">
-                              {securityCourses.slice(0, 3).map((c) => (
-                                <Link
-                                  key={c.slug}
-                                  to="/courses/$slug"
-                                  params={{ slug: c.slug }}
-                                  className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-gradient-to-r hover:from-emerald-50/70 hover:via-teal-50/30 hover:to-transparent border border-transparent hover:border-emerald-100 transition-all duration-200"
-                                >
-                                  <span className="text-[13px] font-bold text-slate-850 group-hover/item:text-emerald-700 transition-colors leading-snug pr-2">
-                                    {c.title}
-                                  </span>
-                                  <span className="size-6 rounded-full bg-slate-100/80 group-hover/item:bg-emerald-600 text-slate-400 group-hover/item:text-white grid place-items-center transition-all duration-200 shrink-0 shadow-2xs group-hover/item:shadow-sm group-hover/item:scale-105">
-                                    <ArrowUpRight className="size-3.5 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-transform" />
-                                  </span>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
+                              </Link>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -548,7 +503,7 @@ export function Header() {
             {/* Mobile Nav Links */}
             <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
               {headerNavLinks.map((link) => {
-                if (link.label === "Programs") {
+                if (link.label === "Courses" || link.label === "Programs") {
                   return (
                     <div key={link.to} className="space-y-1 rounded-xl bg-slate-50/60 p-1">
                       <div className="flex items-center justify-between">
@@ -564,7 +519,7 @@ export function Header() {
                         <button
                           type="button"
                           onClick={() => setMobileCoursesOpen((v) => !v)}
-                          aria-label="Toggle programs list"
+                          aria-label="Toggle courses list"
                           className="px-3 py-2 text-slate-500 hover:text-slate-900"
                         >
                           <ChevronDown
@@ -578,25 +533,29 @@ export function Header() {
 
                       {mobileCoursesOpen && (
                         <div className="space-y-1.5 pt-1.5 pb-2 px-2">
-                          <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400 px-1">
-                            Select Track
-                          </span>
-                          {activeCourses.map((c) => (
-                            <Link
-                              key={c.slug}
-                              to="/courses/$slug"
-                              params={{ slug: c.slug }}
-                              className="flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                            >
-                              <div className="pr-2 min-w-0">
-                                <span className="block font-bold text-slate-800 truncate">{c.title}</span>
-                                <span className="text-[10px] text-slate-400">
-                                  {c.category} • {c.duration}
-                                </span>
-                              </div>
-                              <ArrowRight className="size-3 text-slate-400 shrink-0" />
-                            </Link>
-                          ))}
+                          {coreCourseNavItems.map((item) => {
+                            const ItemIcon = item.icon;
+                            return (
+                              <Link
+                                key={item.to}
+                                to={item.to}
+                                className="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-blue-50 hover:text-blue-600 border border-slate-200/60 transition-colors shadow-2xs"
+                              >
+                                <div className="flex items-center gap-2.5 min-w-0">
+                                  <span
+                                    className={cn(
+                                      "grid size-7 place-items-center rounded-lg border shadow-2xs shrink-0",
+                                      item.iconColor,
+                                    )}
+                                  >
+                                    <ItemIcon className="size-3.5" />
+                                  </span>
+                                  <span className="block font-bold text-slate-800 text-[13px]">{item.label}</span>
+                                </div>
+                                <ArrowRight className="size-3.5 text-slate-400 shrink-0" />
+                              </Link>
+                            );
+                          })}
                         </div>
                       )}
                     </div>

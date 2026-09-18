@@ -6,6 +6,7 @@ import {
   ChevronRight,
   FileSearch,
   GraduationCap,
+  PlayCircle,
   Rocket,
   Sparkles,
   TrendingUp,
@@ -41,11 +42,11 @@ const stepsData: AscentStep[] = [
     step: "02",
     level: "STEP 2 · THE ASCENT",
     altitude: "Elevation: 40%",
-    tag: "Hands-on Practice",
-    title: "Guided Practice",
-    text: "Reinforce concepts through hands-on exercises, guided workflows, and interactive lab sessions that build muscle memory.",
-    highlights: ["Interactive Labs", "Guided Exercises", "Workflow Drills"],
-    icon: "Wrench",
+    tag: "Real-World Action",
+    title: "See It In Action",
+    text: "Watch how the concept is applied in a real-world scenario with live demonstrations and practical walkthroughs.",
+    highlights: ["Live Demonstrations", "Real Scenarios", "Workflow Teardowns"],
+    icon: "PlayCircle",
   },
   {
     step: "03",
@@ -81,6 +82,7 @@ const stepsData: AscentStep[] = [
 
 const iconComponents: Record<string, React.ComponentType<{ className?: string }>> = {
   BookOpen,
+  PlayCircle,
   Wrench,
   Rocket,
   FileSearch,

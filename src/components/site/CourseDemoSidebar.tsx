@@ -47,17 +47,16 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const [liveCourseOptions, setLiveCourseOptions] = useState<Array<{ id: string; title: string }>>(() => {
-    if (typeof window !== "undefined") {
-      const cached = getLocalCachedCourses();
-      if (cached.length > 0) {
-        return cached.map((c) => ({ id: c.id, title: c.title }));
-      }
-    }
-    return courses.map((c) => ({ id: c.id, title: c.title }));
-  });
+  const [liveCourseOptions, setLiveCourseOptions] = useState<Array<{ id: string; title: string }>>(
+    () => courses.map((c) => ({ id: c.id, title: c.title }))
+  );
 
   useEffect(() => {
+    const cached = getLocalCachedCourses();
+    if (cached && cached.length > 0) {
+      setLiveCourseOptions(cached.map((c) => ({ id: c.id, title: c.title })));
+    }
+
     const unsub = subscribeCourses((list) => {
       if (list && list.length > 0) {
         setLiveCourseOptions(

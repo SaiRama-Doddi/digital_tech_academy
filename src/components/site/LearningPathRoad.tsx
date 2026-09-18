@@ -6,6 +6,7 @@ import {
   Gamepad2,
   GraduationCap,
   Layers,
+  PlayCircle,
   Rocket,
   Sparkles,
 } from "lucide-react";
@@ -53,10 +54,10 @@ const learningSteps: LearningStepItem[] = [
   },
   {
     step: "02",
-    title: "Practice",
+    title: "See It In Action",
     description:
-      "Reinforce concepts through guided exercises and practical activities.",
-    tagline: "Turn knowledge into ability",
+      "Watch how the concept is applied in a real-world scenario.",
+    tagline: "Watch real-world application",
     colorName: "purple",
     theme: {
       text: "text-purple-600",
@@ -68,7 +69,7 @@ const learningSteps: LearningStepItem[] = [
       shadowHover: "hover:shadow-purple-500/15",
       orbFill: "#7c3aed",
     },
-    icon: Gamepad2,
+    icon: PlayCircle,
   },
   {
     step: "03",

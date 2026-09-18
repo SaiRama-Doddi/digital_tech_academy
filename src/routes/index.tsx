@@ -47,7 +47,7 @@ import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { homeFaqs, practicalTraining, whoIsForAudience, careerReadinessPillars } from "@/data/content";
+import { homeFaqs, practicalTraining, whoIsForAudience } from "@/data/content";
 import { courses } from "@/data/courses";
 import { subscribeCourses, type FirebaseCourse } from "@/services/courseService";
 
@@ -952,7 +952,6 @@ function WhyDigitechademy() {
               eyebrow="WHY DIGITECHADEMY"
               title="WHAT MAKES DIGITECHADEMY DIFFERENT?"
               singleLine={false}
-              description="DIGITECHADEMY bridges the gap between academic theory and technical employability through practical, mentor-led training across Cyber Security, Digital Marketing, and Programmatic Advertising."
               align="left"
             />
           </div>
@@ -1975,40 +1974,6 @@ function CareerReadiness() {
               </span>
             </div>
           </div>
-        </div>
-
-        {/* 6 Career Readiness Pillars */}
-        <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {careerReadinessPillars.map((pillar, index) => (
-            <div
-              key={pillar.title}
-              data-reveal
-              className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:border-sky-400/40 hover:bg-white/[0.07] hover:-translate-y-0.5"
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="grid size-11 place-items-center rounded-xl bg-blue-500/10 text-sky-400 border border-blue-400/20 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                    <Icon name={pillar.icon} className="size-5.5" />
-                  </span>
-                  <span className="text-xs font-black text-sky-400/80 bg-sky-950/60 border border-sky-800/40 px-2 py-0.5 rounded-md">
-                    0{index + 1}
-                  </span>
-                </div>
-
-                <h4 className="mt-4 text-base font-bold text-white leading-snug">
-                  {pillar.title}
-                </h4>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal text-justify">
-                  {pillar.text}
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3.5 border-t border-white/10 flex items-center gap-1.5 text-xs text-sky-300 font-medium">
-                <CheckCircle2 className="size-3.5 text-emerald-400 shrink-0" />
-                <span>Verified Career Standard</span>
-              </div>
-            </div>
-          ))}
         </div>
 
         {/* Closing Line & CTA Banner */}

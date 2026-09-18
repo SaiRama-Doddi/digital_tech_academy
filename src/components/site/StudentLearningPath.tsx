@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   ChevronRight,
   MessageSquareCheck,
+  PlayCircle,
   Rocket,
   Sparkles,
   Terminal,
@@ -91,11 +92,11 @@ const stages: StageData[] = [
     imageAlt: "Students learning core digital marketing and cybersecurity principles in a modern training room",
   },
   {
-    id: "practice",
+    id: "action",
     step: "02",
-    title: "Practice",
-    subtitle: "Hands-on Sandbox",
-    badge: "Interactive Labs",
+    title: "See It In Action",
+    subtitle: "Real-World Scenarios",
+    badge: "Live Demonstrations",
     color: {
       primary: "purple",
       text: "text-purple-400",
@@ -103,33 +104,33 @@ const stages: StageData[] = [
       gradient: "from-purple-400 to-violet-600",
       glow: "from-purple-500/20 via-violet-600/10 to-transparent",
     },
-    icon: Terminal,
+    icon: PlayCircle,
     description:
-      "Step into guided virtual sandboxes to run packet captures, configure conversion tracking tags, and build authentic practical muscle memory.",
+      "Watch how the concept is applied in a real-world scenario.",
     highlights: [
-      "Hands-on terminal drills and live packet capture sessions",
-      "Tracking pixel setup and error troubleshooting",
+      "Live walkthroughs of authentic industry scenarios & live environments",
+      "Observe expert decision-making, configuration, and troubleshooting",
     ],
     competencies: [
       {
-        title: "Live Packet Inspection",
-        desc: "Wireshark packet capture analysis, protocol dissection, and suspicious traffic isolation.",
+        title: "Live Scenario Demonstrations",
+        desc: "Observe how seasoned mentors configure campaigns, inspect live network traffic, and diagnose real-world issues.",
       },
       {
-        title: "Tag Engineering & Pixels",
-        desc: "Google Tag Manager container setup, custom DOM listeners, and server-side tracking.",
+        title: "Real-World Problem Solving",
+        desc: "Watch practical problem-solving in action across ad platforms, tag architecture, and defensive monitors.",
       },
       {
-        title: "Sandbox Exploitation & Scans",
-        desc: "Burp Suite proxy interception, automated vulnerability crawling, and parameter fuzzing.",
+        title: "Industry Workflow Teardowns",
+        desc: "Break down real production briefs and technical workflows before executing your own capstone projects.",
       },
     ],
-    tools: ["Wireshark", "Google Tag Manager", "Burp Suite", "Ads Sandbox", "Nmap"],
-    outputTitle: "Interactive Lab Terminal",
-    outputBadge: "Active Sandbox Session",
-    outputStat: "24+ Completed Drills",
+    tools: ["Live Demos", "DV360", "Google Tag Manager", "Wireshark", "Burp Suite"],
+    outputTitle: "Live Scenario Walkthrough",
+    outputBadge: "Real-World Demo Cleared",
+    outputStat: "18+ Scenario Teardowns",
     image: stagePracticeImg,
-    imageAlt: "Professional running hands-on packet analysis and conversion tag debugging drills in a tech lab",
+    imageAlt: "Watch how concepts are applied in real-world scenarios with live mentor walkthroughs",
   },
   {
     id: "build",
@@ -335,7 +336,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 </span>
                 <p
                   className={cn(
-                    "text-[8.5px] xs:text-[9.5px] sm:text-[13px] font-bold tracking-tight leading-tight sm:leading-snug mt-0 sm:mt-0.5 whitespace-nowrap",
+                    "text-[8px] xs:text-[9px] sm:text-[12px] md:text-[13px] font-bold tracking-tight leading-tight sm:leading-snug mt-0 sm:mt-0.5 break-words line-clamp-2 sm:line-clamp-none sm:whitespace-nowrap",
                     isActive ? "text-white" : "text-slate-300 group-hover:text-white",
                   )}
                 >

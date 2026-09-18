@@ -111,7 +111,14 @@ export function getLocalCachedCourses(): FirebaseCourse[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      return parsed;
+      return parsed.filter(
+        (c: any) =>
+          c &&
+          c.id !== "full-stack-java" &&
+          c.slug !== "full-stack-java" &&
+          !c.title?.toLowerCase().includes("full stack java") &&
+          c.id !== "testing",
+      );
     }
     return [];
   } catch {
@@ -263,7 +270,13 @@ export function subscribeCourses(
               image: data['image'] || "",
               createdAt: data['createdAt'] ? String(data['createdAt']) : Date.now(),
             };
-          });
+          }).filter(
+            (c) =>
+              c.id !== "full-stack-java" &&
+              c.slug !== "full-stack-java" &&
+              !c.title?.toLowerCase().includes("full stack java") &&
+              c.id !== "testing",
+          );
           saveLocalCachedCourses(list);
           onUpdate(list);
         } else {

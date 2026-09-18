@@ -2,6 +2,7 @@ import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import advancedSeoImg from "@/assets/course-advanced-seo.jpg";
 import ethicalHackingImg from "@/assets/course-ethical-hacking.jpg";
+import programmaticAdvertisingImg from "@/assets/course-programmatic-advertising.jpg";
 import arjunImg from "@/assets/instructor-arjun.jpg";
 import priyaImg from "@/assets/instructor-priya.jpg";
 
@@ -363,7 +364,7 @@ export const courses: Course[] = [
     level: "Beginner to Advanced",
     mode: "Classroom & Live Online",
     certificate: "Course completion certificate",
-    image: advancedSeoImg,
+    image: programmaticAdvertisingImg,
     highlights: [
       "DV360 & CM360",
       "YouTube & Video Ads",

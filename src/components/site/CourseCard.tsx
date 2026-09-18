@@ -14,6 +14,51 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import type { Course } from "@/data/courses";
+import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
+import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
+import advancedSeoImg from "@/assets/course-advanced-seo.jpg";
+import ethicalHackingImg from "@/assets/course-ethical-hacking.jpg";
+import programmaticAdvertisingImg from "@/assets/course-programmatic-advertising.jpg";
+
+export function getCourseImage(course: any): string {
+  if (course?.image && typeof course.image === "string" && course.image.length > 5) {
+    return course.image;
+  }
+
+  const slug = (course?.slug || "").toLowerCase();
+  const title = (course?.title || "").toLowerCase();
+  const category = (course?.category || "").toLowerCase();
+
+  if (slug.includes("ethical") || title.includes("ethical") || title.includes("hacking")) {
+    return ethicalHackingImg;
+  }
+  if (
+    slug.includes("programmatic") ||
+    title.includes("programmatic") ||
+    title.includes("adtech") ||
+    title.includes("dsp")
+  ) {
+    return programmaticAdvertisingImg;
+  }
+  if (slug.includes("seo") || title.includes("seo") || title.includes("search")) {
+    return advancedSeoImg;
+  }
+  if (
+    category.includes("cyber") ||
+    category.includes("security") ||
+    slug.includes("cyber") ||
+    slug.includes("security") ||
+    title.includes("cyber") ||
+    title.includes("security")
+  ) {
+    return cyberSecurityImg;
+  }
+  if (category.includes("market") || slug.includes("market") || title.includes("market")) {
+    return digitalMarketingImg;
+  }
+
+  return digitalMarketingImg;
+}
 
 // Helper to determine the theme styling based on category and title
 function getCourseTheme(category = "", title = "") {
@@ -137,6 +182,7 @@ export function CourseCard({ course }: { course: Course | any }) {
   const navigate = useNavigate();
   const theme = getCourseTheme(course.category, course.title);
   const IconComponent = theme.icon;
+  const courseImage = getCourseImage(course);
 
   return (
     <article
@@ -159,62 +205,73 @@ export function CourseCard({ course }: { course: Course | any }) {
         theme.borderColor,
       )}
     >
-      {/* Top Meta Bar: Category Pill & Live Badge */}
-      <div className="flex items-center justify-between gap-2 mb-3">
-        <span
-          className={cn(
-            "text-[10px] sm:text-[10.5px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border shadow-2xs",
-            theme.badgeBg,
-          )}
-        >
-          {course.category || "Certification"}
-        </span>
-        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/90 border border-slate-200/80 text-[10px] font-bold text-slate-600 shadow-2xs">
-          <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Live Online</span>
-        </div>
-      </div>
+      {/* Course Image Header with Floating Badges */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-900 shadow-xs mb-3.5 shrink-0">
+        <img
+          src={courseImage}
+          alt={course.title}
+          loading="lazy"
+          className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-black/30" />
 
-      {/* Center Area: Circular Icon Badge, Title, Description & Highlights */}
-      <div className="flex flex-col items-center flex-1 my-auto py-1 w-full">
-        {/* Circular Colored Icon Badge */}
+        {/* Floating Category & Mode Badges */}
+        <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
+          <span
+            className={cn(
+              "text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border shadow-xs backdrop-blur-md bg-white/95",
+              theme.badgeBg,
+            )}
+          >
+            {course.category || "Certification"}
+          </span>
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-slate-200/80 text-[9.5px] font-bold text-slate-700 shadow-xs backdrop-blur-md">
+            <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Live Online</span>
+          </div>
+        </div>
+
+        {/* Subtle Theme Icon Accent Floating at Bottom-Right of Image */}
         <div
           className={cn(
-            "size-12 sm:size-14 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-xs shrink-0",
+            "absolute bottom-2.5 right-2.5 size-7 rounded-lg flex items-center justify-center shadow-md backdrop-blur-md transition-transform duration-300 group-hover:scale-110",
             theme.iconBg,
           )}
         >
-          <IconComponent className="size-6 sm:size-7" aria-hidden="true" />
+          <IconComponent className="size-3.5" aria-hidden="true" />
         </div>
+      </div>
 
-        {/* Course Title - Fixed height container for consistent horizontal baseline alignment */}
-        <div className="mt-3 sm:mt-3.5 min-h-[44px] sm:min-h-[48px] flex items-center justify-center text-center w-full px-1">
-          <h3 className="font-bold text-slate-900 text-xs sm:text-sm lg:text-[0.95rem] leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
+      {/* Card Body: Title, Description & Highlights */}
+      <div className="flex flex-col flex-1 w-full">
+        {/* Course Title */}
+        <div className="min-h-[44px] flex items-center w-full">
+          <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-blue-600 transition-colors line-clamp-2 text-left">
             {course.title}
           </h3>
         </div>
 
-        {/* Subtitle / Topics / Description - Fully Justified text with consistent alignment */}
-        <div className="mt-2 w-full min-h-[58px] sm:min-h-[62px] flex items-start px-0.5">
-          <p className="w-full text-[11px] sm:text-xs text-slate-600 leading-relaxed text-justify line-clamp-3">
+        {/* Subtitle / Topics / Description */}
+        <div className="mt-1.5 w-full min-h-[54px] flex items-start">
+          <p className="w-full text-xs text-slate-600 leading-relaxed text-justify line-clamp-3 font-normal">
             {course.description}
           </p>
         </div>
 
         {/* Learning Journey Strip (if present) */}
         {course.learningJourney && (
-          <div className="mt-2.5 w-full rounded-lg bg-white/90 border border-slate-200/80 px-2 py-1.5 text-center">
-            <span className="block text-[8.5px] font-black uppercase tracking-wider text-slate-400">
+          <div className="mt-2.5 w-full rounded-lg bg-white/90 border border-slate-200/80 px-2 py-1 text-center">
+            <span className="block text-[8px] font-black uppercase tracking-wider text-slate-400">
               Learning Journey
             </span>
-            <span className="block text-[10px] font-bold text-blue-700 truncate mt-0.5">
+            <span className="block text-[9.5px] font-bold text-blue-700 truncate mt-0.5">
               {course.learningJourney}
             </span>
           </div>
         )}
 
-        {/* Skill Chips - Aligned horizontal baseline */}
-        <div className="mt-2.5 w-full min-h-[24px] flex flex-wrap items-center justify-center gap-1.5">
+        {/* Skill Chips */}
+        <div className="mt-2.5 w-full min-h-[24px] flex flex-wrap items-center gap-1.5">
           {course.highlights && course.highlights.length > 0 ? (
             course.highlights.slice(0, 3).map((h: string, idx: number) => (
               <span
@@ -232,7 +289,7 @@ export function CourseCard({ course }: { course: Course | any }) {
         </div>
       </div>
 
-      {/* Bottom Metadata & Action Row - Aligned flush to bottom */}
+      {/* Bottom Metadata & Action Row */}
       <div className="mt-4 pt-3 border-t border-slate-100/90 flex items-center justify-between w-full">
         <div className="flex items-center gap-2 text-[10px] sm:text-xs font-semibold text-slate-500">
           <span className="flex items-center gap-1">

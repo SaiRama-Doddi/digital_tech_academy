@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  CheckCircle2,
   ChevronRight,
   Instagram,
   Linkedin,
@@ -10,8 +9,6 @@ import {
   MessageCircle,
   Phone,
   PhoneCall,
-  Send,
-  Sparkles,
   Twitter,
   Youtube,
 } from "lucide-react";
@@ -27,18 +24,13 @@ import {
 } from "@/services/courseService";
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const [liveCourses, setLiveCourses] = useState<Array<{ id: string; slug: string; title: string; active?: boolean }>>(() => {
-    if (typeof window !== "undefined") {
-      const cached = getLocalCachedCourses();
-      if (cached.length > 0) return cached;
-    }
-    return courses;
-  });
+  const [liveCourses, setLiveCourses] = useState<Array<{ id: string; slug: string; title: string; active?: boolean }>>(courses);
 
   useEffect(() => {
+    const cached = getLocalCachedCourses();
+    if (cached && cached.length > 0) {
+      setLiveCourses(cached);
+    }
     const unsub = subscribeCourses((list) => {
       if (list && list.length > 0) {
         setLiveCourses(list);
@@ -46,13 +38,6 @@ export function Footer() {
     });
     return () => unsub();
   }, []);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubscribed(true);
-    setEmail("");
-  };
 
   return (
     <footer className="relative bg-[#020712] text-slate-300 border-t border-sky-500/20 overflow-hidden">
@@ -94,51 +79,6 @@ export function Footer() {
               <p className="mt-2 text-xs font-bold text-sky-300 tracking-wide">
                 LEARN • GROW • ACHIEVE
               </p>
-            </div>
-
-            {/* VIP Newsletter Box */}
-            <div className="rounded-2xl border border-sky-500/20 bg-gradient-to-b from-[#081836]/90 to-[#040e21]/90 p-4 sm:p-5 shadow-xl backdrop-blur-md relative overflow-hidden">
-              <div className="flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-wider text-sky-300 mb-1">
-                <Sparkles className="size-3 text-amber-400" />
-                <span>Industry Intelligence</span>
-              </div>
-              <h4 className="text-sm font-bold text-white tracking-wide">
-                Get Practical Career Insights
-              </h4>
-              <p className="mt-1 text-xs text-slate-300 leading-relaxed font-normal">
-                Free cheatsheets, curriculum updates, and interview roadmaps delivered weekly.
-              </p>
-
-              {subscribed ? (
-                <div className="mt-3.5 rounded-xl bg-emerald-500/10 border border-emerald-400/30 px-3.5 py-2.5 text-xs font-semibold text-emerald-300 flex items-center gap-2">
-                  <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                  <span>Thank you! You're subscribed to the weekly dispatch.</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="mt-3.5 flex gap-2">
-                  <div className="relative flex-1">
-                    <Mail
-                      className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-sky-400"
-                      aria-hidden="true"
-                    />
-                    <input
-                      type="email"
-                      required
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="h-10 w-full rounded-xl border border-sky-500/25 bg-[#091d3d] pl-9 pr-3 text-xs text-white placeholder:text-slate-400 transition-all focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 text-xs font-bold text-white shadow-md shadow-sky-500/20 transition-all duration-200 hover:brightness-110 active:scale-95 cursor-pointer shrink-0"
-                  >
-                    <span>Subscribe</span>
-                    <Send className="size-3" aria-hidden="true" />
-                  </button>
-                </form>
-              )}
             </div>
 
             {/* Social Media Pills */}

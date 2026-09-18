@@ -30,7 +30,7 @@ export const whyChooseUs = [
 
 export const methodology = [
   { step: "01", title: "Learn", text: "Understand the principles, terminology, frameworks, and tools behind each subject." },
-  { step: "02", title: "Practice", text: "Reinforce concepts through guided exercises and practical activities." },
+  { step: "02", title: "See It In Action", text: "Watch how the concept is applied in a real-world scenario." },
   { step: "03", title: "Build", text: "Apply your learning to projects, campaigns, case studies, and realistic scenarios." },
   { step: "04", title: "Review", text: "Identify gaps, improve your work, and learn how professionals evaluate results." },
   { step: "05", title: "Progress", text: "Build a stronger portfolio of skills and move forward with greater career confidence." },
