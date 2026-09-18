@@ -101,8 +101,10 @@ export function DemoClassModal() {
       setErrorMsg("Please enter your full name.");
       return;
     }
-    if (!phone.trim() || phone.replace(/\D/g, "").length < 6) {
-      setErrorMsg("Please enter a valid phone number.");
+    const cleanPhone = phone.replace(/\D/g, "");
+    const minRequired = selectedCountry.minDigits || selectedCountry.digits;
+    if (!cleanPhone || cleanPhone.length < minRequired) {
+      setErrorMsg(`Please enter a valid ${selectedCountry.digits}-digit mobile number for ${selectedCountry.name}.`);
       return;
     }
     if (!email.trim() || !email.includes("@")) {
@@ -261,14 +263,17 @@ export function DemoClassModal() {
                       value={selectedCountry.country}
                       onChange={(e) => {
                         const found = COUNTRY_CODES.find((c) => c.country === e.target.value);
-                        if (found) setSelectedCountry(found);
+                        if (found) {
+                          setSelectedCountry(found);
+                          setPhone((prev) => prev.replace(/\D/g, "").slice(0, found.digits));
+                        }
                       }}
                       className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
                       aria-label="Country Code"
                     >
                       {COUNTRY_CODES.map((c) => (
                         <option key={`${c.country}-${c.code}`} value={c.country}>
-                          {c.name} ({c.code})
+                          {c.name} ({c.code}) - {c.digits} digits
                         </option>
                       ))}
                     </select>
@@ -281,11 +286,19 @@ export function DemoClassModal() {
                     <input
                       id="demo-phone"
                       type="tel"
+                      inputMode="numeric"
+                      maxLength={selectedCountry.digits}
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Phone number"
-                      className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-3 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                      onChange={(e) => {
+                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, selectedCountry.digits);
+                        setPhone(cleaned);
+                      }}
+                      placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
+                      className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-14 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                     />
+                    <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">
+                      {phone.length}/{selectedCountry.digits}
+                    </span>
                   </div>
                 </div>
                 <div className="relative group">

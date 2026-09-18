@@ -1,8 +1,9 @@
-import { CheckCircle2, Loader2, PhoneCall } from "lucide-react";
+import { CheckCircle2, ChevronDown, Loader2, PhoneCall } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 
 import { Btn } from "./Btn";
+import { CountryFlag, COUNTRY_CODES, type CountryCodeItem } from "./CountryFlag";
 import { callTimeOptions, courseOptions } from "@/data/content";
 import { cn } from "@/lib/utils";
 import { addEnquiryToFirebase } from "@/services/enquiryService";
@@ -16,7 +17,7 @@ const schema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^[+]?[\d\s-]{10,16}$/, { message: "Enter a valid phone number" }),
+    .min(1, { message: "Please enter your phone number" }),
   email: z
     .string()
     .trim()
@@ -43,6 +44,7 @@ export function RequestCallForm({
   compact?: boolean | undefined;
 }) {
   const [values, setValues] = useState<Values>({ ...initial, course: defaultCourse ?? "" });
+  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(COUNTRY_CODES[0]);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
@@ -54,20 +56,32 @@ export function RequestCallForm({
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const parsed = schema.safeParse(values);
+    const next: Errors = {};
     if (!parsed.success) {
-      const next: Errors = {};
       parsed.error.issues.forEach((issue) => {
         const key = issue.path[0] as keyof Values;
         if (!next[key]) next[key] = issue.message;
       });
+    }
+
+    const cleanDigits = values.phone.replace(/\D/g, "");
+    const minRequired = selectedCountry.minDigits || selectedCountry.digits;
+    if (!cleanDigits) {
+      next.phone = "Please enter your phone number";
+    } else if (cleanDigits.length < minRequired) {
+      next.phone = `Enter all ${selectedCountry.digits} digits for ${selectedCountry.name} (${cleanDigits.length}/${selectedCountry.digits})`;
+    }
+
+    if (Object.keys(next).length > 0) {
       setErrors(next);
       return;
     }
+
     setStatus("loading");
     try {
       await addEnquiryToFirebase({
         name: values.name.trim(),
-        phone: values.phone.trim(),
+        phone: `${selectedCountry.code} ${cleanDigits}`,
         email: values.email.trim(),
         course: values.course,
         callTime: values.callTime,
@@ -102,6 +116,7 @@ export function RequestCallForm({
           size="sm"
           onClick={() => {
             setValues({ ...initial, course: defaultCourse ?? "" });
+            setSelectedCountry(COUNTRY_CODES[0]);
             setStatus("idle");
           }}
         >
@@ -136,19 +151,59 @@ export function RequestCallForm({
         </Field>
 
         <Field label="Phone Number" error={errors.phone} htmlFor="rc-phone">
-          <input
-            id="rc-phone"
-            name="phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            maxLength={16}
-            value={values.phone}
-            onChange={(e) => set("phone", e.target.value)}
-            placeholder="Enter your phone number"
-            aria-invalid={Boolean(errors.phone)}
-            className={cn(fieldClass, errors.phone ? "border-accent" : "border-input")}
-          />
+          <div className="flex gap-2">
+            <div className="relative shrink-0 flex items-center">
+              <label htmlFor="rc-country" className="sr-only">
+                Country Code
+              </label>
+              <div className="h-full rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-slate-100 px-2.5 py-2 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
+                <CountryFlag country={selectedCountry.country} />
+                <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
+                <ChevronDown className="size-3 text-slate-400 shrink-0 -ml-0.5" />
+              </div>
+              <select
+                id="rc-country"
+                value={selectedCountry.country}
+                onChange={(e) => {
+                  const found = COUNTRY_CODES.find((c) => c.country === e.target.value);
+                  if (found) {
+                    setSelectedCountry(found);
+                    set("phone", values.phone.replace(/\D/g, "").slice(0, found.digits));
+                  }
+                }}
+                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
+                aria-label="Country Code"
+              >
+                {COUNTRY_CODES.map((c) => (
+                  <option key={`${c.country}-${c.code}`} value={c.country} className="text-slate-900 font-semibold">
+                    {c.name} ({c.code}) - {c.digits} digits
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="relative flex-1">
+              <input
+                id="rc-phone"
+                name="phone"
+                type="tel"
+                inputMode="numeric"
+                autoComplete="tel"
+                maxLength={selectedCountry.digits}
+                value={values.phone}
+                onChange={(e) => {
+                  const cleaned = e.target.value.replace(/\D/g, "").slice(0, selectedCountry.digits);
+                  set("phone", cleaned);
+                }}
+                placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
+                aria-invalid={Boolean(errors.phone)}
+                className={cn(fieldClass, "pr-14 font-mono", errors.phone ? "border-accent" : "border-input")}
+              />
+              <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">
+                {values.phone.length}/{selectedCountry.digits}
+              </span>
+            </div>
+          </div>
         </Field>
 
         <Field label="Email Address" error={errors.email} htmlFor="rc-email">
