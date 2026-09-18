@@ -99,6 +99,7 @@ import {
   addMentorToFirebase,
   updateMentorInFirebase,
   deleteMentorFromFirebase,
+  deleteDemoMentorsFromFirebase,
   clearAllMentorsFromFirebase,
   getDefaultMentorAvatar,
 } from "@/services/mentorService";
