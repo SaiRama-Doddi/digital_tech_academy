@@ -135,7 +135,7 @@ function ContactPage() {
 
       {/* Section 3 — Enquiry Form */}
       <section className="bg-surface">
-        <div className="container-site py-6 sm:py-8 lg:py-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+        <div className="container-site py-6 sm:py-8 lg:py-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 items-start">
           <div data-reveal="left">
             <SectionHeading
               eyebrow="ENQUIRY FORM"
@@ -185,6 +185,25 @@ function ContactPage() {
                 <Phone className="size-4" aria-hidden="true" />
                 Call Us
               </BtnAnchor>
+            </div>
+
+            {/* What to Expect Next — Balances the form height and eliminates the empty gap */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs space-y-3">
+              <h3 className="text-sm font-extrabold text-navy">What Happens Next?</h3>
+              <ul className="space-y-2.5 text-xs text-slate-600">
+                <li className="flex items-start gap-2.5">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">1</span>
+                  <span><strong>15-Minute Callback:</strong> An academic counselor connects with you during your chosen time slot.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-sky-100 text-sky-700 text-[10px] font-bold">2</span>
+                  <span><strong>Personalized Guidance:</strong> Understand curriculum details, live projects, and career opportunities.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-bold">3</span>
+                  <span><strong>Free Live Demo:</strong> Receive an invite to attend a live mentor session before enrolling.</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
