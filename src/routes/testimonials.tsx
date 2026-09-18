@@ -1,16 +1,16 @@
+import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Award,
   BookOpen,
-  Briefcase,
   CheckCircle2,
-  Cpu,
-  FileText,
   Layers,
   ShieldCheck,
   Sparkles,
   Users,
   ArrowRight,
+  Star,
+  Quote,
 } from "lucide-react";
 
 import { PageHero } from "@/components/site/PageHero";
@@ -18,21 +18,26 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { BtnLink } from "@/components/site/Btn";
 import testimonialAnanyaImg from "@/assets/testimonial-ananya.jpg";
+import {
+  type FirebaseTestimonial,
+  subscribeTestimonials,
+  isDummyTestimonial,
+} from "@/services/testimonialService";
 
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
     meta: [
-      { title: "Value & Trust Standards | DIGITECHADEMY" },
+      { title: "Student Reviews & Trust Standards | DIGITECHADEMY" },
       {
         name: "description",
         content:
-          "Our commitment to credibility, practical hands-on training, 10 dedicated mentors, 100% placement assistance, and authentic learner outcomes.",
+          "Our commitment to credibility, practical hands-on training, dedicated mentors, and authentic learner outcomes.",
       },
-      { property: "og:title", content: "Value & Trust Standards at DIGITECHADEMY" },
+      { property: "og:title", content: "Student Reviews & Trust Standards at DIGITECHADEMY" },
       {
         property: "og:description",
         content:
-          "Discover our core learning standards, lab-driven methodology, 100% placement assistance framework, and authentic feedback policy.",
+          "Discover our core learning standards, lab-driven methodology, authentic feedback policy, and verified student reviews.",
       },
       { property: "og:url", content: "/testimonials" },
     ],
@@ -93,37 +98,6 @@ const trustPillars = [
   },
 ];
 
-const placementPhases = [
-  {
-    step: "01",
-    title: "Diagnostic & Skill Mapping",
-    description:
-      "Identify individual strengths and pinpoint technical gaps against current market requirements.",
-    icon: Cpu,
-  },
-  {
-    step: "02",
-    title: "ATS Resume & Profile Rebuild",
-    description:
-      "Restructure your resume and LinkedIn presence to highlight verified capstone projects and technical proficiencies.",
-    icon: FileText,
-  },
-  {
-    step: "03",
-    title: "Technical Mock Drills",
-    description:
-      "Simulate real interview scenarios with domain mentors, receiving actionable feedback on both technical depth and communication.",
-    icon: Users,
-  },
-  {
-    step: "04",
-    title: "Ongoing Mentorship Support",
-    description:
-      "Continuous guidance and application strategies until you secure your target role in the industry.",
-    icon: Briefcase,
-  },
-];
-
 function renderQualityPillarCard(pillar: (typeof trustPillars)[number], key: string) {
   const PillarIcon = pillar.icon;
   return (
@@ -158,7 +132,111 @@ function renderQualityPillarCard(pillar: (typeof trustPillars)[number], key: str
   );
 }
 
+function TestimonialCard({ review }: { review: FirebaseTestimonial }) {
+  const initials =
+    review.name
+      .split(" ")
+      .map((n) => n[0])
+      .filter(Boolean)
+      .slice(0, 2)
+      .join("")
+      .toUpperCase() || "S";
+
+  return (
+    <div
+      data-reveal
+      className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs hover:shadow-xl hover:border-blue-400/40 hover:-translate-y-1 transition-all duration-300"
+    >
+      <div>
+        {/* Header: Avatar, Name, Role, Rating */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            {review.avatar ? (
+              <img
+                src={review.avatar}
+                alt={review.name}
+                className="size-11 rounded-full object-cover border border-slate-200 shrink-0"
+              />
+            ) : (
+              <div className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-black text-sm shrink-0 shadow-2xs">
+                {initials}
+              </div>
+            )}
+            <div className="min-w-0">
+              <h4 className="font-bold text-slate-900 text-base leading-snug truncate">
+                {review.name}
+              </h4>
+              <p className="text-xs text-slate-500 truncate">
+                {review.role && review.company
+                  ? `${review.role} • ${review.company}`
+                  : review.role || review.company || "Verified Student"}
+              </p>
+            </div>
+          </div>
+
+          {/* Star Rating */}
+          <div className="flex items-center gap-0.5 shrink-0 bg-amber-50 border border-amber-200/60 px-2 py-1 rounded-lg">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                className={`size-3.5 ${
+                  i < (review.rating || 5)
+                    ? "fill-amber-400 text-amber-400"
+                    : "fill-slate-200 text-slate-200"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Course Badge */}
+        {review.course && (
+          <div className="mt-3.5">
+            <span className="inline-block rounded-full bg-blue-50 border border-blue-100 px-2.5 py-0.5 text-[11px] font-bold text-blue-700">
+              {review.course}
+            </span>
+          </div>
+        )}
+
+        {/* Testimonial Quote */}
+        <div className="relative mt-4">
+          <Quote className="size-6 text-blue-100 absolute -top-2 -left-1 -z-0 opacity-70" />
+          <p className="relative z-10 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
+            "{review.content}"
+          </p>
+        </div>
+      </div>
+
+      {/* Footer: Verified Learner Badge & Date */}
+      <div className="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+        <div className="flex items-center gap-1.5 text-emerald-600 font-bold">
+          <CheckCircle2 className="size-3.5" />
+          <span>Verified Learner</span>
+        </div>
+        {review.createdAt && (
+          <span className="text-[11px] text-slate-400">
+            {new Date(review.createdAt).toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric",
+            })}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function TrustAndValuesPage() {
+  const [testimonials, setTestimonials] = useState<FirebaseTestimonial[]>([]);
+
+  useEffect(() => {
+    const unsub = subscribeTestimonials((data) => {
+      const valid = data.filter((t) => !isDummyTestimonial(t));
+      setTestimonials(valid);
+    });
+    return () => unsub();
+  }, []);
+
   return (
     <SiteLayout>
       {/* Section 1 — Hero */}
@@ -281,49 +359,30 @@ function TrustAndValuesPage() {
         </div>
       </section>
 
-      {/* Section 5 — 100% Placement Assistance Framework */}
-      <section className="bg-background py-6 sm:py-8 lg:py-10">
-        <div className="container-site max-w-5xl">
-          <SectionHeading
-            eyebrow="CAREER ACCELERATION"
-            title="Our 100% Placement Assistance Framework"
-            description="We do not make misleading guarantees. Instead, we provide exhaustive, 1-on-1 placement support designed to equip you with the technical capability and interview confidence required to succeed."
-            align="left"
-          />
+      {/* Section 5 — Live Student Testimonials (Dynamically added by Admin) */}
+      {testimonials.length > 0 && (
+        <section className="bg-background py-8 sm:py-12 lg:py-16 border-b border-slate-200/80">
+          <div className="container-site">
+            <SectionHeading
+              eyebrow="STUDENT REVIEWS"
+              title="Verified Reviews from Our Learners"
+              description="Authentic feedback and career outcomes shared by students who trained at DIGITECHADEMY."
+              align="left"
+            />
 
-          <div className="mt-5 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {placementPhases.map((phase, index) => {
-              const PhaseIcon = phase.icon;
-              return (
-                <div
-                  key={phase.step}
-                  data-reveal="left-to-right-and-bottom-to-up"
-                  style={{ "--reveal-delay": `${index * 120}ms` } as React.CSSProperties}
-                  className="group rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-blue-500/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
-                >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-black text-blue-600 transition-transform duration-300 group-hover:scale-110">
-                        {phase.step}
-                      </span>
-                      <span className="grid size-8 place-items-center rounded-lg bg-blue-50 text-blue-600 border border-blue-100 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-md">
-                        <PhaseIcon className="size-4" />
-                      </span>
-                    </div>
-                    <h4 className="mt-3.5 text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {phase.title}
-                    </h4>
-                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal text-justify">
-                      {phase.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+            <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {testimonials.map((review) => (
+                <TestimonialCard key={review.id} review={review} />
+              ))}
+            </div>
           </div>
+        </section>
+      )}
 
-          {/* Training classroom image and highlight banner */}
-          <div className="mt-10 rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white grid lg:grid-cols-12 items-center" data-reveal>
+      {/* Section 6 — Live Practical Labs Experience CTA */}
+      <section className="bg-background py-8 sm:py-12">
+        <div className="container-site">
+          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white grid lg:grid-cols-12 items-center" data-reveal>
             <div className="lg:col-span-5 h-56 lg:h-full min-h-[220px]">
               <img
                 src={testimonialAnanyaImg}
