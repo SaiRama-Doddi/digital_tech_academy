@@ -324,8 +324,6 @@ function CoursesPage() {
                   <Star className="size-3 fill-current" />
                   4.8
                 </span>
-                <span className="text-slate-600">•</span>
-                <span className="text-slate-300">7,845+ Placed</span>
               </div>
             </div>
 
