@@ -199,10 +199,6 @@ function ContactPage() {
                   <span className="grid size-5 shrink-0 place-items-center rounded-full bg-sky-100 text-sky-700 text-[10px] font-bold">2</span>
                   <span><strong>Personalized Guidance:</strong> Understand curriculum details, live projects, and career opportunities.</span>
                 </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-bold">3</span>
-                  <span><strong>Free Live Demo:</strong> Receive an invite to attend a live mentor session before enrolling.</span>
-                </li>
               </ul>
             </div>
           </div>
