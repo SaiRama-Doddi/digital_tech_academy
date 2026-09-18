@@ -1814,14 +1814,14 @@ function PracticalLearning() {
         </div>
 
         {/* Closing Line Callout */}
-        <div className="mt-10 rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-5 sm:p-6 text-white shadow-lg border border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="grid size-10 place-items-center rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-300 shrink-0">
-              <Sparkles className="size-5 text-blue-300" />
+        <div className="mt-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-3.5 sm:p-4.5 text-white shadow-md border border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-3">
+            <div className="grid size-9 sm:size-10 place-items-center rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-300 shrink-0">
+              <Sparkles className="size-4.5 text-blue-300" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider font-bold text-blue-300/90">Closing Philosophy</p>
-              <p className="text-sm sm:text-base font-bold tracking-tight text-white mt-0.5">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-blue-300/90">Closing Philosophy</p>
+              <p className="text-xs sm:text-sm md:text-base font-bold tracking-tight text-white mt-0.5">
                 Knowledge Gets You Started. <span className="text-blue-400">Practice Makes You Job Ready.</span>
               </p>
             </div>
@@ -1830,10 +1830,10 @@ function PracticalLearning() {
             to="/request-call"
             variant="primary"
             size="sm"
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2.5 rounded-xl shrink-0 text-xs sm:text-sm shadow-md"
+            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shrink-0 text-xs sm:text-[13px] shadow-sm flex items-center gap-1.5"
           >
             <span>Talk to a Mentor</span>
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-3.5" />
           </BtnLink>
         </div>
       </div>
@@ -1979,15 +1979,15 @@ function CareerReadiness() {
         {/* Closing Line & CTA Banner */}
         <div
           data-reveal
-          className="mt-10 rounded-2xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 p-6 sm:p-8 text-white shadow-2xl border border-blue-500/30 flex flex-col lg:flex-row items-center justify-between gap-6"
+          className="mt-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-900/90 via-indigo-900/80 to-slate-900/90 p-3.5 sm:p-4.5 text-white shadow-lg border border-blue-500/30 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
         >
-          <div className="flex items-center gap-4">
-            <div className="grid size-12 place-items-center rounded-2xl bg-blue-500/20 border border-blue-400/40 text-sky-300 shrink-0 shadow-inner">
-              <Sparkles className="size-6 text-sky-300" />
+          <div className="flex items-center gap-3">
+            <div className="grid size-9 sm:size-10 place-items-center rounded-xl bg-blue-500/20 border border-blue-400/30 text-sky-300 shrink-0 shadow-inner">
+              <Sparkles className="size-4.5 text-sky-300" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider font-bold text-sky-300">Core Principle</p>
-              <p className="text-base sm:text-xl font-black tracking-tight text-white mt-0.5">
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-sky-300">Core Principle</p>
+              <p className="text-xs sm:text-sm md:text-base font-bold tracking-tight text-white mt-0.5">
                 Your Career Starts With What You Can Do — <span className="text-sky-300">Not Just What You Know.</span>
               </p>
             </div>
@@ -1996,11 +1996,11 @@ function CareerReadiness() {
           <BtnLink
             to="/courses"
             variant="primary"
-            size="lg"
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3.5 rounded-xl shrink-0 text-sm shadow-xl flex items-center gap-2"
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shrink-0 text-xs sm:text-[13px] shadow-md flex items-center gap-1.5"
           >
             <span>Explore Career-Focused Programs</span>
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-3.5" />
           </BtnLink>
         </div>
       </div>
