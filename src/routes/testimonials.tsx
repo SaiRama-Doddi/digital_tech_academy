@@ -124,6 +124,40 @@ const placementPhases = [
   },
 ];
 
+function renderQualityPillarCard(pillar: (typeof trustPillars)[number], key: string) {
+  const PillarIcon = pillar.icon;
+  return (
+    <div
+      key={key}
+      className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-xl w-[300px] sm:w-[350px] md:w-[370px] shrink-0 select-none overflow-hidden"
+    >
+      {/* Top Accent Glow Line on hover */}
+      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
+      <div>
+        <div className="flex items-center justify-between gap-3">
+          <span className="grid size-12 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 transition-colors group-hover:bg-blue-600 group-hover:text-white shrink-0">
+            <PillarIcon className="size-6" />
+          </span>
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600 uppercase tracking-wider shrink-0">
+            {pillar.badge}
+          </span>
+        </div>
+        <h3 className="mt-4 text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+          {pillar.title}
+        </h3>
+        <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
+          {pillar.description}
+        </p>
+      </div>
+      <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-600">
+        <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+        <span>Institutional Standard</span>
+      </div>
+    </div>
+  );
+}
+
 function TrustAndValuesPage() {
   return (
     <SiteLayout>
@@ -197,49 +231,44 @@ function TrustAndValuesPage() {
         </div>
       </section>
 
-      {/* Section 4 — The 6 Value & Trust Pillars */}
-      <section className="bg-surface py-6 sm:py-8 lg:py-10 border-b border-slate-200/80">
+      {/* Section 4 — The 6 Value & Trust Pillars (Single-Row with Scrolling Effect) */}
+      <section className="bg-surface py-6 sm:py-8 lg:py-10 border-b border-slate-200/80 overflow-hidden">
         <div className="container-site">
-          <SectionHeading
-            eyebrow="OUR COMMITMENTS"
-            title="The 6 Quality Standards That Define DIGITECHADEMY"
-            description="Every program we teach is built around transparent delivery, practical application, and verifiable student growth."
-            align="left"
-          />
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+            <SectionHeading
+              eyebrow="OUR COMMITMENTS"
+              title="The 6 Quality Standards That Define DIGITECHADEMY"
+              description="Every program we teach is built around transparent delivery, practical application, and verifiable student growth."
+              align="left"
+            />
+            <div className="hidden lg:flex items-center gap-2 shrink-0 pb-1 text-xs font-semibold text-slate-500">
+              <span className="size-2 rounded-full bg-blue-500 animate-ping" />
+              <span>Hover or touch to pause scroll</span>
+            </div>
+          </div>
 
-          <div className="mt-5 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {trustPillars.map((pillar, index) => {
-              const PillarIcon = pillar.icon;
-              return (
-                <div
-                  key={pillar.title}
-                  data-reveal="left-to-right-and-bottom-to-up"
-                  style={{ "--reveal-delay": `${(index % 3) * 120}ms` } as React.CSSProperties}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-500/40 hover:shadow-xl"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="grid size-12 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 transition-colors group-hover:bg-blue-600 group-hover:text-white">
-                        <PillarIcon className="size-6" />
-                      </span>
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
-                        {pillar.badge}
-                      </span>
-                    </div>
-                    <h3 className="mt-4 text-lg font-bold text-slate-900 leading-snug">
-                      {pillar.title}
-                    </h3>
-                    <p className="mt-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
-                      {pillar.description}
-                    </p>
-                  </div>
-                  <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-600">
-                    <CheckCircle2 className="size-3.5 text-emerald-500" />
-                    <span>Institutional Standard</span>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Auto-scrolling Single-Row Quality Standards Marquee */}
+          <div className="relative mt-5 sm:mt-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-hidden py-3" data-reveal>
+            {/* Subtle gradient edge fades */}
+            <div
+              className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-[var(--surface)] via-[var(--surface)]/85 to-transparent"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 z-20 bg-gradient-to-l from-[var(--surface)] via-[var(--surface)]/85 to-transparent"
+              aria-hidden="true"
+            />
+
+            <div className="flex w-max animate-quality-marquee hover:[animation-play-state:paused] active:[animation-play-state:paused]">
+              {/* Primary Track Set */}
+              <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0">
+                {trustPillars.map((pillar, index) => renderQualityPillarCard(pillar, `pillar-a-${index}`))}
+              </div>
+              {/* Duplicated Track Set for Seamless Infinite Loop */}
+              <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0" aria-hidden="true">
+                {trustPillars.map((pillar, index) => renderQualityPillarCard(pillar, `pillar-b-${index}`))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
