@@ -24,15 +24,11 @@ import {
   COUNTRY_CODES,
   type CountryCodeItem,
 } from "@/components/site/CountryFlag";
-
-const availableCourses = [
-  "Digital Marketing Mastery",
-  "Cyber Security & Ethical Hacking",
-  "Advanced SEO & Performance Marketing",
-  "Network Defense & Security Operations",
-  "Full Stack Digital Career Bootcamp",
-  "Not sure yet / Need Counseling",
-];
+import {
+  subscribeCourses,
+  getLocalCachedCourses,
+  type FirebaseCourse,
+} from "@/services/courseService";
 
 export function DemoClassModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +42,56 @@ export function DemoClassModal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [liveCourses, setLiveCourses] = useState<Array<{ id: string; title: string }>>(() => {
+    const cached = getLocalCachedCourses();
+    const active = cached.filter(
+      (c) =>
+        c.active !== false &&
+        Boolean(c.title?.trim()) &&
+        c.id !== "full-stack-java" &&
+        c.slug !== "full-stack-java" &&
+        !c.title?.toLowerCase().includes("full stack java") &&
+        c.id !== "testing"
+    );
+    return active.map((c) => ({ id: c.id, title: c.title.trim() }));
+  });
+
+  useEffect(() => {
+    const cached = getLocalCachedCourses();
+    if (cached && cached.length > 0) {
+      const active = cached.filter(
+        (c) =>
+          c.active !== false &&
+          Boolean(c.title?.trim()) &&
+          c.id !== "full-stack-java" &&
+          c.slug !== "full-stack-java" &&
+          !c.title?.toLowerCase().includes("full stack java") &&
+          c.id !== "testing"
+      );
+      if (active.length > 0) {
+        setLiveCourses(active.map((c) => ({ id: c.id, title: c.title.trim() })));
+      }
+    }
+
+    const unsub = subscribeCourses((list) => {
+      if (list && list.length > 0) {
+        const active = list.filter(
+          (c) =>
+            c.active !== false &&
+            Boolean(c.title?.trim()) &&
+            c.id !== "full-stack-java" &&
+            c.slug !== "full-stack-java" &&
+            !c.title?.toLowerCase().includes("full stack java") &&
+            c.id !== "testing"
+        );
+        setLiveCourses(active.map((c) => ({ id: c.id, title: c.title.trim() })));
+      } else {
+        setLiveCourses([]);
+      }
+    });
+
+    return () => unsub();
+  }, []);
 
   useEffect(() => {
     let triggered = false;
@@ -326,9 +372,13 @@ export function DemoClassModal() {
                     onChange={(e) => setCourse(e.target.value)}
                     className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-8 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   >
-                    <option value="" disabled>Select your course</option>
-                    {availableCourses.map((c) => (
-                      <option key={c} value={c}>{c}</option>
+                    <option value="" disabled>
+                      {liveCourses.length === 0 ? "Loading published courses..." : "Select your course"}
+                    </option>
+                    {liveCourses.map((c) => (
+                      <option key={c.id} value={c.title}>
+                        {c.title}
+                      </option>
                     ))}
                   </select>
                 </div>

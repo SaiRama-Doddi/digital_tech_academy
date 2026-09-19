@@ -48,21 +48,55 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const [liveCourseOptions, setLiveCourseOptions] = useState<Array<{ id: string; title: string }>>(
-    () => courses.map((c) => ({ id: c.id, title: c.title }))
+    () => {
+      const cached = getLocalCachedCourses();
+      const active = cached.filter(
+        (c) =>
+          c.active !== false &&
+          Boolean(c.title?.trim()) &&
+          c.id !== "full-stack-java" &&
+          c.slug !== "full-stack-java" &&
+          !c.title?.toLowerCase().includes("full stack java") &&
+          c.id !== "testing"
+      );
+      if (active.length > 0) {
+        return active.map((c) => ({ id: c.id, title: c.title.trim() }));
+      }
+      return courses.map((c) => ({ id: c.id, title: c.title.trim() }));
+    }
   );
 
   useEffect(() => {
     const cached = getLocalCachedCourses();
     if (cached && cached.length > 0) {
-      setLiveCourseOptions(cached.map((c) => ({ id: c.id, title: c.title })));
+      const active = cached.filter(
+        (c) =>
+          c.active !== false &&
+          Boolean(c.title?.trim()) &&
+          c.id !== "full-stack-java" &&
+          c.slug !== "full-stack-java" &&
+          !c.title?.toLowerCase().includes("full stack java") &&
+          c.id !== "testing"
+      );
+      if (active.length > 0) {
+        setLiveCourseOptions(active.map((c) => ({ id: c.id, title: c.title.trim() })));
+      }
     }
 
     const unsub = subscribeCourses((list) => {
       if (list && list.length > 0) {
         setLiveCourseOptions(
           list
-            .filter((c) => c.active !== false)
-            .map((c) => ({ id: c.id, title: c.title }))
+            .filter(
+              (c) =>
+                c.active !== false &&
+                Boolean(c.title?.trim()) &&
+                c.id !== "full-stack-java" &&
+                c.slug !== "full-stack-java" &&
+                !c.title?.toLowerCase().includes("full stack java") &&
+                c.id !== "testing"
+            )
+            .map((c) => ({ id: c.id, title: c.title.trim() }))
         );
       }
     });

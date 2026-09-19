@@ -1,5 +1,5 @@
 import { CheckCircle2, ChevronDown, Loader2, PhoneCall } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 
 import { Btn } from "./Btn";
@@ -7,6 +7,10 @@ import { CountryFlag, COUNTRY_CODES, type CountryCodeItem } from "./CountryFlag"
 import { callTimeOptions, courseOptions } from "@/data/content";
 import { cn } from "@/lib/utils";
 import { addEnquiryToFirebase } from "@/services/enquiryService";
+import {
+  subscribeCourses,
+  getLocalCachedCourses,
+} from "@/services/courseService";
 
 const schema = z.object({
   name: z
@@ -47,6 +51,54 @@ export function RequestCallForm({
   const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(COUNTRY_CODES[0]);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [liveCourseList, setLiveCourseList] = useState<string[]>(() => {
+    const cached = getLocalCachedCourses();
+    const active = cached.filter(
+      (c) =>
+        c.active !== false &&
+        Boolean(c.title?.trim()) &&
+        c.id !== "full-stack-java" &&
+        c.slug !== "full-stack-java" &&
+        !c.title?.toLowerCase().includes("full stack java") &&
+        c.id !== "testing"
+    );
+    if (active.length > 0) return active.map((c) => c.title.trim());
+    return courseOptions;
+  });
+
+  useEffect(() => {
+    const cached = getLocalCachedCourses();
+    if (cached && cached.length > 0) {
+      const active = cached.filter(
+        (c) =>
+          c.active !== false &&
+          Boolean(c.title?.trim()) &&
+          c.id !== "full-stack-java" &&
+          c.slug !== "full-stack-java" &&
+          !c.title?.toLowerCase().includes("full stack java") &&
+          c.id !== "testing"
+      );
+      if (active.length > 0) setLiveCourseList(active.map((c) => c.title.trim()));
+    }
+
+    const unsub = subscribeCourses((list) => {
+      if (list && list.length > 0) {
+        const active = list.filter(
+          (c) =>
+            c.active !== false &&
+            Boolean(c.title?.trim()) &&
+            c.id !== "full-stack-java" &&
+            c.slug !== "full-stack-java" &&
+            !c.title?.toLowerCase().includes("full stack java") &&
+            c.id !== "testing"
+        );
+        if (active.length > 0) {
+          setLiveCourseList(active.map((c) => c.title.trim()));
+        }
+      }
+    });
+    return () => unsub();
+  }, []);
 
   const set = (key: keyof Values, value: string) => {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -231,7 +283,7 @@ export function RequestCallForm({
             className={cn(fieldClass, errors.course ? "border-accent" : "border-input")}
           >
             <option value="">Select a course</option>
-            {courseOptions.map((option) => (
+            {liveCourseList.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>

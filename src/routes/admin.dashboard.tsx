@@ -564,6 +564,7 @@ function AdminDashboardPage() {
               isClient={isClient}
               onNavigateTab={setActiveTab}
               recentEnquiries={liveEnquiries.slice(0, 6)}
+              allEnquiries={liveEnquiries}
               totalLeads={liveEnquiries.length}
               courses={courses}
             />
@@ -587,20 +588,20 @@ function DashboardOverviewTab({
   isClient,
   onNavigateTab,
   recentEnquiries = [],
+  allEnquiries = [],
   totalLeads = 0,
   courses = [],
 }: {
   isClient: boolean;
   onNavigateTab: (tab: TabType) => void;
   recentEnquiries?: FirebaseEnquiry[];
+  allEnquiries?: FirebaseEnquiry[];
   totalLeads?: number;
   courses?: FirebaseCourse[];
 }) {
-  const totalEnrolled = useMemo(() => {
-    const sum = courses.reduce((acc, c) => acc + (c.students || 0), 0);
-    return sum > 0 ? sum : 357;
-  }, [courses]);
-
+  const enquiredStudentsCount = allEnquiries.length > 0 ? allEnquiries.length : totalLeads;
+  const newEnquiriesCount = allEnquiries.filter((e) => e.status === "New").length;
+  const convertedCount = allEnquiries.filter((e) => e.status === "Converted").length;
   const activeProgramsCount = courses.filter((c) => c.active !== false).length;
 
   return (
@@ -608,7 +609,10 @@ function DashboardOverviewTab({
       {/* 3 BIG GRADIENT STAT CARDS WITH WATERMARK CIRCLES */}
       <div className="grid gap-6 md:grid-cols-3">
         {/* CARD 1: CORAL / PINK GRADIENT */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#ffbf96] to-[#fe7096] p-6 text-white shadow-lg shadow-pink-500/15">
+        <div
+          onClick={() => onNavigateTab("courses")}
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#ffbf96] to-[#fe7096] p-6 text-white shadow-lg shadow-pink-500/15 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+        >
           {/* Translucent overlapping circular watermarks */}
           <div className="absolute -right-8 -top-8 size-36 rounded-full bg-white/15 pointer-events-none" />
           <div className="absolute right-4 -bottom-10 size-28 rounded-full bg-white/10 pointer-events-none" />
@@ -628,41 +632,47 @@ function DashboardOverviewTab({
         </div>
 
         {/* CARD 2: BLUE / CYAN GRADIENT */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#90caf9] to-[#047edf] p-6 text-white shadow-lg shadow-blue-500/15">
+        <div
+          onClick={() => onNavigateTab("enquiries")}
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#90caf9] to-[#047edf] p-6 text-white shadow-lg shadow-blue-500/15 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+        >
           {/* Translucent overlapping circular watermarks */}
           <div className="absolute -right-8 -top-8 size-36 rounded-full bg-white/15 pointer-events-none" />
           <div className="absolute right-4 -bottom-10 size-28 rounded-full bg-white/10 pointer-events-none" />
 
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-extrabold text-white/90">Active Cohort Students</h3>
-              <Bookmark className="size-5 text-white/80" />
+              <h3 className="text-sm font-extrabold text-white/90">Students In Enquire List</h3>
+              <Users className="size-5 text-white/80" />
             </div>
             <div className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
-              {totalEnrolled.toLocaleString()}
+              {enquiredStudentsCount} {enquiredStudentsCount === 1 ? "Student" : "Students"}
             </div>
             <p className="text-xs font-bold text-white/80 flex items-center gap-1">
-              <span>Total Enrolled Learners</span>
+              <span>{newEnquiriesCount} New Leads in Firebase</span>
             </p>
           </div>
         </div>
 
         {/* CARD 3: TEAL / EMERALD GRADIENT */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#84d9d2] to-[#07b09e] p-6 text-white shadow-lg shadow-teal-500/15">
+        <div
+          onClick={() => onNavigateTab("enquiries")}
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#84d9d2] to-[#07b09e] p-6 text-white shadow-lg shadow-teal-500/15 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+        >
           {/* Translucent overlapping circular watermarks */}
           <div className="absolute -right-8 -top-8 size-36 rounded-full bg-white/15 pointer-events-none" />
           <div className="absolute right-4 -bottom-10 size-28 rounded-full bg-white/10 pointer-events-none" />
 
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-extrabold text-white/90">Admissions &amp; Leads</h3>
+              <h3 className="text-sm font-extrabold text-white/90">Admissions &amp; Converted</h3>
               <Gem className="size-5 text-white/80" />
             </div>
             <div className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
-              {totalLeads} {totalLeads === 1 ? "Lead" : "Leads"}
+              {convertedCount} {convertedCount === 1 ? "Admission" : "Admissions"}
             </div>
             <p className="text-xs font-bold text-white/80 flex items-center gap-1">
-              <span>Real-time Firebase CRM</span>
+              <span>{enquiredStudentsCount - convertedCount} In Counselling Pipeline</span>
             </p>
           </div>
         </div>
