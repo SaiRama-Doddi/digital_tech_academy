@@ -197,6 +197,18 @@ function CoursesPage() {
     });
   }, [coursesList, activeTab]);
 
+  // Scroll listener for sticky heading small size on scroll
+  const [isHeroScrolled, setIsHeroScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsHeroScrolled(window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const scrollToDemoForm = () => {
     const el = document.getElementById("course-demo-sidebar");
     if (el) {
@@ -218,20 +230,38 @@ function CoursesPage() {
   return (
     <SiteLayout>
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (Clean Responsive Header Banner)                           */}
+      {/* 1. HERO SECTION (Sticky Header Banner with Shrink on Scroll)                */}
       {/* ========================================================================= */}
-      <section className="relative text-slate-900 border-b border-slate-200/90 bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 py-4 sm:py-5 lg:py-6 shadow-2xs overflow-hidden">
+      <section
+        className={cn(
+          "sticky top-16 z-30 text-slate-900 border-b transition-all duration-300 ease-in-out overflow-hidden",
+          isHeroScrolled
+            ? "bg-white/95 backdrop-blur-md border-slate-200/90 shadow-sm py-1.5 sm:py-2"
+            : "bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 border-slate-200/90 py-4 sm:py-5 lg:py-6 shadow-2xs"
+        )}
+      >
         {/* Ambient light glow */}
         <div
-          className="pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl"
+          className={cn(
+            "pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl transition-opacity duration-300",
+            isHeroScrolled ? "opacity-0" : "opacity-100"
+          )}
           aria-hidden="true"
         />
         <div className="container-site relative z-10">
-          <div className="max-w-5xl space-y-2">
+          <div
+            className={cn(
+              "max-w-5xl transition-all duration-300",
+              isHeroScrolled ? "space-y-0.5" : "space-y-2"
+            )}
+          >
             {/* Top Row: Breadcrumb */}
             <nav
               aria-label="Breadcrumb"
-              className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 font-medium"
+              className={cn(
+                "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300",
+                isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-[11px] sm:text-xs"
+              )}
             >
               <Link to="/" className="hover:text-blue-600 transition-colors">
                 Home
@@ -241,12 +271,26 @@ function CoursesPage() {
             </nav>
 
             {/* Title & Subtitle */}
-            <div className="pt-0.5">
-              <h1 className="font-display font-extrabold tracking-tight text-slate-900 leading-[1.25] text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]">
+            <div className="pt-0">
+              <h1
+                className={cn(
+                  "font-display font-extrabold tracking-tight text-slate-900 leading-tight transition-all duration-300",
+                  isHeroScrolled
+                    ? "text-sm sm:text-base md:text-lg"
+                    : "text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]"
+                )}
+              >
                 Practical Courses for Today&apos;s Digital Careers
               </h1>
 
-              <p className="mt-1 leading-relaxed font-normal max-w-3xl text-slate-600 text-xs sm:text-[13.5px]">
+              <p
+                className={cn(
+                  "leading-relaxed font-normal max-w-3xl text-slate-600 transition-all duration-300",
+                  isHeroScrolled
+                    ? "text-[10.5px] sm:text-xs line-clamp-1 mt-0.5 text-slate-500"
+                    : "text-xs sm:text-[13.5px] mt-1"
+                )}
+              >
                 Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic Advertising.
               </p>
             </div>
