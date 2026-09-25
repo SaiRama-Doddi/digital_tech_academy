@@ -1967,16 +1967,18 @@ function CyberSecurityDifferentiator() {
       id="cyber-security-differentiator"
       className="bg-[#030914] relative py-7 sm:py-9 overflow-hidden border-t border-b border-cyan-950/80"
     >
-      {/* Cyber Security Background Image with Reduced Opacity */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      {/* Cyber Security Background Image strictly positioned in top-right area as requested */}
+      <div className="pointer-events-none absolute top-0 right-0 w-full sm:w-[65%] lg:w-[50%] h-64 sm:h-72 lg:h-80 z-0 overflow-hidden">
         <img
           src={cyberHeroBg}
           alt=""
           aria-hidden="true"
-          className="h-full w-full object-cover object-center opacity-20 scale-105"
+          className="h-full w-full object-cover object-right-top opacity-25"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/90 via-[#030914]/75 to-[#030914]/95" />
-        <div className="absolute inset-0 bg-radial from-transparent via-[#030914]/60 to-[#030914]" />
+        {/* Soft edge blend overlays so it fades smoothly into the dark section background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#030914] via-[#030914]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030914]/40 to-[#030914]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030914] via-transparent to-transparent" />
       </div>
 
       {/* High-tech Cyber Grid Background & Subtle Ambient Fades */}
