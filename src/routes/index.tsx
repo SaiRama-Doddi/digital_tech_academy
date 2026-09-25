@@ -1830,6 +1830,57 @@ function ProgrammaticDifferentiator() {
  */
 function CyberSecurityDifferentiator() {
   const [activePhase, setActivePhase] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    skipSnaps: false,
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+    onSelect();
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  // Auto-scroll loop for mobile/tablet screens
+  useEffect(() => {
+    if (!emblaApi || isPaused) return;
+
+    const interval = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [emblaApi, isPaused]);
 
   const phases = [
     {
@@ -1868,7 +1919,7 @@ function CyberSecurityDifferentiator() {
       image: cyberPhase3Img,
       badge: "HANDS-ON",
       dotColor: "bg-emerald-400 shadow-[0_0_8px_#34d399]",
-      cardBorder: "border-emerald-500/25 hover:border-emerald-400/80 hover:shadow-[0_0_25px_rgba(16,185,129,0.25)]",
+      cardBorder: "border-emerald-500/25 hover:border-emerald-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
       badgeStyle: "text-emerald-300 bg-emerald-950/80 border-emerald-500/30",
       iconStyle: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30 group-hover:bg-emerald-500/20 group-hover:border-emerald-400",
       stepColor: "text-emerald-400 bg-emerald-950/90 border-emerald-500/40",
@@ -1949,7 +2000,7 @@ function CyberSecurityDifferentiator() {
             </p>
           </div>
 
-          {/* Right Action & Vectors Strip */}
+          {/* Right Action & Controls Strip */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 shrink-0 self-start lg:self-end">
             <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-950/70 backdrop-blur-md">
               {hudVectors.map((hud) => {
@@ -1969,6 +2020,26 @@ function CyberSecurityDifferentiator() {
               })}
             </div>
 
+            {/* Mobile / Tablet Arrow Navigation Controls */}
+            <div className="flex lg:hidden items-center gap-1 p-1 rounded-xl border border-slate-800 bg-slate-950/70 backdrop-blur-md">
+              <button
+                type="button"
+                onClick={scrollPrev}
+                aria-label="Previous cyber phase"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-900 transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronLeft className="size-4" />
+              </button>
+              <button
+                type="button"
+                onClick={scrollNext}
+                aria-label="Next cyber phase"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-900 transition-all cursor-pointer active:scale-95"
+              >
+                <ChevronRight className="size-4" />
+              </button>
+            </div>
+
             <BtnLink
               to="/courses/$slug"
               params={{ slug: "cyber-security" }}
@@ -1982,88 +2053,119 @@ function CyberSecurityDifferentiator() {
           </div>
         </div>
 
-        {/* 5-Step Connected Cyber Defense Pipeline Cards */}
-        <div className="grid gap-3 sm:gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {phases.map((item, index) => {
-            const ItemIcon = item.icon;
-            return (
-              <Link
-                key={item.step}
-                to="/courses/$slug"
-                params={{ slug: "cyber-security" }}
-                onMouseEnter={() => setActivePhase(index)}
-                onMouseLeave={() => setActivePhase(null)}
-                data-reveal="bottom-to-up"
-                style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
-                className={cn(
-                  "group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#061122]/90 p-4 transition-all duration-300 ease-out hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md shadow-md shadow-black/40",
-                  item.cardBorder,
-                )}
-              >
-                {/* Top Subtle Accent Gradient Glow */}
+        {/* 5-Step Connected Cyber Defense Pipeline Cards (Mobile/Tablet Carousel, Desktop 5-Col Row) */}
+        <div
+          ref={emblaRef}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+          className="overflow-hidden p-1 -m-1 cursor-grab active:cursor-grabbing"
+        >
+          <div className="flex -ml-3 sm:-ml-3.5 py-1.5">
+            {phases.map((item, index) => {
+              const ItemIcon = item.icon;
+              return (
                 <div
-                  className={cn(
-                    "pointer-events-none absolute -top-10 -right-10 size-28 rounded-full bg-gradient-to-br to-transparent opacity-0 group-hover:opacity-60 blur-xl transition-opacity duration-500",
-                    item.glow,
-                  )}
-                />
-
-                <div className="relative z-10">
-                  {/* Top Row: Step Tag + Category Pill */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span
+                  key={item.step}
+                  className="min-w-0 shrink-0 grow-0 pl-3 sm:pl-3.5 basis-[85%] sm:basis-[48%] md:basis-1/3 lg:basis-1/5"
+                >
+                  <Link
+                    to="/courses/$slug"
+                    params={{ slug: "cyber-security" }}
+                    onMouseEnter={() => setActivePhase(index)}
+                    onMouseLeave={() => setActivePhase(null)}
+                    data-reveal="bottom-to-up"
+                    style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
+                    className={cn(
+                      "h-full group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#061122]/90 p-4 transition-all duration-300 ease-out hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md shadow-md shadow-black/40 select-none",
+                      item.cardBorder,
+                    )}
+                  >
+                    {/* Top Subtle Accent Gradient Glow */}
+                    <div
                       className={cn(
-                        "text-[10px] font-mono font-black px-2 py-0.5 rounded-md border shadow-xs tracking-wider",
-                        item.stepColor,
+                        "pointer-events-none absolute -top-10 -right-10 size-28 rounded-full bg-gradient-to-br to-transparent opacity-0 group-hover:opacity-60 blur-xl transition-opacity duration-500",
+                        item.glow,
                       )}
-                    >
-                      PHASE {item.step}
-                    </span>
-                    <span
-                      className={cn(
-                        "inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border",
-                        item.badgeStyle,
-                      )}
-                    >
-                      <span className={cn("size-1.5 rounded-full", item.dotColor)} />
-                      <span>{item.badge}</span>
-                    </span>
-                  </div>
+                    />
 
-                  {/* Icon & Title Row */}
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <span
-                      className={cn(
-                        "grid size-8.5 place-items-center rounded-xl border shrink-0 transition-transform duration-300 group-hover:scale-110",
-                        item.iconStyle,
-                      )}
-                    >
-                      <ItemIcon className="size-4.5" aria-hidden="true" />
-                    </span>
-                    <h3 className="text-sm sm:text-base font-extrabold text-white group-hover:text-cyan-300 transition-colors">
-                      {item.title}
-                    </h3>
-                  </div>
+                    <div className="relative z-10">
+                      {/* Top Row: Step Tag + Category Pill */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span
+                          className={cn(
+                            "text-[10px] font-mono font-black px-2 py-0.5 rounded-md border shadow-xs tracking-wider",
+                            item.stepColor,
+                          )}
+                        >
+                          PHASE {item.step}
+                        </span>
+                        <span
+                          className={cn(
+                            "inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border",
+                            item.badgeStyle,
+                          )}
+                        >
+                          <span className={cn("size-1.5 rounded-full", item.dotColor)} />
+                          <span>{item.badge}</span>
+                        </span>
+                      </div>
 
-                  {/* Concise Description */}
-                  <p className="text-[11.5px] leading-relaxed text-slate-300/90 font-normal">
-                    {item.desc}
-                  </p>
+                      {/* Icon & Title Row */}
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <span
+                          className={cn(
+                            "grid size-8.5 place-items-center rounded-xl border shrink-0 transition-transform duration-300 group-hover:scale-110",
+                            item.iconStyle,
+                          )}
+                        >
+                          <ItemIcon className="size-4.5" aria-hidden="true" />
+                        </span>
+                        <h3 className="text-sm sm:text-base font-extrabold text-white group-hover:text-cyan-300 transition-colors">
+                          {item.title}
+                        </h3>
+                      </div>
+
+                      {/* Concise Description */}
+                      <p className="text-[11.5px] leading-relaxed text-slate-300/90 font-normal">
+                        {item.desc}
+                      </p>
+                    </div>
+
+                    {/* Small Cyber 3D Illustration at Bottom */}
+                    <div className="relative z-10 mt-3.5 overflow-hidden rounded-xl bg-black/40 border border-white/10 group-hover:border-cyan-400/40 transition-colors duration-300">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        className="h-20 sm:h-22 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#061122]/50 via-transparent to-transparent pointer-events-none" />
+                    </div>
+                  </Link>
                 </div>
+              );
+            })}
+          </div>
+        </div>
 
-                {/* Small Cyber 3D Illustration at Bottom */}
-                <div className="relative z-10 mt-3.5 overflow-hidden rounded-xl bg-black/40 border border-white/10 group-hover:border-cyan-400/40 transition-colors duration-300">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    loading="lazy"
-                    className="h-20 sm:h-22 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#061122]/50 via-transparent to-transparent pointer-events-none" />
-                </div>
-              </Link>
-            );
-          })}
+        {/* Mobile/Tablet Carousel Indicator Dots */}
+        <div className="flex lg:hidden justify-center items-center gap-1.5 mt-3.5">
+          {phases.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => scrollTo(i)}
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                selectedIndex === i
+                  ? "w-6 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
+                  : "w-1.5 bg-slate-700 hover:bg-slate-600"
+              )}
+              aria-label={`Go to phase ${i + 1}`}
+            />
+          ))}
         </div>
 
         {/* Slim Cyber Philosophy Strip */}
