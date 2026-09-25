@@ -33,7 +33,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   }, [inView, value]);
 
   return (
-    <span ref={ref} className="text-xl sm:text-2xl lg:text-[1.85rem] font-extrabold text-accent tracking-tight">
+    <span ref={ref} className="text-xl sm:text-2xl lg:text-[1.85rem] font-extrabold text-blue-600 tracking-tight">
       {display}
       {suffix}
     </span>
@@ -42,19 +42,19 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 
 export function StatsSection() {
   return (
-    <section aria-label="Institute statistics" className="surface-navy border-y border-navy-600/60">
+    <section aria-label="Institute statistics" className="bg-white border-y border-slate-200/80">
       <div className="container-site section-y-sm">
         <dl className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
           {stats.map((stat) => (
             <div
               key={stat.label}
               data-reveal
-              className="flex flex-col items-center gap-1.5 border-l border-navy-600/70 pl-4 text-center lg:items-start lg:text-left"
+              className="flex flex-col items-center gap-1.5 border-l border-slate-200 pl-4 text-center lg:items-start lg:text-left"
             >
               <dd className="order-1 flex items-baseline font-display">
                 <Counter value={stat.value} suffix={stat.suffix} />
               </dd>
-              <dt className="order-2 text-xs font-semibold uppercase tracking-[0.12em] text-navy-muted sm:text-[0.8rem]">
+              <dt className="order-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 sm:text-[0.8rem]">
                 {stat.label}
               </dt>
             </div>

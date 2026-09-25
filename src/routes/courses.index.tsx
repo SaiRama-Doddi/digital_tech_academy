@@ -5,6 +5,8 @@ import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import {
   subscribeCourses,
+  normalizeCourseCategory,
+  getDefaultCoursesList,
   type FirebaseCourse,
 } from "@/services/courseService";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -20,23 +22,17 @@ import {
   ChevronDown,
   ChevronUp,
   Clock,
-  Download,
   FileText,
   Heart,
   HelpCircle,
-  MessageCircle,
   PhoneCall,
   Signal,
   Sparkles,
-  Star,
   UserPlus,
-  Users,
   ArrowRight,
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { subscribeMentors, type FirebaseMentor } from "@/services/mentorService";
-import { whatsappLink } from "@/lib/site";
 
 export const Route = createFileRoute("/courses/")({
   head: () => ({
@@ -113,73 +109,22 @@ const generalFaqs = [
 function CoursesPage() {
   const navigate = useNavigate();
   const [coursesList, setCoursesList] = useState<FirebaseCourse[]>(() =>
-    courses.map((c) => ({
-      id: c.id,
-      slug: c.slug,
-      title: c.title,
-      category: c.category,
-      description: c.description,
-      duration: c.duration,
-      level: c.level,
-      instructor: c.instructors?.[0]?.name || "Sai Rama",
-      price: c.pricing?.fee || "₹24,999",
-      highlights: c.highlights || [],
-      syllabus: c.syllabus || [],
-      students: 150,
-      active: true,
-      featured: true,
-      image: c.image || "",
-    })),
+    getDefaultCoursesList()
   );
 
   const [activeTab, setActiveTab] = useState<string>("All Courses");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
-  const [liveMentors, setLiveMentors] = useState<FirebaseMentor[]>([]);
-  const [selectedMentor, setSelectedMentor] = useState<FirebaseMentor | null>(null);
-  const [isHeroScrolled, setIsHeroScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setIsHeroScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Subscribe to live mentors from Firebase
-  useEffect(() => {
-    const unsub = subscribeMentors((list) => {
-      setLiveMentors(list.filter((m) => m.active !== false));
-    });
-    return () => unsub();
-  }, []);
-
-  // Close mentor modal on Escape and lock body scroll
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setSelectedMentor(null);
-      }
-    };
-
-    if (selectedMentor) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [selectedMentor]);
 
   // Subscribe to live Firebase courses
   useEffect(() => {
     const unsub = subscribeCourses((list) => {
       if (list && list.length > 0) {
-        setCoursesList(list);
+        const normalized = list.map((c) => ({
+          ...c,
+          category: normalizeCourseCategory(c.category, c.title, c.slug),
+        }));
+        setCoursesList(normalized);
       }
     });
     return () => unsub();
@@ -205,24 +150,30 @@ function CoursesPage() {
 
     const categoryCounts: Record<string, number> = {};
     activeCourses.forEach((c) => {
-      const cat = (c.category || "").trim();
+      const cat = normalizeCourseCategory(c.category, c.title, c.slug);
       if (cat) {
         categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
       }
     });
 
-    // Only categories that currently have active courses (count > 0)
-    const activeCategories = Object.keys(categoryCounts).sort((a, b) => {
-      if ((categoryCounts[b] || 0) !== (categoryCounts[a] || 0)) {
-        return (categoryCounts[b] || 0) - (categoryCounts[a] || 0);
+    // Standard primary tracks order
+    const priorityCategories = [
+      "Cyber Security",
+      "Digital Marketing",
+      "Programmatic Advertising",
+    ];
+
+    // First add priority categories that have active courses
+    priorityCategories.forEach((cat) => {
+      if (categoryCounts[cat]) {
+        tabs.push({ id: cat, label: cat, count: categoryCounts[cat] });
       }
-      return a.localeCompare(b);
     });
 
-    activeCategories.forEach((cat) => {
-      const count = categoryCounts[cat] || 0;
-      if (count > 0) {
-        tabs.push({ id: cat, label: cat, count });
+    // Then add any other custom categories
+    Object.keys(categoryCounts).forEach((cat) => {
+      if (!priorityCategories.includes(cat) && categoryCounts[cat]) {
+        tabs.push({ id: cat, label: cat, count: categoryCounts[cat] });
       }
     });
 
@@ -240,7 +191,10 @@ function CoursesPage() {
   const visibleCourses = useMemo(() => {
     const active = coursesList.filter((c) => c.active !== false);
     if (activeTab === "All Courses") return active;
-    return active.filter((c) => c.category.toLowerCase() === activeTab.toLowerCase());
+    return active.filter((c) => {
+      const cat = normalizeCourseCategory(c.category, c.title, c.slug);
+      return cat.toLowerCase() === activeTab.toLowerCase();
+    });
   }, [coursesList, activeTab]);
 
   const scrollToDemoForm = () => {
@@ -261,118 +215,41 @@ function CoursesPage() {
     }
   };
 
-  const scrollToMentors = () => {
-    const el = document.getElementById("mentors-section");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      navigate({ to: "/about", hash: "mentors" });
-    }
-  };
-
-  const handleDownloadProspectus = () => {
-    try {
-      const pdfUrl = `/curriculum/all-courses-prospectus.pdf`;
-      const link = document.createElement("a");
-      link.href = pdfUrl;
-      link.download = `all-courses-prospectus.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (e) {
-      console.error("Download error:", e);
-    }
-
-    setDownloadSuccess(true);
-    setTimeout(() => setDownloadSuccess(false), 5000);
-  };
-
   return (
     <SiteLayout>
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (Compact Sticky Navy Banner)                                */}
+      {/* 1. HERO SECTION (Clean Responsive Header Banner)                           */}
       {/* ========================================================================= */}
-      <section
-        className={cn(
-          "bg-[#0b1633] text-white border-b border-navy-800 sticky top-16 z-20 backdrop-blur-xl overflow-hidden transition-all duration-300 ease-in-out",
-          isHeroScrolled ? "py-2 sm:py-2.5 shadow-lg bg-[#070f26]/95 border-sky-500/30" : "py-4 sm:py-5 shadow-md"
-        )}
-      >
-        {/* Subtle background circuit / grid glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
-
+      <section className="relative text-slate-900 border-b border-slate-200/90 bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 py-4 sm:py-5 lg:py-6 shadow-2xs overflow-hidden">
+        {/* Ambient light glow */}
+        <div
+          className="pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl"
+          aria-hidden="true"
+        />
         <div className="container-site relative z-10">
-          <div className={cn("max-w-5xl transition-all duration-300", isHeroScrolled ? "space-y-1.5" : "space-y-2.5")}>
-            {/* Top Row: Breadcrumb & Social Proof Badges */}
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium"
-              >
-                <Link to="/" className="hover:text-white transition-colors">
-                  Home
-                </Link>
-                <span className="text-slate-600">»</span>
-                <span className="text-white font-semibold">All Courses</span>
-              </nav>
+          <div className="max-w-5xl space-y-2">
+            {/* Top Row: Breadcrumb */}
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 font-medium"
+            >
+              <Link to="/" className="hover:text-blue-600 transition-colors">
+                Home
+              </Link>
+              <span className="text-slate-400">»</span>
+              <span className="text-slate-900 font-semibold">All Courses</span>
+            </nav>
 
-              <div className="flex items-center gap-2 sm:gap-3 text-[11px] font-bold text-slate-300">
-                <span className="rounded bg-[#ffcc00] px-2 py-0.5 text-[9.5px] font-black uppercase tracking-wider text-slate-950 font-sans">
-                  CERTIFICATION
-                </span>
-                <span className="flex items-center gap-1 text-amber-300">
-                  <Star className="size-3 fill-current" />
-                  4.8
-                </span>
-              </div>
-            </div>
-
-            {/* Title & Action Row */}
+            {/* Title & Subtitle */}
             <div className="pt-0.5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1.5">
-                <h1
-                  className={cn(
-                    "font-black tracking-tight text-white leading-tight transition-all duration-300 ease-in-out",
-                    isHeroScrolled
-                      ? "text-base sm:text-lg md:text-xl lg:text-[1.35rem]"
-                      : "text-lg sm:text-xl md:text-2xl lg:text-[1.85rem]"
-                  )}
-                >
-                  Practical Courses for Today&apos;s Digital Careers
-                </h1>
+              <h1 className="font-display font-extrabold tracking-tight text-slate-900 leading-[1.25] text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]">
+                Practical Courses for Today&apos;s Digital Careers
+              </h1>
 
-                <div className="flex items-center gap-2 shrink-0 self-start sm:self-center">
-                  <button
-                    type="button"
-                    onClick={scrollToDemoForm}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 font-black text-slate-950 shadow-md transition-all cursor-pointer whitespace-nowrap",
-                      isHeroScrolled ? "px-3 py-1.5 text-[11px]" : "px-4 py-2 text-xs"
-                    )}
-                  >
-                    <UserPlus className={cn(isHeroScrolled ? "size-3" : "size-3.5")} />
-                    <span>Join Free Demo</span>
-                  </button>
-                </div>
-              </div>
-
-              <p
-                className={cn(
-                  "leading-relaxed font-normal max-w-4xl text-slate-300 transition-all duration-300 ease-in-out",
-                  isHeroScrolled ? "text-[11px] sm:text-xs" : "text-xs sm:text-sm"
-                )}
-              >
+              <p className="mt-1 leading-relaxed font-normal max-w-3xl text-slate-600 text-xs sm:text-[13.5px]">
                 Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic Advertising.
               </p>
             </div>
-
-            {/* Prospectus Notice Toast */}
-            {downloadSuccess && (
-              <div className="w-fit rounded-lg bg-emerald-950/80 border border-emerald-500/40 px-3.5 py-1.5 text-xs font-semibold text-emerald-300 flex items-center gap-2">
-                <Check className="size-3.5 text-emerald-400" />
-                <span>All Programs Prospectus PDF downloaded successfully!</span>
-              </div>
-            )}
           </div>
         </div>
       </section>
@@ -380,7 +257,7 @@ function CoursesPage() {
       {/* ========================================================================= */}
       {/* 2. MAIN CONTENT AREA (Course Cards on Left + Sticky Demo Sidebar on Right)  */}
       {/* ========================================================================= */}
-      <section id="programs-grid" className="bg-slate-50/60 py-4 sm:py-6 overflow-x-clip">
+      <section id="programs-grid" className="bg-white py-4 sm:py-6 overflow-x-clip">
         <div className="container-site">
           <div className="grid gap-6 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start w-full min-w-0">
             {/* ------------------------------------------------------------------- */}
@@ -389,44 +266,15 @@ function CoursesPage() {
             <div className="space-y-5 w-full min-w-0">
               {/* Category Pill Tabs & Quick Action Bar */}
               <div className="space-y-3.5 border-b border-slate-200/80 pb-3.5 w-full min-w-0">
-                {/* Top Row: Section Label / Program Count on Left, Mentors & Prospectus Actions on Right */}
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-700">
-                      Filter Programs
-                    </span>
-                    <span className="text-slate-300">•</span>
-                    <span className="text-xs font-semibold text-slate-500">
-                      Showing <strong className="text-slate-800 font-bold">{visibleCourses.length}</strong> {visibleCourses.length === 1 ? "track" : "tracks"}
-                    </span>
-                  </div>
-
-                  {/* Right Action Tools: Meet Mentors & Download Prospectus */}
-                  <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-                    {/* Button: Meet Your Mentors */}
-                    <button
-                      type="button"
-                      onClick={scrollToMentors}
-                      className="rounded-xl px-3 sm:px-3.5 py-1.5 text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap bg-navy hover:bg-navy-800 text-white border border-sky-400/40 shadow-sm active:scale-[0.98] group"
-                      title="Explore expert mentors and faculty"
-                    >
-                      <Users className="size-3.5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                      <span>Meet Mentors</span>
-                      <span className="text-[0.7rem] px-1.5 py-0.2 rounded-md font-extrabold bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                        {liveMentors.length}
-                      </span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleDownloadProspectus}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white hover:border-indigo-300 hover:text-indigo-600 px-3 py-1.5 text-xs font-bold text-slate-700 transition-colors cursor-pointer shrink-0 shadow-2xs"
-                    >
-                      <Download className="size-3.5 text-indigo-600" />
-                      <span className="hidden xs:inline">Download Prospectus</span>
-                      <span className="xs:hidden">Prospectus</span>
-                    </button>
-                  </div>
+                {/* Top Row: Section Label / Program Count */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black uppercase tracking-wider text-slate-700">
+                    Filter Programs
+                  </span>
+                  <span className="text-slate-300">•</span>
+                  <span className="text-xs font-semibold text-slate-500">
+                    Showing <strong className="text-slate-800 font-bold">{visibleCourses.length}</strong> {visibleCourses.length === 1 ? "track" : "tracks"}
+                  </span>
                 </div>
 
                 {/* Bottom Row: Full-Width Category Filter Pills (Wraps on Desktop/Tablet, Smooth Scroll on Small Mobile) */}
@@ -462,14 +310,21 @@ function CoursesPage() {
 
 
               {/* Course Cards Grid */}
-              <div className="grid gap-5 sm:gap-6 sm:grid-cols-2 w-full min-w-0">
+              <div
+                className={cn(
+                  "gap-5 sm:gap-6 w-full min-w-0",
+                  visibleCourses.length === 1
+                    ? "flex justify-center max-w-xl mx-auto"
+                    : "grid sm:grid-cols-2"
+                )}
+              >
                 {visibleCourses.map((course) => (
                   <article
                     key={course.id}
                     onClick={() => {
                       navigate({ to: "/courses/$slug", params: { slug: course.slug } });
                     }}
-                    className="group flex flex-col w-full min-w-0 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:border-indigo-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                    className="group flex flex-col w-full min-w-0 overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-sm hover:border-blue-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
                   >
                     {/* Course Thumbnail with Category & Mode */}
                     <Link
@@ -485,10 +340,10 @@ function CoursesPage() {
                         className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                      <span className="absolute left-3 top-3 rounded-md bg-[#0b1633]/90 px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wider text-amber-300 border border-white/10 backdrop-blur-sm">
+                      <span className="absolute left-3 top-3 rounded-md bg-[#081426]/90 px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wider text-amber-300 border border-white/10 backdrop-blur-sm">
                         {getCourseCategory(course)}
                       </span>
-                      <span className="absolute right-3 top-3 rounded-md bg-white/90 px-2 py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-slate-900 shadow-sm">
+                      <span className="absolute right-3 top-3 rounded-md bg-white/95 px-2 py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-slate-900 shadow-sm border border-slate-200">
                         ONLINE &bull; LIVE
                       </span>
                     </Link>
@@ -502,11 +357,11 @@ function CoursesPage() {
                           onClick={(e) => e.stopPropagation()}
                           className="block"
                         >
-                          <h3 className="text-base sm:text-lg font-black text-navy leading-snug group-hover:text-indigo-600 hover:underline transition-colors">
+                          <h3 className="text-base sm:text-lg font-black text-navy leading-snug group-hover:text-blue-600 hover:underline transition-colors">
                             {course.title}
                           </h3>
                         </Link>
-                        <p className="mt-1.5 text-xs text-slate-600 leading-relaxed text-justify line-clamp-2">
+                        <p className="mt-1.5 text-xs sm:text-[13px] text-slate-700 leading-relaxed text-justify line-clamp-2 font-normal">
                           {course.description}
                         </p>
                       </div>
@@ -516,7 +371,7 @@ function CoursesPage() {
                         {(course.highlights || []).slice(0, 4).map((tool) => (
                           <span
                             key={tool}
-                            className="rounded-md bg-slate-100 px-2 py-0.5 text-[0.65rem] font-bold text-slate-700"
+                            className="rounded-md border border-slate-300 bg-slate-100 px-2 py-0.5 text-[0.65rem] font-bold text-slate-800"
                           >
                             {tool}
                           </span>
@@ -524,32 +379,32 @@ function CoursesPage() {
                       </div>
 
                       {/* Specs Row */}
-                      <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-1.5 text-[0.72rem] sm:text-xs font-semibold text-slate-500 border-t border-slate-100 pt-3 mt-auto">
+                      <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-1.5 text-[0.72rem] sm:text-xs font-bold text-slate-600 border-t border-slate-200 pt-3 mt-auto">
                         <div className="flex items-center gap-1 shrink-0">
-                          <Clock className="size-3.5 text-indigo-600" />
+                          <Clock className="size-3.5 text-blue-600" />
                           <span>{course.duration}</span>
                         </div>
-                        <span className="text-slate-300">&bull;</span>
+                        <span className="text-slate-400">&bull;</span>
                         <div className="flex items-center gap-1 shrink-0">
-                          <Signal className="size-3.5 text-indigo-600" />
+                          <Signal className="size-3.5 text-blue-600" />
                           <span>{(course.level || "All Levels").split(" to ")[0]}</span>
                         </div>
-                        <span className="text-slate-300">&bull;</span>
+                        <span className="text-slate-400">&bull;</span>
                         <div className="flex items-center gap-1 shrink-0">
-                          <BookOpen className="size-3.5 text-indigo-600" />
+                          <BookOpen className="size-3.5 text-blue-600" />
                           <span>{course.syllabus?.length || 4} Modules</span>
                         </div>
                       </div>
 
                       {/* Dual Action Buttons */}
-                      <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-100">
+                      <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-slate-200">
                         <BtnLink
                           to="/courses/$slug"
                           params={{ slug: course.slug }}
                           variant="outline"
                           size="sm"
                           onClick={(e) => e.stopPropagation()}
-                          className="w-full min-w-0 border-slate-200 hover:bg-navy hover:text-white hover:border-navy text-slate-800 font-bold rounded-xl text-xs h-9 justify-center gap-1 px-2"
+                          className="w-full min-w-0 border-slate-300 hover:bg-navy hover:text-white hover:border-navy text-slate-800 font-bold rounded-xl text-xs h-9 justify-center gap-1 px-2"
                         >
                           <span>View Course</span>
                           <ArrowRight className="size-3.5 shrink-0" />
@@ -561,7 +416,7 @@ function CoursesPage() {
                             e.stopPropagation();
                             scrollToDemoForm();
                           }}
-                          className="w-full min-w-0 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs h-9 flex items-center justify-center gap-1 shadow-xs cursor-pointer transition-colors px-2"
+                          className="w-full min-w-0 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs h-9 flex items-center justify-center gap-1 shadow-xs cursor-pointer transition-colors px-2"
                         >
                           <UserPlus className="size-3.5 shrink-0" />
                           <span>Free Demo</span>
@@ -570,102 +425,6 @@ function CoursesPage() {
                     </div>
                   </article>
                 ))}
-              </div>
-
-              {/* Meet Your Mentors Showcase Section */}
-              <div
-                id="mentors-section"
-                className="space-y-4 pt-6 border-t border-slate-200/80 w-full min-w-0 scroll-mt-28"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                  <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-sky-700 mb-1.5">
-                      <Sparkles className="size-3 text-sky-600 animate-pulse" />
-                      <span>Direct Mentorship Access</span>
-                    </div>
-                    <h3 className="text-base sm:text-xl lg:text-2xl font-black text-navy tracking-tight">
-                      Meet Your Mentors &amp; Program Directors
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
-                      Learn directly from seasoned practitioners who lead enterprise security perimeters, programmatic trading desks, and high-velocity digital marketing campaigns.
-                    </p>
-                  </div>
-
-                  <Link
-                    to="/about"
-                    hash="mentors"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors shrink-0 py-1 whitespace-nowrap self-start sm:self-end"
-                  >
-                    <span>Full Faculty Profiles</span>
-                    <ArrowRight className="size-3.5" />
-                  </Link>
-                </div>
-
-                {/* Mentor Cards Grid (Live Admin Sync) */}
-                {liveMentors.length === 0 ? (
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-8 text-center text-slate-500">
-                    <p className="text-xs font-bold text-slate-700">Faculty directory is being updated by the academy administration.</p>
-                    <p className="text-[11px] text-slate-400 mt-1">Please explore our courses or contact counselors for mentor assignment details.</p>
-                  </div>
-                ) : (
-                  <div className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
-                    {liveMentors.map((mentor) => (
-                      <div
-                        key={mentor.id || mentor.name}
-                        onClick={() => setSelectedMentor(mentor)}
-                        className="group relative rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs hover:shadow-lg hover:border-sky-400 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer flex flex-col justify-between"
-                      >
-                      <div className="flex items-start gap-3">
-                        <div className="relative size-14 sm:size-16 rounded-full shrink-0 p-0.5 bg-gradient-to-tr from-sky-400 to-indigo-600 shadow-md">
-                          <img
-                            src={mentor.image}
-                            alt={mentor.name}
-                            className="size-full rounded-full object-cover object-top"
-                            loading="lazy"
-                          />
-                          <div className="absolute bottom-0 right-0 rounded-full bg-[#061122] p-0.5 shadow-xs">
-                            <CheckCircle2 className="size-3.5 text-sky-400 fill-[#061122]" />
-                          </div>
-                        </div>
-
-                        <div className="min-w-0 flex-1">
-                          <span
-                            className={cn(
-                              "inline-block rounded-full px-2 py-0.2 text-[9px] font-extrabold uppercase tracking-wider border",
-                              mentor.badgeBg
-                            )}
-                          >
-                            {mentor.track}
-                          </span>
-                          <h4 className="text-sm font-black text-navy group-hover:text-indigo-600 transition-colors mt-1 truncate">
-                            {mentor.name}
-                          </h4>
-                          <p className="text-[11px] font-semibold text-slate-500 leading-tight">
-                            {mentor.role}
-                          </p>
-                          <p className="text-[10.5px] font-bold text-sky-600 mt-0.5">
-                            {mentor.experience}
-                          </p>
-                        </div>
-                      </div>
-
-                      <p className="mt-2.5 text-xs text-slate-600 line-clamp-2 leading-relaxed text-justify">
-                        {mentor.bio}
-                      </p>
-
-                      <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span className="text-[11px] font-bold text-indigo-600 group-hover:underline flex items-center gap-1">
-                          View Bio &amp; Insights
-                          <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-                        </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
-                          1-on-1 Guidance
-                        </span>
-                      </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
 
               {/* Key Features & Placement Support Grid */}
@@ -690,12 +449,12 @@ function CoursesPage() {
                       key={idx}
                       data-reveal={idx % 2 === 0 ? "left" : "top"}
                       style={{ "--reveal-delay": `${(idx % 2) * 100 + Math.floor(idx / 2) * 80}ms` } as CSSProperties}
-                      className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3 sm:p-3.5 shadow-xs min-w-0"
+                      className="flex items-start gap-3 rounded-xl border border-slate-300 bg-white p-3 sm:p-3.5 shadow-xs min-w-0"
                     >
-                      <span className="grid size-6 place-items-center rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold shrink-0 mt-0.5">
+                      <span className="grid size-6 place-items-center rounded-full bg-blue-50 text-blue-600 text-xs font-bold shrink-0 mt-0.5 border border-blue-200">
                         <Check className="size-3.5 stroke-[2.5]" />
                       </span>
-                      <span className="text-xs sm:text-sm text-slate-700 font-medium leading-snug">
+                      <span className="text-xs sm:text-sm text-slate-800 font-semibold leading-snug">
                         {item}
                       </span>
                     </div>
@@ -704,16 +463,16 @@ function CoursesPage() {
               </div>
 
               {/* Program FAQs Section */}
-              <div className="space-y-3 pt-4 border-t border-slate-200/80 w-full min-w-0">
+              <div className="space-y-3 pt-4 border-t border-slate-300 w-full min-w-0">
                 <div
                   data-reveal="left"
                   className="flex items-center justify-between"
                 >
                   <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
-                    <HelpCircle className="size-5 text-indigo-600 shrink-0" />
+                    <HelpCircle className="size-5 text-blue-600 shrink-0" />
                     Frequently Asked Questions
                   </h3>
-                  <span className="text-xs font-bold text-slate-400">
+                  <span className="text-xs font-bold text-slate-500">
                     {generalFaqs.length} Answers
                   </span>
                 </div>
@@ -726,7 +485,7 @@ function CoursesPage() {
                         key={index}
                         data-reveal={index % 2 === 0 ? "top" : "left"}
                         style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
-                        className="border border-slate-200/80 rounded-xl overflow-hidden bg-white shadow-xs w-full min-w-0"
+                        className="border border-slate-300 rounded-xl overflow-hidden bg-white shadow-xs w-full min-w-0"
                       >
                         <button
                           type="button"
@@ -735,13 +494,13 @@ function CoursesPage() {
                         >
                           <span className="pr-2">{faq.question}</span>
                           {isFaqExpanded ? (
-                            <ChevronUp className="size-4 text-indigo-600 shrink-0 ml-auto" />
+                            <ChevronUp className="size-4 text-blue-600 shrink-0 ml-auto" />
                           ) : (
-                            <ChevronDown className="size-4 text-slate-400 shrink-0 ml-auto" />
+                            <ChevronDown className="size-4 text-slate-500 shrink-0 ml-auto" />
                           )}
                         </button>
                         {isFaqExpanded && (
-                          <div className="border-t border-slate-100 p-3.5 sm:p-4 bg-slate-50/30 text-xs sm:text-sm lg:text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                          <div className="border-t border-slate-200 p-3.5 sm:p-4 bg-slate-50/60 text-xs sm:text-sm lg:text-[0.95rem] text-slate-700 leading-relaxed text-justify font-normal">
                             {faq.answer}
                           </div>
                         )}
@@ -755,7 +514,7 @@ function CoursesPage() {
             {/* ------------------------------------------------------------------- */}
             {/* RIGHT COLUMN: Video Demo Card + JOIN FREE DEMO CLASS Form           */}
             {/* ------------------------------------------------------------------- */}
-            <aside className="lg:sticky lg:top-[180px] xl:top-[185px] w-full min-w-0">
+            <aside className="lg:sticky lg:top-24 w-full min-w-0">
               <CourseDemoSidebar />
             </aside>
           </div>
@@ -765,161 +524,6 @@ function CoursesPage() {
       {/* ========================================================================= */}
       {/* MENTOR POPUP MODAL DIALOG                                                 */}
       {/* ========================================================================= */}
-      {selectedMentor && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="mentor-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={() => setSelectedMentor(null)}
-        >
-          <div
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-sky-400/40 bg-gradient-to-b from-[#0a1835] via-[#061122] to-[#040c1a] shadow-2xl p-5 sm:p-7 text-white animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Ambient Background Glows */}
-            <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-sky-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -left-16 -bottom-16 size-56 rounded-full bg-blue-600/20 blur-3xl" />
-
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setSelectedMentor(null)}
-              className="absolute top-4 right-4 z-10 grid size-9 place-items-center rounded-full bg-slate-900/90 border border-white/10 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-400 cursor-pointer"
-              aria-label="Close mentor details"
-            >
-              <X className="size-5" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 pb-5 border-b border-sky-500/20 relative z-10">
-              <div className="size-24 sm:size-28 shrink-0 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-blue-500 to-indigo-500 ring-2 ring-[#051126] shadow-xl shadow-sky-500/25">
-                <div className="size-full rounded-full overflow-hidden bg-slate-950">
-                  <img
-                    src={selectedMentor.image}
-                    alt={selectedMentor.name}
-                    className="size-full object-cover object-top"
-                  />
-                </div>
-              </div>
-
-              <div className="text-center sm:text-left space-y-1.5 flex-1">
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                  <span
-                    className={cn(
-                      "inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-[10px] font-black uppercase tracking-wider border shadow-sm",
-                      selectedMentor.badgeBg
-                    )}
-                  >
-                    {selectedMentor.track}
-                  </span>
-                  <span className="text-[10px] font-bold text-sky-200 bg-sky-950/80 px-2.5 py-0.5 rounded-full border border-sky-400/20">
-                    {selectedMentor.experience}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-center sm:justify-start gap-2">
-                  <h3 id="mentor-modal-title" className="text-xl sm:text-2xl font-black text-white">
-                    {selectedMentor.name}
-                  </h3>
-                  <CheckCircle2
-                    className="size-5 text-sky-400 shrink-0"
-                    aria-label="Verified Faculty"
-                  />
-                </div>
-
-                <p className="text-xs sm:text-sm font-semibold text-sky-300">
-                  {selectedMentor.role}
-                </p>
-              </div>
-            </div>
-
-            {/* Modal Body */}
-            <div className="space-y-4 sm:space-y-5 py-5 relative z-10">
-              {/* Detailed Bio */}
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-wider text-sky-400 mb-1.5 flex items-center gap-1.5">
-                  <Sparkles className="size-3.5" />
-                  <span>About {selectedMentor.name.split(" ")[0]}</span>
-                </h4>
-                <p className="text-xs sm:text-sm leading-relaxed text-slate-200 font-normal">
-                  {selectedMentor.fullBio}
-                </p>
-              </div>
-
-              {/* Core Expertise Skills */}
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-wider text-sky-400 mb-2">
-                  Core Technical Expertise &amp; Tools
-                </h4>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedMentor.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="inline-block rounded-lg bg-sky-950/70 border border-sky-400/30 px-2.5 py-1 text-xs font-semibold text-sky-200 shadow-xs"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Mentorship Focus */}
-              <div className="rounded-2xl border border-sky-500/20 bg-sky-950/30 p-3.5 sm:p-4">
-                <h4 className="text-xs font-black uppercase tracking-wider text-sky-400 mb-2.5">
-                  What You Master in 1-on-1 Mentorship Sessions
-                </h4>
-                <ul className="space-y-2">
-                  {selectedMentor.mentorshipFocus.map((focus) => (
-                    <li
-                      key={focus}
-                      className="flex items-start gap-2 text-xs sm:text-[13px] text-slate-200 font-medium"
-                    >
-                      <CheckCircle2 className="size-4 text-sky-400 shrink-0 mt-0.5" />
-                      <span>{focus}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Modal Footer Actions */}
-            <div className="pt-4 border-t border-sky-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10">
-              <a
-                href={whatsappLink(
-                  `Hi DIGITECHADEMY, I would like to connect with mentor ${selectedMentor.name} for career and program guidance.`
-                )}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold px-4 py-2.5 transition-colors shadow-md shadow-emerald-600/20"
-              >
-                <MessageCircle className="size-4" />
-                <span>Ask via WhatsApp</span>
-              </a>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setSelectedMentor(null)}
-                  className="flex-1 sm:flex-initial rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-bold px-4 py-2.5 transition-colors cursor-pointer"
-                >
-                  Close
-                </button>
-                <BtnLink
-                  to="/request-call"
-                  variant="primary"
-                  size="sm"
-                  className="flex-1 sm:flex-initial bg-sky-500 hover:bg-sky-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-sky-500/30 whitespace-nowrap"
-                  onClick={() => setSelectedMentor(null)}
-                >
-                  <span>Book Mentorship Call</span>
-                  <ArrowRight className="size-4 ml-1.5" />
-                </BtnLink>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </SiteLayout>
   );
 }

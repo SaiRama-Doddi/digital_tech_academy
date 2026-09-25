@@ -54,10 +54,10 @@ const categoryIcons: Record<string, typeof HelpCircle> = {
 
 const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
   General: { bg: "bg-blue-500/10", text: "text-blue-600", border: "border-blue-300/40" },
-  "Digital Marketing": { bg: "bg-indigo-500/10", text: "text-indigo-600", border: "border-indigo-300/40" },
+  "Digital Marketing": { bg: "bg-blue-500/10", text: "text-blue-600", border: "border-blue-300/40" },
   "Programmatic Advertising": { bg: "bg-sky-500/10", text: "text-sky-600", border: "border-sky-300/40" },
-  "Cyber Security": { bg: "bg-emerald-500/10", text: "text-emerald-600", border: "border-emerald-300/40" },
-  "Enrollment & Support": { bg: "bg-rose-500/10", text: "text-rose-600", border: "border-rose-300/40" },
+  "Cyber Security": { bg: "bg-blue-600/10", text: "text-blue-700", border: "border-blue-300/40" },
+  "Enrollment & Support": { bg: "bg-sky-500/10", text: "text-sky-600", border: "border-sky-300/40" },
 };
 
 function FaqPage() {
@@ -119,7 +119,7 @@ function FaqPage() {
         description="Clear answers about DIGITECHADEMY courses, practical labs, tools, certification, and admissions."
       />
 
-      <section className="bg-gradient-to-b from-slate-50/70 via-white to-slate-50/50 py-6 sm:py-8">
+      <section className="bg-white py-6 sm:py-8">
         <div className="container-site">
           {/* ========================================================================= */}
           {/* 1. CATEGORY FILTER TABS                                                   */}
@@ -306,7 +306,7 @@ function FaqPage() {
             </div>
 
             {/* Right Column: Sticky Support & Help Box */}
-            <aside className="lg:sticky lg:top-[185px] xl:top-[190px] space-y-4" data-reveal="right">
+            <aside className="lg:sticky lg:top-24 space-y-4" data-reveal="right">
               {/* Card 1: Direct Support Card */}
               <div className="rounded-2xl border border-sky-400/30 bg-gradient-to-br from-[#091738] via-[#061126] to-[#040b1a] p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
                 <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-blue-500/15 blur-2xl" />
@@ -373,10 +373,9 @@ function FaqPage() {
                   <li>
                     <Link
                       to="/about"
-                      hash="mentors"
                       className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 text-slate-800 hover:text-blue-600 transition-colors"
                     >
-                      <span>Meet Our Faculty</span>
+                      <span>About DIGITECHADEMY</span>
                       <ArrowRight className="size-3 text-slate-400" />
                     </Link>
                   </li>

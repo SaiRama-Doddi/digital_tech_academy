@@ -77,7 +77,7 @@ function ContactPage() {
       />
 
       {/* Section 2 — Contact Options */}
-      <section className="bg-background">
+      <section className="bg-white">
         <div className="container-site py-5 sm:py-6 lg:py-7">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {cards.map((card) => (
@@ -95,9 +95,9 @@ function ContactPage() {
                       {card.action}
                     </span>
                   </div>
-                  <h2 className="text-base sm:text-lg font-black text-navy leading-tight">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
                     {card.title}
-                  </h2>
+                  </h3>
                   <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                     {card.description}
                   </p>
@@ -134,7 +134,7 @@ function ContactPage() {
       </section>
 
       {/* Section 3 — Enquiry Form */}
-      <section className="bg-surface">
+      <section className="bg-white border-t border-slate-200/80">
         <div className="container-site py-6 sm:py-8 lg:py-10 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 items-start">
           <div data-reveal="left">
             <SectionHeading

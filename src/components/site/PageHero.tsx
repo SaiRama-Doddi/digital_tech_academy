@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type PageHeroProps = {
@@ -25,45 +25,23 @@ export function PageHero({
   containerClassName,
 }: PageHeroProps) {
   const isCenter = align === "center";
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <section
       className={cn(
-        "surface-navy sticky top-16 z-20 overflow-hidden border-b backdrop-blur-xl transition-all duration-300 ease-in-out",
-        isScrolled
-          ? "border-sky-500/30 shadow-lg shadow-navy/30 bg-[#070f26]/95"
-          : "border-sky-500/20 shadow-md shadow-navy/20",
+        "relative overflow-hidden border-b border-slate-200/90 bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 py-4 sm:py-5 lg:py-6 shadow-2xs",
         className
       )}
     >
-      <div className="grid-lines absolute inset-0 opacity-70 pointer-events-none" aria-hidden="true" />
-      {/* Ambient glow */}
+      {/* Ambient light glow */}
       <div
-        className={cn(
-          "pointer-events-none absolute left-1/2 -translate-x-1/2 rounded-full bg-accent/10 blur-3xl transition-all duration-300",
-          isScrolled ? "-top-36 size-[24rem]" : "-top-24 size-[36rem]"
-        )}
+        className="pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl"
         aria-hidden="true"
       />
-      <div
-        className={cn(
-          "container-site relative z-10 transition-all duration-300 ease-in-out",
-          isScrolled ? "py-1.5 sm:py-2 lg:py-2.5" : "py-3 sm:py-4 lg:py-4.5"
-        )}
-      >
+      <div className="container-site relative z-10">
         <div
           className={cn(
-            "max-w-5xl lg:max-w-6xl xl:max-w-7xl w-full transition-all duration-300",
+            "max-w-5xl lg:max-w-6xl xl:max-w-7xl w-full",
             isCenter ? "mx-auto flex flex-col items-center text-center" : "flex flex-col items-start text-left",
             containerClassName
           )}
@@ -72,39 +50,21 @@ export function PageHero({
           {eyebrow ? (
             <span
               className={cn(
-                "eyebrow text-accent inline-flex items-center gap-2 font-bold uppercase transition-all duration-300 ease-in-out",
-                isScrolled
-                  ? "text-[10px] sm:text-[11px] tracking-wider mb-0.5"
-                  : "text-[11px] sm:text-xs tracking-widest",
+                "eyebrow text-blue-700 inline-flex items-center gap-2 font-bold uppercase text-[10.5px] sm:text-xs tracking-widest",
                 isCenter && "justify-center"
               )}
             >
-              <span
-                className={cn(
-                  "h-px bg-accent transition-all duration-300",
-                  isScrolled ? "w-3 sm:w-4" : "w-5 sm:w-6"
-                )}
-                aria-hidden="true"
-              />
+              <span className="h-px w-5 sm:w-6 bg-blue-600" aria-hidden="true" />
               <span>{eyebrow}</span>
               {isCenter ? (
-                <span
-                  className={cn(
-                    "h-px bg-accent transition-all duration-300",
-                    isScrolled ? "w-3 sm:w-4" : "w-5 sm:w-6"
-                  )}
-                  aria-hidden="true"
-                />
+                <span className="h-px w-5 sm:w-6 bg-blue-600" aria-hidden="true" />
               ) : null}
             </span>
           ) : null}
 
           <h1
             className={cn(
-              "leading-tight sm:leading-tight text-white tracking-tight sm:whitespace-nowrap text-left [text-wrap:balance] transition-all duration-300 ease-in-out",
-              isScrolled
-                ? "mt-0.5 sm:mt-1 text-base sm:text-lg md:text-xl lg:text-[1.35rem] xl:text-[1.5rem] font-extrabold"
-                : "mt-1.5 sm:mt-2 text-xl sm:text-2xl md:text-3xl lg:text-[2.2rem] xl:text-[2.45rem] font-black",
+              "font-display font-extrabold tracking-tight text-slate-900 leading-[1.25] text-left [text-wrap:balance] mt-1 sm:mt-1.5 text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]",
               isCenter && "text-center mx-auto",
               titleClassName
             )}
@@ -115,10 +75,7 @@ export function PageHero({
           {description ? (
             <p
               className={cn(
-                "leading-relaxed text-slate-300 font-normal text-left whitespace-normal md:whitespace-nowrap w-full max-w-none [text-wrap:balance] transition-all duration-300 ease-in-out",
-                isScrolled
-                  ? "mt-0.5 sm:mt-1 text-[11px] sm:text-xs md:text-sm leading-snug text-slate-300/90"
-                  : "mt-1 sm:mt-1.5 text-xs sm:text-sm md:text-[15px]",
+                "leading-relaxed text-slate-600 font-normal text-left max-w-3xl [text-wrap:balance] mt-1 sm:mt-1.5 text-xs sm:text-[13.5px]",
                 isCenter && "text-center mx-auto",
                 descriptionClassName
               )}
@@ -130,8 +87,7 @@ export function PageHero({
           {children ? (
             <div
               className={cn(
-                "w-full transition-all duration-300",
-                isScrolled ? "mt-2 sm:mt-2.5" : "mt-4 sm:mt-5",
+                "w-full mt-4 sm:mt-5",
                 isCenter ? "flex justify-center" : "flex justify-start"
               )}
             >
@@ -143,4 +99,3 @@ export function PageHero({
     </section>
   );
 }
-

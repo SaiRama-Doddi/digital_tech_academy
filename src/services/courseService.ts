@@ -125,11 +125,11 @@ function mapStaticCourse(c: Course): FirebaseCourse {
     highlights: c.highlights || [],
     syllabus: c.syllabus || [],
     faqs: c.faqs || [],
-    students: 120 + Math.floor(Math.random() * 150),
+    students: 150,
     active: true,
     featured: true,
     image: c.image || "",
-    createdAt: Date.now(),
+    createdAt: "2026-01-01T00:00:00.000Z",
   };
 }
 
@@ -148,15 +148,16 @@ export const DEMO_COURSE_IDS = [
 
 // Get courses from local storage cache
 export function getLocalCachedCourses(): FirebaseCourse[] {
-  if (typeof window === "undefined") return [];
+  const defaults = getDefaultCoursesList();
+  if (typeof window === "undefined") return defaults;
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!raw) {
-      return [];
+      return defaults;
     }
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      return parsed.filter(
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      const filtered = parsed.filter(
         (c: any) =>
           c &&
           c.id !== "full-stack-java" &&
@@ -167,10 +168,18 @@ export function getLocalCachedCourses(): FirebaseCourse[] {
         ...c,
         category: normalizeCourseCategory(c.category, c.title, c.slug),
       }));
+
+      // Merge in any missing default courses (e.g. programmatic advertising)
+      for (const def of defaults) {
+        if (!filtered.some((c: any) => c.slug === def.slug || c.id === def.id)) {
+          filtered.push(def);
+        }
+      }
+      return filtered;
     }
-    return [];
+    return defaults;
   } catch {
-    return [];
+    return defaults;
   }
 }
 

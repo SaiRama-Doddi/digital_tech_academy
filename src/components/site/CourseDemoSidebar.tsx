@@ -163,7 +163,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   return (
     <div id="course-demo-sidebar" className="w-full scroll-mt-[190px]">
       {/* Embedded Lead Capture Form Card (JOIN FREE DEMO CLASS) */}
-      <div className="relative rounded-2xl sm:rounded-[24px] border border-slate-200/90 bg-white/95 backdrop-blur-xl p-4 sm:p-6 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.12),0_0_0_1px_rgba(255,255,255,0.8)] transition-all overflow-hidden w-full min-w-0">
+      <div className="relative rounded-2xl sm:rounded-[24px] border border-slate-300 bg-white p-4 sm:p-6 shadow-[0_12px_40px_-10px_rgba(15,23,42,0.12)] transition-all overflow-hidden w-full min-w-0">
         {/* Top Beveled Edge Glow Strip */}
         <div
           className="absolute inset-x-6 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/70 to-transparent pointer-events-none"
@@ -176,7 +176,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
               <CheckCircle2 className="size-8 stroke-[2.5]" />
             </div>
             <h4 className="mt-3 text-lg font-black text-slate-900 tracking-tight">Registration Confirmed!</h4>
-            <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+            <p className="mt-1.5 text-xs text-slate-700 leading-relaxed">
               Thank you, <strong className="text-slate-900">{fullName}</strong>. Your free demo class seat
               for <strong className="text-blue-600">{selectedCourse}</strong> is reserved.
             </p>
@@ -193,7 +193,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
               <button
                 type="button"
                 onClick={handleResetForm}
-                className="w-full text-xs font-semibold text-slate-500 hover:text-slate-900 py-1.5 cursor-pointer transition-colors"
+                className="w-full text-xs font-semibold text-slate-600 hover:text-slate-900 py-1.5 cursor-pointer transition-colors"
               >
                 Submit another request
               </button>
@@ -203,7 +203,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
           <div>
             {/* Header: Exact copy from user screenshot with luxury styling */}
             <div className="text-center pb-2">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200/60 shadow-2xs mb-1.5">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-300 shadow-2xs mb-1.5">
                 <span className="relative flex size-2 shrink-0">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
@@ -215,7 +215,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
               <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
                 JOIN FREE DEMO CLASS
               </h3>
-              <p className="text-[11px] text-slate-500 mt-0.5">
+              <p className="text-[11px] text-slate-600 mt-0.5">
                 Try the live curriculum before making a decision
               </p>
             </div>
@@ -242,7 +242,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Full Name"
-                  className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                 />
               </div>
 
@@ -252,7 +252,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   <label htmlFor="course-sidebar-country" className="sr-only">
                     Country Code
                   </label>
-                  <div className="h-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-100 px-2.5 py-2 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
+                  <div className="h-full rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 px-2.5 py-2 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
                     <CountryFlag country={selectedCountry.country} />
                     <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
                     <ChevronDown className="size-3 text-slate-400 shrink-0 -ml-0.5" />
@@ -296,7 +296,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                       setPhone(cleaned);
                     }}
                     placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
-                    className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-14 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-14 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   />
                   <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">
                     {phone.length}/{selectedCountry.digits}
@@ -318,7 +318,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address"
-                  className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                 />
               </div>
 
@@ -334,7 +334,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   id="course-sidebar-select"
                   value={selectedCourse}
                   onChange={(e) => setSelectedCourse(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-8 py-2.5 text-xs sm:text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                  className="w-full rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-8 py-2.5 text-xs sm:text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                 >
                   {liveCourseOptions.map((c) => (
                     <option key={c.id} value={c.title}>
@@ -342,7 +342,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                     </option>
                   ))}
                 </select>
-                <div className="flex items-center justify-between pt-1 px-1 text-[11px] text-slate-500">
+                <div className="flex items-center justify-between pt-1 px-1 text-[11px] text-slate-600">
                   <span>Want to see full syllabus?</span>
                   <Link
                     to="/courses"
@@ -383,7 +383,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
               </div>
 
               {/* Trust Badges Strip */}
-              <div className="pt-1 flex items-center justify-center gap-2 text-[10px] text-slate-500 font-medium">
+              <div className="pt-1 flex items-center justify-center gap-2 text-[10px] text-slate-600 font-medium">
                 <span className="inline-flex items-center gap-1">
                   <ShieldCheck className="size-3 text-emerald-600" />
                   <span>100% Free Demo</span>

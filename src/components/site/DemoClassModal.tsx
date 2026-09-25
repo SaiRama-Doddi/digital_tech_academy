@@ -196,18 +196,18 @@ export function DemoClassModal() {
         aria-hidden="true"
       />
       <div className="relative z-10 w-full max-w-[460px]">
-        <div className="absolute -inset-1.5 rounded-[32px] bg-gradient-to-r from-blue-600/30 via-indigo-600/30 to-purple-600/30 blur-2xl opacity-70 pointer-events-none" aria-hidden="true" />
+        <div className="absolute -inset-1.5 rounded-[32px] bg-gradient-to-r from-blue-600/30 via-sky-500/30 to-blue-700/30 blur-2xl opacity-70 pointer-events-none" aria-hidden="true" />
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="demo-class-modal-title"
-          className="relative w-full max-h-[94vh] overflow-y-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden rounded-2xl sm:rounded-[28px] bg-white/98 backdrop-blur-2xl p-4 sm:p-5 lg:p-6 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.3),0_0_0_1px_rgba(255,255,255,0.95)] border border-slate-100 text-slate-800 animate-in zoom-in-95 duration-200"
+          className="relative w-full max-h-[94vh] overflow-y-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden rounded-2xl sm:rounded-[28px] bg-white/98 backdrop-blur-2xl p-4 sm:p-5 lg:p-6 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.3),0_0_0_1px_rgba(255,255,255,0.95)] border border-slate-300 text-slate-800 animate-in zoom-in-95 duration-200"
         >
           <div className="absolute inset-x-8 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent pointer-events-none" aria-hidden="true" />
           <button
             type="button"
             onClick={handleClose}
-            className="group absolute right-3 top-3 sm:right-4 sm:top-4 grid size-7.5 sm:size-8 place-items-center rounded-full bg-slate-100/80 hover:bg-slate-200/90 text-slate-400 hover:text-slate-800 transition-all active:scale-95 cursor-pointer shadow-2xs z-20"
+            className="group absolute right-3 top-3 sm:right-4 sm:top-4 grid size-7.5 sm:size-8 place-items-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-all active:scale-95 cursor-pointer shadow-2xs z-20"
             aria-label="Close modal"
           >
             <X className="size-4 sm:size-4.5 transition-transform duration-200 group-hover:rotate-90" />
@@ -221,7 +221,7 @@ export function DemoClassModal() {
               <h3 className="mt-4 text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 Demo Seat Reserved!
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xs mx-auto">
+              <p className="mt-2 text-xs sm:text-sm text-slate-700 leading-relaxed max-w-xs mx-auto">
                 Thank you, <span className="font-bold text-slate-900">{fullName.split(" ")[0]}</span>.
                 Our academic coordinator will call you on{" "}
                 <span className="font-bold text-blue-600">{selectedCountry.code} {phone}</span> with
@@ -247,7 +247,7 @@ export function DemoClassModal() {
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="w-full py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
+                  className="w-full py-2 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
                 >
                   Close & Continue Browsing
                 </button>
@@ -267,11 +267,11 @@ export function DemoClassModal() {
                 </div>
                 <h2
                   id="demo-class-modal-title"
-                  className="text-lg sm:text-[22px] font-black tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent uppercase leading-tight"
+                  className="text-lg sm:text-[22px] font-black tracking-tight bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-transparent uppercase leading-tight"
                 >
                   JOIN FREE DEMO CLASS
                 </h2>
-                <p className="text-[10.5px] sm:text-[11.5px] text-slate-500 mt-0.5 font-normal max-w-xs mx-auto leading-snug">
+                <p className="text-[10.5px] sm:text-[11.5px] text-slate-600 mt-0.5 font-normal max-w-xs mx-auto leading-snug">
                   Experience live mentor guidance & real hands-on projects before enrolling.
                 </p>
               </div>
@@ -293,13 +293,13 @@ export function DemoClassModal() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Full Name"
-                    className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                    className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   />
                 </div>
                 <div className="flex gap-1.5 sm:gap-2">
                   <div className="relative shrink-0 flex items-center">
                     <label htmlFor="demo-country" className="sr-only">Country Code</label>
-                    <div className="h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-100 px-2 sm:px-2.5 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
+                    <div className="h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 px-2 sm:px-2.5 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
                       <CountryFlag country={selectedCountry.country} />
                       <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
                       <ChevronDown className="size-3 text-slate-400 shrink-0" />
@@ -340,7 +340,7 @@ export function DemoClassModal() {
                         setPhone(cleaned);
                       }}
                       placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
-                      className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-14 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                      className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-14 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                     />
                     <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">
                       {phone.length}/{selectedCountry.digits}
@@ -358,7 +358,7 @@ export function DemoClassModal() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email Address"
-                    className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                    className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-3.5 py-1.5 sm:py-2 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   />
                 </div>
                 <div className="relative group">
@@ -370,7 +370,7 @@ export function DemoClassModal() {
                     id="demo-course"
                     value={course}
                     onChange={(e) => setCourse(e.target.value)}
-                    className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-200/90 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-8 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
+                    className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-8 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   >
                     <option value="" disabled>
                       {liveCourses.length === 0 ? "Loading published courses..." : "Select your course"}
@@ -386,7 +386,7 @@ export function DemoClassModal() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group relative w-full overflow-hidden rounded-xl bg-[linear-gradient(135deg,#0284c7_0%,#2563eb_40%,#4f46e5_80%,#7c3aed_100%)] text-white font-extrabold h-10 sm:h-11 text-xs sm:text-sm border border-white/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.5),0_6px_20px_-2px_rgba(37,99,235,0.45),0_2px_6px_rgba(15,23,42,0.1)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.65),0_10px_26px_-2px_rgba(37,99,235,0.65),0_4px_10px_rgba(79,70,229,0.35)] flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] disabled:opacity-75"
+                    className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-sky-500 via-blue-600 to-blue-700 text-white font-extrabold h-10 sm:h-11 text-xs sm:text-sm border border-white/25 shadow-[inset_0_1px_1px_rgba(255,255,255,0.5),0_6px_20px_-2px_rgba(37,99,235,0.45),0_2px_6px_rgba(15,23,42,0.1)] hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.65),0_10px_26px_-2px_rgba(37,99,235,0.65)] flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] disabled:opacity-75"
                   >
                     <span
                       className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
@@ -409,7 +409,7 @@ export function DemoClassModal() {
                     )}
                   </button>
                 </div>
-                <div className="pt-0.5 flex items-center justify-center gap-1.5 sm:gap-3 text-[9px] sm:text-[10px] text-slate-500 font-medium">
+                <div className="pt-0.5 flex items-center justify-center gap-1.5 sm:gap-3 text-[9px] sm:text-[10px] text-slate-600 font-medium">
                   <span className="inline-flex items-center gap-1">
                     <ShieldCheck className="size-3 text-emerald-600" />
                     <span>100% Free Demo</span>
@@ -426,10 +426,10 @@ export function DemoClassModal() {
                   </span>
                 </div>
               </form>
-              <div className="mt-2.5 sm:mt-3 pt-2.5 sm:pt-3 border-t border-slate-100/90 flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+              <div className="mt-2.5 sm:mt-3 pt-2.5 sm:pt-3 border-t border-slate-200 flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
                 <a
                   href={site.phoneHref}
-                  className="group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-blue-50/70 hover:bg-blue-100/80 border border-blue-100 text-blue-700 transition-all shadow-2xs hover:shadow-xs active:scale-95 shrink-0"
+                  className="group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-blue-50/70 hover:bg-blue-100/80 border border-blue-200 text-blue-700 transition-all shadow-2xs hover:shadow-xs active:scale-95 shrink-0"
                 >
                   <span className="grid size-4 place-items-center rounded-full bg-blue-600 text-white shadow-2xs">
                     <Phone className="size-2.5" />
@@ -438,9 +438,9 @@ export function DemoClassModal() {
                 </a>
                 <a
                   href={`mailto:${site.email}?subject=Free Demo Class Enquiry`}
-                  className="group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-purple-50/70 hover:bg-purple-100/80 border border-purple-100 text-purple-700 transition-all shadow-2xs hover:shadow-xs active:scale-95 shrink-0"
+                  className="group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-sky-50/70 hover:bg-sky-100/80 border border-sky-200 text-sky-700 transition-all shadow-2xs hover:shadow-xs active:scale-95 shrink-0"
                 >
-                  <span className="grid size-4 place-items-center rounded-full bg-purple-600 text-white shadow-2xs">
+                  <span className="grid size-4 place-items-center rounded-full bg-sky-600 text-white shadow-2xs">
                     <Mail className="size-2.5" />
                   </span>
                   <span>Email</span>
@@ -449,7 +449,7 @@ export function DemoClassModal() {
                   href={whatsappLink("Hi, I would like to join the free demo class.")}
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-100 text-emerald-700 transition-all shadow-2xs hover:shadow-xs active:scale-95 shrink-0"
+                  className="group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200 text-emerald-700 transition-all shadow-2xs hover:shadow-xs active:scale-95 shrink-0"
                 >
                   <span className="grid size-4 place-items-center rounded-full bg-emerald-500 text-white shadow-2xs">
                     <MessageCircle className="size-2.5" />

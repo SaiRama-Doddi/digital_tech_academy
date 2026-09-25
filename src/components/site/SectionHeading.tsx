@@ -39,22 +39,20 @@ export function SectionHeading({
       {eyebrow ? (
         <span
           className={cn(
-            "eyebrow text-[11px] sm:text-xs inline-flex items-center gap-2",
-            onDark ? "text-accent" : "text-accent-foreground/70"
+            "eyebrow text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2",
+            onDark ? "text-sky-400" : "text-blue-700"
           )}
         >
-          <span className="h-px w-5 sm:w-6 bg-accent" aria-hidden="true" />
-          <span className={onDark ? "text-accent" : "text-foreground/60"}>{eyebrow}</span>
+          <span className={cn("h-px w-5 sm:w-6", onDark ? "bg-sky-400" : "bg-blue-600")} aria-hidden="true" />
+          <span>{eyebrow}</span>
         </span>
       ) : null}
       <Tag
         className={cn(
           "font-extrabold tracking-tight leading-[1.2]",
-          singleLine
-            ? "text-xl sm:text-[1.35rem] md:text-[1.8rem] lg:text-[2.25rem] xl:text-[2.6rem] whitespace-normal sm:whitespace-nowrap"
-            : "text-xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] sm:leading-[1.2]",
+          "text-2xl sm:text-3xl lg:text-4xl",
           align === "center" ? "text-center" : "text-left",
-          onDark ? "text-navy-foreground" : "text-foreground",
+          onDark ? "text-white" : "text-slate-900",
           titleClassName,
         )}
       >
@@ -63,10 +61,9 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "text-xs sm:text-sm md:text-base leading-relaxed font-normal w-full max-w-none",
-            singleLine ? "whitespace-normal sm:whitespace-nowrap" : "",
+            "text-sm sm:text-base leading-relaxed font-normal w-full max-w-4xl",
             align === "center" ? "mx-auto text-center" : "text-left",
-            onDark ? "text-navy-muted" : "text-muted-foreground",
+            onDark ? "text-slate-300" : "text-slate-600",
             descriptionClassName,
           )}
         >

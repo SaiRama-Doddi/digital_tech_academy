@@ -58,16 +58,16 @@ const learningSteps: LearningStepItem[] = [
     description:
       "Watch how the concept is applied in a real-world scenario.",
     tagline: "Watch real-world application",
-    colorName: "purple",
+    colorName: "cyan",
     theme: {
-      text: "text-purple-600",
-      bgBadge: "bg-purple-50 text-purple-700 border-purple-200",
-      divider: "bg-purple-600",
-      nodeGradient: "from-purple-500 via-purple-600 to-violet-800",
-      nodeGlow: "rgba(147, 51, 234, 0.45)",
-      borderHover: "hover:border-purple-400/80",
-      shadowHover: "hover:shadow-purple-500/15",
-      orbFill: "#7c3aed",
+      text: "text-cyan-700",
+      bgBadge: "bg-cyan-50 text-cyan-800 border-cyan-200",
+      divider: "bg-cyan-600",
+      nodeGradient: "from-cyan-500 via-sky-600 to-blue-700",
+      nodeGlow: "rgba(6, 182, 212, 0.45)",
+      borderHover: "hover:border-cyan-400/80",
+      shadowHover: "hover:shadow-cyan-500/15",
+      orbFill: "#0284c7",
     },
     icon: PlayCircle,
   },
@@ -77,16 +77,16 @@ const learningSteps: LearningStepItem[] = [
     description:
       "Apply your learning to projects, campaigns, case studies, and realistic scenarios.",
     tagline: "Create real-world experience",
-    colorName: "emerald",
+    colorName: "blue",
     theme: {
-      text: "text-emerald-600",
-      bgBadge: "bg-emerald-50 text-emerald-700 border-emerald-200",
-      divider: "bg-emerald-600",
-      nodeGradient: "from-emerald-400 via-emerald-500 to-teal-700",
-      nodeGlow: "rgba(16, 185, 129, 0.45)",
-      borderHover: "hover:border-emerald-400/80",
-      shadowHover: "hover:shadow-emerald-500/15",
-      orbFill: "#059669",
+      text: "text-blue-700",
+      bgBadge: "bg-blue-50 text-blue-800 border-blue-200",
+      divider: "bg-blue-600",
+      nodeGradient: "from-blue-500 via-indigo-600 to-blue-800",
+      nodeGlow: "rgba(37, 99, 235, 0.45)",
+      borderHover: "hover:border-blue-400/80",
+      shadowHover: "hover:shadow-blue-500/15",
+      orbFill: "#2563eb",
     },
     icon: Layers,
   },
@@ -96,16 +96,16 @@ const learningSteps: LearningStepItem[] = [
     description:
       "Identify gaps, improve your work, and learn how professionals evaluate results.",
     tagline: "Get expert feedback",
-    colorName: "amber",
+    colorName: "sky",
     theme: {
-      text: "text-amber-600",
-      bgBadge: "bg-amber-50 text-amber-800 border-amber-200",
-      divider: "bg-amber-500",
-      nodeGradient: "from-amber-400 via-amber-500 to-orange-600",
-      nodeGlow: "rgba(245, 158, 11, 0.45)",
-      borderHover: "hover:border-amber-400/80",
-      shadowHover: "hover:shadow-amber-500/15",
-      orbFill: "#d97706",
+      text: "text-sky-700",
+      bgBadge: "bg-sky-50 text-sky-800 border-sky-200",
+      divider: "bg-sky-600",
+      nodeGradient: "from-sky-400 via-blue-600 to-indigo-700",
+      nodeGlow: "rgba(14, 165, 233, 0.45)",
+      borderHover: "hover:border-sky-400/80",
+      shadowHover: "hover:shadow-sky-500/15",
+      orbFill: "#0284c7",
     },
     icon: BarChart3,
   },
@@ -115,16 +115,16 @@ const learningSteps: LearningStepItem[] = [
     description:
       "Build a stronger portfolio of skills and move forward with greater career confidence.",
     tagline: "Be job-ready",
-    colorName: "rose",
+    colorName: "cyan",
     theme: {
-      text: "text-rose-600",
-      bgBadge: "bg-rose-50 text-rose-700 border-rose-200",
-      divider: "bg-rose-500",
-      nodeGradient: "from-pink-500 via-rose-500 to-rose-700",
-      nodeGlow: "rgba(244, 63, 94, 0.45)",
-      borderHover: "hover:border-rose-400/80",
-      shadowHover: "hover:shadow-rose-500/15",
-      orbFill: "#e11d48",
+      text: "text-cyan-700",
+      bgBadge: "bg-cyan-50 text-cyan-800 border-cyan-200",
+      divider: "bg-cyan-600",
+      nodeGradient: "from-cyan-400 via-sky-500 to-blue-600",
+      nodeGlow: "rgba(6, 182, 212, 0.45)",
+      borderHover: "hover:border-cyan-400/80",
+      shadowHover: "hover:shadow-cyan-500/15",
+      orbFill: "#0ea5e9",
     },
     icon: Rocket,
   },
@@ -354,7 +354,7 @@ export function LearningPathRoad({ className }: { className?: string }) {
             </div>
           </div>
 
-          {/* Node 02: Gamepad (Purple) at the first crest */}
+          {/* Node 02: Gamepad (Cyan) at the first crest */}
           <div
             className="absolute z-20 -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 cursor-pointer"
             style={{ left: "29.58%", top: "25%" }}
@@ -364,15 +364,15 @@ export function LearningPathRoad({ className }: { className?: string }) {
             <div className="relative flex items-center justify-center">
               <div
                 className={cn(
-                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-purple-500/40",
+                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-cyan-500/40",
                   hoveredStep === 1 ? "opacity-100 scale-125" : "opacity-75",
                 )}
                 aria-hidden="true"
               />
               <span
                 className={cn(
-                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-purple-500 to-violet-800 transition-all duration-300",
-                  hoveredStep === 1 ? "scale-115 shadow-purple-500/60" : "shadow-purple-500/35",
+                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-cyan-500 to-blue-700 transition-all duration-300",
+                  hoveredStep === 1 ? "scale-115 shadow-cyan-500/60" : "shadow-cyan-500/35",
                 )}
               >
                 <Gamepad2 className="size-5 text-white drop-shadow-sm" />
@@ -380,7 +380,7 @@ export function LearningPathRoad({ className }: { className?: string }) {
             </div>
           </div>
 
-          {/* Node 03: Layers (Emerald) at second crest */}
+          {/* Node 03: Layers (Royal Blue) at second crest */}
           <div
             className="absolute z-20 -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 cursor-pointer"
             style={{ left: "47.5%", top: "34.4%" }}
@@ -390,15 +390,15 @@ export function LearningPathRoad({ className }: { className?: string }) {
             <div className="relative flex items-center justify-center">
               <div
                 className={cn(
-                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-emerald-500/40",
+                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-blue-500/40",
                   hoveredStep === 2 ? "opacity-100 scale-125" : "opacity-75",
                 )}
                 aria-hidden="true"
               />
               <span
                 className={cn(
-                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-emerald-400 to-teal-700 transition-all duration-300",
-                  hoveredStep === 2 ? "scale-115 shadow-emerald-500/60" : "shadow-emerald-500/35",
+                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-blue-500 to-indigo-700 transition-all duration-300",
+                  hoveredStep === 2 ? "scale-115 shadow-blue-500/60" : "shadow-blue-500/35",
                 )}
               >
                 <Layers className="size-5 text-white drop-shadow-sm" />
@@ -406,7 +406,7 @@ export function LearningPathRoad({ className }: { className?: string }) {
             </div>
           </div>
 
-          {/* Node 04: BarChart (Amber) at third crest */}
+          {/* Node 04: BarChart (Sky) at third crest */}
           <div
             className="absolute z-20 -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 cursor-pointer"
             style={{ left: "66.0%", top: "37.5%" }}
@@ -416,15 +416,15 @@ export function LearningPathRoad({ className }: { className?: string }) {
             <div className="relative flex items-center justify-center">
               <div
                 className={cn(
-                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-amber-500/40",
+                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-sky-500/40",
                   hoveredStep === 3 ? "opacity-100 scale-125" : "opacity-75",
                 )}
                 aria-hidden="true"
               />
               <span
                 className={cn(
-                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-amber-400 to-orange-600 transition-all duration-300",
-                  hoveredStep === 3 ? "scale-115 shadow-amber-500/60" : "shadow-amber-500/35",
+                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-sky-400 to-blue-600 transition-all duration-300",
+                  hoveredStep === 3 ? "scale-115 shadow-sky-500/60" : "shadow-sky-500/35",
                 )}
               >
                 <BarChart3 className="size-5 text-white drop-shadow-sm" />
@@ -432,7 +432,7 @@ export function LearningPathRoad({ className }: { className?: string }) {
             </div>
           </div>
 
-          {/* Node 05: Rocket (Rose) at fourth crest */}
+          {/* Node 05: Rocket (Cyan/Sky) at fourth crest */}
           <div
             className="absolute z-20 -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 cursor-pointer"
             style={{ left: "81.67%", top: "33.3%" }}
@@ -442,15 +442,15 @@ export function LearningPathRoad({ className }: { className?: string }) {
             <div className="relative flex items-center justify-center">
               <div
                 className={cn(
-                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-rose-500/40",
+                  "absolute -inset-2.5 rounded-full blur-md transition-opacity duration-300 bg-cyan-500/40",
                   hoveredStep === 4 ? "opacity-100 scale-125" : "opacity-75",
                 )}
                 aria-hidden="true"
               />
               <span
                 className={cn(
-                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-pink-500 to-rose-700 transition-all duration-300",
-                  hoveredStep === 4 ? "scale-115 shadow-rose-500/60" : "shadow-rose-500/35",
+                  "relative grid size-10 xl:size-11 place-items-center rounded-full text-white border-2 border-white/90 shadow-lg bg-gradient-to-br from-cyan-400 to-blue-600 transition-all duration-300",
+                  hoveredStep === 4 ? "scale-115 shadow-cyan-500/60" : "shadow-cyan-500/35",
                 )}
               >
                 <Rocket className="size-5 text-white drop-shadow-sm" />
@@ -601,10 +601,10 @@ function RoadCard({
   return (
     <div
       className={cn(
-        "group relative flex flex-col justify-between rounded-xl sm:rounded-2xl border bg-white p-3.5 sm:p-4 text-left transition-all duration-300 shadow-sm",
+        "group relative flex flex-col justify-between rounded-xl sm:rounded-2xl border bg-white p-3.5 sm:p-4 text-left transition-all duration-300 shadow-xs",
         isHighlighted
-          ? "border-slate-300 shadow-lg -translate-y-1 ring-2 ring-blue-500/10"
-          : "border-slate-100 hover:border-slate-200/90 hover:shadow-md hover:-translate-y-0.5",
+          ? "border-blue-500 shadow-lg -translate-y-1 ring-2 ring-blue-500/15"
+          : "border-slate-300 hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5",
       )}
     >
       <div>
@@ -614,16 +614,16 @@ function RoadCard({
         </h4>
 
         {/* Description */}
-        <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-600 font-normal">
+        <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-700 font-normal">
           {step.description}
         </p>
       </div>
 
-      <div className="mt-2.5 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-100/90">
+      <div className="mt-2.5 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-200">
         {/* Accent Divider & Bottom Tagline */}
         <div className="flex items-center gap-1.5">
           <div className={cn("h-0.5 w-4 rounded-full shrink-0", step.theme.divider)} />
-          <p className={cn("text-[10.5px] sm:text-[11px] font-semibold leading-tight truncate", step.theme.text)}>
+          <p className={cn("text-[10.5px] sm:text-[11px] font-bold leading-tight truncate", step.theme.text)}>
             {step.tagline}
           </p>
         </div>

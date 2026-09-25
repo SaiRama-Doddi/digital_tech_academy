@@ -25,7 +25,7 @@ if (typeof process !== "undefined" && typeof process.on === "function") {
 export default defineConfig({
   server: {
     host: true,
-    port: 3000,
+    port: Number(process.env.PORT) || 8080,
   },
   plugins: [
     tailwindcss(),

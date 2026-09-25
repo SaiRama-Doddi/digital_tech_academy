@@ -93,13 +93,13 @@ export function getTrackBadgeStyle(track: string): { badgeBg: string; gradient: 
   if (lower.includes("digital") || lower.includes("marketing") || lower.includes("seo")) {
     return {
       badgeBg: "bg-blue-500/15 text-blue-300 border-blue-400/30",
-      gradient: "from-blue-600 to-indigo-600",
+      gradient: "from-blue-600 to-cyan-600",
     };
   }
   if (lower.includes("cyber") || lower.includes("defense")) {
     return {
-      badgeBg: "bg-indigo-500/15 text-indigo-300 border-indigo-400/30",
-      gradient: "from-indigo-600 to-purple-600",
+      badgeBg: "bg-blue-600/15 text-blue-300 border-blue-400/30",
+      gradient: "from-blue-700 to-sky-600",
     };
   }
   if (lower.includes("programmatic") || lower.includes("ad")) {
@@ -110,19 +110,19 @@ export function getTrackBadgeStyle(track: string): { badgeBg: string; gradient: 
   }
   if (lower.includes("growth") || lower.includes("paid")) {
     return {
-      badgeBg: "bg-rose-500/15 text-rose-300 border-rose-400/30",
-      gradient: "from-rose-500 to-pink-600",
+      badgeBg: "bg-sky-500/15 text-sky-300 border-sky-400/30",
+      gradient: "from-sky-500 to-blue-600",
     };
   }
   if (lower.includes("offensive") || lower.includes("hack") || lower.includes("security")) {
     return {
-      badgeBg: "bg-emerald-500/15 text-emerald-300 border-emerald-400/30",
-      gradient: "from-emerald-500 to-teal-600",
+      badgeBg: "bg-blue-600/15 text-blue-300 border-blue-400/30",
+      gradient: "from-blue-700 to-sky-600",
     };
   }
   return {
-    badgeBg: "bg-purple-500/15 text-purple-300 border-purple-400/30",
-    gradient: "from-purple-600 to-indigo-600",
+    badgeBg: "bg-blue-500/15 text-blue-300 border-blue-400/30",
+    gradient: "from-blue-600 to-cyan-600",
   };
 }
 

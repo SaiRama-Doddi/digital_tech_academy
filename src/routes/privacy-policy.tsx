@@ -116,7 +116,7 @@ function PrivacyPolicyPage() {
       />
 
       {/* Main Content */}
-      <section className="bg-background py-6 sm:py-8">
+      <section className="bg-white py-6 sm:py-8">
         <div className="container-site max-w-4xl">
           {/* Policy Intro Card */}
           <div
@@ -157,10 +157,10 @@ function PrivacyPolicyPage() {
                       <sec.icon className="size-5" aria-hidden="true" />
                     </span>
                     <div>
-                      <span className="text-xs font-black uppercase tracking-widest text-accent">
+                      <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
                         {sec.label}
                       </span>
-                      <h2 className="text-lg sm:text-xl font-black text-navy leading-snug">
+                      <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                         {`${sec.label} — ${sec.title}`}
                       </h2>
                     </div>
@@ -182,22 +182,17 @@ function PrivacyPolicyPage() {
           {/* Support & Contact Card */}
           <div
             data-reveal
-            className="mt-8 surface-navy relative overflow-hidden rounded-2xl p-6 sm:p-8 border border-navy-700/60 shadow-lg text-center sm:text-left"
+            className="mt-8 relative overflow-hidden rounded-2xl p-6 sm:p-8 border border-blue-200/90 bg-gradient-to-br from-blue-50/90 via-white to-sky-50/70 shadow-sm text-center sm:text-left"
           >
-            <div className="grid-lines absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true" />
-            <div
-              className="pointer-events-none absolute -right-16 -bottom-16 size-64 rounded-full bg-accent/15 blur-3xl"
-              aria-hidden="true"
-            />
             <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
               <div className="max-w-xl">
-                <span className="text-xs font-black uppercase tracking-widest text-accent">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
                   QUESTIONS & ENQUIRIES
                 </span>
-                <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
                   Have Questions About Our Privacy Practices?
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                   Speak with our admissions and administrative support team for any questions regarding your
                   information, courses, or enrollment.
                 </p>
@@ -208,15 +203,15 @@ function PrivacyPolicyPage() {
                   to="/contact"
                   variant="outline"
                   size="md"
-                  className="border border-white/20 text-white hover:bg-white/10 h-11 px-5 rounded-xl font-bold"
+                  className="border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 h-11 px-5 rounded-xl font-bold"
                 >
                   Contact Us
                 </BtnLink>
                 <BtnLink
                   to="/request-call"
-                  variant="accent"
+                  variant="primary"
                   size="md"
-                  className="bg-accent hover:brightness-110 text-slate-950 font-black h-11 px-5 rounded-xl shadow-md shadow-accent/20 flex items-center gap-2 group"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 px-5 rounded-xl shadow-md flex items-center gap-2 group"
                 >
                   <span>Talk to an Expert</span>
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />

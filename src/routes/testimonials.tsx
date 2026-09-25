@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
 import {
   Award,
   BookOpen,
@@ -252,7 +253,7 @@ function TrustAndValuesPage() {
       />
 
       {/* Section 2 — Credible Metrics Strip */}
-      <section className="border-b border-border bg-surface overflow-x-clip">
+      <section className="border-b border-border bg-white overflow-x-clip">
         <div className="container-site section-y-sm w-full min-w-0">
           <dl className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 w-full min-w-0">
             {credibleMetrics.map((stat) => (
@@ -270,7 +271,7 @@ function TrustAndValuesPage() {
       </section>
 
       {/* Section 3 — Authentic Feedback Policy */}
-      <section className="bg-background py-6 sm:py-8 lg:py-10 border-b border-slate-200/80">
+      <section className="bg-white py-6 sm:py-8 lg:py-10 border-b border-slate-200/80">
         <div className="container-site">
           <div
             data-reveal
@@ -283,7 +284,7 @@ function TrustAndValuesPage() {
                   <ShieldCheck className="size-4 text-blue-600" />
                   <span>Authentic Reviews Policy</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2]">
                   Testimonials Must Be Genuine, Attributable &amp; Approved
                 </h2>
 
@@ -318,7 +319,7 @@ function TrustAndValuesPage() {
       </section>
 
       {/* Section 4 — The 6 Value & Trust Pillars (Single-Row with Scrolling Effect) */}
-      <section className="bg-surface py-6 sm:py-8 lg:py-10 border-b border-slate-200/80 overflow-hidden">
+      <section className="bg-white py-6 sm:py-8 lg:py-10 border-b border-slate-200/80 overflow-hidden">
         <div className="container-site">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <SectionHeading
@@ -337,11 +338,11 @@ function TrustAndValuesPage() {
           <div className="relative mt-5 sm:mt-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-hidden py-3" data-reveal>
             {/* Subtle gradient edge fades */}
             <div
-              className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-[var(--surface)] via-[var(--surface)]/85 to-transparent"
+              className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-white via-white/85 to-transparent"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 z-20 bg-gradient-to-l from-[var(--surface)] via-[var(--surface)]/85 to-transparent"
+              className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 z-20 bg-gradient-to-l from-white via-white/85 to-transparent"
               aria-hidden="true"
             />
 
@@ -361,7 +362,7 @@ function TrustAndValuesPage() {
 
       {/* Section 5 — Live Student Testimonials (Dynamically added by Admin) */}
       {testimonials.length > 0 && (
-        <section className="bg-background py-8 sm:py-12 lg:py-16 border-b border-slate-200/80">
+        <section className="bg-white py-8 sm:py-12 lg:py-16 border-b border-slate-200/80">
           <div className="container-site">
             <SectionHeading
               eyebrow="STUDENT REVIEWS"
@@ -370,7 +371,16 @@ function TrustAndValuesPage() {
               align="left"
             />
 
-            <div className="mt-6 sm:mt-8 grid gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              className={cn(
+                "mt-6 sm:mt-8 gap-5 sm:gap-6 w-full",
+                testimonials.length === 1
+                  ? "flex justify-center max-w-lg mx-auto"
+                  : testimonials.length === 2
+                    ? "grid grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
+                    : "grid sm:grid-cols-2 lg:grid-cols-3"
+              )}
+            >
               {testimonials.map((review) => (
                 <TestimonialCard key={review.id} review={review} />
               ))}
@@ -380,7 +390,7 @@ function TrustAndValuesPage() {
       )}
 
       {/* Section 6 — Live Practical Labs Experience CTA */}
-      <section className="bg-background py-8 sm:py-12">
+      <section className="bg-white py-8 sm:py-12">
         <div className="container-site">
           <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white grid lg:grid-cols-12 items-center" data-reveal>
             <div className="lg:col-span-5 h-56 lg:h-full min-h-[220px]">

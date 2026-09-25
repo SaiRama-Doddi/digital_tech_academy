@@ -98,11 +98,11 @@ const stages: StageData[] = [
     subtitle: "Real-World Scenarios",
     badge: "Live Demonstrations",
     color: {
-      primary: "purple",
-      text: "text-purple-400",
-      bgBadge: "bg-purple-500/10 text-purple-300 border-purple-500/30",
-      gradient: "from-purple-400 to-violet-600",
-      glow: "from-purple-500/20 via-violet-600/10 to-transparent",
+      primary: "blue",
+      text: "text-cyan-400",
+      bgBadge: "bg-cyan-500/10 text-cyan-300 border-cyan-500/30",
+      gradient: "from-cyan-400 to-blue-600",
+      glow: "from-cyan-500/20 via-blue-600/10 to-transparent",
     },
     icon: PlayCircle,
     description:
@@ -139,11 +139,11 @@ const stages: StageData[] = [
     subtitle: "Real-World Projects",
     badge: "Live Capstones",
     color: {
-      primary: "emerald",
-      text: "text-emerald-400",
-      bgBadge: "bg-emerald-500/10 text-emerald-300 border-emerald-500/30",
-      gradient: "from-emerald-400 to-teal-600",
-      glow: "from-emerald-500/20 via-teal-600/10 to-transparent",
+      primary: "sky",
+      text: "text-sky-400",
+      bgBadge: "bg-sky-500/10 text-sky-300 border-sky-500/30",
+      gradient: "from-sky-400 to-indigo-600",
+      glow: "from-sky-500/20 via-indigo-600/10 to-transparent",
     },
     icon: Rocket,
     description:
@@ -180,11 +180,11 @@ const stages: StageData[] = [
     subtitle: "Mentor Audits",
     badge: "1-on-1 Feedback",
     color: {
-      primary: "amber",
-      text: "text-amber-400",
-      bgBadge: "bg-amber-500/10 text-amber-300 border-amber-500/30",
-      gradient: "from-amber-400 to-orange-500",
-      glow: "from-amber-500/20 via-orange-600/10 to-transparent",
+      primary: "blue",
+      text: "text-blue-400",
+      bgBadge: "bg-blue-500/10 text-blue-300 border-blue-500/30",
+      gradient: "from-blue-400 to-cyan-500",
+      glow: "from-blue-500/20 via-cyan-500/10 to-transparent",
     },
     icon: MessageSquareCheck,
     description:
@@ -221,11 +221,11 @@ const stages: StageData[] = [
     subtitle: "Placement Ready",
     badge: "Career Summit",
     color: {
-      primary: "rose",
-      text: "text-rose-400",
-      bgBadge: "bg-rose-500/10 text-rose-300 border-rose-500/30",
-      gradient: "from-rose-400 to-pink-600",
-      glow: "from-rose-500/20 via-pink-600/10 to-transparent",
+      primary: "cyan",
+      text: "text-cyan-400",
+      bgBadge: "bg-cyan-500/10 text-cyan-300 border-cyan-500/30",
+      gradient: "from-cyan-400 to-sky-600",
+      glow: "from-cyan-500/20 via-sky-600/10 to-transparent",
     },
     icon: Award,
     description:
@@ -295,7 +295,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
       {/* ========================================================================= */}
       {/* 1. COMPACT STEPPER RAIL (Auto-advances sequentially)                      */}
       {/* ========================================================================= */}
-      <div className="grid grid-cols-5 sm:grid-cols-[1fr_1.35fr_1fr_1fr_1.05fr] gap-1 sm:gap-1.5 md:gap-2 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl bg-[#07152b]/90 border border-sky-500/20 backdrop-blur-md shadow-lg">
+      <div className="grid grid-cols-5 sm:grid-cols-[1fr_1.35fr_1fr_1fr_1.05fr] gap-1 sm:gap-1.5 md:gap-2 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl bg-slate-100 border border-slate-200 shadow-xs">
         {stages.map((stg, idx) => {
           const isActive = idx === activeStageIndex;
           const StepIcon = stg.icon;
@@ -308,8 +308,8 @@ export function StudentLearningPath({ className }: { className?: string }) {
               className={cn(
                 "group relative flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-1.5 md:gap-2 rounded-lg sm:rounded-xl px-0.5 sm:px-2 md:px-2.5 lg:px-3 py-1 sm:py-2.5 text-center sm:text-left transition-all duration-200 cursor-pointer focus:outline-none min-w-0",
                 isActive
-                  ? "bg-[#0f2347] border border-sky-400/60 shadow-md shadow-sky-500/10"
-                  : "bg-transparent border border-transparent hover:bg-[#0b1c38]",
+                  ? "bg-white border border-slate-200 shadow-sm"
+                  : "bg-transparent border border-transparent hover:bg-slate-200/50",
               )}
             >
               {/* Step indicator */}
@@ -318,7 +318,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                   "grid size-6.5 sm:size-7.5 md:size-8 lg:size-9 shrink-0 place-items-center rounded-md sm:rounded-lg text-white font-bold text-xs transition-transform duration-200",
                   isActive
                     ? `bg-gradient-to-br ${stg.color.gradient} shadow-sm scale-105`
-                    : "bg-[#0b1d38] border border-slate-700 text-slate-400",
+                    : "bg-white border border-slate-300 text-slate-500",
                 )}
               >
                 <StepIcon className="size-3.5 sm:size-4" />
@@ -329,7 +329,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 <span
                   className={cn(
                     "text-[9px] font-black uppercase tracking-wider hidden sm:block leading-none",
-                    isActive ? stg.color.text : "text-slate-400",
+                    isActive ? "text-blue-700" : "text-slate-500",
                   )}
                 >
                   Stage {stg.step}
@@ -340,7 +340,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                     stg.id === "action"
                       ? "sm:whitespace-normal md:whitespace-nowrap"
                       : "sm:whitespace-nowrap",
-                    isActive ? "text-white" : "text-slate-300 group-hover:text-white",
+                    isActive ? "text-slate-900" : "text-slate-600 group-hover:text-slate-900",
                   )}
                 >
                   {stg.title}
@@ -350,7 +350,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
               {/* Active Indicator Bar with Smooth Linear Progress Fill */}
               {isActive && (
                 <div
-                  className="absolute -top-0.5 sm:-top-1 left-1 right-1 sm:left-2 sm:right-2 h-0.5 rounded-full overflow-hidden bg-slate-800"
+                  className="absolute -top-0.5 sm:-top-1 left-1 right-1 sm:left-2 sm:right-2 h-0.5 rounded-full overflow-hidden bg-slate-200"
                   aria-hidden="true"
                 >
                   <div
@@ -373,45 +373,36 @@ export function StudentLearningPath({ className }: { className?: string }) {
       {/* ========================================================================= */}
       {/* 2. STAGE SHOWCASE: EQUAL HEIGHT & SAME SIZE WITH REALISTIC STAGE PHOTO    */}
       {/* ========================================================================= */}
-      <div className="mt-3 sm:mt-4 rounded-xl sm:rounded-2xl border border-sky-500/20 bg-[#091830]/95 backdrop-blur-xl shadow-xl p-2 sm:p-5 relative overflow-hidden w-full max-w-full min-w-0">
-        {/* Ambient background glow */}
-        <div
-          className={cn(
-            "pointer-events-none absolute -right-16 -top-16 size-60 rounded-full blur-3xl opacity-30 transition-all duration-500",
-            `bg-gradient-to-br ${currentStage.color.glow}`,
-          )}
-          aria-hidden="true"
-        />
-
+      <div className="mt-3 sm:mt-4 rounded-xl sm:rounded-2xl border border-slate-200 bg-white shadow-sm p-2 sm:p-5 relative overflow-hidden w-full max-w-full min-w-0">
         {/* 2-Column Balanced Grid with matching equal heights */}
         <div className="grid lg:grid-cols-2 gap-3.5 sm:gap-5 items-stretch relative z-10 w-full min-w-0 max-w-full">
           {/* ------------------------------------------------------------- */}
           {/* LEFT CARD: Stage Info, 2 Highlights, Tools & Controls         */}
           {/* ------------------------------------------------------------- */}
-          <div className="flex flex-col justify-between h-full rounded-xl sm:rounded-2xl border border-sky-400/20 bg-[#061122]/70 p-2.5 sm:p-5 shadow-lg w-full min-w-0 max-w-full overflow-hidden">
+          <div className="flex flex-col justify-between h-full rounded-xl sm:rounded-2xl border border-slate-200 bg-slate-50/60 p-2.5 sm:p-5 shadow-2xs w-full min-w-0 max-w-full overflow-hidden">
             <div className="space-y-2 sm:space-y-3 min-w-0 w-full">
               {/* Badge */}
-              <div className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide">
-                <CurrentIcon className="size-3 shrink-0" />
-                <span className={currentStage.color.text}>{currentStage.badge}</span>
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide">
+                <CurrentIcon className="size-3 shrink-0 text-blue-600" />
+                <span className="text-blue-700">{currentStage.badge}</span>
               </div>
 
               {/* Stage Title */}
-              <h3 className="text-base sm:text-xl font-extrabold text-white tracking-tight leading-snug">
+              <h3 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
                 {currentStage.title}:{" "}
-                <span className={currentStage.color.text}>{currentStage.subtitle}</span>
+                <span className="text-blue-600">{currentStage.subtitle}</span>
               </h3>
 
               {/* Short, punchy description */}
-              <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed font-normal">
+              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
                 {currentStage.description}
               </p>
 
               {/* 2 Clean Highlights */}
               <div className="space-y-1.5 pt-0.5">
                 {currentStage.highlights.map((item) => (
-                  <div key={item} className="flex items-start sm:items-center gap-2 text-xs text-slate-200">
-                    <CheckCircle2 className="size-3.5 text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
+                  <div key={item} className="flex items-start sm:items-center gap-2 text-xs text-slate-700">
+                    <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0 mt-0.5 sm:mt-0" />
                     <span className="leading-snug">{item}</span>
                   </div>
                 ))}
@@ -423,9 +414,9 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 {currentStage.tools.map((t) => (
                   <span
                     key={t}
-                    className="inline-flex items-center gap-1 rounded-md bg-[#0e2547] border border-sky-400/20 px-1.5 sm:px-2 py-0.5 text-[9.5px] sm:text-[11px] font-medium text-sky-200"
+                    className="inline-flex items-center gap-1 rounded-md bg-white border border-slate-200 px-1.5 sm:px-2 py-0.5 text-[9.5px] sm:text-[11px] font-medium text-slate-800 shadow-2xs"
                   >
-                    <Wrench className="size-2 sm:size-2.5 text-sky-400 shrink-0" />
+                    <Wrench className="size-2 sm:size-2.5 text-blue-600 shrink-0" />
                     <span>{t}</span>
                   </span>
                 ))}
@@ -433,23 +424,23 @@ export function StudentLearningPath({ className }: { className?: string }) {
 
               {/* Core Execution Capabilities (Fills empty vertical area cleanly) */}
               <div className="pt-1 sm:pt-1.5 space-y-1.5">
-                <span className="text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-slate-400 block">
+                <span className="text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-slate-500 block">
                   Core Execution Capabilities:
                 </span>
                 <div className="grid gap-1 sm:gap-1.5">
                   {currentStage.competencies.map((comp) => (
                     <div
                       key={comp.title}
-                      className="group/item flex items-start gap-2 sm:gap-2.5 rounded-lg bg-[#0a1b35]/85 border border-sky-500/20 p-2 sm:p-2.5 transition-all hover:border-sky-400/50 hover:bg-[#0e2447]"
+                      className="group/item flex items-start gap-2 sm:gap-2.5 rounded-lg bg-white border border-slate-200 p-2 sm:p-2.5 transition-all hover:border-blue-400 hover:shadow-2xs"
                     >
-                      <div className="mt-0.5 size-4 rounded-md bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400 shrink-0">
+                      <div className="mt-0.5 size-4 rounded-md bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
                         <Sparkles className="size-2.5" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11px] sm:text-xs font-bold text-white leading-snug">
+                        <p className="text-[11px] sm:text-xs font-bold text-slate-900 leading-snug">
                           {comp.title}
                         </p>
-                        <p className="text-[10px] sm:text-[11.5px] text-slate-300 leading-normal mt-0.5 font-normal">
+                        <p className="text-[10px] sm:text-[11.5px] text-slate-600 leading-normal mt-0.5 font-normal">
                           {comp.desc}
                         </p>
                       </div>
@@ -459,28 +450,28 @@ export function StudentLearningPath({ className }: { className?: string }) {
               </div>
 
               {/* Practical Milestone Card (Responsive, never truncates on mobile) */}
-              <div className="rounded-lg bg-gradient-to-r from-sky-950/60 to-[#081b36] border border-sky-400/25 p-2 sm:p-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 shadow-2xs mt-1 w-full min-w-0">
+              <div className="rounded-lg bg-blue-50/70 border border-blue-200 p-2 sm:p-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 shadow-2xs mt-1 w-full min-w-0">
                 <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto flex-1">
-                  <div className="size-6 sm:size-7 rounded-md bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-300 shrink-0">
+                  <div className="size-6 sm:size-7 rounded-md bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0">
                     <Award className="size-3 sm:size-3.5" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <span className="text-[8px] sm:text-[9.5px] uppercase font-bold text-slate-400 block tracking-wide leading-none">
+                    <span className="text-[8px] sm:text-[9.5px] uppercase font-bold text-slate-500 block tracking-wide leading-none">
                       Key Milestone
                     </span>
-                    <span className="text-xs sm:text-[12.5px] font-bold text-white block mt-0.5 leading-tight truncate sm:whitespace-normal">
+                    <span className="text-xs sm:text-[12.5px] font-bold text-slate-900 block mt-0.5 leading-tight truncate sm:whitespace-normal">
                       {currentStage.outputTitle}
                     </span>
                   </div>
                 </div>
-                <span className="self-start sm:self-auto text-[9.5px] sm:text-[11px] font-bold text-emerald-300 bg-emerald-500/15 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-500/30 shrink-0">
+                <span className="self-start sm:self-auto text-[9.5px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-200 shrink-0">
                   {currentStage.outputStat}
                 </span>
               </div>
             </div>
 
             {/* Bottom Controls */}
-            <div className="mt-3 pt-2.5 sm:pt-3 flex items-center justify-between gap-1.5 sm:gap-3 border-t border-slate-800 w-full min-w-0">
+            <div className="mt-3 pt-2.5 sm:pt-3 flex items-center justify-between gap-1.5 sm:gap-3 border-t border-slate-200 w-full min-w-0">
               <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                 {stages.map((s, i) => (
                   <button
@@ -491,7 +482,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                       "h-1.5 rounded-full transition-all duration-200 cursor-pointer",
                       i === activeStageIndex
                         ? `w-3.5 sm:w-5 bg-gradient-to-r ${s.color.gradient}`
-                        : "w-1 sm:w-1.5 bg-slate-700 hover:bg-slate-600",
+                        : "w-1 sm:w-1.5 bg-slate-300 hover:bg-slate-400",
                     )}
                     aria-label={`Go to stage ${i + 1}`}
                   />
@@ -502,14 +493,14 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 <button
                   type="button"
                   onClick={() => selectStage((activeStageIndex - 1 + stages.length) % stages.length)}
-                  className="px-2 sm:px-2.5 py-1 rounded-lg border border-slate-700 text-[10px] sm:text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
+                  className="px-2 sm:px-2.5 py-1 rounded-lg border border-slate-300 text-[10px] sm:text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
                 >
                   ← Prev
                 </button>
                 <button
                   type="button"
                   onClick={() => selectStage((activeStageIndex + 1) % stages.length)}
-                  className="px-2 sm:px-3 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 text-[10px] sm:text-xs font-bold transition-colors inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer shrink-0"
+                  className="px-2 sm:px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold transition-colors inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer shrink-0 shadow-2xs"
                 >
                   <span>Next</span>
                   <ChevronRight className="size-3" />
@@ -522,24 +513,24 @@ export function StudentLearningPath({ className }: { className?: string }) {
           {/* RIGHT CARD: EQUAL HEIGHT & SAME SIZE WITH REALISTIC STAGE PHOTO */}
           {/* ------------------------------------------------------------- */}
           <div className="flex flex-col h-full w-full min-w-0 max-w-full overflow-hidden">
-            <div className="group relative rounded-xl sm:rounded-2xl border border-sky-400/25 bg-[#061122]/95 p-2.5 sm:p-4 shadow-2xl overflow-hidden transition-all hover:border-sky-400/40 flex flex-col justify-between h-full w-full min-w-0 max-w-full">
+            <div className="group relative rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-2.5 sm:p-4 shadow-sm overflow-hidden transition-all hover:border-blue-400 flex flex-col justify-between h-full w-full min-w-0 max-w-full">
               {/* Top Window Bar (Mac dots & Deliverable Badge) */}
-              <div className="flex items-center justify-between gap-1 pb-2 sm:pb-2.5 border-b border-slate-800/80 shrink-0 w-full min-w-0">
+              <div className="flex items-center justify-between gap-1 pb-2 sm:pb-2.5 border-b border-slate-100 shrink-0 w-full min-w-0">
                 <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 flex-1">
                   <span className="size-1.5 sm:size-2 rounded-full bg-rose-500/90 inline-block shrink-0" />
                   <span className="size-1.5 sm:size-2 rounded-full bg-amber-500/90 inline-block shrink-0" />
                   <span className="size-1.5 sm:size-2 rounded-full bg-emerald-500/90 inline-block shrink-0" />
-                  <span className="text-[9px] sm:text-xs font-mono text-slate-300 font-semibold ml-0.5 truncate">
+                  <span className="text-[9px] sm:text-xs font-mono text-slate-600 font-semibold ml-0.5 truncate">
                     {currentStage.outputTitle}
                   </span>
                 </div>
-                <span className="text-[7.5px] sm:text-[9.5px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-800/90 border border-slate-700 text-sky-300 shadow-2xs shrink-0 max-w-[100px] sm:max-w-none truncate">
+                <span className="text-[7.5px] sm:text-[9.5px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 shadow-2xs shrink-0 max-w-[100px] sm:max-w-none truncate">
                   {currentStage.outputBadge}
                 </span>
               </div>
 
               {/* Realistic Stage Image (Fills border area cleanly edge-to-edge) */}
-              <div className="relative w-full flex-1 min-h-[220px] xs:min-h-[250px] sm:min-h-[270px] md:min-h-[290px] my-2 sm:my-2.5 rounded-xl sm:rounded-2xl overflow-hidden border border-sky-400/30 bg-[#030914] shadow-md">
+              <div className="relative w-full flex-1 min-h-[220px] xs:min-h-[250px] sm:min-h-[270px] md:min-h-[290px] my-2 sm:my-2.5 rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xs">
                 {/* Full-bleed realistic photography filling the entire bordered frame */}
                 <img
                   key={currentStage.image}
@@ -550,7 +541,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 />
 
                 {/* Subtle bottom gradient to ensure overlay badge is always readable */}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none" />
 
                 {/* Live Stage Deliverable Badge */}
                 <div className="absolute bottom-2.5 right-2.5 z-20 inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-slate-950/85 border border-white/20 backdrop-blur-md text-[8px] sm:text-[10.5px] font-bold text-white shadow-lg pointer-events-none max-w-[calc(100%-1.25rem)]">
@@ -563,9 +554,9 @@ export function StudentLearningPath({ className }: { className?: string }) {
               </div>
 
               {/* Stat Highlight Banner */}
-              <div className="shrink-0 py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg bg-gradient-to-r from-[#091b36] to-[#0c2347] border border-sky-500/20 flex items-center justify-between gap-1.5 shadow-2xs w-full min-w-0">
-                <span className="text-[9.5px] sm:text-[11px] text-slate-400 font-medium shrink-0">Outcome:</span>
-                <span className="text-[10px] sm:text-[13px] font-bold text-white tracking-wide truncate text-right flex-1 min-w-0">
+              <div className="shrink-0 py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between gap-1.5 shadow-2xs w-full min-w-0">
+                <span className="text-[9.5px] sm:text-[11px] text-slate-500 font-medium shrink-0">Outcome:</span>
+                <span className="text-[10px] sm:text-[13px] font-bold text-slate-900 tracking-wide truncate text-right flex-1 min-w-0">
                   {currentStage.outputStat}
                 </span>
               </div>

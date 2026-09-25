@@ -118,7 +118,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
 
         {/* Quick summit preview tag */}
         <div className="hidden sm:flex items-center gap-2.5 rounded-xl border border-sky-400/30 bg-sky-500/10 px-3.5 py-1.5 text-xs text-sky-300">
-          <Trophy className="size-4 text-amber-400" />
+          <Trophy className="size-4 text-sky-400" />
           <span className="font-semibold">Goal: 100% Career Placement Readiness</span>
         </div>
       </div>
@@ -190,7 +190,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
               >
                 {/* Summit Crown Banner on Step 5 */}
                 {isSummit && (
-                  <div className="absolute -top-4 inset-x-0 mx-auto w-fit z-20 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 via-sky-400 to-cyan-300 px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-950 shadow-md shadow-sky-400/30">
+                  <div className="absolute -top-4 inset-x-0 mx-auto w-fit z-20 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-600 px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-950 shadow-md shadow-sky-400/30">
                     <Trophy className="size-3 text-slate-950" />
                     <span>The Summit</span>
                   </div>
@@ -204,7 +204,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
                       className={cn(
                         "absolute -inset-1 rounded-full blur-xs transition-all duration-300",
                         isSummit
-                          ? "bg-amber-400/40 group-hover:bg-amber-400/60"
+                          ? "bg-sky-400/40 group-hover:bg-sky-400/60"
                           : "bg-sky-400/30 group-hover:bg-sky-400/50",
                       )}
                       aria-hidden="true"
@@ -214,7 +214,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
                       className={cn(
                         "relative grid size-10 place-items-center rounded-full text-white border-2 shadow-md transition-transform duration-300 group-hover:scale-110",
                         isSummit
-                          ? "bg-gradient-to-b from-amber-400 via-sky-500 to-blue-700 border-amber-300/60"
+                          ? "bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 border-sky-300/80"
                           : "bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 border-sky-300/40",
                       )}
                     >
@@ -256,7 +256,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
                         className={cn(
                           "rounded-md px-1.5 py-0.5 text-[9px] font-semibold",
                           isSummit
-                            ? "bg-amber-400/15 text-amber-300 border border-amber-400/25"
+                            ? "bg-sky-500/20 text-sky-200 border border-sky-400/30"
                             : "bg-sky-500/10 text-sky-300 border border-sky-500/20",
                         )}
                       >
@@ -271,7 +271,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
                       className={cn(
                         "h-full rounded-full transition-all duration-500",
                         isSummit
-                          ? "bg-gradient-to-r from-amber-400 to-sky-400"
+                          ? "bg-gradient-to-r from-cyan-400 to-sky-400"
                           : "bg-gradient-to-r from-blue-500 to-sky-400",
                       )}
                       style={{ width: `${(index + 1) * 20}%` }}
@@ -316,7 +316,7 @@ export function AscentTimeline({ className }: { className?: string | undefined }
             >
               {/* Summit badge on mobile */}
               {isSummit && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 via-sky-400 to-cyan-300 px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-950 shadow-md shadow-sky-400/30">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 rounded-full bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-600 px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-950 shadow-md shadow-sky-400/30">
                   <Trophy className="size-3 text-slate-950" />
                   <span>The Summit · Career Success</span>
                 </div>
@@ -328,14 +328,14 @@ export function AscentTimeline({ className }: { className?: string | undefined }
                   <div
                     className={cn(
                       "absolute -inset-1 rounded-full blur-xs",
-                      isSummit ? "bg-amber-400/40" : "bg-sky-400/30",
+                      isSummit ? "bg-sky-400/40" : "bg-sky-400/30",
                     )}
                   />
                   <span
                     className={cn(
                       "relative grid size-10 place-items-center rounded-full text-white border-2 shadow-md",
                       isSummit
-                        ? "bg-gradient-to-b from-amber-400 via-sky-500 to-blue-700 border-amber-300/60"
+                        ? "bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 border-sky-300/80"
                         : "bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 border-sky-300/40",
                     )}
                   >

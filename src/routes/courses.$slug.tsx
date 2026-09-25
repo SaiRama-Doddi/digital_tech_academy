@@ -23,8 +23,6 @@ import {
   Layers,
   PhoneCall,
   Signal,
-  Star,
-  UserPlus,
   Users,
   ArrowRight,
 } from "lucide-react";
@@ -198,14 +196,6 @@ function CourseDetailPage() {
   const [expandedModule, setExpandedModule] = useState<number | null>(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
-  const [isHeroScrolled, setIsHeroScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setIsHeroScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Subscribe to live course updates
   useEffect(() => {
@@ -319,97 +309,48 @@ function CourseDetailPage() {
   return (
     <SiteLayout>
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (Compact Sticky Navy Background)                           */}
+      {/* 1. HERO SECTION (Clean Responsive Header Banner)                           */}
       {/* ========================================================================= */}
-      <section
-        className={cn(
-          "bg-[#0b1633] text-white border-b border-navy-800 sticky top-16 z-20 backdrop-blur-xl overflow-hidden transition-all duration-300 ease-in-out",
-          isHeroScrolled ? "py-2 sm:py-2.5 shadow-lg bg-[#070f26]/95 border-sky-500/30" : "py-4 sm:py-5 shadow-md"
-        )}
-      >
-        {/* Subtle background circuit / grid glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
-
+      <section className="relative text-slate-900 border-b border-slate-200/90 bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 py-4 sm:py-5 lg:py-6 shadow-2xs overflow-hidden">
+        {/* Ambient light glow */}
+        <div
+          className="pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl"
+          aria-hidden="true"
+        />
         <div className="container-site relative z-10">
-          <div className={cn("max-w-5xl transition-all duration-300", isHeroScrolled ? "space-y-1.5" : "space-y-2.5")}>
-            {/* Breadcrumb & Social Proof Row */}
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-              <nav
-                aria-label="Breadcrumb"
-                className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium"
-              >
-                <Link to="/" className="hover:text-white transition-colors">
-                  Home
-                </Link>
-                <span className="text-slate-600">»</span>
-                <Link to="/courses" className="hover:text-white transition-colors">
-                  Courses
-                </Link>
-                <span className="text-slate-600">»</span>
-                <span className="text-white font-semibold line-clamp-1">{displayTitle}</span>
-              </nav>
+          <div className="max-w-5xl space-y-2">
+            {/* Breadcrumb Row */}
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 font-medium"
+            >
+              <Link to="/" className="hover:text-blue-600 transition-colors">
+                Home
+              </Link>
+              <span className="text-slate-400">»</span>
+              <Link to="/courses" className="hover:text-blue-600 transition-colors">
+                Courses
+              </Link>
+              <span className="text-slate-400">»</span>
+              <span className="text-slate-900 font-semibold line-clamp-1">{displayTitle}</span>
+            </nav>
 
-              <div className="flex items-center gap-2 sm:gap-3 text-[11px] font-bold text-slate-300">
-                <span className="rounded bg-[#ffcc00] px-2 py-0.5 text-[9.5px] font-black uppercase tracking-wider text-slate-950 font-sans">
-                  CERTIFICATION
-                </span>
-                <span className="flex items-center gap-1 text-amber-300">
-                  <Star className="size-3 fill-current" />
-                  4.6
-                </span>
-                <span className="text-slate-600">•</span>
-                <span className="text-slate-300">
-                  {course.duration && (course.duration.includes("h") || course.duration.includes("H"))
-                    ? course.duration
-                    : `${course.duration || "12 Weeks"} (65h Live)`}
-                </span>
-              </div>
-            </div>
-
-            {/* Course Main Title & Demo CTA */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-0.5">
-              <div>
-                <h1
-                  className={cn(
-                    "font-black tracking-tight text-white leading-tight sm:whitespace-nowrap transition-all duration-300 ease-in-out",
-                    isHeroScrolled
-                      ? "text-base sm:text-lg md:text-xl lg:text-[1.35rem]"
-                      : "text-lg sm:text-xl md:text-2xl lg:text-[1.85rem]"
-                  )}
-                >
-                  {displayTitle}
-                </h1>
-                <p
-                  className={cn(
-                    "leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap transition-all duration-300 ease-in-out text-slate-300",
-                    isHeroScrolled ? "mt-0.5 text-[11px] sm:text-xs" : "mt-1 text-xs sm:text-sm"
-                  )}
-                >
-                  {course.category === "Cyber Security"
-                    ? "Comprehensive practical training for mastering essential Cyber Security skills remotely."
-                    : course.heroDescription || course.description}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={scrollToDemoForm}
-                  className={cn(
-                    "inline-flex items-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 font-black text-slate-950 shadow-md transition-all cursor-pointer",
-                    isHeroScrolled ? "px-3 py-1.5 text-[11px]" : "px-4 py-2 text-xs"
-                  )}
-                >
-                  <UserPlus className={cn(isHeroScrolled ? "size-3" : "size-3.5")} />
-                  <span>Join Free Demo</span>
-                </button>
-              </div>
+            {/* Course Main Title & Subtitle */}
+            <div className="pt-0.5">
+              <h1 className="font-black tracking-tight text-slate-900 leading-tight sm:whitespace-nowrap text-lg sm:text-xl md:text-2xl lg:text-[1.85rem]">
+                {displayTitle}
+              </h1>
+              <p className="leading-relaxed font-normal w-full max-w-none whitespace-normal md:whitespace-nowrap text-slate-600 mt-1 text-xs sm:text-sm">
+                {course.category === "Cyber Security"
+                  ? "Comprehensive practical training for mastering essential Cyber Security skills remotely."
+                  : course.heroDescription || course.description}
+              </p>
             </div>
 
             {/* Curriculum Download Notice Toast */}
             {downloadSuccess && (
-              <div className="w-fit rounded-lg bg-emerald-950/80 border border-emerald-500/40 px-3.5 py-1.5 text-xs font-semibold text-emerald-300 flex items-center gap-2">
-                <Check className="size-3.5 text-emerald-400" />
+              <div className="w-fit rounded-lg bg-emerald-50 border border-emerald-300 px-3.5 py-1.5 text-xs font-semibold text-emerald-800 flex items-center gap-2">
+                <Check className="size-3.5 text-emerald-600" />
                 <span>Curriculum PDF guide downloaded successfully for {course.title}!</span>
               </div>
             )}
@@ -420,7 +361,7 @@ function CourseDetailPage() {
       {/* ========================================================================= */}
       {/* 2. MAIN CONTENT AREA (Tabs on Left + Sticky Demo Sidebar on Right)         */}
       {/* ========================================================================= */}
-      <section className="bg-slate-50/60 py-4 sm:py-6">
+      <section className="bg-white py-4 sm:py-6">
         <div className="container-site">
           <div className="grid gap-6 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start">
             
@@ -430,7 +371,7 @@ function CourseDetailPage() {
             <div className="space-y-6">
               
               {/* Horizontal Tabs: About, Curriculum, Description, FAQ's */}
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 border-b border-slate-200/80 pb-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 border-b border-slate-300 pb-4">
                 {tabs.map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -439,10 +380,10 @@ function CourseDetailPage() {
                       type="button"
                       onClick={() => setActiveTab(tab.id)}
                       className={cn(
-                        "rounded-lg px-6 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer",
+                        "rounded-lg px-6 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer border",
                         isActive
-                          ? "bg-[#5455f6] text-white shadow-md shadow-indigo-500/25"
-                          : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0]"
+                          ? "bg-[#5455f6] text-white border-indigo-600 shadow-md shadow-indigo-500/25"
+                          : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0] border-slate-300"
                       )}
                     >
                       {tab.label}
@@ -457,14 +398,14 @@ function CourseDetailPage() {
               {activeTab === "about" && (
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Opening Lead Paragraph from screenshot */}
-                  <div className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-7 shadow-sm space-y-4">
+                  <div className="bg-white rounded-2xl border border-slate-300 p-6 sm:p-7 shadow-xs space-y-4">
                     <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-justify">
                       Our online {course.title} training and placement program is fully job-oriented
                       and includes real-time project work for hands-on learning. The{" "}
                       <strong className="text-navy">{displayTitle} Course</strong> is developed by
                       certified experts to deliver industry-ready skills.
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
                       {course.longDescription || course.description}
                     </p>
                   </div>
@@ -486,7 +427,7 @@ function CourseDetailPage() {
                       ].map((item, idx) => (
                         <div
                           key={idx}
-                          className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white p-3.5 shadow-xs"
+                          className="flex items-start gap-3 rounded-xl border border-slate-300 bg-white p-3.5 shadow-xs"
                         >
                           <span className="grid size-6 place-items-center rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold shrink-0 mt-0.5">
                             <Check className="size-3.5 stroke-[2.5]" />
@@ -508,7 +449,7 @@ function CourseDetailPage() {
                           <BookOpen className="size-5 text-accent shrink-0" />
                           What You Will Learn
                         </h3>
-                        <span className="text-xs font-bold text-slate-400">
+                        <span className="text-xs font-bold text-slate-600">
                           {(course.overview?.whatYouLearnDetailed?.length || course.overview?.learn?.length || 0)}{" "}
                           Core Topics
                         </span>
@@ -519,7 +460,7 @@ function CourseDetailPage() {
                           {course.overview.whatYouLearnDetailed.map((item, idx) => (
                             <div
                               key={idx}
-                              className="rounded-2xl border border-slate-200/80 bg-white p-4.5 shadow-sm hover:border-indigo-500/40 hover:shadow-md transition-all group"
+                              className="rounded-2xl border border-slate-300 bg-white p-4.5 shadow-xs hover:border-indigo-500 hover:shadow-md transition-all group"
                             >
                               <div className="flex items-center gap-2.5 mb-1.5">
                                 <span className="grid size-7 place-items-center rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black shrink-0">
@@ -529,19 +470,19 @@ function CourseDetailPage() {
                                   {item.title}
                                 </h4>
                               </div>
-                              <p className="text-xs text-slate-600 leading-relaxed pl-9">
+                              <p className="text-xs text-slate-700 leading-relaxed pl-9">
                                 {item.description}
                               </p>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+                        <div className="bg-white border border-slate-300 rounded-2xl p-5 shadow-xs">
                           <ul className="grid gap-2.5 sm:grid-cols-2">
                             {(course.overview?.learn || []).map((item) => (
                               <li
                                 key={item}
-                                className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
+                                className="flex gap-2.5 text-xs sm:text-sm text-slate-700 leading-snug"
                               >
                                 <Check className="size-4 shrink-0 text-accent mt-0.5" />
                                 <span>{item}</span>
@@ -556,13 +497,13 @@ function CourseDetailPage() {
                   {/* Who Should Enroll */}
                   {(course.overview?.audienceDescription ||
                     (course.overview?.audience && course.overview.audience.length > 0)) && (
-                    <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm space-y-3">
+                    <div className="bg-white border border-slate-300 rounded-2xl p-6 shadow-xs space-y-3">
                       <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
                         <Users className="size-4 text-accent shrink-0" />
                         Who Should Attend This Training?
                       </h3>
                       {course.overview?.audienceDescription ? (
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                           {course.overview.audienceDescription}
                         </p>
                       ) : (
@@ -570,7 +511,7 @@ function CourseDetailPage() {
                           {(course.overview?.audience || []).map((item) => (
                             <li
                               key={item}
-                              className="flex gap-2.5 text-xs sm:text-sm text-slate-600 leading-snug"
+                              className="flex gap-2.5 text-xs sm:text-sm text-slate-700 leading-snug"
                             >
                               <span className="size-2 rounded-full bg-accent shrink-0 mt-1.5" />
                               <span>{item}</span>
@@ -583,12 +524,12 @@ function CourseDetailPage() {
 
                   {/* Career Readiness & Placement Outcomes */}
                   {course.overview?.outcomes && course.overview.outcomes.length > 0 && (
-                    <div className="rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-white p-6 shadow-sm space-y-3">
+                    <div className="rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50/70 to-white p-6 shadow-xs space-y-3">
                       <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
                         <Award className="size-4 text-accent shrink-0" />
                         Career Outcomes &amp; Skills Acquired
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                         Graduates from this program gain working competence, resume-ready portfolio
                         projects, and direct preparation for high-demand technical roles across the industry.
                       </p>
@@ -596,7 +537,7 @@ function CourseDetailPage() {
                         {(course.overview.outcomes || []).map((item, i) => (
                           <span
                             key={i}
-                            className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
                           >
                             <Check className="size-3.5 text-emerald-600" />
                             {item}
@@ -613,12 +554,12 @@ function CourseDetailPage() {
               {/* ================================================================= */}
               {activeTab === "curriculum" && (
                 <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-300 pb-3">
                     <div>
                       <h3 className="text-lg sm:text-xl font-black text-navy">
                         Course Curriculum &amp; Syllabus Breakdown
                       </h3>
-                      <p className="text-xs text-slate-500 mt-0.5">
+                      <p className="text-xs text-slate-600 mt-0.5">
                         Structured modular tracks designed to meet latest industry hiring benchmarks.
                       </p>
                     </div>
@@ -634,10 +575,10 @@ function CourseDetailPage() {
                   </div>
 
                   {(!course.syllabus || course.syllabus.length === 0) ? (
-                    <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
-                      <Layers className="size-10 text-slate-300 mx-auto mb-3" />
+                    <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-300 rounded-2xl">
+                      <Layers className="size-10 text-slate-400 mx-auto mb-3" />
                       <h4 className="text-base font-bold text-navy">Curriculum Syllabus in Progress</h4>
-                      <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+                      <p className="text-xs text-slate-600 mt-1 max-w-md mx-auto">
                         Detailed module topics for this program are currently being structured by our faculty. Contact us to receive syllabus updates.
                       </p>
                     </div>
@@ -651,14 +592,14 @@ function CourseDetailPage() {
                             className={cn(
                               "border rounded-2xl transition-all duration-200 overflow-hidden shadow-xs",
                               isExpanded
-                                ? "border-indigo-500/40 bg-indigo-50/20"
-                                : "border-slate-200/80 bg-white"
+                                ? "border-indigo-500 bg-indigo-50/30"
+                                : "border-slate-300 bg-white"
                             )}
                           >
                             <button
                               type="button"
                               onClick={() => setExpandedModule(isExpanded ? null : index)}
-                              className="w-full flex items-center justify-between p-4 text-left font-bold text-navy hover:bg-slate-50/50 transition-colors cursor-pointer"
+                              className="w-full flex items-center justify-between p-4 text-left font-bold text-navy hover:bg-slate-50 transition-colors cursor-pointer"
                             >
                               <div className="flex items-center gap-3">
                                 <span className="text-[0.7rem] bg-[#0b1633] text-amber-300 font-black px-2.5 py-1 rounded-md tracking-wider">
@@ -671,17 +612,17 @@ function CourseDetailPage() {
                               {isExpanded ? (
                                 <ChevronUp className="size-4 text-indigo-600" />
                               ) : (
-                                <ChevronDown className="size-4 text-slate-400" />
+                                <ChevronDown className="size-4 text-slate-500" />
                               )}
                             </button>
 
                             {isExpanded && (
-                              <div className="border-t border-slate-100 p-5 bg-white">
+                              <div className="border-t border-slate-200 p-5 bg-white">
                                 <ul className="grid gap-2.5 sm:grid-cols-2">
                                   {(item.topics || []).map((topic, i) => (
                                     <li
                                       key={i}
-                                      className="flex items-center gap-2 text-xs sm:text-sm text-slate-600"
+                                      className="flex items-center gap-2 text-xs sm:text-sm text-slate-700"
                                     >
                                       <span className="size-1.5 bg-indigo-600 rounded-full shrink-0" />
                                       <span>{topic}</span>
@@ -704,25 +645,25 @@ function CourseDetailPage() {
               {activeTab === "description" && (
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Detailed Description */}
-                  <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm space-y-3">
+                  <div className="bg-white rounded-2xl border border-slate-300 p-6 shadow-xs space-y-3">
                     <h3 className="text-base sm:text-lg font-black text-navy">
                       Program Overview &amp; Training Methodology
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
                       {course.practicalLearning?.description || course.longDescription}
                     </p>
                   </div>
 
                   {/* Practical Labs & Portfolio Projects */}
                   <div className="grid gap-5 sm:grid-cols-2">
-                    <div className="bg-white border border-slate-200/80 p-5 rounded-2xl space-y-3 shadow-sm">
+                    <div className="bg-white border border-slate-300 p-5 rounded-2xl space-y-3 shadow-xs">
                       <h4 className="text-xs font-black uppercase tracking-wider text-navy flex items-center gap-2">
                         <Briefcase className="size-4 text-accent" />
                         Practical Lab Training
                       </h4>
                       <ul className="space-y-2">
                         {(course.practicalTraining || []).map((item, i) => (
-                          <li key={i} className="flex gap-2 text-xs text-slate-600">
+                          <li key={i} className="flex gap-2 text-xs text-slate-700">
                             <Check className="size-3.5 shrink-0 text-emerald-600 mt-0.5" />
                             <span>{item}</span>
                           </li>
@@ -730,7 +671,7 @@ function CourseDetailPage() {
                       </ul>
                     </div>
 
-                    <div className="bg-white border border-slate-200/80 p-5 rounded-2xl space-y-3 shadow-sm">
+                    <div className="bg-white border border-slate-300 p-5 rounded-2xl space-y-3 shadow-xs">
                       <h4 className="text-xs font-black uppercase tracking-wider text-navy flex items-center gap-2">
                         <FileText className="size-4 text-accent" />
                         Real-World Projects
@@ -739,10 +680,10 @@ function CourseDetailPage() {
                         {(course.projects || []).map((project, i) => (
                           <div
                             key={i}
-                            className="border border-slate-100 rounded-xl p-3 bg-slate-50/50"
+                            className="border border-slate-200 rounded-xl p-3 bg-slate-50"
                           >
                             <h5 className="text-xs font-bold text-navy">{project.title}</h5>
-                            <p className="text-[0.72rem] text-slate-500 mt-0.5 leading-relaxed text-justify">
+                            <p className="text-[0.72rem] text-slate-700 mt-0.5 leading-relaxed text-justify">
                               {project.summary}
                             </p>
                           </div>
@@ -752,7 +693,7 @@ function CourseDetailPage() {
                   </div>
 
                   {/* Certification Credential Box */}
-                  <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] border border-slate-200/80 rounded-2xl p-6 bg-gradient-to-br from-white to-indigo-50/30 items-center shadow-sm">
+                  <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] border border-slate-300 rounded-2xl p-6 bg-gradient-to-br from-white to-indigo-50/40 items-center shadow-xs">
                     <div className="space-y-2">
                       <span className="text-[0.65rem] font-black uppercase tracking-widest text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-md">
                         Official Credential
@@ -760,19 +701,19 @@ function CourseDetailPage() {
                       <h4 className="text-base font-black text-navy">
                         {course.title} Authorized Certification
                       </h4>
-                      <p className="text-xs text-slate-600 leading-relaxed text-justify">
+                      <p className="text-xs text-slate-700 leading-relaxed text-justify">
                         Earn an industry-recognized certificate and verified digital credential
                         upon completing assessments, labs, and capstones. Add this credential
                         directly to LinkedIn.
                       </p>
                     </div>
                     <div className="flex justify-center">
-                      <div className="border border-slate-200 shadow-lg rounded-xl bg-white p-4 rotate-1 max-w-[200px] text-center">
+                      <div className="border border-slate-300 shadow-md rounded-xl bg-white p-4 rotate-1 max-w-[200px] text-center">
                         <Award className="size-8 text-amber-500 mx-auto" />
                         <span className="block text-xs font-black text-navy uppercase tracking-wider mt-2">
                           DIGITECHADEMY
                         </span>
-                        <span className="block text-[0.65rem] text-slate-400 font-semibold mt-1">
+                        <span className="block text-[0.65rem] text-slate-600 font-semibold mt-1">
                           Verified Certificate
                         </span>
                       </div>
@@ -781,23 +722,23 @@ function CourseDetailPage() {
 
                   {/* Mentors */}
                   <div className="space-y-3">
-                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-600">
                       Your Instructors &amp; Mentors
                     </h4>
                     <div className="grid gap-4 sm:grid-cols-2">
                       {(course.instructors || []).map((item) => (
                         <div
                           key={item.name}
-                          className="flex gap-3.5 border border-slate-200/80 rounded-2xl p-4 bg-white shadow-xs items-center"
+                          className="flex gap-3.5 border border-slate-300 rounded-2xl p-4 bg-white shadow-xs items-center"
                         >
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="size-12 rounded-full object-cover border border-slate-200 shrink-0"
+                            className="size-12 rounded-full object-cover border border-slate-300 shrink-0"
                           />
                           <div>
                             <h5 className="text-sm font-bold text-navy">{item.name}</h5>
-                            <span className="block text-xs text-muted-foreground">{item.role}</span>
+                            <span className="block text-xs text-slate-600">{item.role}</span>
                             <span className="block text-[0.7rem] text-indigo-600 font-bold mt-0.5">
                               {item.experience}
                             </span>
@@ -814,21 +755,21 @@ function CourseDetailPage() {
               {/* ================================================================= */}
               {activeTab === "faqs" && (
                 <div className="space-y-6 animate-in fade-in duration-200">
-                  <div data-reveal="left" className="border-b border-slate-200/80 pb-3">
+                  <div data-reveal="left" className="border-b border-slate-300 pb-3">
                     <h3 className="text-lg sm:text-xl font-black text-navy flex items-center gap-2">
                       <HelpCircle className="size-5 text-indigo-600 shrink-0" />
                       Frequently Asked Questions
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-slate-600 mt-0.5">
                       Common queries regarding class timings, batch schedules, fees, and placement assistance.
                     </p>
                   </div>
 
                   {(!course.faqs || course.faqs.length === 0) ? (
-                    <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-200 rounded-2xl">
-                      <HelpCircle className="size-10 text-slate-300 mx-auto mb-3" />
+                    <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-300 rounded-2xl">
+                      <HelpCircle className="size-10 text-slate-400 mx-auto mb-3" />
                       <h4 className="text-base font-bold text-navy">No FAQs Available Yet</h4>
-                      <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+                      <p className="text-xs text-slate-600 mt-1 max-w-md mx-auto">
                         Have questions about this course? Connect with our counselors below for personalized guidance.
                       </p>
                     </div>
@@ -841,22 +782,22 @@ function CourseDetailPage() {
                             key={index}
                             data-reveal={index % 2 === 0 ? "top" : "left"}
                             style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
-                            className="border border-slate-200/80 rounded-xl overflow-hidden bg-white shadow-xs"
+                            className="border border-slate-300 rounded-xl overflow-hidden bg-white shadow-xs"
                           >
                             <button
                               type="button"
                               onClick={() => setExpandedFaq(isFaqExpanded ? null : index)}
-                              className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-navy hover:bg-slate-50/50 cursor-pointer"
+                              className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-navy hover:bg-slate-50 cursor-pointer"
                             >
                               <span>{faq.question}</span>
                               {isFaqExpanded ? (
                                 <ChevronUp className="size-4 text-indigo-600 shrink-0 ml-2" />
                               ) : (
-                                <ChevronDown className="size-4 text-slate-400 shrink-0 ml-2" />
+                                <ChevronDown className="size-4 text-slate-500 shrink-0 ml-2" />
                               )}
                             </button>
                             {isFaqExpanded && (
-                              <div className="border-t border-slate-100 p-4 bg-slate-50/30 text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">
+                              <div className="border-t border-slate-200 p-4 bg-slate-50/60 text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
                                 {faq.answer}
                               </div>
                             )}
@@ -867,10 +808,10 @@ function CourseDetailPage() {
                   )}
 
                   {/* Need more help card */}
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+                  <div className="rounded-2xl border border-slate-300 bg-white p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
                     <div>
                       <h4 className="text-sm font-bold text-navy">Still have questions?</h4>
-                      <p className="text-xs text-slate-500 mt-0.5">
+                      <p className="text-xs text-slate-600 mt-0.5">
                         Our academic counselor can answer all questions about batches and curricula.
                       </p>
                     </div>
@@ -891,7 +832,7 @@ function CourseDetailPage() {
             {/* ------------------------------------------------------------------- */}
             {/* RIGHT COLUMN: Video Demo Card + JOIN FREE DEMO CLASS Form           */}
             {/* ------------------------------------------------------------------- */}
-            <aside className="lg:sticky lg:top-[180px] xl:top-[185px] w-full min-w-0">
+            <aside className="lg:sticky lg:top-24 w-full min-w-0">
               <CourseDemoSidebar course={course} />
             </aside>
 
@@ -902,17 +843,17 @@ function CourseDetailPage() {
       {/* ========================================================================= */}
       {/* 2.5 EXPLORE OTHER COURSES SECTION                                          */}
       {/* ========================================================================= */}
-      <section className="bg-white py-6 sm:py-8 border-t border-slate-200/80">
+      <section className="bg-white py-6 sm:py-8 border-t border-slate-300">
         <div className="container-site">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-5">
             <div className="max-w-2xl lg:max-w-3xl flex-1 min-w-0">
-              <span className="text-xs font-black uppercase tracking-widest text-indigo-600">
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
                 RELATED PROGRAMS
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-navy mt-1">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2] mt-1">
                 Explore Other Professional Programs
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
                 Looking to explore other career disciplines? Browse our other high-demand certification training courses with live mentors and hands-on labs.
               </p>
             </div>
@@ -920,14 +861,23 @@ function CourseDetailPage() {
               to="/courses"
               variant="outline"
               size="sm"
-              className="border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-bold rounded-xl text-xs h-10 px-4 shrink-0 flex items-center gap-1.5"
+              className="border-indigo-300 text-indigo-700 hover:bg-indigo-50 font-bold rounded-xl text-xs h-10 px-4 shrink-0 flex items-center gap-1.5"
             >
               <span>View All Courses Catalog</span>
               <ArrowRight className="size-3.5" />
             </BtnLink>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={cn(
+              "gap-6 w-full",
+              relatedCourses.length === 1
+                ? "flex justify-center max-w-md mx-auto"
+                : relatedCourses.length === 2
+                  ? "grid grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
+                  : "grid sm:grid-cols-2 lg:grid-cols-3"
+            )}
+          >
             {relatedCourses.map((otherCourse) => {
               if (!otherCourse || !otherCourse.slug) return null;
               const imageSrc =
@@ -945,7 +895,7 @@ function CourseDetailPage() {
               return (
                 <article
                   key={otherCourse.id || otherSlug}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:border-indigo-500/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-xs hover:border-indigo-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="relative aspect-[16/9] overflow-hidden bg-slate-900">
                     <img
@@ -965,29 +915,29 @@ function CourseDetailPage() {
                       <h3 className="text-base font-black text-navy group-hover:text-indigo-600 transition-colors line-clamp-1">
                         {otherCourse.title}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-600 line-clamp-2 text-justify">
+                      <p className="mt-1 text-xs text-slate-700 line-clamp-2 text-justify">
                         {otherCourse.description}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 border-t border-slate-100 pt-3 mt-auto">
+                    <div className="flex items-center gap-3 text-xs font-semibold text-slate-600 border-t border-slate-200 pt-3 mt-auto">
                       <div className="flex items-center gap-1">
                         <Clock className="size-3.5 text-indigo-600" />
                         <span>{otherCourse.duration}</span>
                       </div>
-                      <span className="text-slate-300">&bull;</span>
+                      <span className="text-slate-400">&bull;</span>
                       <div className="flex items-center gap-1">
                         <Signal className="size-3.5 text-indigo-600" />
                         <span>{levelText}</span>
                       </div>
-                      <span className="text-slate-300">&bull;</span>
+                      <span className="text-slate-400">&bull;</span>
                       <div className="flex items-center gap-1">
                         <BookOpen className="size-3.5 text-indigo-600" />
                         <span>{moduleCount} Modules</span>
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100">
+                    <div className="pt-2 border-t border-slate-200">
                       <BtnLink
                         to="/courses/$slug"
                         params={{ slug: otherSlug }}

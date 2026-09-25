@@ -37,7 +37,7 @@ function RequestCallPage() {
         description="Tell us your learning goals. An academic advisor will guide you to the right program."
       />
 
-      <section className="bg-background">
+      <section className="bg-white">
         <div className="container-site py-5 sm:py-6 lg:py-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
           <div data-reveal="left">
             <RequestCallForm />
@@ -45,7 +45,7 @@ function RequestCallPage() {
 
           <aside className="flex flex-col gap-4" data-reveal="right">
             <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.03)]">
-              <h2 className="text-base font-extrabold text-slate-800">Prefer to talk right away?</h2>
+              <h3 className="text-base font-bold text-slate-900">Prefer to talk right away?</h3>
               <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-500">
                 Call us during working hours or send a WhatsApp message — both reach the admissions
                 team directly.
