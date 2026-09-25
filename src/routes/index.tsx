@@ -1967,17 +1967,29 @@ function CyberSecurityDifferentiator() {
       id="cyber-security-differentiator"
       className="bg-[#030914] relative py-7 sm:py-9 overflow-hidden border-t border-b border-cyan-950/80"
     >
+      {/* Cyber Security Background Image with Reduced Opacity */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <img
+          src={cyberHeroBg}
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center opacity-20 scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/90 via-[#030914]/75 to-[#030914]/95" />
+        <div className="absolute inset-0 bg-radial from-transparent via-[#030914]/60 to-[#030914]" />
+      </div>
+
       {/* High-tech Cyber Grid Background & Subtle Ambient Fades */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06] z-0"
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, rgba(34, 211, 238, 0.45) 1px, transparent 0)`,
           backgroundSize: "24px 24px",
         }}
         aria-hidden="true"
       />
-      <div className="pointer-events-none absolute -top-32 left-1/3 size-96 rounded-full bg-cyan-500/10 blur-[100px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute -bottom-32 right-1/4 size-96 rounded-full bg-blue-600/10 blur-[100px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -top-32 left-1/3 size-96 rounded-full bg-cyan-500/10 blur-[100px] z-0" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-32 right-1/4 size-96 rounded-full bg-blue-600/10 blur-[100px] z-0" aria-hidden="true" />
 
       <div className="container-site relative z-10">
         {/* Unified Compact Header */}
