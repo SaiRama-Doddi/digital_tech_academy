@@ -2133,15 +2133,14 @@ function CyberSecurityDifferentiator() {
                       </p>
                     </div>
 
-                    {/* Small Cyber 3D Illustration at Bottom */}
-                    <div className="relative z-10 mt-3.5 overflow-hidden rounded-xl bg-black/40 border border-white/10 group-hover:border-cyan-400/40 transition-colors duration-300">
+                    {/* Small Cyber 3D Illustration at Bottom (Square 1:1 Aspect Ratio - No Cropping) */}
+                    <div className="relative z-10 mt-3.5 flex items-center justify-center overflow-hidden rounded-xl bg-slate-950/70 border border-white/10 p-2 group-hover:border-cyan-400/40 transition-colors duration-300">
                       <img
                         src={item.image}
                         alt={item.title}
                         loading="lazy"
-                        className="h-20 sm:h-22 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="size-24 sm:size-28 object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#061122]/50 via-transparent to-transparent pointer-events-none" />
                     </div>
                   </Link>
                 </div>
