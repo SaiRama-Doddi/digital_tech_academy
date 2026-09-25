@@ -317,12 +317,15 @@ export function Header() {
       {/* ========================================================================= */}
       <header
         className={cn(
-          "sticky top-0 z-50 w-full transition-all duration-300 ease-in-out sticky-nav",
+          "w-full transition-all duration-300 ease-in-out sticky-nav",
           mobileOpen
-            ? "border-b border-slate-200 bg-white shadow-md"
-            : scrolled
+            ? "fixed top-0 inset-x-0 z-[60] border-b border-slate-200 bg-white shadow-md"
+            : "sticky top-0 z-50",
+          !mobileOpen && (
+            scrolled
               ? "border-b border-slate-200/90 bg-white/95 shadow-[0_6px_24px_-4px_rgba(15,23,42,0.12)] backdrop-blur-2xl"
-              : "border-b border-slate-200/60 bg-white/90 shadow-[0_2px_16px_-3px_rgba(15,23,42,0.04)] backdrop-blur-xl",
+              : "border-b border-slate-200/60 bg-white/90 shadow-[0_2px_16px_-3px_rgba(15,23,42,0.04)] backdrop-blur-xl"
+          ),
         )}
       >
         <div
@@ -472,7 +475,7 @@ export function Header() {
           id="mobile-nav"
           className={cn(
             "relative z-50 overflow-hidden border-t border-slate-200 bg-white shadow-2xl transition-[max-height,opacity] duration-300 lg:hidden",
-            mobileOpen ? "max-h-[85vh] opacity-100 overflow-y-auto" : "max-h-0 opacity-0 pointer-events-none",
+            mobileOpen ? "max-h-[calc(100dvh-4rem)] opacity-100 overflow-y-auto overscroll-contain" : "max-h-0 opacity-0 pointer-events-none",
           )}
         >
           <div className="w-full max-w-[1400px] mx-auto px-4 py-4 space-y-3.5">
@@ -594,14 +597,14 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile Backdrop Overlay (Positioned behind sticky header & mobile drawer, dimming page beneath) */}
+      {/* Mobile Backdrop Overlay (Positioned behind fixed header & mobile drawer, dimming page beneath) */}
       {mobileOpen && (
         <button
           type="button"
           aria-label="Close mobile navigation"
           tabIndex={-1}
           onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs lg:hidden cursor-pointer"
+          className="fixed inset-0 z-[55] bg-slate-950/60 backdrop-blur-xs lg:hidden cursor-pointer"
         />
       )}
     </>
