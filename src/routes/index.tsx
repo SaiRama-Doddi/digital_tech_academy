@@ -1837,6 +1837,7 @@ function CyberSecurityDifferentiator() {
       title: "Understand",
       desc: "Networking protocols, OS architectures & core security foundations.",
       icon: ShieldCheck,
+      image: cyberPhase1Img,
       badge: "FOUNDATIONS",
       dotColor: "bg-cyan-400 shadow-[0_0_8px_#22d3ee]",
       cardBorder: "border-cyan-500/25 hover:border-cyan-400/80 hover:shadow-[0_0_25px_rgba(6,182,212,0.25)]",
@@ -1850,6 +1851,7 @@ function CyberSecurityDifferentiator() {
       title: "Explore",
       desc: "Linux systems, web technologies & common vulnerability surfaces.",
       icon: Terminal,
+      image: cyberPhase2Img,
       badge: "TOOLING & OS",
       dotColor: "bg-purple-400 shadow-[0_0_8px_#c084fc]",
       cardBorder: "border-purple-500/25 hover:border-purple-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
@@ -1863,6 +1865,7 @@ function CyberSecurityDifferentiator() {
       title: "Practice",
       desc: "Hands-on guided lab environments & defensive configuration exercises.",
       icon: Cpu,
+      image: cyberPhase3Img,
       badge: "HANDS-ON",
       dotColor: "bg-emerald-400 shadow-[0_0_8px_#34d399]",
       cardBorder: "border-emerald-500/25 hover:border-emerald-400/80 hover:shadow-[0_0_25px_rgba(16,185,129,0.25)]",
@@ -1876,6 +1879,7 @@ function CyberSecurityDifferentiator() {
       title: "Test",
       desc: "Vulnerability assessment, pen-testing methods & ethical exploitation.",
       icon: Lock,
+      image: cyberPhase4Img,
       badge: "ASSESSMENT",
       dotColor: "bg-amber-400 shadow-[0_0_8px_#fbbf24]",
       cardBorder: "border-amber-500/25 hover:border-amber-400/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.25)]",
@@ -1889,6 +1893,7 @@ function CyberSecurityDifferentiator() {
       title: "Apply",
       desc: "Realistic incident analysis, threat mitigation & live security scenarios.",
       icon: Target,
+      image: cyberPhase5Img,
       badge: "REAL SCENARIOS",
       dotColor: "bg-pink-400 shadow-[0_0_8px_#f472b6]",
       cardBorder: "border-pink-500/25 hover:border-pink-400/80 hover:shadow-[0_0_25px_rgba(236,72,153,0.25)]",
@@ -1981,7 +1986,6 @@ function CyberSecurityDifferentiator() {
         <div className="grid gap-3 sm:gap-3.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {phases.map((item, index) => {
             const ItemIcon = item.icon;
-            const isHovered = activePhase === index;
             return (
               <Link
                 key={item.step}
@@ -1992,7 +1996,7 @@ function CyberSecurityDifferentiator() {
                 data-reveal="bottom-to-up"
                 style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
                 className={cn(
-                  "group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#061122]/90 p-4 transition-all duration-300 ease-out hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md shadow-md shadow-black/40 min-h-[190px]",
+                  "group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#061122]/90 p-4 transition-all duration-300 ease-out hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md shadow-md shadow-black/40",
                   item.cardBorder,
                 )}
               >
@@ -2047,12 +2051,15 @@ function CyberSecurityDifferentiator() {
                   </p>
                 </div>
 
-                {/* Bottom Micro Stage Action */}
-                <div className="relative z-10 mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[10.5px] font-mono text-slate-400 group-hover:text-cyan-300 transition-colors">
-                  <span className="font-semibold uppercase tracking-wider text-[10px]">
-                    Step {item.step} of 05
-                  </span>
-                  <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1 text-cyan-400" />
+                {/* Small Cyber 3D Illustration at Bottom */}
+                <div className="relative z-10 mt-3.5 overflow-hidden rounded-xl bg-black/40 border border-white/10 group-hover:border-cyan-400/40 transition-colors duration-300">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    className="h-20 sm:h-22 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#061122]/50 via-transparent to-transparent pointer-events-none" />
                 </div>
               </Link>
             );
