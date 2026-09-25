@@ -875,7 +875,7 @@ function CourseDetailPage() {
             {/* ------------------------------------------------------------------- */}
             {/* RIGHT COLUMN: Video Demo Card + JOIN FREE DEMO CLASS Form           */}
             {/* ------------------------------------------------------------------- */}
-            <aside className="lg:sticky lg:top-24 w-full min-w-0">
+            <aside className="lg:sticky lg:top-36 w-full min-w-0">
               <CourseDemoSidebar course={course} />
             </aside>
 

@@ -306,7 +306,7 @@ function FaqPage() {
             </div>
 
             {/* Right Column: Sticky Support & Help Box */}
-            <aside className="lg:sticky lg:top-24 space-y-4" data-reveal="right">
+            <aside className="lg:sticky lg:top-36 space-y-4" data-reveal="right">
               {/* Card 1: Direct Support Card */}
               <div className="rounded-2xl border border-sky-400/30 bg-gradient-to-br from-[#091738] via-[#061126] to-[#040b1a] p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
                 <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-blue-500/15 blur-2xl" />
