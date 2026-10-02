@@ -59,6 +59,7 @@ import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { Hero3DCardsCarousel } from "@/components/site/Hero3DCardsCarousel";
 import { homeFaqs, practicalTraining, whoIsForAudience } from "@/data/content";
 import { courses } from "@/data/courses";
 import { subscribeCourses, normalizeCourseCategory, type FirebaseCourse } from "@/services/courseService";
@@ -275,367 +276,6 @@ const HERO_DOMAINS = [
   },
 ];
 
-type SandboxTabId = "cyber" | "programmatic" | "growth";
-
-interface SandboxConfig {
-  id: SandboxTabId;
-  label: string;
-  icon: typeof ShieldCheck;
-  tag: string;
-  terminalPrompt: string;
-  logs: string[];
-  metrics: { label: string; value: string; color: string }[];
-  highlight: string;
-}
-
-const SANDBOX_CONFIGS: Record<SandboxTabId, SandboxConfig> = {
-  cyber: {
-    id: "cyber",
-    label: "Cyber SOC",
-    icon: Shield,
-    tag: "KALI 2026.1 • SECURE",
-    terminalPrompt: "kali@sandbox:~$ sys_soc_monitor --live",
-    logs: [
-      "[09:44:02] INITIALIZING KALI VIRTUAL SANDBOX...",
-      "[09:44:03] PORT 443 (TLS) ENCRYPTED • 0 EXPOSURE",
-      "[09:44:04] MITRE ATT&CK SCAN: THREAT ISOLATED",
-      "[09:44:05] DEFENSE STATUS: PASS (0 BREACHES)",
-    ],
-    metrics: [
-      { label: "SOC Latency", value: "12ms", color: "text-emerald-400" },
-      { label: "Threat Index", value: "0 Breaches", color: "text-sky-400" },
-      { label: "Live Labs", value: "24+ Active", color: "text-amber-400" },
-    ],
-    highlight: "100% Practical Attack & Defense Scenarios",
-  },
-  programmatic: {
-    id: "programmatic",
-    label: "DV360 DSP",
-    icon: BarChart3,
-    tag: "RTB ENGINE • LIVE",
-    terminalPrompt: "dv360@dsp:~$ stream_bids --qps=48k",
-    logs: [
-      "[09:44:02] CONNECTING GOOGLE AD MANAGER DSP...",
-      "[09:44:03] INCOMING BID STREAM: 48,250 QPS",
-      "[09:44:04] CM360 FLOODLIGHT TAG VERIFIED [200 OK]",
-      "[09:44:05] BID OPTIMIZATION: $2.42 CPM [WIN]",
-    ],
-    metrics: [
-      { label: "Bid Velocity", value: "48.2k QPS", color: "text-cyan-400" },
-      { label: "Win Rate", value: "94.6%", color: "text-emerald-400" },
-      { label: "ROAS Index", value: "4.8x Lift", color: "text-amber-400" },
-    ],
-    highlight: "Live Production DV360 & CM360 Console",
-  },
-  growth: {
-    id: "growth",
-    label: "Growth Engine",
-    icon: TrendingUp,
-    tag: "GA4 STREAM • ACTIVE",
-    terminalPrompt: "growth@engine:~$ run_attribution --multi-touch",
-    logs: [
-      "[09:44:02] SYNCING GOOGLE ADS + META PIXEL...",
-      "[09:44:03] HIGH-INTENT AUDIENCE CLUSTER IDENTIFIED",
-      "[09:44:04] MULTI-TOUCH ATTRIBUTION MODEL CALCULATED",
-      "[09:44:05] CONVERSION LIFT: +34% (CAC -22%)",
-    ],
-    metrics: [
-      { label: "Conversion Lift", value: "+34%", color: "text-emerald-400" },
-      { label: "Ad Spend ROAS", value: "5.2x", color: "text-sky-400" },
-      { label: "Tracking Health", value: "100% Verified", color: "text-amber-400" },
-    ],
-    highlight: "Full-Funnel Omnichannel Strategy & GA4",
-  },
-};
-
-function HeroInteractiveSandbox() {
-  const [activeTab, setActiveTab] = useState<SandboxTabId>("cyber");
-  const [isPaused, setIsPaused] = useState(false);
-  const [pulseTick, setPulseTick] = useState(0);
-
-  // Auto-cycle tabs every 6 seconds unless user pauses / clicks
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setActiveTab((prev) => {
-        if (prev === "cyber") return "programmatic";
-        if (prev === "programmatic") return "growth";
-        return "cyber";
-      });
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  // Micro-tick for live animation pulse
-  useEffect(() => {
-    const tick = setInterval(() => {
-      setPulseTick((prev) => (prev + 1) % 100);
-    }, 2000);
-    return () => clearInterval(tick);
-  }, []);
-
-  const config = SANDBOX_CONFIGS[activeTab];
-
-  return (
-    <div
-      className="relative w-full max-w-[540px] lg:max-w-none pt-7 sm:pt-8 pb-8 sm:pb-9"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      {/* Ambient background glow behind HUD */}
-      <div
-        className="pointer-events-none absolute inset-x-0 inset-y-6 sm:inset-y-7 rounded-3xl bg-gradient-to-r from-blue-600/20 via-sky-500/20 to-indigo-600/20 blur-xl opacity-75 animate-pulse-glow"
-        aria-hidden="true"
-      />
-
-      {/* Floating Top-Right HUD Badge: Active Lab Sandbox (Floats above terminal window) */}
-      <div className="absolute top-0 right-2 sm:right-0 z-30 animate-float-slow pointer-events-none max-w-[calc(100%-1rem)]">
-        <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
-          <span className="grid size-6 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xs shrink-0">
-            <Terminal className="size-3 sm:size-4" />
-          </span>
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="size-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
-              <span className="text-[9px] sm:text-[10.5px] font-black uppercase tracking-wider text-slate-800 truncate">
-                Virtual Cloud Sandbox
-              </span>
-            </div>
-            <span className="block text-[8.5px] sm:text-[9.5px] font-bold text-blue-600 truncate">
-              DV360 • CM360 • Kali • GA4
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Glassmorphic Terminal Window */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-800/80 bg-slate-950 shadow-2xl shadow-slate-950/50 backdrop-blur-xl">
-        {/* Subtle laser scanline moving down */}
-        <div
-          className="pointer-events-none absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent animate-scanline z-20"
-          aria-hidden="true"
-        />
-
-        {/* Console Header Bar */}
-        <div className="flex items-center justify-between border-b border-slate-800/90 bg-slate-900/90 px-3 py-2.5 sm:px-4 sm:py-3 gap-1">
-          {/* Mac-style Window Controls */}
-          <div className="flex items-center gap-1.5 min-w-0">
-            <span className="size-2 sm:size-2.5 rounded-full bg-rose-500/90 shrink-0" />
-            <span className="size-2 sm:size-2.5 rounded-full bg-amber-500/90 shrink-0" />
-            <span className="size-2 sm:size-2.5 rounded-full bg-emerald-500/90 shrink-0" />
-            <span className="ml-1.5 text-[10px] sm:text-xs font-mono font-bold text-slate-400 flex items-center gap-1.5 truncate">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-              <span className="hidden sm:inline">digitechademy-</span>live-terminal
-            </span>
-          </div>
-
-          {/* Interactive Simulation Switcher Tabs */}
-          <div className="flex items-center gap-1 rounded-xl bg-slate-950/80 p-0.5 sm:p-1 border border-slate-800/80 shrink-0">
-            {(["cyber", "programmatic", "growth"] as const).map((tab) => {
-              const tabConf = SANDBOX_CONFIGS[tab];
-              const TabIcon = tabConf.icon;
-              const isActive = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  type="button"
-                  className={cn(
-                    "flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] sm:text-[11px] font-bold transition-all duration-200 cursor-pointer",
-                    isActive
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-500/30"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
-                  )}
-                >
-                  <TabIcon className="size-3 shrink-0" />
-                  <span className="hidden xs:inline">{tabConf.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Live Simulation Workspace */}
-        <div className="p-4 sm:p-5 text-slate-200 relative min-h-[290px] sm:min-h-[320px] flex flex-col justify-between">
-          {/* Top Live Status & Highlight Pill */}
-          <div className="flex items-center justify-between gap-2 border-b border-slate-800/70 pb-3">
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="grid size-6 place-items-center rounded-lg bg-blue-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
-                <config.icon className="size-3.5" />
-              </div>
-              <span className="font-mono text-xs font-bold text-slate-200 truncate">
-                {config.label} Simulation
-              </span>
-            </div>
-            <span className="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
-              {config.tag}
-            </span>
-          </div>
-
-          {/* Center Visual: Dynamic Animated Graphic per Mode */}
-          <div className="my-3 grid sm:grid-cols-12 gap-3 items-center">
-            {/* Left Graphic Sandbox Visualizer (5 cols on sm) */}
-            <div className="sm:col-span-5 flex justify-center items-center">
-              {activeTab === "cyber" && (
-                /* Cyber Security Radar Scanner Visual */
-                <div className="relative size-28 sm:size-32 rounded-full border border-cyan-500/30 bg-slate-950 flex items-center justify-center overflow-hidden shadow-[0_0_20px_rgba(6,182,212,0.15)]">
-                  {/* Concentric rings */}
-                  <div className="absolute inset-2 rounded-full border border-cyan-500/20" />
-                  <div className="absolute inset-5 rounded-full border border-cyan-500/20" />
-                  <div className="absolute inset-8 rounded-full border border-cyan-500/20" />
-                  {/* Crosshairs */}
-                  <div className="absolute inset-x-0 top-1/2 h-px bg-cyan-500/20" />
-                  <div className="absolute inset-y-0 left-1/2 w-px bg-cyan-500/20" />
-                  {/* Sweeping Radar Beam */}
-                  <div className="absolute inset-0 animate-radar-sweep origin-center">
-                    <div className="w-1/2 h-1/2 bg-gradient-to-br from-cyan-400/40 via-cyan-500/10 to-transparent rounded-tl-full" />
-                  </div>
-                  {/* Glowing Target Blips */}
-                  <span className="absolute top-6 right-7 size-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse" />
-                  <span className="absolute bottom-6 left-8 size-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8]" />
-                  <span className="relative z-10 grid size-8 place-items-center rounded-full bg-slate-900 border border-cyan-400 text-cyan-300 text-[9px] font-mono font-bold shadow-md">
-                    SOC
-                  </span>
-                </div>
-              )}
-
-              {activeTab === "programmatic" && (
-                /* Programmatic DV360 Real-Time Auction Bidding Visual */
-                <div className="w-full h-28 sm:h-32 rounded-2xl border border-indigo-500/30 bg-slate-950 p-2.5 flex flex-col justify-between shadow-[0_0_20px_rgba(99,102,241,0.15)]">
-                  <div className="flex items-center justify-between text-[9px] font-mono text-indigo-300">
-                    <span>DSP BID STREAM</span>
-                    <span className="text-emerald-400 font-bold">● RTB ACTIVE</span>
-                  </div>
-                  {/* Animated Wave Bars */}
-                  <div className="flex items-end justify-between gap-1.5 h-14 px-1">
-                    {[40, 75, 55, 95, 65, 85, 45, 90, 70].map((h, i) => (
-                      <div
-                        key={i}
-                        className="w-full rounded-t-sm bg-gradient-to-t from-indigo-600 via-sky-400 to-cyan-300 transition-all duration-500"
-                        style={{
-                          height: `${Math.min(100, Math.max(25, h + ((pulseTick * (i + 1)) % 30) - 15))}%`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between text-[9px] font-mono font-bold text-slate-400 bg-slate-900/90 rounded px-1.5 py-0.5">
-                    <span>WIN CPM: $2.42</span>
-                    <span className="text-cyan-400">48.2k QPS</span>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "growth" && (
-                /* Growth Engine Attribution Funnel Visual */
-                <div className="w-full h-28 sm:h-32 rounded-2xl border border-emerald-500/30 bg-slate-950 p-2.5 flex flex-col justify-between shadow-[0_0_20px_rgba(16,185,129,0.15)]">
-                  <div className="flex items-center justify-between text-[9px] font-mono text-emerald-300">
-                    <span>OMNICHANNEL ATTRIBUTION</span>
-                    <span className="text-emerald-400 font-bold">+34% ROAS</span>
-                  </div>
-                  {/* Multi-tier Funnel Step Bars */}
-                  <div className="flex flex-col gap-1.5 py-1">
-                    <div className="space-y-0.5">
-                      <div className="flex justify-between text-[8.5px] font-mono text-slate-400">
-                        <span>Awareness (Google Ads)</span>
-                        <span>100%</span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                        <div className="h-full w-full bg-gradient-to-r from-blue-500 to-cyan-400 animate-shimmer-slide" />
-                      </div>
-                    </div>
-                    <div className="space-y-0.5">
-                      <div className="flex justify-between text-[8.5px] font-mono text-slate-400">
-                        <span>Intent (Meta Retargeting)</span>
-                        <span>76%</span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                        <div className="h-full w-[76%] bg-gradient-to-r from-blue-500 to-cyan-400" />
-                      </div>
-                    </div>
-                    <div className="space-y-0.5">
-                      <div className="flex justify-between text-[8.5px] font-mono text-emerald-300 font-bold">
-                        <span>Conversion (GA4 Event)</span>
-                        <span>34% Lift</span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                        <div className="h-full w-[48%] bg-gradient-to-r from-emerald-400 to-teal-300 shadow-[0_0_8px_#34d399]" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Right Telemetry Terminal Logs (7 cols on sm) */}
-            <div className="sm:col-span-7 rounded-2xl bg-slate-900/90 border border-slate-800 p-2.5 sm:p-3 font-mono text-[10px] sm:text-[11px] leading-relaxed space-y-1">
-              <div className="text-cyan-400 font-bold flex items-center gap-1 mb-1">
-                <span>{config.terminalPrompt}</span>
-                <span className="inline-block w-1.5 h-3 bg-cyan-400 animate-terminal-cursor" />
-              </div>
-              {config.logs.map((log, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "transition-all duration-300",
-                    i === config.logs.length - 1
-                      ? "text-emerald-300 font-bold"
-                      : "text-slate-400"
-                  )}
-                >
-                  {log}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom Telemetry Metrics Strip */}
-          <div className="grid grid-cols-3 gap-2 border-t border-slate-800/70 pt-2.5 mt-1 text-center">
-            {config.metrics.map((m, i) => (
-              <div key={i} className="rounded-xl bg-slate-900/70 border border-slate-800/80 p-1.5">
-                <span className="block text-[9px] sm:text-[9.5px] font-medium text-slate-400">
-                  {m.label}
-                </span>
-                <span className={cn("block text-xs sm:text-sm font-black font-mono mt-0.5", m.color)}>
-                  {m.value}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Live Console Bottom Bar */}
-        <div className="flex items-center justify-between border-t border-slate-800/90 bg-slate-900/95 px-3 py-2 text-[10px] font-mono text-slate-400">
-          <div className="flex items-center gap-1.5">
-            <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
-            <span className="text-slate-300 font-bold">{config.highlight}</span>
-          </div>
-          <span className="text-sky-400 hover:text-sky-300 font-semibold cursor-pointer select-none">
-            Interactive Console ⚡
-          </span>
-        </div>
-      </div>
-
-      {/* Floating Bottom-Left HUD Badge: Mentors & Rating (Floats cleanly below terminal) */}
-      <div className="absolute bottom-0 left-2 sm:-left-3 z-30 animate-float-reverse pointer-events-none max-w-[calc(100%-1rem)]">
-        <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-xl shadow-slate-900/10 text-left">
-          <span className="grid size-6 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-xs shrink-0">
-            <Users className="size-3 sm:size-4" />
-          </span>
-          <div className="min-w-0">
-            <span className="block text-[9.5px] sm:text-[10.5px] font-black text-slate-900 leading-tight truncate">
-              10+ Mentors
-            </span>
-            <span className="block text-[8.5px] sm:text-[9.5px] font-bold text-amber-600 leading-tight truncate">
-              ★ 4.9 Rating
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Hero() {
   const [domainIndex, setDomainIndex] = useState(0);
 
@@ -707,7 +347,7 @@ function Hero() {
 
             {/* Subheading */}
             <p
-              className="mt-3.5 sm:mt-4 text-xs sm:text-[15px] lg:text-base text-slate-600 leading-relaxed max-w-2xl font-normal text-justify sm:text-left"
+              className="mt-3.5 sm:mt-4 text-xs sm:text-[15px] lg:text-base text-slate-600 leading-relaxed max-w-lg lg:max-w-xl font-normal text-justify sm:text-left"
               data-reveal
               style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
             >
@@ -768,9 +408,9 @@ function Hero() {
             <RotatingTrustBadge />
           </div>
 
-          {/* Right Column: Interactive Animated Lab Sandbox (5 cols on lg/xl) */}
+          {/* Right Column: Interactive 3D Cards Showcase Carousel (5 cols on lg/xl) */}
           <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0" data-reveal="right">
-            <HeroInteractiveSandbox />
+            <Hero3DCardsCarousel />
           </div>
         </div>
       </div>
@@ -1419,56 +1059,37 @@ function CorePrograms() {
                           }
                         }}
                         className={cn(
-                          "h-full core-program-card group relative flex flex-col justify-between rounded-2xl p-6 sm:p-7 transition-all duration-300 cursor-pointer border shadow-xs select-none",
+                          "h-full core-program-card group relative flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-all duration-200 cursor-pointer border shadow-2xs select-none",
                           track.cardBorder,
                           track.cardHoverBorder,
                           track.cardBg,
                           track.hoverShadow,
                           isActive ? "ring-2 ring-blue-500/80 shadow-md" : "",
-                          "hover:-translate-y-1.5 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                          "hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                         )}
                       >
                         <div>
                           {/* Top Row: Icon & Eyebrow Badge */}
-                          <div className="flex items-center justify-between gap-3 mb-5">
-                            <div className={cn("size-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105", track.iconBg)}>
-                              <TrackIcon className="size-6" />
+                          <div className="flex items-center justify-between gap-2.5 mb-3">
+                            <div className={cn("size-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shrink-0", track.iconBg)}>
+                              <TrackIcon className="size-5" />
                             </div>
-                            <span className={cn("inline-flex items-center px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider border", track.badgeStyle)}>
+                            <span className={cn("inline-flex items-center px-2 py-0.5 rounded-full text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider border", track.badgeStyle)}>
                               {track.eyebrow}
                             </span>
                           </div>
 
-                          {/* Domain Title */}
-                          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2.5 group-hover:text-blue-600 transition-colors">
+                          {/* Domain Main Heading */}
+                          <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
                             {track.title}
                           </h3>
-
-                          {/* Description */}
-                          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-                            {track.description}
-                          </p>
-
-                          {/* Key Skills Pills */}
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
-                            {track.skills.map((skill) => (
-                              <span
-                                key={skill}
-                                className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-white/90 text-slate-700 border border-slate-200/80 shadow-2xs"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
                         </div>
 
-                        {/* Bottom Action Footer */}
-                        <div className="pt-4 border-t border-slate-200/70 flex items-center justify-between gap-3">
-                          <span className="text-xs font-semibold text-slate-500">
-                            {count} {count === 1 ? "Program Available" : "Programs Available"}
-                          </span>
-                          <span className={cn("inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-white bg-slate-900 px-3.5 py-2 rounded-xl transition-all duration-200 shadow-xs", track.btnHoverBg)}>
-                            <span>Explore Courses</span>
+                        {/* Clean Compact Footer */}
+                        <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
+                          <span>{count} {count === 1 ? "Program" : "Programs"}</span>
+                          <span className="inline-flex items-center gap-1 font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
+                            <span>Explore</span>
                             <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
                           </span>
                         </div>

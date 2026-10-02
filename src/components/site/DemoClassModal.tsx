@@ -34,7 +34,7 @@ export function DemoClassModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [fullName, setFullName] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(
-    COUNTRY_CODES[0]
+    COUNTRY_CODES[0]!
   );
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -129,7 +129,7 @@ export function DemoClassModal() {
     setEmail("");
     setCourse("");
     setErrorMsg("");
-    setSelectedCountry(COUNTRY_CODES[0]);
+    setSelectedCountry(COUNTRY_CODES[0]!);
     setIsSuccess(false);
   };
 

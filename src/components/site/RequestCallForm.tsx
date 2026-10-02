@@ -48,7 +48,7 @@ export function RequestCallForm({
   compact?: boolean | undefined;
 }) {
   const [values, setValues] = useState<Values>({ ...initial, course: defaultCourse ?? "" });
-  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(COUNTRY_CODES[0]);
+  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(COUNTRY_CODES[0]!);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [liveCourseList, setLiveCourseList] = useState<string[]>(() => {
@@ -168,7 +168,7 @@ export function RequestCallForm({
           size="sm"
           onClick={() => {
             setValues({ ...initial, course: defaultCourse ?? "" });
-            setSelectedCountry(COUNTRY_CODES[0]);
+            setSelectedCountry(COUNTRY_CODES[0]!);
             setStatus("idle");
           }}
         >

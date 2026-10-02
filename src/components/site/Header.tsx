@@ -3,13 +3,26 @@ import {
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
+  ChevronRight,
   Menu,
   MessageCircle,
   Phone,
   Radio,
   ShieldCheck,
   TrendingUp,
+  Bot,
+  Code2,
+  Sparkles,
+  Zap,
+  Globe,
+  BookOpen,
   X,
+  BarChart3,
+  Megaphone,
+  Terminal,
+  Lock,
+  Layers,
+  Cpu,
 } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 
@@ -23,102 +36,145 @@ import {
   type FirebaseCourse,
 } from "@/services/courseService";
 
-// Core courses displayed in navbar courses dropdown
-const coreCourseNavItems = [
+export interface SubCourseItem {
+  title: string;
+  to: string;
+  icon?: any;
+}
+
+export interface CourseCategoryMenu {
+  id: string;
+  name: string;
+  to: string;
+  icon: any;
+  subCourses: SubCourseItem[];
+  viewAllText?: string;
+}
+
+const COURSE_CATEGORIES: CourseCategoryMenu[] = [
   {
-    label: "Digital Marketing",
+    id: "digital-marketing",
+    name: "Digital Marketing",
     to: "/courses/digital-marketing",
     icon: TrendingUp,
-    iconColor: "bg-rose-50 text-rose-600 border-rose-100",
+    subCourses: [
+      {
+        title: "Digital Marketing Masterclass",
+        to: "/courses/digital-marketing",
+        icon: TrendingUp,
+      },
+      {
+        title: "Performance Ads & GA4 Analytics",
+        to: "/courses/digital-marketing",
+        icon: BarChart3,
+      },
+      {
+        title: "Advanced SEO & Organic Growth",
+        to: "/courses/advanced-seo",
+        icon: Globe,
+      },
+      {
+        title: "Social Media & Viral Funnels",
+        to: "/courses/digital-marketing",
+        icon: Megaphone,
+      },
+    ],
+    viewAllText: "View All Digital Marketing Courses (6+) →",
   },
   {
-    label: "Programmatic Advertising",
-    to: "/courses/programmatic-advertising",
-    icon: Radio,
-    iconColor: "bg-sky-50 text-sky-600 border-sky-100",
-  },
-  {
-    label: "Cyber Security",
+    id: "cyber-security",
+    name: "Cyber Security",
     to: "/courses/cyber-security",
     icon: ShieldCheck,
-    iconColor: "bg-amber-50 text-amber-600 border-amber-100",
+    subCourses: [
+      {
+        title: "Practical Cyber Security Defense",
+        to: "/courses/cyber-security",
+        icon: ShieldCheck,
+      },
+      {
+        title: "Ethical Hacking & Penetration Testing",
+        to: "/courses/ethical-hacking",
+        icon: Terminal,
+      },
+      {
+        title: "SOC Analyst & Incident Response",
+        to: "/courses/cyber-security",
+        icon: Lock,
+      },
+      {
+        title: "Network & Cloud Security Defense",
+        to: "/courses/cyber-security",
+        icon: Globe,
+      },
+    ],
+    viewAllText: "View All Cyber Security Courses (5+) →",
+  },
+  {
+    id: "programmatic",
+    name: "Programmatic Advertising",
+    to: "/courses/programmatic-advertising",
+    icon: Radio,
+    subCourses: [
+      {
+        title: "DV360 & Programmatic Media Buying",
+        to: "/courses/programmatic-advertising",
+        icon: Radio,
+      },
+      {
+        title: "CM360 Ad Serving & Floodlight Tracking",
+        to: "/courses/programmatic-advertising",
+        icon: Layers,
+      },
+      {
+        title: "RTB Auction Algorithms & PMP Deals",
+        to: "/courses/programmatic-advertising",
+        icon: Zap,
+      },
+      {
+        title: "Cross-Exchange DSP & Media Strategy",
+        to: "/courses/programmatic-advertising",
+        icon: BarChart3,
+      },
+    ],
+    viewAllText: "View All Programmatic Courses (4+) →",
+  },
+  {
+    id: "ai-tech",
+    name: "AI & Full-Stack Tech",
+    to: "/courses",
+    icon: Bot,
+    subCourses: [
+      {
+        title: "AI Marketing & CRM Automation",
+        to: "/courses",
+        icon: Bot,
+      },
+      {
+        title: "Full-Stack Web Development",
+        to: "/courses",
+        icon: Code2,
+      },
+      {
+        title: "MarTech & Conversion Engineering",
+        to: "/courses",
+        icon: Cpu,
+      },
+    ],
+    viewAllText: "View All Tech & Dev Courses (3+) →",
   },
 ];
 
-// All navigation links
+// Navigation links list
 const headerNavLinks = navLinks;
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileCoursesOpen, setMobileCoursesOpen] = useState(false);
+  const [mobileActiveCategory, setMobileActiveCategory] = useState<string>("digital-marketing");
+  const [hoveredCategory, setHoveredCategory] = useState<string>("digital-marketing");
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-
-  // Subscribe to live courses (from Firebase and local cache)
-  const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() => {
-    return courses.map((c) => ({
-      id: c.id,
-      slug: c.slug,
-      title: c.title,
-      category: c.category,
-      description: c.description,
-      duration: c.duration,
-      level: c.level,
-      instructor: c.instructors?.[0]?.name || "Sai Rama",
-      price: c.pricing?.fee || "₹24,999",
-      highlights: c.highlights || [],
-      students: 150,
-      active: true,
-      featured: true,
-      image: c.image || "",
-    }));
-  });
-
-  useEffect(() => {
-    const cached = getLocalCachedCourses();
-    if (cached && cached.length > 0) {
-      setLiveCourses(cached);
-    }
-    const unsub = subscribeCourses((list) => {
-      if (list && list.length > 0) {
-        setLiveCourses(list);
-      }
-    });
-    return () => unsub();
-  }, []);
-
-  const activeCourses = useMemo(() => {
-    return liveCourses.filter(
-      (c) =>
-        c.active !== false &&
-        c.id !== "full-stack-java" &&
-        c.slug !== "full-stack-java" &&
-        !c.title?.toLowerCase().includes("full stack java") &&
-        c.id !== "testing",
-    );
-  }, [liveCourses]);
-
-  const isTechOrDev = (c: FirebaseCourse) => {
-    const text = `${c.title} ${c.slug} ${c.category}`.toLowerCase();
-    return (
-      c.category === "Cyber Security" ||
-      text.includes("security") ||
-      text.includes("hacking") ||
-      text.includes("cyber") ||
-      text.includes("soc") ||
-      text.includes("ethical")
-    );
-  };
-
-  const marketingCourses = useMemo(() => {
-    const subset = activeCourses.filter((c) => !isTechOrDev(c));
-    return subset.length > 0 ? subset : activeCourses.slice(0, 3);
-  }, [activeCourses]);
-
-  const securityCourses = useMemo(() => {
-    const subset = activeCourses.filter((c) => isTechOrDev(c));
-    return subset.length > 0 ? subset : activeCourses.slice(3);
-  }, [activeCourses]);
 
   // Scroll listener for sticky glassmorphism elevation
   useEffect(() => {
@@ -148,6 +204,13 @@ export function Header() {
 
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
 
+  const currentCategoryData = useMemo(() => {
+    return (
+      COURSE_CATEGORIES.find((cat) => cat.id === hoveredCategory) ??
+      COURSE_CATEGORIES[0]!
+    );
+  }, [hoveredCategory]);
+
   return (
     <>
       {/* ========================================================================= */}
@@ -157,7 +220,7 @@ export function Header() {
         <div className="container-site">
           {/* Mobile view (< sm / < 640px) */}
           <div className="flex sm:hidden items-center justify-between gap-1.5 text-[10px] font-semibold min-w-0 w-full">
-            {/* Left: Admissions Open (fixed live status badge) */}
+            {/* Left: Admissions Open */}
             <div className="flex items-center gap-1 shrink-0">
               <span className="relative flex size-1.5 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -169,52 +232,41 @@ export function Header() {
               <span className="text-slate-500 shrink-0 select-none text-[9px]" aria-hidden="true">•</span>
             </div>
 
-            {/* Center: Smooth Scrolling Ticker for "New Batches Starting Soon" */}
+            {/* Center: Smooth Scrolling Ticker */}
             <div className="relative overflow-hidden flex-1 min-w-0 h-4.5 flex items-center mx-1 [mask-image:linear-gradient(to_right,transparent,black_6px,black_calc(100%-6px),transparent)]">
               <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused] active:[animation-play-state:paused]">
-                {/* Track Item 1 */}
                 <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]">
                   <span className="text-slate-200 font-medium whitespace-nowrap">
                     New Batches Starting Soon
                   </span>
                   <span className="text-amber-400/90 font-bold whitespace-nowrap">
-                    • Limited Seats Available
+                    • Limited Seats
                   </span>
                   <span className="text-sky-300 font-semibold whitespace-nowrap">
-                    • Weekend &amp; Weekday Batches
+                    • Fast-Track Batches
                   </span>
-                  <span className="text-slate-600 select-none" aria-hidden="true">•</span>
                 </div>
-                {/* Track Item 2 (Duplicate for seamless loop) */}
                 <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]" aria-hidden="true">
                   <span className="text-slate-200 font-medium whitespace-nowrap">
                     New Batches Starting Soon
                   </span>
                   <span className="text-amber-400/90 font-bold whitespace-nowrap">
-                    • Limited Seats Available
+                    • Limited Seats
                   </span>
                   <span className="text-sky-300 font-semibold whitespace-nowrap">
-                    • Weekend &amp; Weekday Batches
+                    • Fast-Track Batches
                   </span>
-                  <span className="text-slate-600 select-none" aria-hidden="true">•</span>
                 </div>
               </div>
             </div>
 
-            {/* Right: Quick actions (Explore pill & WhatsApp) */}
+            {/* Right: Quick actions */}
             <div className="flex items-center gap-1.5 shrink-0">
               <Link
                 to="/courses"
-                className="hidden min-[480px]:inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2.5 py-0.5 text-[9.5px] font-bold text-sky-300 hover:bg-blue-600 hover:text-white shrink-0 transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2.5 py-0.5 text-[9px] font-bold text-sky-300 hover:bg-blue-600 hover:text-white shrink-0 transition-colors whitespace-nowrap"
               >
-                <span>Explore Programs</span>
-                <ArrowRight className="size-2.5" />
-              </Link>
-              <Link
-                to="/courses"
-                className="inline-flex min-[480px]:hidden items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2 py-0.5 text-[9px] font-bold text-sky-300 hover:bg-blue-600 hover:text-white shrink-0 transition-colors whitespace-nowrap"
-              >
-                <span>Explore</span>
+                <span>Programs</span>
                 <ArrowRight className="size-2.5" />
               </Link>
               <a
@@ -231,7 +283,6 @@ export function Header() {
 
           {/* Tablet & Desktop view (>= 640px / sm) */}
           <div className="hidden sm:flex items-center justify-between gap-3 w-full">
-            {/* Left/Center: The Announcement + Ticker + CTA */}
             <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
               <span className="relative flex size-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -242,32 +293,29 @@ export function Header() {
               </span>
               <span className="text-slate-600 shrink-0 select-none text-[11px]" aria-hidden="true">•</span>
 
-              {/* Scrolling Ticker for New Batches Starting Soon */}
               <div className="relative overflow-hidden flex-1 max-w-[320px] lg:max-w-[400px] xl:max-w-[480px] h-4.5 flex items-center [mask-image:linear-gradient(to_right,transparent,black_8px,black_calc(100%-8px),transparent)]">
                 <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused]">
-                  {/* Track Item 1 */}
                   <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]">
                     <span className="text-slate-200 font-medium whitespace-nowrap">
                       New Batches Starting Soon
                     </span>
                     <span className="text-amber-300 font-bold whitespace-nowrap">
-                      • Limited Seats Available
+                      • Practical Live Training
                     </span>
                     <span className="text-sky-300 font-medium whitespace-nowrap">
-                      • Fast-Track Weekend &amp; Weekday Batches
+                      • Weekend &amp; Weekday Batches
                     </span>
                     <span className="text-slate-600 select-none" aria-hidden="true">•</span>
                   </div>
-                  {/* Track Item 2 (Duplicate for seamless loop) */}
                   <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]" aria-hidden="true">
                     <span className="text-slate-200 font-medium whitespace-nowrap">
                       New Batches Starting Soon
                     </span>
                     <span className="text-amber-300 font-bold whitespace-nowrap">
-                      • Limited Seats Available
+                      • Practical Live Training
                     </span>
                     <span className="text-sky-300 font-medium whitespace-nowrap">
-                      • Fast-Track Weekend &amp; Weekday Batches
+                      • Weekend &amp; Weekday Batches
                     </span>
                     <span className="text-slate-600 select-none" aria-hidden="true">•</span>
                   </div>
@@ -283,7 +331,6 @@ export function Header() {
               </Link>
             </div>
 
-            {/* Right: Hotline & WhatsApp shortcuts */}
             <div className="flex items-center gap-2 shrink-0 text-[11px]">
               <a
                 href={site.phoneHref}
@@ -313,7 +360,7 @@ export function Header() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. MAIN FLOATING FROSTED GLASS NAVBAR (Sticky across all screens & devices)*/}
+      {/* 2. MAIN FLOATING FROSTED GLASS NAVBAR                                     */}
       {/* ========================================================================= */}
       <header
         className={cn(
@@ -335,23 +382,27 @@ export function Header() {
             scrolled ? "h-16" : "h-16 sm:h-18 lg:h-20",
           )}
         >
-          {/* Logo (Shrink-0 and fully responsive) */}
+          {/* Logo */}
           <Logo />
 
-          {/* Desktop Navigation Links (Responsive spacing & Premium Active Pills) */}
-          <nav aria-label="Main navigation" className="hidden items-center gap-0.5 xl:gap-1 lg:flex h-full">
+          {/* Desktop Navigation Links */}
+          <nav aria-label="Main navigation" className="hidden items-center gap-1 xl:gap-2 lg:flex h-full">
             {headerNavLinks.map((link) => {
-              if (link.label === "Courses" || link.label === "Programs") {
+              if (link.label === "Courses") {
                 return (
-                  <div key={link.to} className="relative group/nav h-full flex items-center">
+                  <div
+                    key={link.to}
+                    className="relative group/nav h-full flex items-center"
+                    onMouseEnter={() => setHoveredCategory((prev) => prev || "digital-marketing")}
+                  >
                     {/* Courses Dropdown Trigger Button */}
                     <Link
                       to={link.to}
                       className={cn(
-                        "group inline-flex items-center justify-center gap-1 rounded-lg font-semibold transition-all duration-200 select-none relative cursor-pointer",
-                        "px-2 py-1.5 text-[11.5px] xl:px-2.5 xl:text-[13px] 2xl:px-3 2xl:text-sm",
+                        "group inline-flex items-center justify-center gap-1.5 rounded-lg font-bold transition-all duration-200 select-none relative cursor-pointer",
+                        "px-3 py-2 text-[12.5px] xl:px-3.5 xl:text-[13.5px] 2xl:text-sm",
                         isActive(link.to)
-                          ? "bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 text-blue-700 font-bold shadow-[0_2px_8px_-2px_rgba(37,99,235,0.14)]"
+                          ? "bg-gradient-to-r from-blue-50/95 via-indigo-50/80 to-blue-50/95 text-blue-700 shadow-[0_2px_8px_-2px_rgba(37,99,235,0.14)] border border-blue-200/70"
                           : "text-slate-700 hover:text-slate-950 hover:bg-slate-100/80 group-hover/nav:text-blue-600 group-hover/nav:bg-slate-100/80",
                       )}
                     >
@@ -359,45 +410,86 @@ export function Header() {
                         <span className="size-1.5 rounded-full bg-blue-600 shadow-[0_0_6px_rgba(37,99,235,0.9)] shrink-0" />
                       )}
                       <span>{link.label}</span>
-                      <span className="grid size-3.5 place-items-center rounded-full bg-slate-100 group-hover/nav:bg-blue-100/70 text-slate-500 group-hover/nav:text-blue-600 transition-colors shrink-0">
-                        <ChevronDown className="size-2.5 transition-transform duration-300 group-hover/nav:rotate-180" />
+                      <span className="grid size-4 place-items-center rounded-full bg-slate-100 group-hover/nav:bg-blue-100/70 text-slate-500 group-hover/nav:text-blue-600 transition-colors shrink-0">
+                        <ChevronDown className="size-3 transition-transform duration-300 group-hover/nav:rotate-180" />
                       </span>
                     </Link>
 
-                    {/* COURSES DROPDOWN: ONLY Digital Marketing | Programmatic Advertising | Cyber Security */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-72 sm:w-80 opacity-0 translate-y-2 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-300 ease-out z-50 pointer-events-none group-hover/nav:pointer-events-auto">
-                      <div className="relative rounded-2xl border border-slate-200/90 bg-white/98 backdrop-blur-xl p-2 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.18)] ring-1 ring-black/[0.04] overflow-hidden">
-                        {/* Top Accent Hairline */}
-                        <div className="absolute top-0 inset-x-0 h-[2.5px] bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-400" />
-
-                        <div className="space-y-1 pt-1">
-                          {coreCourseNavItems.map((item) => {
-                            const ItemIcon = item.icon;
+                    {/* COURSES FLYOUT MENU (Matching Screenshot Model) */}
+                    <div className="absolute top-full left-0 pt-2 opacity-0 translate-y-1 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-200 ease-out z-50 pointer-events-none group-hover/nav:pointer-events-auto">
+                      <div className="flex bg-white shadow-2xl rounded-md border border-slate-200/90 overflow-visible text-slate-700">
+                        {/* Left Column: Categories List */}
+                        <div className="w-[215px] sm:w-[230px] py-1 bg-white relative">
+                          {COURSE_CATEGORIES.map((cat) => {
+                            const CatIcon = cat.icon;
+                            const isSelected = hoveredCategory === cat.id;
                             return (
-                              <Link
-                                key={item.to}
-                                to={item.to}
-                                className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-gradient-to-r hover:from-blue-50/80 hover:via-indigo-50/40 hover:to-transparent border border-transparent hover:border-blue-100 transition-all duration-200"
+                              <div
+                                key={cat.id}
+                                onMouseEnter={() => setHoveredCategory(cat.id)}
+                                className={cn(
+                                  "relative flex items-center gap-3 px-4 py-2.5 text-[13.5px] transition-colors cursor-pointer select-none border-l-[3.5px]",
+                                  isSelected
+                                    ? "text-orange-600 font-semibold bg-white border-l-orange-500"
+                                    : "text-slate-700 hover:text-orange-600 hover:bg-slate-50/80 border-l-transparent"
+                                )}
                               >
-                                <div className="flex items-center gap-3 min-w-0">
+                                <CatIcon
+                                  className={cn(
+                                    "size-4 shrink-0 transition-colors",
+                                    isSelected ? "text-orange-600" : "text-slate-500"
+                                  )}
+                                />
+
+                                <span className="truncate flex-1 font-medium">{cat.name}</span>
+
+                                {/* Orange Pointer Triangle Arrow pointing to Submenu */}
+                                {isSelected && (
                                   <span
-                                    className={cn(
-                                      "grid size-8.5 place-items-center rounded-xl border transition-all duration-200 group-hover/item:scale-105 shadow-2xs shrink-0",
-                                      item.iconColor,
-                                    )}
-                                  >
-                                    <ItemIcon className="size-4" />
-                                  </span>
-                                  <span className="text-[13.5px] font-bold text-slate-800 group-hover/item:text-blue-600 transition-colors leading-snug">
-                                    {item.label}
-                                  </span>
-                                </div>
-                                <span className="size-6 rounded-full bg-slate-100/80 group-hover/item:bg-blue-600 text-slate-400 group-hover/item:text-white grid place-items-center transition-all duration-200 shrink-0 shadow-2xs group-hover/item:shadow-sm group-hover/item:scale-105">
-                                  <ArrowUpRight className="size-3.5 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-transform" />
-                                </span>
-                              </Link>
+                                    className="absolute -right-[7px] top-1/2 -translate-y-1/2 w-0 h-0 border-y-[6px] border-y-transparent border-l-[7px] border-l-orange-500 z-30 pointer-events-none"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </div>
                             );
                           })}
+                        </div>
+
+                        {/* Vertical Orange Accent Divider Bar */}
+                        <div className="w-[2.5px] bg-orange-500 shrink-0 relative z-20" />
+
+                        {/* Right Column: Flyout Sub-Courses List */}
+                        <div className="w-[270px] sm:w-[305px] py-1 bg-white relative flex flex-col justify-between">
+                          <div>
+                            {currentCategoryData.subCourses.map((sub, sIdx) => {
+                              const SubIcon = sub.icon || BookOpen;
+                              return (
+                                <Link
+                                  key={sIdx}
+                                  to={sub.to}
+                                  className="group/sub relative flex items-center gap-3 px-4 py-2.5 text-[13px] text-slate-700 hover:text-orange-600 hover:bg-orange-50/30 border-b border-slate-100 last:border-b-0 transition-colors"
+                                >
+                                  <SubIcon className="size-3.5 shrink-0 text-slate-400 group-hover/sub:text-orange-600 transition-colors" />
+                                  <span className="truncate flex-1 font-medium group-hover/sub:font-semibold">
+                                    {sub.title}
+                                  </span>
+                                </Link>
+                              );
+                            })}
+                          </div>
+
+                          {/* View All Category Link */}
+                          {currentCategoryData.viewAllText && (
+                            <div className="px-4 py-2 border-t border-slate-100 mt-1 bg-slate-50/50">
+                              <Link
+                                to={currentCategoryData.to}
+                                className="text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center justify-between transition-colors"
+                              >
+                                <span>{currentCategoryData.viewAllText}</span>
+                                <ArrowRight className="size-3" />
+                              </Link>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -410,11 +502,11 @@ export function Header() {
                   key={link.to}
                   to={link.to}
                   className={cn(
-                    "group inline-flex items-center justify-center gap-1 rounded-lg font-semibold transition-all duration-200 select-none relative cursor-pointer",
-                    "px-2 py-1.5 text-[11.5px] xl:px-2.5 xl:text-[13px] 2xl:px-3 2xl:text-sm",
+                    "group inline-flex items-center justify-center gap-1 rounded-lg font-bold transition-all duration-200 select-none relative cursor-pointer",
+                    "px-3 py-2 text-[12.5px] xl:px-3.5 xl:text-[13.5px] 2xl:text-sm",
                     isActive(link.to)
-                      ? "bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 text-blue-700 font-bold border border-blue-200/80 shadow-[0_2px_8px_-2px_rgba(37,99,235,0.14)]"
-                      : "text-slate-700 hover:text-slate-950 hover:bg-slate-100/80 hover:shadow-2xs",
+                      ? "bg-gradient-to-r from-blue-50/95 via-indigo-50/80 to-blue-50/95 text-blue-700 border border-blue-200/80 shadow-[0_2px_8px_-2px_rgba(37,99,235,0.14)]"
+                      : "text-slate-700 hover:text-slate-950 hover:bg-slate-100/80",
                   )}
                 >
                   {isActive(link.to) && (
@@ -426,22 +518,22 @@ export function Header() {
             })}
           </nav>
 
-          {/* Desktop Right Area: Primary CTA (Explore Programs) */}
+          {/* Desktop Right Area: Primary CTA */}
           <div className="hidden items-center gap-2 xl:gap-2.5 lg:flex shrink-0">
             <Link
               to="/courses"
               className={cn(
                 "group relative inline-flex items-center justify-center gap-1.5 rounded-xl font-bold transition-all duration-200 select-none shrink-0 cursor-pointer",
-                "h-8.5 px-3.5 text-[11.5px] xl:h-9.5 xl:px-4 xl:text-xs 2xl:h-10 2xl:px-4.5 2xl:text-sm",
+                "h-9 px-4 text-xs xl:h-10 xl:px-5 xl:text-sm",
                 "bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow-md active:scale-[0.98]",
               )}
             >
               <span>Explore Programs</span>
-              <ArrowRight className="size-3 xl:size-3.5 text-white/90 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="size-3.5 text-white/90 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
 
-          {/* Mobile & Tablet Right Controls: Premium Glassmorphic Hamburger Toggle + Tablet CTA */}
+          {/* Mobile & Tablet Right Controls */}
           <div className="flex items-center gap-2 lg:hidden shrink-0">
             <Link
               to="/courses"
@@ -479,7 +571,7 @@ export function Header() {
           )}
         >
           <div className="w-full max-w-[1400px] mx-auto px-4 py-4 space-y-3.5">
-            {/* 2-Column Equal Grid: Call & WhatsApp shortcuts with premium styling */}
+            {/* Quick Actions */}
             <div className="grid grid-cols-2 gap-2 text-xs">
               <a
                 href={site.phoneHref}
@@ -506,24 +598,25 @@ export function Header() {
             {/* Mobile Nav Links */}
             <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
               {headerNavLinks.map((link) => {
-                if (link.label === "Courses" || link.label === "Programs") {
+                if (link.label === "Courses") {
                   return (
-                    <div key={link.to} className="space-y-1 rounded-xl bg-slate-50/60 p-1">
+                    <div key={link.to} className="space-y-1 rounded-xl bg-slate-50/80 p-1.5 border border-slate-200/80">
                       <div className="flex items-center justify-between">
                         <Link
                           to={link.to}
                           className={cn(
-                            "flex-1 px-3 py-2 text-sm font-bold transition-colors flex items-center gap-2",
+                            "flex-1 px-2.5 py-1.5 text-sm font-bold transition-colors flex items-center gap-2",
                             isActive(link.to) ? "text-blue-600" : "text-slate-800",
                           )}
                         >
+                          <BookOpen className="size-4 text-blue-600" />
                           <span>{link.label}</span>
                         </Link>
                         <button
                           type="button"
                           onClick={() => setMobileCoursesOpen((v) => !v)}
                           aria-label="Toggle courses list"
-                          className="px-3 py-2 text-slate-500 hover:text-slate-900"
+                          className="px-2.5 py-1.5 text-slate-500 hover:text-slate-900 cursor-pointer"
                         >
                           <ChevronDown
                             className={cn(
@@ -535,30 +628,61 @@ export function Header() {
                       </div>
 
                       {mobileCoursesOpen && (
-                        <div className="space-y-1.5 pt-1.5 pb-2 px-2">
-                          {coreCourseNavItems.map((item) => {
-                            const ItemIcon = item.icon;
-                            return (
-                              <Link
-                                key={item.to}
-                                to={item.to}
-                                className="flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-blue-50 hover:text-blue-600 border border-slate-200/60 transition-colors shadow-2xs"
+                        <div className="space-y-2 pt-1 pb-2 px-1">
+                          {/* Mobile Category Switcher Pills */}
+                          <div className="grid grid-cols-2 gap-1.5 pb-1">
+                            {COURSE_CATEGORIES.map((cat) => (
+                              <button
+                                key={cat.id}
+                                type="button"
+                                onClick={() => setMobileActiveCategory(cat.id)}
+                                className={cn(
+                                  "text-[11px] font-bold p-1.5 rounded-lg border text-left flex items-center gap-1.5 transition-all",
+                                  mobileActiveCategory === cat.id
+                                    ? "bg-blue-600 text-white border-blue-600 shadow-2xs"
+                                    : "bg-white text-slate-700 border-slate-200"
+                                )}
                               >
-                                <div className="flex items-center gap-2.5 min-w-0">
-                                  <span
-                                    className={cn(
-                                      "grid size-7 place-items-center rounded-lg border shadow-2xs shrink-0",
-                                      item.iconColor,
-                                    )}
-                                  >
-                                    <ItemIcon className="size-3.5" />
+                                <cat.icon className="size-3 shrink-0" />
+                                <span className="truncate">{cat.name}</span>
+                              </button>
+                            ))}
+                          </div>
+
+                          {/* Sub-courses for selected mobile category */}
+                          {COURSE_CATEGORIES.filter((c) => c.id === mobileActiveCategory).map((cat) => (
+                            <div key={cat.id} className="space-y-1.5 bg-white p-2.5 rounded-xl border border-slate-200/80">
+                              <div className="flex items-center justify-between pb-1 border-b border-slate-100">
+                                <span className="text-[11.5px] font-bold text-slate-900">{cat.name}</span>
+                                <Link
+                                  to={cat.to}
+                                  className="text-[10.5px] font-bold text-blue-600 flex items-center gap-1"
+                                >
+                                  <span>Explore</span>
+                                  <ArrowRight className="size-2.5" />
+                                </Link>
+                              </div>
+
+                              {cat.subCourses.map((sub, sIdx) => (
+                                <Link
+                                  key={sIdx}
+                                  to={sub.to}
+                                  className="block py-1.5 px-2 rounded-lg hover:bg-slate-50 transition-colors"
+                                >
+                                  <span className="block text-xs font-bold text-slate-800 leading-tight">
+                                    {sub.title}
                                   </span>
-                                  <span className="block font-bold text-slate-800 text-[13px]">{item.label}</span>
-                                </div>
-                                <ArrowRight className="size-3.5 text-slate-400 shrink-0" />
+                                </Link>
+                              ))}
+
+                              <Link
+                                to={cat.to}
+                                className="block pt-1 text-[11px] font-bold text-blue-600 hover:underline text-center"
+                              >
+                                {cat.viewAllText}
                               </Link>
-                            );
-                          })}
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
@@ -583,7 +707,7 @@ export function Header() {
               })}
             </nav>
 
-            {/* Mobile Primary CTA: Explore Programs */}
+            {/* Mobile Primary CTA */}
             <div className="pt-1">
               <Link
                 to="/courses"
@@ -597,7 +721,7 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile Backdrop Overlay (Positioned behind fixed header & mobile drawer, dimming page beneath) */}
+      {/* Mobile Backdrop Overlay */}
       {mobileOpen && (
         <button
           type="button"

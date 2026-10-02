@@ -38,7 +38,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   const activeCourse = course || (courses[0] as Course);
   const [fullName, setFullName] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(
-    COUNTRY_CODES[0]
+    COUNTRY_CODES[0]!
   );
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -155,7 +155,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
     setPhone("");
     setEmail("");
     setSelectedCourse(activeCourse.title || "Cyber Security Course");
-    setSelectedCountry(COUNTRY_CODES[0]);
+    setSelectedCountry(COUNTRY_CODES[0]!);
     setErrorMsg("");
     setIsSuccess(false);
   };

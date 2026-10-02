@@ -24,9 +24,8 @@ export function whatsappLink(message = "Hi, I would like to know more about Digi
 
 export const navLinks = [
   { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
   { label: "Courses", to: "/courses" },
-  { label: "Resources", to: "/testimonials" },
+  { label: "About", to: "/about" },
   { label: "FAQ", to: "/faq" },
   { label: "Contact", to: "/contact" },
 ] as const;
