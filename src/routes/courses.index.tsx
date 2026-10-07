@@ -1,8 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo, useEffect, type CSSProperties } from "react";
 import { courses } from "@/data/courses";
-import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
-import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import domainCyberSecurityImg from "@/assets/domain-cyber-security.jpg";
 import domainDigitalMarketingImg from "@/assets/domain-digital-marketing.jpg";
 import domainProgrammaticAdsImg from "@/assets/domain-programmatic-ads.jpg";
@@ -174,7 +172,6 @@ function CoursesPage() {
 
   const [activeTab, setActiveTab] = useState<string>("All Courses");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
-  const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   // Subscribe to live Firebase courses
   useEffect(() => {

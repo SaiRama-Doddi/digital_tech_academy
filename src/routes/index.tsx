@@ -327,7 +327,6 @@ function Hero({ onSelectDomain }: { onSelectDomain?: ((domain: string) => void) 
           className="absolute inset-0 h-full w-full object-cover object-center opacity-30 mix-blend-multiply transition-opacity duration-1000 filter contrast-105"
         >
           <source src="/hero-tech-bg.mp4" type="video/mp4" />
-          <source src="/hero-tech-bg-2.mp4" type="video/mp4" />
         </video>
         {/* Soft gradient masks to keep typography, badges and 3D cards 100% legible */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/90" />
