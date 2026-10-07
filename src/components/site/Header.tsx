@@ -30,6 +30,11 @@ import { Logo } from "./Logo";
 import { courses } from "@/data/courses";
 import { navLinks, site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import domainCyberSecurityImg from "@/assets/domain-cyber-security.jpg";
+import domainDigitalMarketingImg from "@/assets/domain-digital-marketing.jpg";
+import domainProgrammaticAdsImg from "@/assets/domain-programmatic-ads.jpg";
+import domainAiAutomationImg from "@/assets/domain-ai-automation.jpg";
+import domainFullstackDevImg from "@/assets/domain-fullstack-dev.jpg";
 import {
   subscribeCourses,
   getLocalCachedCourses,
@@ -40,11 +45,17 @@ export interface SubCourseItem {
   title: string;
   to: string;
   icon?: any;
+  domainName: string;
 }
 
 export interface CourseCategoryMenu {
   id: string;
   name: string;
+  domainName: string;
+  eyebrow: string;
+  badgeStyle: string;
+  image: string;
+  description: string;
   to: string;
   icon: any;
   subCourses: SubCourseItem[];
@@ -55,6 +66,11 @@ const COURSE_CATEGORIES: CourseCategoryMenu[] = [
   {
     id: "digital-marketing",
     name: "Digital Marketing",
+    domainName: "Digital Marketing",
+    eyebrow: "GROWTH & PERFORMANCE",
+    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200",
+    image: domainDigitalMarketingImg,
+    description: "Drive measurable business growth across SEO, paid advertising, social media, and conversion analytics.",
     to: "/courses/digital-marketing",
     icon: TrendingUp,
     subCourses: [
@@ -62,21 +78,25 @@ const COURSE_CATEGORIES: CourseCategoryMenu[] = [
         title: "Digital Marketing Masterclass",
         to: "/courses/digital-marketing",
         icon: TrendingUp,
+        domainName: "Digital Marketing",
       },
       {
         title: "Performance Ads & GA4 Analytics",
         to: "/courses/digital-marketing",
         icon: BarChart3,
+        domainName: "Digital Marketing",
       },
       {
         title: "Advanced SEO & Organic Growth",
         to: "/courses/advanced-seo",
         icon: Globe,
+        domainName: "Digital Marketing",
       },
       {
         title: "Social Media & Viral Funnels",
         to: "/courses/digital-marketing",
         icon: Megaphone,
+        domainName: "Digital Marketing",
       },
     ],
     viewAllText: "View All Digital Marketing Courses (6+) →",
@@ -84,6 +104,11 @@ const COURSE_CATEGORIES: CourseCategoryMenu[] = [
   {
     id: "cyber-security",
     name: "Cyber Security",
+    domainName: "Cyber Security",
+    eyebrow: "DEFENSE & ETHICAL HACKING",
+    badgeStyle: "bg-blue-50 text-blue-800 border-blue-200",
+    image: domainCyberSecurityImg,
+    description: "Master network defense, ethical hacking, vulnerability assessments, and SOC incident response.",
     to: "/courses/cyber-security",
     icon: ShieldCheck,
     subCourses: [
@@ -91,21 +116,25 @@ const COURSE_CATEGORIES: CourseCategoryMenu[] = [
         title: "Practical Cyber Security Defense",
         to: "/courses/cyber-security",
         icon: ShieldCheck,
+        domainName: "Cyber Security",
       },
       {
         title: "Ethical Hacking & Penetration Testing",
         to: "/courses/ethical-hacking",
         icon: Terminal,
+        domainName: "Cyber Security",
       },
       {
         title: "SOC Analyst & Incident Response",
         to: "/courses/cyber-security",
         icon: Lock,
+        domainName: "Cyber Security",
       },
       {
         title: "Network & Cloud Security Defense",
         to: "/courses/cyber-security",
         icon: Globe,
+        domainName: "Cyber Security",
       },
     ],
     viewAllText: "View All Cyber Security Courses (5+) →",
@@ -113,6 +142,11 @@ const COURSE_CATEGORIES: CourseCategoryMenu[] = [
   {
     id: "programmatic",
     name: "Programmatic Advertising",
+    domainName: "Programmatic Advertising",
+    eyebrow: "ADTECH & REAL-TIME BIDDING",
+    badgeStyle: "bg-blue-50 text-blue-800 border-blue-200",
+    image: domainProgrammaticAdsImg,
+    description: "Specialized enterprise media buying, real-time bidding (RTB), DV360, CM360, and AdTech analytics.",
     to: "/courses/programmatic-advertising",
     icon: Radio,
     subCourses: [
@@ -120,48 +154,104 @@ const COURSE_CATEGORIES: CourseCategoryMenu[] = [
         title: "DV360 & Programmatic Media Buying",
         to: "/courses/programmatic-advertising",
         icon: Radio,
+        domainName: "Programmatic Advertising",
       },
       {
         title: "CM360 Ad Serving & Floodlight Tracking",
         to: "/courses/programmatic-advertising",
         icon: Layers,
+        domainName: "Programmatic Advertising",
       },
       {
         title: "RTB Auction Algorithms & PMP Deals",
         to: "/courses/programmatic-advertising",
         icon: Zap,
+        domainName: "Programmatic Advertising",
       },
       {
         title: "Cross-Exchange DSP & Media Strategy",
         to: "/courses/programmatic-advertising",
         icon: BarChart3,
+        domainName: "Programmatic Advertising",
       },
     ],
     viewAllText: "View All Programmatic Courses (4+) →",
   },
   {
-    id: "ai-tech",
-    name: "AI & Full-Stack Tech",
-    to: "/courses",
+    id: "ai-automation",
+    name: "AI & Automation",
+    domainName: "AI & Automation",
+    eyebrow: "AI AGENTS & SMART WORKFLOWS",
+    badgeStyle: "bg-amber-50 text-amber-800 border-amber-200",
+    image: domainAiAutomationImg,
+    description: "Automate business operations, autonomous AI agents, Zapier pipelines, CRM flows, and LLMs.",
+    to: "/courses/ai-automation",
     icon: Bot,
     subCourses: [
       {
-        title: "AI Marketing & CRM Automation",
-        to: "/courses",
+        title: "Generative AI & Agent Workflows",
+        to: "/courses/ai-automation",
         icon: Bot,
+        domainName: "AI & Automation",
       },
       {
-        title: "Full-Stack Web Development",
-        to: "/courses",
-        icon: Code2,
+        title: "AI Marketing & CRM Automation",
+        to: "/courses/ai-automation",
+        icon: Sparkles,
+        domainName: "AI & Automation",
       },
       {
-        title: "MarTech & Conversion Engineering",
-        to: "/courses",
+        title: "Zapier, Make & Webhook Pipelines",
+        to: "/courses/ai-automation",
+        icon: Zap,
+        domainName: "AI & Automation",
+      },
+      {
+        title: "LLM App Integration & Chatbots",
+        to: "/courses/ai-automation",
         icon: Cpu,
+        domainName: "AI & Automation",
       },
     ],
-    viewAllText: "View All Tech & Dev Courses (3+) →",
+    viewAllText: "View All AI & Automation Programs →",
+  },
+  {
+    id: "fullstack-dev",
+    name: "Full Stack Development",
+    domainName: "Full Stack Development",
+    eyebrow: "REACT & NODE.JS ENGINEERING",
+    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200",
+    image: domainFullstackDevImg,
+    description: "Build scalable modern web applications with React 19, Node.js, Express, databases, and APIs.",
+    to: "/courses/full-stack-web-development",
+    icon: Code2,
+    subCourses: [
+      {
+        title: "Full-Stack React & Node.js Masterclass",
+        to: "/courses/full-stack-web-development",
+        icon: Code2,
+        domainName: "Full Stack Development",
+      },
+      {
+        title: "Frontend Engineering & UI Systems",
+        to: "/courses/full-stack-web-development",
+        icon: Globe,
+        domainName: "Full Stack Development",
+      },
+      {
+        title: "Backend APIs & Database Architecture",
+        to: "/courses/full-stack-web-development",
+        icon: Terminal,
+        domainName: "Full Stack Development",
+      },
+      {
+        title: "Cloud Deployment & DevOps Fundamentals",
+        to: "/courses/full-stack-web-development",
+        icon: Layers,
+        domainName: "Full Stack Development",
+      },
+    ],
+    viewAllText: "View All Full-Stack Engineering Programs →",
   },
 ];
 
@@ -415,7 +505,7 @@ export function Header() {
                       </span>
                     </Link>
 
-                    {/* COURSES FLYOUT MENU (Matching Screenshot Model) */}
+                    {/* COURSES FLYOUT MENU (2-Column Category & Sub-Courses Menu) */}
                     <div className="absolute top-full left-0 pt-2 opacity-0 translate-y-1 invisible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 group-hover/nav:visible transition-all duration-200 ease-out z-50 pointer-events-none group-hover/nav:pointer-events-auto">
                       <div className="flex bg-white shadow-2xl rounded-md border border-slate-200/90 overflow-visible text-slate-700">
                         {/* Left Column: Categories List */}
@@ -427,6 +517,17 @@ export function Header() {
                               <div
                                 key={cat.id}
                                 onMouseEnter={() => setHoveredCategory(cat.id)}
+                                onClick={() => {
+                                  if (pathname === "/") {
+                                    window.dispatchEvent(new CustomEvent("select-domain", { detail: cat.domainName }));
+                                    const el = document.getElementById("courses");
+                                    if (el) {
+                                      const topOffset = -70;
+                                      const y = el.getBoundingClientRect().top + window.pageYOffset + topOffset;
+                                      window.scrollTo({ top: y, behavior: "smooth" });
+                                    }
+                                  }
+                                }}
                                 className={cn(
                                   "relative flex items-center gap-3 px-4 py-2.5 text-[13.5px] transition-colors cursor-pointer select-none border-l-[3.5px]",
                                   isSelected
@@ -467,6 +568,17 @@ export function Header() {
                                 <Link
                                   key={sIdx}
                                   to={sub.to}
+                                  onClick={() => {
+                                    if (pathname === "/") {
+                                      window.dispatchEvent(new CustomEvent("select-domain", { detail: sub.domainName }));
+                                      const el = document.getElementById("courses");
+                                      if (el) {
+                                        const topOffset = -70;
+                                        const y = el.getBoundingClientRect().top + window.pageYOffset + topOffset;
+                                        window.scrollTo({ top: y, behavior: "smooth" });
+                                      }
+                                    }
+                                  }}
                                   className="group/sub relative flex items-center gap-3 px-4 py-2.5 text-[13px] text-slate-700 hover:text-orange-600 hover:bg-orange-50/30 border-b border-slate-100 last:border-b-0 transition-colors"
                                 >
                                   <SubIcon className="size-3.5 shrink-0 text-slate-400 group-hover/sub:text-orange-600 transition-colors" />
@@ -483,6 +595,17 @@ export function Header() {
                             <div className="px-4 py-2 border-t border-slate-100 mt-1 bg-slate-50/50">
                               <Link
                                 to={currentCategoryData.to}
+                                onClick={() => {
+                                  if (pathname === "/") {
+                                    window.dispatchEvent(new CustomEvent("select-domain", { detail: currentCategoryData.domainName }));
+                                    const el = document.getElementById("courses");
+                                    if (el) {
+                                      const topOffset = -70;
+                                      const y = el.getBoundingClientRect().top + window.pageYOffset + topOffset;
+                                      window.scrollTo({ top: y, behavior: "smooth" });
+                                    }
+                                  }
+                                }}
                                 className="text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center justify-between transition-colors"
                               >
                                 <span>{currentCategoryData.viewAllText}</span>
@@ -651,11 +774,17 @@ export function Header() {
 
                           {/* Sub-courses for selected mobile category */}
                           {COURSE_CATEGORIES.filter((c) => c.id === mobileActiveCategory).map((cat) => (
-                            <div key={cat.id} className="space-y-1.5 bg-white p-2.5 rounded-xl border border-slate-200/80">
+                            <div key={cat.id} className="space-y-2 bg-white p-2.5 rounded-xl border border-slate-200/80">
                               <div className="flex items-center justify-between pb-1 border-b border-slate-100">
                                 <span className="text-[11.5px] font-bold text-slate-900">{cat.name}</span>
                                 <Link
                                   to={cat.to}
+                                  onClick={() => {
+                                    setMobileOpen(false);
+                                    if (pathname === "/") {
+                                      window.dispatchEvent(new CustomEvent("select-domain", { detail: cat.domainName }));
+                                    }
+                                  }}
                                   className="text-[10.5px] font-bold text-blue-600 flex items-center gap-1"
                                 >
                                   <span>Explore</span>
@@ -663,20 +792,34 @@ export function Header() {
                                 </Link>
                               </div>
 
-                              {cat.subCourses.map((sub, sIdx) => (
-                                <Link
-                                  key={sIdx}
-                                  to={sub.to}
-                                  className="block py-1.5 px-2 rounded-lg hover:bg-slate-50 transition-colors"
-                                >
-                                  <span className="block text-xs font-bold text-slate-800 leading-tight">
-                                    {sub.title}
-                                  </span>
-                                </Link>
-                              ))}
+                              <div className="space-y-1">
+                                {cat.subCourses.map((sub, sIdx) => (
+                                  <Link
+                                    key={sIdx}
+                                    to={sub.to}
+                                    onClick={() => {
+                                      setMobileOpen(false);
+                                      if (pathname === "/") {
+                                        window.dispatchEvent(new CustomEvent("select-domain", { detail: sub.domainName }));
+                                      }
+                                    }}
+                                    className="block py-1 px-2 rounded-lg hover:bg-slate-50 transition-colors"
+                                  >
+                                    <span className="block text-xs font-medium text-slate-800 leading-tight">
+                                      {sub.title}
+                                    </span>
+                                  </Link>
+                                ))}
+                              </div>
 
                               <Link
                                 to={cat.to}
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  if (pathname === "/") {
+                                    window.dispatchEvent(new CustomEvent("select-domain", { detail: cat.domainName }));
+                                  }
+                                }}
                                 className="block pt-1 text-[11px] font-bold text-blue-600 hover:underline text-center"
                               >
                                 {cat.viewAllText}

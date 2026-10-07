@@ -8,9 +8,11 @@ import {
   Award,
   BarChart3,
   BookOpen,
+  Bot,
   Briefcase,
   Check,
   CheckCircle2,
+  Code2,
   ChevronLeft,
   ChevronRight,
   Cpu,
@@ -43,12 +45,18 @@ import { cn } from "@/lib/utils";
 import aboutImg from "@/assets/about-training.jpg";
 import heroImg from "@/assets/hero-tech.jpg";
 import heroStudentImg from "@/assets/hero-student.jpg";
+import careerReadinessStudentImg from "@/assets/career-readiness-student.jpg";
 import cyberHeroBg from "@/assets/cyber-hero-bg.jpg";
 import cyberPhase1Img from "@/assets/cyber-phase1-3d.jpg";
 import cyberPhase2Img from "@/assets/cyber-phase2-3d.jpg";
 import cyberPhase3Img from "@/assets/cyber-phase3-3d.jpg";
 import cyberPhase4Img from "@/assets/cyber-phase4-3d.jpg";
 import cyberPhase5Img from "@/assets/cyber-phase5-3d.jpg";
+import domainCyberSecurityImg from "@/assets/domain-cyber-security.jpg";
+import domainDigitalMarketingImg from "@/assets/domain-digital-marketing.jpg";
+import domainProgrammaticAdsImg from "@/assets/domain-programmatic-ads.jpg";
+import domainAiAutomationImg from "@/assets/domain-ai-automation.jpg";
+import domainFullstackDevImg from "@/assets/domain-fullstack-dev.jpg";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseCard } from "@/components/site/CourseCard";
 import { CountUp } from "@/components/site/CountUp";
@@ -119,10 +127,23 @@ export const Route = createFileRoute("/")({
  * =========================================================================
  */
 function Home() {
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+
+  // Sync with global header dropdown domain selection
+  useEffect(() => {
+    const handleSelectDomainEvent = (e: any) => {
+      if (e?.detail) {
+        setSelectedDomain(e.detail);
+      }
+    };
+    window.addEventListener("select-domain", handleSelectDomainEvent);
+    return () => window.removeEventListener("select-domain", handleSelectDomainEvent);
+  }, []);
+
   return (
     <SiteLayout>
       {/* 3. Hero */}
-      <Hero />
+      <Hero onSelectDomain={setSelectedDomain} />
 
       {/* 4. USP / Trust Strip */}
       <UspTrustStrip />
@@ -131,13 +152,17 @@ function Home() {
       <WhyDigitechademy />
 
       {/* 6. Core Programs */}
-      <CorePrograms />
+      <CorePrograms selectedDomain={selectedDomain} onSelectDomain={setSelectedDomain} />
 
-      {/* 7. Programmatic Advertising Differentiator */}
-      <ProgrammaticDifferentiator />
+      {/* 7. Programmatic Advertising Differentiator (Appears when Digital Marketing or Programmatic Advertising is clicked) */}
+      {(selectedDomain === "Digital Marketing" || selectedDomain === "Programmatic Advertising") && (
+        <ProgrammaticDifferentiator />
+      )}
 
-      {/* 8. Cyber Security Differentiator */}
-      <CyberSecurityDifferentiator />
+      {/* 8. Cyber Security Differentiator (Appears when Cyber Security is clicked) */}
+      {selectedDomain === "Cyber Security" && (
+        <CyberSecurityDifferentiator />
+      )}
 
       {/* 9. Digitechademy Learning Method */}
       <DigitechademyLearningMethod />
@@ -276,7 +301,7 @@ const HERO_DOMAINS = [
   },
 ];
 
-function Hero() {
+function Hero({ onSelectDomain }: { onSelectDomain?: ((domain: string) => void) | undefined } = {}) {
   const [domainIndex, setDomainIndex] = useState(0);
 
   // Auto-cycle headline domain every 3.6s
@@ -291,9 +316,27 @@ function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-white pb-6 pt-3 sm:pt-4 lg:pb-8 lg:pt-6">
+      {/* Dynamic Background Tech & Data Transformation Video */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-30 mix-blend-multiply transition-opacity duration-1000 filter contrast-105"
+        >
+          <source src="/hero-tech-bg.mp4" type="video/mp4" />
+          <source src="/hero-tech-bg-2.mp4" type="video/mp4" />
+        </video>
+        {/* Soft gradient masks to keep typography, badges and 3D cards 100% legible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/30 via-transparent to-transparent" />
+      </div>
+
       {/* High-tech matrix background grid overlay */}
       <div
-        className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.09] pointer-events-none"
+        className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.08] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -376,10 +419,15 @@ function Hero() {
               data-reveal
               style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
             >
-              <BtnLink
-                to="/courses"
-                variant="primary"
-                size="md"
+              <a
+                href="#courses"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const coursesElem = document.getElementById("courses");
+                  if (coursesElem) {
+                    coursesElem.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
                 className="relative overflow-hidden flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-2.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap min-w-0"
               >
                 {/* Subtle Shimmer Slide Effect */}
@@ -389,7 +437,7 @@ function Hero() {
                 />
                 <span className="relative z-10 truncate">Explore Programs</span>
                 <ArrowRight className="relative z-10 size-3.5 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
-              </BtnLink>
+              </a>
 
               <BtnLink
                 to="/request-call"
@@ -410,7 +458,7 @@ function Hero() {
 
           {/* Right Column: Interactive 3D Cards Showcase Carousel (5 cols on lg/xl) */}
           <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0" data-reveal="right">
-            <Hero3DCardsCarousel />
+            <Hero3DCardsCarousel onSelectDomain={onSelectDomain} />
           </div>
         </div>
       </div>
@@ -484,52 +532,6 @@ function UspTrustStrip() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Row 2: 4 Foundational USP Commitments */}
-        <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
-          {[
-            {
-              title: "Practical Training",
-              text: "Live tool labs & sandboxes",
-              icon: Terminal,
-              color: "text-blue-600 bg-blue-50 border-blue-100",
-            },
-            {
-              title: "Industry Mentorship",
-              text: "10 dedicated expert mentors",
-              icon: Users,
-              color: "text-indigo-600 bg-indigo-50 border-indigo-100",
-            },
-            {
-              title: "Real-World Projects",
-              text: "Live campaigns & security audits",
-              icon: Layers,
-              color: "text-sky-600 bg-sky-50 border-sky-100",
-            },
-            {
-              title: "Career-Focused Learning",
-              text: "100% placement assistance & prep",
-              icon: Briefcase,
-              color: "text-emerald-600 bg-emerald-50 border-emerald-100",
-            },
-          ].map((usp) => {
-            const UspIcon = usp.icon;
-            return (
-              <div
-                key={usp.title}
-                className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-slate-50/70 border border-slate-200/70 hover:bg-slate-100/70 transition-colors"
-              >
-                <span className={cn("grid size-8 sm:size-9 shrink-0 place-items-center rounded-lg border", usp.color)}>
-                  <UspIcon className="size-4" />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-[13px] font-bold text-slate-800 leading-snug">{usp.title}</p>
-                  <p className="text-[10.5px] sm:text-[11.5px] text-slate-500 leading-tight mt-0.5">{usp.text}</p>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>
@@ -750,6 +752,7 @@ type DomainTrack = {
   description: string;
   icon: typeof ShieldCheck;
   iconBg: string;
+  image: string;
   cardBorder: string;
   cardHoverBorder: string;
   cardBg: string;
@@ -769,6 +772,7 @@ const DOMAIN_TRACKS: DomainTrack[] = [
       "Master network defense, Linux administration, vulnerability assessment, and real-world ethical security testing.",
     icon: ShieldCheck,
     iconBg: "bg-blue-100 text-blue-700 ring-1 ring-blue-200/80",
+    image: domainCyberSecurityImg,
     cardBorder: "border-slate-300",
     cardHoverBorder: "hover:border-blue-600",
     cardBg: "bg-gradient-to-b from-blue-50/30 via-white to-white",
@@ -786,6 +790,7 @@ const DOMAIN_TRACKS: DomainTrack[] = [
       "Drive measurable business growth across SEO, paid advertising campaigns, social media, and conversion analytics.",
     icon: Megaphone,
     iconBg: "bg-sky-100 text-sky-700 ring-1 ring-sky-200/80",
+    image: domainDigitalMarketingImg,
     cardBorder: "border-slate-300",
     cardHoverBorder: "hover:border-sky-500",
     cardBg: "bg-gradient-to-b from-sky-50/30 via-white to-white",
@@ -803,12 +808,49 @@ const DOMAIN_TRACKS: DomainTrack[] = [
       "Specialized enterprise media buying, real-time bidding (RTB), demand-side platforms (DV360), and AdTech analytics.",
     icon: Radio,
     iconBg: "bg-blue-100 text-blue-700 ring-1 ring-blue-200/80",
+    image: domainProgrammaticAdsImg,
     cardBorder: "border-slate-300",
     cardHoverBorder: "hover:border-blue-600",
     cardBg: "bg-gradient-to-b from-blue-50/30 via-white to-white",
     hoverShadow: "hover:shadow-xl hover:shadow-blue-500/10",
     btnHoverBg: "group-hover:bg-blue-600",
     skills: ["DV360 & CM360", "Real-Time Bidding", "Audience Targeting", "DSP & SSP Platforms"],
+  },
+  {
+    id: "ai-automation",
+    name: "AI & Automation",
+    eyebrow: "AI AGENTS & SMART WORKFLOWS",
+    badgeStyle: "bg-amber-50 text-amber-800 border-amber-200/90",
+    title: "AI & Automation",
+    description:
+      "Automate business operations, AI agents, Zapier workflows, and smart CRM integrations.",
+    icon: Bot,
+    iconBg: "bg-amber-100 text-amber-700 ring-1 ring-amber-200/80",
+    image: domainAiAutomationImg,
+    cardBorder: "border-slate-300",
+    cardHoverBorder: "hover:border-amber-500",
+    cardBg: "bg-gradient-to-b from-amber-50/30 via-white to-white",
+    hoverShadow: "hover:shadow-xl hover:shadow-amber-500/10",
+    btnHoverBg: "group-hover:bg-amber-600",
+    skills: ["AI Agents", "Zapier & Webhooks", "CRM Automation", "Chatbot Funnels"],
+  },
+  {
+    id: "fullstack-dev",
+    name: "Full Stack Development",
+    eyebrow: "REACT & NODE.JS ENGINEERING",
+    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200/90",
+    title: "Full Stack Development",
+    description:
+      "Build scalable, high-performance modern web apps with React, Node.js, databases, and APIs.",
+    icon: Code2,
+    iconBg: "bg-sky-100 text-sky-700 ring-1 ring-sky-200/80",
+    image: domainFullstackDevImg,
+    cardBorder: "border-slate-300",
+    cardHoverBorder: "hover:border-sky-500",
+    cardBg: "bg-gradient-to-b from-sky-50/30 via-white to-white",
+    hoverShadow: "hover:shadow-xl hover:shadow-sky-500/10",
+    btnHoverBg: "group-hover:bg-sky-600",
+    skills: ["React & TypeScript", "Node.js & Express", "Databases & APIs", "Full Stack Architecture"],
   },
 ];
 
@@ -855,12 +897,51 @@ function matchesDomain(course: FirebaseCourse, domainName: string): boolean {
     );
   }
 
+  if (domainName === "AI & Automation") {
+    return (
+      cat.includes("ai") ||
+      cat.includes("automation") ||
+      slug.includes("ai") ||
+      slug.includes("automation") ||
+      title.includes("ai") ||
+      title.includes("automation")
+    );
+  }
+
+  if (domainName === "Full Stack Development") {
+    return (
+      cat.includes("web") ||
+      cat.includes("stack") ||
+      cat.includes("dev") ||
+      slug.includes("full-stack") ||
+      slug.includes("web") ||
+      title.includes("full stack") ||
+      title.includes("web")
+    );
+  }
+
   return false;
 }
 
-function CorePrograms() {
+interface CoreProgramsProps {
+  selectedDomain?: string | null | undefined;
+  onSelectDomain?: ((domain: string | null) => void) | undefined;
+}
+
+function CorePrograms({
+  selectedDomain: externalSelectedDomain,
+  onSelectDomain,
+}: CoreProgramsProps = {}) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+  const [internalSelectedDomain, setInternalSelectedDomain] = useState<string | null>(null);
+  const selectedDomain = externalSelectedDomain !== undefined ? externalSelectedDomain : internalSelectedDomain;
+  const setSelectedDomain = (val: string | null) => {
+    if (onSelectDomain) {
+      onSelectDomain(val);
+    } else {
+      setInternalSelectedDomain(val);
+    }
+  };
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
   const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() =>
@@ -931,6 +1012,16 @@ function CorePrograms() {
 
     return () => clearInterval(interval);
   }, [emblaApi, isAutoScrollPaused, selectedDomain]);
+
+  // Scroll to active domain track when selectedDomain is updated
+  useEffect(() => {
+    if (selectedDomain && emblaApi) {
+      const idx = DOMAIN_TRACKS.findIndex((t) => t.name === selectedDomain);
+      if (idx !== -1) {
+        emblaApi.scrollTo(idx);
+      }
+    }
+  }, [selectedDomain, emblaApi]);
 
   useEffect(() => {
     const unsub = subscribeCourses((coursesList) => {
@@ -1024,183 +1115,140 @@ function CorePrograms() {
           Select a specialized domain to explore dedicated hands-on programs, live lab environments, and job-ready technical curriculums.
         </p>
 
-        {/* View 1: 3 Domain Cards with Auto-Scrolling Carousel */}
-        {!selectedDomain ? (
-          <div>
-            <div
-              ref={emblaRef}
-              onMouseEnter={() => setIsAutoScrollPaused(true)}
-              onMouseLeave={() => setIsAutoScrollPaused(false)}
-              onTouchStart={() => setIsAutoScrollPaused(true)}
-              onTouchEnd={() => {
-                setTimeout(() => setIsAutoScrollPaused(false), 2500);
-              }}
-              className="overflow-hidden p-1 -m-1 cursor-grab active:cursor-grabbing"
-            >
-              <div className="flex -ml-4 sm:-ml-5 py-2">
-                {DOMAIN_TRACKS.map((track, idx) => {
-                  const TrackIcon = track.icon;
-                  const count = domainCounts[track.name] || 0;
-                  const isActive = selectedIndex === idx;
+        {/* 5 Domain Cards with Auto-Scrolling Carousel */}
+        <div>
+          <div
+            ref={emblaRef}
+            onMouseEnter={() => setIsAutoScrollPaused(true)}
+            onMouseLeave={() => setIsAutoScrollPaused(false)}
+            onTouchStart={() => setIsAutoScrollPaused(true)}
+            onTouchEnd={() => {
+              setTimeout(() => setIsAutoScrollPaused(false), 2500);
+            }}
+            className="overflow-hidden p-1 -m-1 cursor-grab active:cursor-grabbing"
+          >
+            <div className="flex -ml-4 sm:-ml-5 py-2">
+              {DOMAIN_TRACKS.map((track, idx) => {
+                const TrackIcon = track.icon;
+                const count = domainCounts[track.name] || 0;
+                const isSelected = selectedDomain === track.name;
+                const isSnapActive = selectedIndex === idx;
 
-                  return (
+                return (
+                  <div
+                    key={track.id}
+                    className="min-w-0 shrink-0 grow-0 pl-4 sm:pl-5 basis-full sm:basis-1/2 lg:basis-1/3"
+                  >
                     <div
-                      key={track.id}
-                      className="min-w-0 shrink-0 grow-0 pl-4 sm:pl-5 basis-full sm:basis-1/2 lg:basis-1/3"
+                      onClick={() => handleSelectDomain(isSelected ? null : track.name)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleSelectDomain(isSelected ? null : track.name);
+                        }
+                      }}
+                      className={cn(
+                        "h-full core-program-card group relative flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-all duration-200 cursor-pointer border shadow-2xs select-none",
+                        track.cardBorder,
+                        track.cardHoverBorder,
+                        track.cardBg,
+                        track.hoverShadow,
+                        isSelected ? "ring-2 ring-blue-600 border-blue-600 bg-blue-50/25 shadow-md scale-[1.01]" : isSnapActive ? "ring-1 ring-blue-400/50" : "",
+                        "hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                      )}
                     >
-                      <div
-                        onClick={() => handleSelectDomain(track.name)}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            handleSelectDomain(track.name);
-                          }
-                        }}
-                        className={cn(
-                          "h-full core-program-card group relative flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-all duration-200 cursor-pointer border shadow-2xs select-none",
-                          track.cardBorder,
-                          track.cardHoverBorder,
-                          track.cardBg,
-                          track.hoverShadow,
-                          isActive ? "ring-2 ring-blue-500/80 shadow-md" : "",
-                          "hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
-                        )}
-                      >
-                        <div>
-                          {/* Top Row: Icon & Eyebrow Badge */}
-                          <div className="flex items-center justify-between gap-2.5 mb-3">
-                            <div className={cn("size-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105 shrink-0", track.iconBg)}>
-                              <TrackIcon className="size-5" />
+                      <div>
+                        {/* Card 3D Image Banner */}
+                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl mb-3.5 bg-slate-900 shadow-xs">
+                          <img
+                            src={track.image}
+                            alt={track.title}
+                            className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20" />
+
+                          {/* Floating Icon & Eyebrow Badge */}
+                          <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
+                            <div className={cn("size-8 rounded-lg flex items-center justify-center backdrop-blur-md bg-white/95 shadow-xs", track.iconBg)}>
+                              <TrackIcon className="size-4" />
                             </div>
-                            <span className={cn("inline-flex items-center px-2 py-0.5 rounded-full text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider border", track.badgeStyle)}>
+                            <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-[9.5px] font-extrabold uppercase tracking-wider backdrop-blur-md bg-white/95 border shadow-xs", track.badgeStyle)}>
                               {track.eyebrow}
                             </span>
                           </div>
-
-                          {/* Domain Main Heading */}
-                          <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
-                            {track.title}
-                          </h3>
                         </div>
 
-                        {/* Clean Compact Footer */}
-                        <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
-                          <span>{count} {count === 1 ? "Program" : "Programs"}</span>
-                          <span className="inline-flex items-center gap-1 font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
-                            <span>Explore</span>
-                            <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
-                          </span>
-                        </div>
+                        {/* Domain Main Heading */}
+                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                          {track.title}
+                        </h3>
+                      </div>
+
+                      {/* Clean Compact Footer */}
+                      <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>{count} {count === 1 ? "Program" : "Programs"}</span>
+                        <span className={cn("inline-flex items-center gap-1 font-bold transition-colors", isSelected ? "text-blue-700" : "text-blue-600 group-hover:text-blue-700")}>
+                          <span>{isSelected ? "Selected" : "Explore"}</span>
+                          <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
+                        </span>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Carousel Indicator Dots & Auto-scroll State */}
-            <div className="flex items-center justify-between mt-4 pt-1">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5">
-                  {DOMAIN_TRACKS.map((track, i) => (
-                    <button
-                      key={track.id}
-                      type="button"
-                      onClick={() => scrollToTrack(i)}
-                      className={cn(
-                        "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                        selectedIndex === i ? "w-7 bg-blue-600 shadow-xs" : "w-2 bg-slate-300 hover:bg-slate-400"
-                      )}
-                      aria-label={`Go to ${track.title}`}
-                    />
-                  ))}
-                </div>
-                <span className="text-[11px] font-semibold text-slate-400 ml-1.5 hidden sm:inline">
-                  {selectedIndex + 1} / {DOMAIN_TRACKS.length}
-                </span>
-              </div>
-
-              {/* Pause/Resume Auto-scroll Toggle */}
-              <button
-                type="button"
-                onClick={() => setIsAutoScrollPaused((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-slate-100 hover:bg-slate-200/80 text-slate-600 transition-colors cursor-pointer border border-slate-200/70"
-                title={isAutoScrollPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
-              >
-                <span className={cn("size-1.5 rounded-full", isAutoScrollPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse")} />
-                <span>{isAutoScrollPaused ? "Auto-scroll: Paused" : "Auto-scrolling"}</span>
-              </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        ) : (
-          /* View 2: Selected Domain Courses View */
-          <div className="space-y-6 animate-in fade-in duration-300">
-            {/* Top Navigation & Domain Switcher Bar */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-              {/* Back to All Domains Button & Current Title */}
-              <div className="flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => handleSelectDomain(null)}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-800 hover:bg-blue-50 hover:text-blue-600 border border-slate-200/90 transition-colors cursor-pointer group"
-                >
-                  <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                  <span>Back to All Domains</span>
-                </button>
 
-                <div className="h-5 w-px bg-slate-200 hidden sm:block" />
-
-                <div className="flex items-center gap-2">
-                  {selectedTrack && (
-                    <span className={cn("inline-flex items-center justify-center size-7 rounded-lg", selectedTrack.iconBg)}>
-                      <selectedTrack.icon className="size-4" />
-                    </span>
-                  )}
-                  <span className="text-sm sm:text-base font-bold text-slate-900">
-                    {selectedDomain}
-                  </span>
-                  <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
-                    {displayedCourses.length} {displayedCourses.length === 1 ? "course" : "courses"}
-                  </span>
-                </div>
+          {/* Carousel Indicator Dots & Auto-scroll State */}
+          <div className="flex items-center justify-between mt-4 pt-1">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
+                {DOMAIN_TRACKS.map((track, i) => (
+                  <button
+                    key={track.id}
+                    type="button"
+                    onClick={() => scrollToTrack(i)}
+                    className={cn(
+                      "h-2 rounded-full transition-all duration-300 cursor-pointer",
+                      selectedIndex === i ? "w-7 bg-blue-600 shadow-xs" : "w-2 bg-slate-300 hover:bg-slate-400"
+                    )}
+                    aria-label={`Go to ${track.title}`}
+                  />
+                ))}
               </div>
-
-              {/* Quick Switcher Domain Tabs */}
-              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-                {DOMAIN_TRACKS.map((t) => {
-                  const isActive = selectedDomain === t.name;
-                  const count = domainCounts[t.name] || 0;
-                  return (
-                    <button
-                      key={t.id}
-                      type="button"
-                      onClick={() => handleSelectDomain(t.name)}
-                      className={cn(
-                        "px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 whitespace-nowrap",
-                        isActive
-                          ? "bg-blue-600 text-white shadow-xs"
-                          : "bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/70"
-                      )}
-                    >
-                      {t.name} ({count})
-                    </button>
-                  );
-                })}
-              </div>
+              <span className="text-[11px] font-semibold text-slate-400 ml-1.5 hidden sm:inline">
+                {selectedIndex + 1} / {DOMAIN_TRACKS.length}
+              </span>
             </div>
 
-            {/* Matching Courses Grid */}
+            {/* Pause/Resume Auto-scroll Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsAutoScrollPaused((prev) => !prev)}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-slate-100 hover:bg-slate-200/80 text-slate-600 transition-colors cursor-pointer border border-slate-200/70"
+              title={isAutoScrollPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
+            >
+              <span className={cn("size-1.5 rounded-full", isAutoScrollPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse")} />
+              <span>{isAutoScrollPaused ? "Auto-scroll: Paused" : "Auto-scrolling"}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Selected Domain Courses Grid (Rendered cleanly below cards without extra top bar) */}
+        {selectedDomain && (
+          <div className="mt-8 pt-6 border-t border-slate-200/80 space-y-4 animate-in fade-in duration-300">
             {displayedCourses.length > 0 ? (
               <div
                 className={cn(
-                  "gap-6 w-full",
+                  "gap-5 w-full",
                   displayedCourses.length === 1
-                    ? "flex justify-center max-w-md mx-auto"
+                    ? "flex justify-center max-w-[320px] sm:max-w-[340px] mx-auto"
                     : displayedCourses.length === 2
-                      ? "grid md:grid-cols-2 max-w-3xl mx-auto"
-                      : "grid md:grid-cols-2 lg:grid-cols-3"
+                      ? "grid sm:grid-cols-2 max-w-2xl mx-auto"
+                      : "grid sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto"
                 )}
               >
                 {displayedCourses.map((course, cIdx) => (
@@ -1217,16 +1265,8 @@ function CorePrograms() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 px-4 bg-white rounded-2xl border border-slate-200/80">
-                <p className="text-slate-600 text-sm mb-4">No active courses currently available in this domain.</p>
-                <button
-                  type="button"
-                  onClick={() => handleSelectDomain(null)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-                >
-                  <ArrowLeft className="size-4" />
-                  <span>Return to Domain Overview</span>
-                </button>
+              <div className="text-center py-10 px-4 bg-white rounded-2xl border border-slate-200/80">
+                <p className="text-slate-600 text-sm">No active courses currently available in this domain.</p>
               </div>
             )}
           </div>
@@ -1832,7 +1872,7 @@ function CyberSecurityDifferentiator() {
  */
 function DigitechademyLearningMethod() {
   return (
-    <section id="methodology" className="bg-white relative py-7 sm:py-10 overflow-hidden border-t border-slate-200/80">
+    <section id="methodology" className="bg-white relative py-5 sm:py-8 overflow-hidden border-t border-slate-200/80">
       <div className="container-site relative z-10">
         <SectionHeading
           eyebrow="DIGITECHADEMY LEARNING METHOD"
@@ -1842,7 +1882,7 @@ function DigitechademyLearningMethod() {
         />
 
         {/* 5-Step Progressive Learning Path Component */}
-        <div className="mt-5" data-reveal>
+        <div className="mt-3.5" data-reveal>
           <StudentLearningPath />
         </div>
       </div>
@@ -2180,89 +2220,155 @@ function WhoIsThisFor() {
  */
 function CareerReadiness() {
   return (
-    <section className="bg-slate-50/80 relative py-7 sm:py-10 overflow-hidden border-b border-slate-200/80">
+    <section className="bg-white relative py-7 sm:py-10 lg:py-12 overflow-hidden border-b border-slate-200/80">
       <div className="container-site relative z-10">
-        <div className="max-w-5xl lg:max-w-6xl" data-reveal="left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">
-            <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-            CAREER READINESS
-          </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2] whitespace-normal sm:whitespace-nowrap">
-            Build Skills With Your Next Career Move in Mind
-          </h2>
-          <p className="mt-2 text-base sm:text-lg font-bold text-blue-600">
-            Learn With Your Next Career Move In Mind.
-          </p>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-4xl lg:max-w-5xl">
-            Our programs are designed to help you understand industry concepts, practice practical skills, work through realistic scenarios,
-            <br className="hidden md:inline" />{" "}
-            build project experience, prepare for technical and role-based interviews, and communicate your knowledge with confidence.
-          </p>
-        </div>
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
+          
+          {/* Left Column: Visual Student Frame with Royal Blue Accent Backdrop */}
+          <div className="lg:col-span-5 relative" data-reveal="left">
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              {/* Royal Blue / Indigo Geometric Accent Backdrop Box */}
+              <div
+                className="absolute -top-3 -left-3 sm:-top-3.5 sm:-left-3.5 w-3/4 h-full rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-sky-500 -z-10 shadow-lg shadow-blue-600/20 opacity-95"
+                aria-hidden="true"
+              />
 
-        {/* Formula / Truth Card */}
-        <div
-          data-reveal
-          className="mt-5 rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xs"
-        >
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              {/* Main Student Image Frame */}
+              <div className="relative overflow-hidden rounded-3xl border-2 border-white shadow-xl bg-slate-900 aspect-[4/4.2] sm:aspect-[4/4]">
+                <img
+                  src={careerReadinessStudentImg}
+                  alt="Student with laptop giving thumbs up"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+
+                {/* Floating Bottom Pill Badge */}
+                <div className="absolute bottom-3 left-3 right-3 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md flex items-center gap-2.5">
+                  <span className="grid size-8 sm:size-9 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-xs">
+                    <CheckCircle2 className="size-4.5 sm:size-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-extrabold text-xs sm:text-[13px] text-slate-900 leading-tight">
+                      100% Practical Training
+                    </p>
+                    <p className="text-[10px] sm:text-[11px] font-semibold text-slate-500 truncate">
+                      Job-Ready Skills &amp; Placement Support
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Heading, Concise Highlight Cards & Framework */}
+          <div className="lg:col-span-7 space-y-3.5 sm:space-y-4" data-reveal="right">
             <div>
-              <span className="text-xs uppercase tracking-wider font-bold text-blue-700">The Core Framework</span>
-              <p className="text-base sm:text-lg font-bold text-slate-900 mt-0.5">
-                A certificate alone doesn't build a career.
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-2">
+                <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
+                CAREER READINESS
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2]">
+                We are the best in <span className="text-blue-600">training...</span>
+              </h2>
+
+              <p className="mt-1 text-xs sm:text-[13px] font-semibold text-slate-500">
+                Learn with your next career move in mind.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 bg-slate-50 border border-slate-300 p-3 sm:p-3.5 rounded-xl">
-              <span className="px-3 py-1 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-xs sm:text-sm font-bold">
-                Skills
-              </span>
-              <span className="text-slate-400 font-bold">+</span>
-              <span className="px-3 py-1 rounded-lg bg-sky-50 border border-sky-200 text-sky-700 text-xs sm:text-sm font-bold">
-                Practice
-              </span>
-              <span className="text-slate-400 font-bold">+</span>
-              <span className="px-3 py-1 rounded-lg bg-blue-50 border border-blue-200 text-blue-700 text-xs sm:text-sm font-bold">
-                Projects
-              </span>
-              <span className="text-slate-400 font-bold">+</span>
-              <span className="px-3 py-1 rounded-lg bg-sky-50 border border-sky-200 text-sky-700 text-xs sm:text-sm font-bold">
-                Confidence
-              </span>
-              <span className="text-blue-600 font-bold">=</span>
-              <span className="px-3 py-1 rounded-lg bg-gradient-to-r from-blue-600 to-sky-500 text-white text-xs sm:text-sm font-black tracking-wide shadow-xs">
-                Career Readiness
-              </span>
-            </div>
-          </div>
-        </div>
+            {/* Primary Blue Highlight Card */}
+            <div className="rounded-2xl border border-blue-100/90 bg-gradient-to-r from-blue-50/70 via-indigo-50/40 to-blue-50/70 p-3.5 sm:p-4 shadow-2xs">
+              <div className="flex items-start gap-3">
+                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-blue-600 text-white shadow-2xs mt-0.5">
+                  <Check className="size-3.5 stroke-[3]" />
+                </span>
 
-        {/* Closing Line & CTA Banner */}
-        <div
-          data-reveal
-          className="mt-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-900 via-[#081426] to-indigo-950 p-3.5 sm:p-4.5 text-white shadow-md border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
-        >
-          <div className="flex items-center gap-3">
-            <div className="grid size-9 sm:size-10 place-items-center rounded-xl bg-blue-500/20 border border-blue-400/30 text-sky-300 shrink-0 shadow-inner">
-              <Sparkles className="size-4.5 text-sky-300" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-[13px] leading-relaxed text-slate-700 font-medium">
+                    Our industry-aligned curriculum is crafted to match global technology standards, providing you with strong practical foundations to excel in modern roles worldwide.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-sky-300">Core Principle</p>
-              <p className="text-xs sm:text-sm md:text-base font-bold tracking-tight text-white mt-0.5">
-                Your Career Starts With What You Can Do — <span className="text-sky-300">Not Just What You Know.</span>
-              </p>
+
+            {/* Assured Job Assistance Card */}
+            <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 sm:p-4 shadow-2xs">
+              <div className="flex items-start gap-3">
+                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-500 text-white shadow-2xs mt-0.5">
+                  <Check className="size-3.5 stroke-[3]" />
+                </span>
+
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-xs sm:text-[13px] font-extrabold text-slate-900 leading-snug">
+                    Assured Job Assistance &amp; Placement Support
+                  </h3>
+                  <p className="mt-0.5 text-[11.5px] sm:text-xs text-slate-600 leading-relaxed font-normal">
+                    Resume optimization, mock technical interview preparation, and direct hiring partner referrals.
+                  </p>
+                </div>
+              </div>
             </div>
+
+            {/* The Core Framework Strip */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-3 sm:p-3.5 shadow-2xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-blue-700">The Core Framework</span>
+                  <p className="text-xs sm:text-[13px] font-bold text-slate-900">
+                    A certificate alone doesn&apos;t build a career.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-1 rounded-xl">
+                  <span className="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-[10.5px] font-bold">
+                    Skills
+                  </span>
+                  <span className="text-slate-400 font-bold text-xs">+</span>
+                  <span className="px-2 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700 text-[10.5px] font-bold">
+                    Practice
+                  </span>
+                  <span className="text-slate-400 font-bold text-xs">+</span>
+                  <span className="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-[10.5px] font-bold">
+                    Projects
+                  </span>
+                  <span className="text-slate-400 font-bold text-xs">+</span>
+                  <span className="px-2 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700 text-[10.5px] font-bold">
+                    Confidence
+                  </span>
+                  <span className="text-blue-600 font-bold text-xs">=</span>
+                  <span className="px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10.5px] font-black tracking-tight shadow-xs">
+                    Career Ready
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="pt-0.5 flex flex-wrap items-center gap-2.5">
+              <BtnLink
+                to="/courses"
+                variant="primary"
+                size="md"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4.5 py-2 rounded-xl text-xs sm:text-[13px] shadow-sm flex items-center gap-1.5"
+              >
+                <span>Explore Career Programs</span>
+                <ArrowRight className="size-3.5" />
+              </BtnLink>
+
+              <BtnLink
+                to="/request-call"
+                variant="outline"
+                size="md"
+                className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-4.5 py-2 rounded-xl text-xs sm:text-[13px]"
+              >
+                <span>Talk to a Career Mentor</span>
+              </BtnLink>
+            </div>
+
           </div>
 
-          <BtnLink
-            to="/courses"
-            variant="primary"
-            size="sm"
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl shrink-0 text-xs sm:text-[13px] shadow-md flex items-center gap-1.5"
-          >
-            <span>Explore Career-Focused Programs</span>
-            <ArrowRight className="size-3.5" />
-          </BtnLink>
         </div>
       </div>
     </section>

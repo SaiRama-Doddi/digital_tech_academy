@@ -371,108 +371,101 @@ export function StudentLearningPath({ className }: { className?: string }) {
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. STAGE SHOWCASE: EQUAL HEIGHT & SAME SIZE WITH REALISTIC STAGE PHOTO    */}
+      {/* 2. STAGE SHOWCASE: COMPACT & BALANCED WITH REALISTIC STAGE PHOTO          */}
       {/* ========================================================================= */}
-      <div className="mt-3 sm:mt-4 rounded-xl sm:rounded-2xl border border-slate-200 bg-white shadow-sm p-2 sm:p-5 relative overflow-hidden w-full max-w-full min-w-0">
+      <div className="mt-2.5 sm:mt-3 rounded-xl border border-slate-200 bg-white shadow-2xs p-2.5 sm:p-3.5 relative overflow-hidden w-full max-w-full min-w-0">
         {/* 2-Column Balanced Grid with matching equal heights */}
-        <div className="grid lg:grid-cols-2 gap-3.5 sm:gap-5 items-stretch relative z-10 w-full min-w-0 max-w-full">
+        <div className="grid lg:grid-cols-12 gap-3 sm:gap-4 items-stretch relative z-10 w-full min-w-0 max-w-full">
           {/* ------------------------------------------------------------- */}
-          {/* LEFT CARD: Stage Info, 2 Highlights, Tools & Controls         */}
+          {/* LEFT CARD: Stage Info, Highlights, Tools & Focus Areas (7 cols) */}
           {/* ------------------------------------------------------------- */}
-          <div className="flex flex-col justify-between h-full rounded-xl sm:rounded-2xl border border-slate-200 bg-slate-50/60 p-2.5 sm:p-5 shadow-2xs w-full min-w-0 max-w-full overflow-hidden">
-            <div className="space-y-2 sm:space-y-3 min-w-0 w-full">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide">
-                <CurrentIcon className="size-3 shrink-0 text-blue-600" />
-                <span className="text-blue-700">{currentStage.badge}</span>
+          <div className="lg:col-span-7 flex flex-col justify-between h-full rounded-xl border border-slate-200 bg-slate-50/60 p-3 sm:p-4 shadow-2xs w-full min-w-0 max-w-full overflow-hidden">
+            <div className="space-y-2 min-w-0 w-full">
+              {/* Top Row: Badge & Stage Title */}
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-wide">
+                  <CurrentIcon className="size-2.5 shrink-0 text-blue-600" />
+                  <span className="text-blue-700">{currentStage.badge}</span>
+                </div>
+                <span className="text-[10.5px] font-mono font-bold text-slate-400">
+                  Stage {currentStage.step} of 05
+                </span>
               </div>
 
               {/* Stage Title */}
-              <h3 className="text-base sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              <h3 className="text-sm sm:text-base md:text-lg font-extrabold text-slate-900 tracking-tight leading-snug">
                 {currentStage.title}:{" "}
                 <span className="text-blue-600">{currentStage.subtitle}</span>
               </h3>
 
-              {/* Short, punchy description */}
-              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
+              {/* Short description */}
+              <p className="text-[11.5px] sm:text-xs text-slate-600 leading-relaxed font-normal">
                 {currentStage.description}
               </p>
 
               {/* 2 Clean Highlights */}
-              <div className="space-y-1.5 pt-0.5">
+              <div className="space-y-1 pt-0.5">
                 {currentStage.highlights.map((item) => (
-                  <div key={item} className="flex items-start sm:items-center gap-2 text-xs text-slate-700">
-                    <CheckCircle2 className="size-3.5 text-emerald-600 shrink-0 mt-0.5 sm:mt-0" />
-                    <span className="leading-snug">{item}</span>
+                  <div key={item} className="flex items-start sm:items-center gap-1.5 text-[11px] sm:text-xs text-slate-700">
+                    <CheckCircle2 className="size-3 text-emerald-600 shrink-0 mt-0.5 sm:mt-0" />
+                    <span className="leading-tight">{item}</span>
                   </div>
                 ))}
               </div>
 
               {/* Clean Tool Chips */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
-                <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 mr-1">Tools:</span>
+              <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                <span className="text-[9.5px] sm:text-[10px] font-semibold text-slate-400 mr-0.5">Tools:</span>
                 {currentStage.tools.map((t) => (
                   <span
                     key={t}
-                    className="inline-flex items-center gap-1 rounded-md bg-white border border-slate-200 px-1.5 sm:px-2 py-0.5 text-[9.5px] sm:text-[11px] font-medium text-slate-800 shadow-2xs"
+                    className="inline-flex items-center gap-1 rounded bg-white border border-slate-200 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-medium text-slate-800 shadow-2xs"
                   >
-                    <Wrench className="size-2 sm:size-2.5 text-blue-600 shrink-0" />
+                    <Wrench className="size-2 text-blue-600 shrink-0" />
                     <span>{t}</span>
                   </span>
                 ))}
               </div>
 
-              {/* Core Execution Capabilities (Fills empty vertical area cleanly) */}
-              <div className="pt-1 sm:pt-1.5 space-y-1.5">
-                <span className="text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-slate-500 block">
+              {/* Core Execution Focus Areas (Compact horizontal items) */}
+              <div className="pt-1 space-y-1">
+                <span className="text-[9px] sm:text-[9.5px] font-bold uppercase tracking-wider text-slate-500 block">
                   Core Execution Capabilities:
                 </span>
-                <div className="grid gap-1 sm:gap-1.5">
+                <div className="grid sm:grid-cols-3 gap-1">
                   {currentStage.competencies.map((comp) => (
                     <div
                       key={comp.title}
-                      className="group/item flex items-start gap-2 sm:gap-2.5 rounded-lg bg-white border border-slate-200 p-2 sm:p-2.5 transition-all hover:border-blue-400 hover:shadow-2xs"
+                      className="flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-2 py-1.5 shadow-2xs"
                     >
-                      <div className="mt-0.5 size-4 rounded-md bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0">
-                        <Sparkles className="size-2.5" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-[11px] sm:text-xs font-bold text-slate-900 leading-snug">
-                          {comp.title}
-                        </p>
-                        <p className="text-[10px] sm:text-[11.5px] text-slate-600 leading-normal mt-0.5 font-normal">
-                          {comp.desc}
-                        </p>
-                      </div>
+                      <Sparkles className="size-2.5 text-blue-600 shrink-0" />
+                      <span className="text-[10px] sm:text-[11px] font-bold text-slate-800 truncate">
+                        {comp.title}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Practical Milestone Card (Responsive, never truncates on mobile) */}
-              <div className="rounded-lg bg-blue-50/70 border border-blue-200 p-2 sm:p-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 shadow-2xs mt-1 w-full min-w-0">
-                <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto flex-1">
-                  <div className="size-6 sm:size-7 rounded-md bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0">
-                    <Award className="size-3 sm:size-3.5" />
+              {/* Practical Milestone Card (Compact 1-line strip) */}
+              <div className="rounded-lg bg-blue-50/70 border border-blue-200 px-2.5 py-1.5 flex items-center justify-between gap-2 shadow-2xs mt-1 w-full min-w-0">
+                <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                  <div className="size-5 rounded bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0">
+                    <Award className="size-2.5" />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="text-[8px] sm:text-[9.5px] uppercase font-bold text-slate-500 block tracking-wide leading-none">
-                      Key Milestone
-                    </span>
-                    <span className="text-xs sm:text-[12.5px] font-bold text-slate-900 block mt-0.5 leading-tight truncate sm:whitespace-normal">
-                      {currentStage.outputTitle}
-                    </span>
-                  </div>
+                  <span className="text-[10.5px] font-bold text-slate-900 truncate">
+                    {currentStage.outputTitle}
+                  </span>
                 </div>
-                <span className="self-start sm:self-auto text-[9.5px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-200 shrink-0">
+                <span className="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 shrink-0">
                   {currentStage.outputStat}
                 </span>
               </div>
             </div>
 
             {/* Bottom Controls */}
-            <div className="mt-3 pt-2.5 sm:pt-3 flex items-center justify-between gap-1.5 sm:gap-3 border-t border-slate-200 w-full min-w-0">
-              <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+            <div className="mt-2.5 pt-2 flex items-center justify-between gap-2 border-t border-slate-200 w-full min-w-0">
+              <div className="flex items-center gap-1 shrink-0">
                 {stages.map((s, i) => (
                   <button
                     key={s.id}
@@ -481,87 +474,84 @@ export function StudentLearningPath({ className }: { className?: string }) {
                     className={cn(
                       "h-1.5 rounded-full transition-all duration-200 cursor-pointer",
                       i === activeStageIndex
-                        ? `w-3.5 sm:w-5 bg-gradient-to-r ${s.color.gradient}`
-                        : "w-1 sm:w-1.5 bg-slate-300 hover:bg-slate-400",
+                        ? `w-4 bg-gradient-to-r ${s.color.gradient}`
+                        : "w-1.5 bg-slate-300 hover:bg-slate-400",
                     )}
                     aria-label={`Go to stage ${i + 1}`}
                   />
                 ))}
               </div>
 
-              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   type="button"
                   onClick={() => selectStage((activeStageIndex - 1 + stages.length) % stages.length)}
-                  className="px-2 sm:px-2.5 py-1 rounded-lg border border-slate-300 text-[10px] sm:text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
+                  className="px-2 py-0.5 rounded-md border border-slate-300 text-[10px] font-semibold text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
                 >
                   ← Prev
                 </button>
                 <button
                   type="button"
                   onClick={() => selectStage((activeStageIndex + 1) % stages.length)}
-                  className="px-2 sm:px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold transition-colors inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer shrink-0 shadow-2xs"
+                  className="px-2.5 py-0.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold transition-colors inline-flex items-center gap-0.5 cursor-pointer shrink-0 shadow-2xs"
                 >
                   <span>Next</span>
-                  <ChevronRight className="size-3" />
+                  <ChevronRight className="size-2.5" />
                 </button>
               </div>
             </div>
           </div>
 
           {/* ------------------------------------------------------------- */}
-          {/* RIGHT CARD: EQUAL HEIGHT & SAME SIZE WITH REALISTIC STAGE PHOTO */}
+          {/* RIGHT CARD: COMPACT WINDOW & REALISTIC STAGE PHOTO (5 cols)    */}
           {/* ------------------------------------------------------------- */}
-          <div className="flex flex-col h-full w-full min-w-0 max-w-full overflow-hidden">
-            <div className="group relative rounded-xl sm:rounded-2xl border border-slate-200 bg-white p-2.5 sm:p-4 shadow-sm overflow-hidden transition-all hover:border-blue-400 flex flex-col justify-between h-full w-full min-w-0 max-w-full">
+          <div className="lg:col-span-5 flex flex-col h-full w-full min-w-0 max-w-full overflow-hidden">
+            <div className="group relative rounded-xl border border-slate-200 bg-white p-2 sm:p-2.5 shadow-2xs overflow-hidden transition-all hover:border-blue-400 flex flex-col justify-between h-full w-full min-w-0 max-w-full">
               {/* Top Window Bar (Mac dots & Deliverable Badge) */}
-              <div className="flex items-center justify-between gap-1 pb-2 sm:pb-2.5 border-b border-slate-100 shrink-0 w-full min-w-0">
-                <div className="flex items-center gap-1 sm:gap-1.5 min-w-0 flex-1">
-                  <span className="size-1.5 sm:size-2 rounded-full bg-rose-500/90 inline-block shrink-0" />
-                  <span className="size-1.5 sm:size-2 rounded-full bg-amber-500/90 inline-block shrink-0" />
-                  <span className="size-1.5 sm:size-2 rounded-full bg-emerald-500/90 inline-block shrink-0" />
-                  <span className="text-[9px] sm:text-xs font-mono text-slate-600 font-semibold ml-0.5 truncate">
+              <div className="flex items-center justify-between gap-1 pb-1.5 border-b border-slate-100 shrink-0 w-full min-w-0">
+                <div className="flex items-center gap-1 min-w-0 flex-1">
+                  <span className="size-1.5 rounded-full bg-rose-500/90 inline-block shrink-0" />
+                  <span className="size-1.5 rounded-full bg-amber-500/90 inline-block shrink-0" />
+                  <span className="size-1.5 rounded-full bg-emerald-500/90 inline-block shrink-0" />
+                  <span className="text-[9px] sm:text-[10px] font-mono text-slate-600 font-semibold ml-0.5 truncate">
                     {currentStage.outputTitle}
                   </span>
                 </div>
-                <span className="text-[7.5px] sm:text-[9.5px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 shadow-2xs shrink-0 max-w-[100px] sm:max-w-none truncate">
+                <span className="text-[7.5px] sm:text-[8.5px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 shadow-2xs shrink-0 truncate">
                   {currentStage.outputBadge}
                 </span>
               </div>
 
-              {/* Realistic Stage Image (Fills border area cleanly edge-to-edge) */}
-              <div className="relative w-full flex-1 min-h-[220px] xs:min-h-[250px] sm:min-h-[270px] md:min-h-[290px] my-2 sm:my-2.5 rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xs">
-                {/* Full-bleed realistic photography filling the entire bordered frame */}
+              {/* Realistic Stage Image */}
+              <div className="relative w-full flex-1 min-h-[160px] xs:min-h-[180px] sm:min-h-[195px] my-1.5 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 shadow-2xs">
                 <img
                   key={currentStage.image}
                   src={currentStage.image}
                   alt={currentStage.imageAlt}
-                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="size-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
 
                 {/* Subtle bottom gradient to ensure overlay badge is always readable */}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none" />
 
                 {/* Live Stage Deliverable Badge */}
-                <div className="absolute bottom-2.5 right-2.5 z-20 inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-lg bg-slate-950/85 border border-white/20 backdrop-blur-md text-[8px] sm:text-[10.5px] font-bold text-white shadow-lg pointer-events-none max-w-[calc(100%-1.25rem)]">
-                  <span className="relative flex size-1.5 sm:size-2 shrink-0">
+                <div className="absolute bottom-2 right-2 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-950/85 border border-white/20 backdrop-blur-md text-[8px] sm:text-[9.5px] font-bold text-white shadow-md pointer-events-none max-w-[calc(100%-1rem)]">
+                  <span className="relative flex size-1.5 shrink-0">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex size-1.5 sm:size-2 rounded-full bg-emerald-500" />
+                    <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
                   </span>
                   <span className="truncate">Stage {currentStage.step} • {currentStage.outputTitle}</span>
                 </div>
               </div>
 
               {/* Stat Highlight Banner */}
-              <div className="shrink-0 py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between gap-1.5 shadow-2xs w-full min-w-0">
-                <span className="text-[9.5px] sm:text-[11px] text-slate-500 font-medium shrink-0">Outcome:</span>
-                <span className="text-[10px] sm:text-[13px] font-bold text-slate-900 tracking-wide truncate text-right flex-1 min-w-0">
+              <div className="shrink-0 py-1 px-2 rounded bg-slate-50 border border-slate-200 flex items-center justify-between gap-1 shadow-2xs w-full min-w-0">
+                <span className="text-[9px] text-slate-500 font-medium shrink-0">Outcome:</span>
+                <span className="text-[9.5px] sm:text-[11px] font-bold text-slate-900 tracking-wide truncate text-right flex-1 min-w-0">
                   {currentStage.outputStat}
                 </span>
               </div>
-
-              {/* Notice: Terminal snippet box card is deleted as requested */}
             </div>
           </div>
         </div>

@@ -3,6 +3,11 @@ import { useState, useMemo, useEffect, type CSSProperties } from "react";
 import { courses } from "@/data/courses";
 import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
+import domainCyberSecurityImg from "@/assets/domain-cyber-security.jpg";
+import domainDigitalMarketingImg from "@/assets/domain-digital-marketing.jpg";
+import domainProgrammaticAdsImg from "@/assets/domain-programmatic-ads.jpg";
+import domainAiAutomationImg from "@/assets/domain-ai-automation.jpg";
+import domainFullstackDevImg from "@/assets/domain-fullstack-dev.jpg";
 import {
   subscribeCourses,
   normalizeCourseCategory,
@@ -31,8 +36,63 @@ import {
   UserPlus,
   ArrowRight,
   X,
+  ShieldCheck,
+  Megaphone,
+  Radio,
+  Bot,
+  Code2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const DOMAIN_SPOTLIGHTS: Record<string, {
+  eyebrow: string;
+  title: string;
+  desc: string;
+  image: string;
+  badgeStyle: string;
+  skills: string[];
+}> = {
+  "Cyber Security": {
+    eyebrow: "DEFENSE & ETHICAL HACKING",
+    title: "Cyber Security & Defensive Operations",
+    desc: "Master hands-on penetration testing, vulnerability assessments, network defense, Linux administration, and SOC incident analysis.",
+    image: domainCyberSecurityImg,
+    badgeStyle: "bg-blue-50 text-blue-800 border-blue-200",
+    skills: ["Ethical Hacking", "Network Defense", "SOC Incident Response", "Vulnerability Assessment"],
+  },
+  "Digital Marketing": {
+    eyebrow: "GROWTH & PERFORMANCE",
+    title: "Digital Marketing & Performance Growth",
+    desc: "Scale traffic and conversions across modern SEO, Meta/Google Ads, viral funnels, and data-driven GA4 analytics.",
+    image: domainDigitalMarketingImg,
+    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200",
+    skills: ["SEO Strategy", "Google & Meta Ads", "Conversion Rate Optimization", "GA4 Analytics"],
+  },
+  "Programmatic Advertising": {
+    eyebrow: "ADTECH & REAL-TIME BIDDING",
+    title: "Programmatic Advertising & DSP Trading",
+    desc: "Enterprise AdTech media buying, real-time bidding algorithms, Google DV360, CM360, SSPs, and publisher monetization.",
+    image: domainProgrammaticAdsImg,
+    badgeStyle: "bg-blue-50 text-blue-800 border-blue-200",
+    skills: ["DV360 & CM360", "Real-Time Bidding", "Audience Targeting", "DSP & SSP Platforms"],
+  },
+  "AI & Automation": {
+    eyebrow: "AI AGENTS & SMART WORKFLOWS",
+    title: "AI Agents & Intelligent Automation",
+    desc: "Automate modern business operations with autonomous AI agents, Zapier pipelines, smart CRM integrations, and LLM apps.",
+    image: domainAiAutomationImg,
+    badgeStyle: "bg-amber-50 text-amber-800 border-amber-200",
+    skills: ["Autonomous AI Agents", "Zapier & Webhooks", "CRM Pipelines", "Chatbot Funnels"],
+  },
+  "Full Stack Development": {
+    eyebrow: "REACT & NODE.JS ENGINEERING",
+    title: "Full Stack Web Engineering Masterclass",
+    desc: "Build scalable full-stack web applications with React 19, TypeScript, Node.js, Express, databases, and cloud DevOps.",
+    image: domainFullstackDevImg,
+    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200",
+    skills: ["React & TypeScript", "Node.js & Express", "Databases & APIs", "AWS Cloud & DevOps"],
+  },
+};
 
 export const Route = createFileRoute("/courses/")({
   head: () => ({
@@ -161,6 +221,8 @@ function CoursesPage() {
       "Cyber Security",
       "Digital Marketing",
       "Programmatic Advertising",
+      "AI & Automation",
+      "Full Stack Development",
     ];
 
     // First add priority categories that have active courses
@@ -352,6 +414,59 @@ function CoursesPage() {
                 </div>
               </div>
 
+
+              {/* 3D Domain Track Spotlight Banner (Connecting Category Tab to 3D Artwork and Subcourses) */}
+              {activeTab !== "All Courses" && DOMAIN_SPOTLIGHTS[activeTab] && (
+                <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-r from-slate-900 via-[#0a1835] to-slate-900 p-4 sm:p-5 text-white shadow-md">
+                  <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
+                    {/* 3D Domain Visual Frame */}
+                    <div className="relative aspect-[16/10] w-full sm:w-44 md:w-48 shrink-0 rounded-xl overflow-hidden border border-white/10 shadow-md">
+                      <img
+                        src={DOMAIN_SPOTLIGHTS[activeTab].image}
+                        alt={DOMAIN_SPOTLIGHTS[activeTab].title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                      <span className="absolute bottom-1.5 left-2 right-2 text-[8.5px] font-black uppercase tracking-wider text-amber-300 truncate">
+                        {DOMAIN_SPOTLIGHTS[activeTab].eyebrow}
+                      </span>
+                    </div>
+
+                    {/* Spotlight Details */}
+                    <div className="min-w-0 flex-1 space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-sky-300 border border-blue-400/30 text-[9.5px] font-extrabold uppercase tracking-wider">
+                          {DOMAIN_SPOTLIGHTS[activeTab].eyebrow}
+                        </span>
+                        <span className="text-slate-400 text-xs">•</span>
+                        <span className="text-slate-300 text-xs font-semibold">
+                          {visibleCourses.length} {visibleCourses.length === 1 ? "Program" : "Programs"}
+                        </span>
+                      </div>
+
+                      <h3 className="text-sm sm:text-base font-black text-white leading-snug">
+                        {DOMAIN_SPOTLIGHTS[activeTab].title}
+                      </h3>
+
+                      <p className="text-[11.5px] sm:text-xs text-slate-300 leading-relaxed">
+                        {DOMAIN_SPOTLIGHTS[activeTab].desc}
+                      </p>
+
+                      {/* Skills Tags */}
+                      <div className="flex flex-wrap gap-1.5 pt-0.5">
+                        {DOMAIN_SPOTLIGHTS[activeTab].skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="px-2 py-0.5 rounded-md bg-white/10 text-slate-200 text-[10px] font-medium border border-white/10"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Course Cards Grid */}
               <div

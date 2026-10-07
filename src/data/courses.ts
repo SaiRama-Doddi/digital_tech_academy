@@ -3,10 +3,17 @@ import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import advancedSeoImg from "@/assets/course-advanced-seo.jpg";
 import ethicalHackingImg from "@/assets/course-ethical-hacking.jpg";
 import programmaticAdvertisingImg from "@/assets/course-programmatic-advertising.jpg";
+import domainAiAutomationImg from "@/assets/domain-ai-automation.jpg";
+import domainFullstackDevImg from "@/assets/domain-fullstack-dev.jpg";
 import arjunImg from "@/assets/instructor-arjun.jpg";
 import priyaImg from "@/assets/instructor-priya.jpg";
 
-export type CourseCategory = "Digital Marketing" | "Cyber Security" | "Programmatic Advertising";
+export type CourseCategory =
+  | "Digital Marketing"
+  | "Cyber Security"
+  | "Programmatic Advertising"
+  | "AI & Automation"
+  | "Full Stack Development";
 
 export type Instructor = {
   name: string;
@@ -110,6 +117,24 @@ const securityPractical = [
   "Tool-based exercises",
   "Mentor code and report reviews",
   "Final security assessment project",
+];
+
+const aiPractical = [
+  "Prompt engineering and AI agent development",
+  "Zapier, Make and webhook pipeline automation",
+  "AI CRM and sales pipeline integration",
+  "Chatbot and conversational flow building",
+  "LLM API integration and vector databases",
+  "Capstone enterprise automation project",
+];
+
+const fullstackPractical = [
+  "End-to-end full stack web application development",
+  "RESTful and GraphQL API design with Node.js",
+  "Relational and NoSQL database modeling",
+  "Authentication, JWT, and security hardening",
+  "CI/CD deployment to cloud platforms",
+  "Production capstone architecture project",
 ];
 
 export const courses: Course[] = [
@@ -1077,6 +1102,305 @@ export const courses: Course[] = [
       { question: "Is the course online or offline?", answer: "Classroom and live online options are available." },
       { question: "Will I receive a certificate?", answer: "Yes, after assessment and lab project participation." },
       { question: "How do I enroll?", answer: "Request a call to check the next batch start date." },
+    ],
+  },
+  {
+    id: "ai-01",
+    slug: "ai-automation",
+    title: "AI & Workflow Automation Masterclass",
+    heroEyebrow: "AI & WORKFLOW AUTOMATION MASTERCLASS",
+    heroTitle: "AI & Workflow Automation Masterclass",
+    heroDescription:
+      "Master Generative AI, custom autonomous agents, Zapier/Make automation pipelines, and enterprise CRM workflow integrations.",
+    primaryCta: "Apply for Batch",
+    secondaryCta: "Download Syllabus",
+    audienceText:
+      "Designed for marketers, tech professionals, operations leads, and founders seeking to automate processes with AI.",
+    learningJourney: "Hands-on projects covering AI agents, webhook automation, CRM pipelines, and LLM integrations.",
+    category: "AI & Automation",
+    description:
+      "Automate repetitive tasks, build custom AI bots, and create smart multi-app automation workflows.",
+    longDescription:
+      "Step into the future of business operations with practical AI and workflow engineering. Build autonomous AI agents, automate enterprise sales funnels with Make and Zapier, and integrate OpenAI and Claude APIs directly into daily workflows.",
+    duration: "10 Weeks",
+    level: "Beginner to Intermediate",
+    mode: "Live Online & Hands-on Labs",
+    certificate: "Certificate of Completion in AI & Automation",
+    image: domainAiAutomationImg,
+    highlights: [
+      "Custom AI agent design & execution",
+      "Zapier & Make multi-step automation",
+      "Enterprise CRM & email pipeline triggers",
+      "Prompt engineering & LLM API integration",
+    ],
+    overview: {
+      heading: "Why Master AI & Workflow Automation?",
+      description:
+        "Modern businesses rely on automation to scale efficiently. This program teaches you how to leverage AI tools and API automation to save hundreds of hours.",
+      learn: [
+        "Architect end-to-end automated pipelines with Zapier and Make",
+        "Build autonomous AI agents for customer support and data analysis",
+        "Integrate LLMs with webhooks, Google Sheets, and CRM tools",
+        "Deploy production chatbots with retrieval augmented generation (RAG)",
+      ],
+      whatYouLearnDetailed: [
+        {
+          title: "Prompt Engineering & LLMs",
+          description: "Craft advanced prompts, system messages, and few-shot examples for structured business outputs.",
+        },
+        {
+          title: "Workflow Automation with Zapier & Make",
+          description: "Connect 20+ SaaS tools through multi-branch conditional triggers, routers, and webhooks.",
+        },
+        {
+          title: "AI Agents & Autonomous Assistants",
+          description: "Deploy task-oriented agents that browse the web, parse documents, and execute multi-step routines.",
+        },
+        {
+          title: "Enterprise CRM & MarTech Automation",
+          description: "Automate lead scoring, nurture sequences, and client onboarding pipelines end-to-end.",
+        },
+      ],
+      audience: [
+        "Marketing & Operations Specialists",
+        "Entrepreneurs & Startup Founders",
+        "Software Developers expanding into AI tools",
+        "Business Analysts looking to eliminate manual tasks",
+      ],
+      audienceDescription:
+        "Whether you are in marketing, engineering, or operations, AI automation skills immediately multiply your productivity.",
+      outcomes: [
+        "Build live automated workflows from scratch",
+        "Save 20+ hours weekly with autonomous agents",
+        "Create high-value client automation solutions",
+        "Gain recognized industry certification",
+      ],
+    },
+    practicalLearning: {
+      heading: "Practical Lab Experience",
+      description:
+        "Every session combines conceptual architecture with live building exercises across leading AI automation platforms.",
+      items: aiPractical,
+    },
+    careerSkills: {
+      heading: "Career Outcomes",
+      description:
+        "Graduate ready for roles like AI Solutions Consultant, Automation Specialist, and Operations Engineer.",
+    },
+    syllabus: [
+      {
+        module: "Module 1",
+        title: "Generative AI Fundamentals & Advanced Prompting",
+        topics: ["LLM architectures", "Chain-of-thought prompting", "Structured JSON output", "System prompt optimization"],
+      },
+      {
+        module: "Module 2",
+        title: "No-Code Automation with Zapier & Make",
+        topics: ["Triggers and webhooks", "Routers and iterators", "Error handling and retry logic", "Data transformation"],
+      },
+      {
+        module: "Module 3",
+        title: "Autonomous AI Agents & Tool Calling",
+        topics: ["Function calling with OpenAI", "Memory & state management", "Document parsing", "Browser automation"],
+      },
+      {
+        module: "Module 4",
+        title: "Capstone Enterprise Automation Project",
+        topics: ["End-to-end CRM automation", "Live client demo", "Monitoring & logging", "Portfolio preparation"],
+      },
+    ],
+    practicalTraining: aiPractical,
+    projects: [
+      {
+        title: "Autonomous Lead Qualification Bot",
+        summary: "Build an AI agent that chats with website visitors, scores leads, and pushes qualified records into CRM.",
+      },
+      {
+        title: "Omnichannel Social Content Pipeline",
+        summary: "Automate blog post summaries, social media graphic generation, and cross-platform scheduling.",
+      },
+    ],
+    instructors: [instructors[0]!],
+    pricing: {
+      fee: "₹24,999",
+      earlyFee: "₹19,999",
+      note: "Flexible installment options available.",
+      includes: [
+        "Full course access & recordings",
+        "AI sandbox credits & templates",
+        "Hands-on guided assignments",
+        "Dedicated mentor review",
+        "Verified industry certificate",
+      ],
+    },
+    testimonials: [
+      {
+        name: "Vikram R.",
+        course: "AI & Workflow Automation Masterclass",
+        rating: 5,
+        quote: "The hands-on Zapier and AI agent labs saved our agency 30+ hours a week.",
+      },
+      {
+        name: "Sneha M.",
+        course: "AI & Workflow Automation Masterclass",
+        rating: 5,
+        quote: "The best practical AI course out there. Zero fluff, 100% actionable skills.",
+      },
+    ],
+    faqs: [
+      { question: "Do I need coding experience?", answer: "No coding background is needed. We cover both no-code and lightweight API integrations." },
+      { question: "What tools will I learn?", answer: "OpenAI APIs, Zapier, Make, Claude, Airtable, and custom agent frameworks." },
+      { question: "What is the duration?", answer: "10 weeks with practical weekly projects." },
+      { question: "Is a certificate provided?", answer: "Yes, upon successful submission of the capstone project." },
+    ],
+  },
+  {
+    id: "fs-01",
+    slug: "full-stack-web-development",
+    title: "Full Stack Web Development Masterclass",
+    heroEyebrow: "FULL STACK WEB DEVELOPMENT MASTERCLASS",
+    heroTitle: "Full Stack Web Development Masterclass",
+    heroDescription:
+      "Learn modern frontend and backend engineering with React, TypeScript, Node.js, databases, REST/GraphQL APIs, and cloud deployment.",
+    primaryCta: "Apply for Batch",
+    secondaryCta: "Download Syllabus",
+    audienceText:
+      "Ideal for beginners, CS students, and career switchers looking to break into high-paying web development roles.",
+    learningJourney: "Build and deploy 4 production-grade full stack web applications from scratch.",
+    category: "Full Stack Development",
+    description:
+      "Master modern web engineering: React, Node.js, Express, PostgreSQL, MongoDB, and AWS deployment.",
+    longDescription:
+      "Become a job-ready full stack software developer. Learn how to architect scalable server systems, build reactive user interfaces with modern React, design clean database schemas, and deploy resilient cloud apps.",
+    duration: "16 Weeks",
+    level: "Beginner to Advanced",
+    mode: "Live Interactive & Code Labs",
+    certificate: "Full Stack Software Developer Certification",
+    image: domainFullstackDevImg,
+    highlights: [
+      "Modern React 19 & TypeScript frontend",
+      "Node.js, Express & REST/GraphQL backend",
+      "PostgreSQL & MongoDB database modeling",
+      "Docker & AWS cloud deployment pipelines",
+    ],
+    overview: {
+      heading: "Why Choose Full Stack Engineering?",
+      description:
+        "Full stack developers are among the most versatile and in-demand engineers in tech, capable of bringing ideas to life from database to UI.",
+      learn: [
+        "Build reactive web apps with React, Vite, TailwindCSS, and TypeScript",
+        "Design scalable REST APIs and microservices with Node.js and Express",
+        "Master SQL and NoSQL database modeling with Prisma and Mongoose",
+        "Implement secure authentication, OAuth2, and JWT token sessions",
+      ],
+      whatYouLearnDetailed: [
+        {
+          title: "Frontend Engineering & UI Systems",
+          description: "Modern component architectures, state management, hooks, and responsive design systems.",
+        },
+        {
+          title: "Backend Services & API Architecture",
+          description: "Construct robust, performant RESTful APIs with Node.js, validation middlewares, and error handling.",
+        },
+        {
+          title: "Databases & Data Modeling",
+          description: "Master relational schema design in PostgreSQL and document stores in MongoDB.",
+        },
+        {
+          title: "DevOps & Cloud Deployment",
+          description: "Containerize applications with Docker and deploy to AWS and Vercel with automated CI/CD.",
+        },
+      ],
+      audience: [
+        "College Graduates & CS Students",
+        "Frontend Developers expanding to backend",
+        "Non-technical professionals transitioning to software engineering",
+        "Tech enthusiasts wanting to build software products",
+      ],
+      audienceDescription:
+        "No prior coding experience is required. We take you from fundamental concepts to enterprise-grade web development.",
+      outcomes: [
+        "Deploy 4 real-world full stack web applications",
+        "Master Git, GitHub, and team collaboration workflows",
+        "Ace technical coding interviews and system design rounds",
+        "Receive industry-recognized Full Stack Certification",
+      ],
+    },
+    practicalLearning: {
+      heading: "Hands-on Code Labs",
+      description:
+        "Code alongside senior software engineers in live sandbox environments with instant code reviews.",
+      items: fullstackPractical,
+    },
+    careerSkills: {
+      heading: "Career Outcomes",
+      description:
+        "Qualify for Full Stack Developer, Frontend Engineer, and Backend Node.js Engineer positions.",
+    },
+    syllabus: [
+      {
+        module: "Module 1",
+        title: "Frontend Mastery: HTML5, CSS3, TypeScript & React",
+        topics: ["Semantic HTML & TailwindCSS", "TypeScript fundamentals", "React components & hooks", "State management"],
+      },
+      {
+        module: "Module 2",
+        title: "Backend Mastery: Node.js, Express & Databases",
+        topics: ["Node.js runtime & event loop", "Express routing & middleware", "PostgreSQL & Prisma ORM", "MongoDB"],
+      },
+      {
+        module: "Module 3",
+        title: "Authentication, Security & API Integration",
+        topics: ["JWT & OAuth2", "CORS & CSRF prevention", "Stripe payment integration", "File upload with S3"],
+      },
+      {
+        module: "Module 4",
+        title: "Cloud Deployment & Production Capstone",
+        topics: ["Docker containerization", "CI/CD GitHub Actions", "AWS deployment", "Mock technical interviews"],
+      },
+    ],
+    practicalTraining: fullstackPractical,
+    projects: [
+      {
+        title: "Real-Time Collaboration Platform",
+        summary: "Build a collaborative workspace with real-time WebSockets, live updates, and secure user permissions.",
+      },
+      {
+        title: "Full Stack E-Commerce & Subscription SaaS",
+        summary: "Create a complete SaaS app with Stripe billing, user dashboards, database persistence, and analytics.",
+      },
+    ],
+    instructors: [instructors[1]!],
+    pricing: {
+      fee: "₹29,999",
+      earlyFee: "₹24,999",
+      note: "0% EMI options available.",
+      includes: [
+        "Lifetime access to recordings & codebase",
+        "1-on-1 code reviews & debug assistance",
+        "Resume building & mock tech interviews",
+        "Full Stack Developer Certificate",
+      ],
+    },
+    testimonials: [
+      {
+        name: "Aditya S.",
+        course: "Full Stack Web Development Masterclass",
+        rating: 5,
+        quote: "The project-based learning methodology gave me the real portfolio I needed to land my first software engineering role.",
+      },
+      {
+        name: "Pooja K.",
+        course: "Full Stack Web Development Masterclass",
+        rating: 5,
+        quote: "Super thorough, modern tech stack (React + TypeScript + Node), and incredible mentor guidance.",
+      },
+    ],
+    faqs: [
+      { question: "Is this course suitable for complete beginners?", answer: "Yes, we start with programming basics and advance systematically." },
+      { question: "What tech stack is taught?", answer: "React 19, TypeScript, Node.js, Express, PostgreSQL, MongoDB, Docker, and AWS." },
+      { question: "How long is the program?", answer: "16 weeks with live weekend classes and weekday code lab sessions." },
+      { question: "Is placement assistance included?", answer: "Yes, including resume reviews, mock interviews, and hiring partner referrals." },
     ],
   },
 ];

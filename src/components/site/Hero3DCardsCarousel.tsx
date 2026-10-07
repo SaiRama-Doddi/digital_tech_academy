@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Shield,
   BarChart3,
@@ -8,7 +8,6 @@ import {
   Code2,
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
   Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -107,7 +106,20 @@ const HERO_COURSE_CARDS: HeroCourseCard[] = [
   },
 ];
 
-export function Hero3DCardsCarousel() {
+const DOMAIN_MAP: Record<string, string> = {
+  cyber: "Cyber Security",
+  marketing: "Digital Marketing",
+  programmatic: "Programmatic Advertising",
+  ai: "AI & Automation",
+  fullstack: "Full Stack Development",
+};
+
+export interface Hero3DCardsCarouselProps {
+  onSelectDomain?: ((domain: string) => void) | undefined;
+}
+
+export function Hero3DCardsCarousel({ onSelectDomain }: Hero3DCardsCarouselProps = {}) {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -167,7 +179,7 @@ export function Hero3DCardsCarousel() {
 
       {/* 3D Cylindrical Cards Stage */}
       <div
-        className="relative w-full h-[440px] sm:h-[470px] lg:h-[485px] flex items-center justify-center mt-1 sm:mt-2"
+        className="relative w-full h-[395px] sm:h-[420px] lg:h-[435px] flex items-center justify-center mt-1 sm:mt-2"
         style={{ perspective: "1100px" }}
       >
         {HERO_COURSE_CARDS.map((card, idx) => {
@@ -224,10 +236,23 @@ export function Hero3DCardsCarousel() {
             <div
               key={card.id}
               onClick={() => {
-                if (!isCenter) setActiveIndex(idx);
+                if (!isCenter) {
+                  setActiveIndex(idx);
+                } else {
+                  const domainName = DOMAIN_MAP[card.id] || "Digital Marketing";
+                  if (onSelectDomain) {
+                    onSelectDomain(domainName);
+                    const coursesElem = document.getElementById("courses");
+                    if (coursesElem) {
+                      coursesElem.scrollIntoView({ behavior: "smooth" });
+                    }
+                  } else {
+                    navigate({ to: card.link as any });
+                  }
+                }
               }}
               className={cn(
-                "group absolute top-0 w-[92%] max-w-[355px] sm:max-w-[385px] xl:max-w-[405px] h-[435px] sm:h-[465px] lg:h-[478px] rounded-3xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-700 ease-out cursor-pointer overflow-hidden text-white shadow-2xl",
+                "group absolute top-0 w-[92%] max-w-[355px] sm:max-w-[385px] xl:max-w-[405px] h-[390px] sm:h-[415px] lg:h-[430px] rounded-3xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-700 ease-out cursor-pointer overflow-hidden text-white shadow-2xl",
                 isCenter ? card.borderGlow : "shadow-slate-950/60 ring-1 ring-white/5"
               )}
               style={{
@@ -285,29 +310,19 @@ export function Hero3DCardsCarousel() {
                 </span>
               </div>
 
-              {/* Card Bottom Area: Title, Outcome Badge, and CTA */}
-              <div className="relative z-10 space-y-3 mt-auto pt-4">
+              {/* Card Bottom Area: Title and Outcome Badge */}
+              <div className="relative z-10 space-y-2.5 mt-auto pt-4">
                 <div>
                   <h3 className="text-base sm:text-lg xl:text-xl font-black tracking-tight text-white leading-tight drop-shadow-md">
                     {card.title}
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-2 bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-xl px-3 py-1.5 shadow-sm">
+                <div className="flex items-center gap-2 bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2 shadow-sm">
                   <Zap className={cn("size-3.5 shrink-0", card.accentColor)} />
                   <span className="text-[10px] sm:text-xs font-bold text-slate-200 truncate">
                     {card.keyOutcome}
                   </span>
-                </div>
-
-                <div>
-                  <Link
-                    to={card.link}
-                    className="w-full h-10 sm:h-11 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition-all active:scale-[0.98]"
-                  >
-                    <span>Explore Program</span>
-                    <ArrowRight className="size-3.5 sm:size-4" />
-                  </Link>
                 </div>
               </div>
             </div>

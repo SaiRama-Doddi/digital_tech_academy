@@ -17,6 +17,8 @@ export const POPULAR_COURSE_CATEGORIES = [
   "Cyber Security",
   "Digital Marketing",
   "Programmatic Advertising",
+  "AI & Automation",
+  "Full Stack Development",
 ] as const;
 
 export type PopularCategory = (typeof POPULAR_COURSE_CATEGORIES)[number];
@@ -55,7 +57,34 @@ export function normalizeCourseCategory(category?: string, title?: string, slug?
     return "Cyber Security";
   }
 
-  // 3. Digital Marketing
+  // 3. AI & Automation
+  if (
+    t.includes("ai &") ||
+    t.includes("ai ") ||
+    t.includes("automation") ||
+    s.includes("ai") ||
+    s.includes("automation") ||
+    c.includes("ai") ||
+    c.includes("automation")
+  ) {
+    return "AI & Automation";
+  }
+
+  // 4. Full Stack Development
+  if (
+    t.includes("full stack") ||
+    t.includes("fullstack") ||
+    s.includes("full-stack") ||
+    s.includes("fullstack") ||
+    c.includes("full stack") ||
+    c.includes("fullstack") ||
+    t.includes("web development") ||
+    s.includes("web-dev")
+  ) {
+    return "Full Stack Development";
+  }
+
+  // 5. Digital Marketing
   if (
     t.includes("marketing") ||
     s.includes("marketing") ||

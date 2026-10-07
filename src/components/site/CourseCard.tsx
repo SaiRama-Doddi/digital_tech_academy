@@ -11,6 +11,7 @@ import {
   Award,
   Sparkles,
   Radio,
+  Bot,
 } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,8 @@ import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
 import advancedSeoImg from "@/assets/course-advanced-seo.jpg";
 import ethicalHackingImg from "@/assets/course-ethical-hacking.jpg";
 import programmaticAdvertisingImg from "@/assets/course-programmatic-advertising.jpg";
+import domainAiAutomationImg from "@/assets/domain-ai-automation.jpg";
+import domainFullstackDevImg from "@/assets/domain-fullstack-dev.jpg";
 import { normalizeCourseCategory } from "@/services/courseService";
 
 export function getCourseCategory(course: any): string {
@@ -36,6 +39,12 @@ export function getCourseImage(course: any): string {
   const title = (course?.title || "").toLowerCase();
   const category = (course?.category || "").toLowerCase();
 
+  if (slug.includes("ai") || title.includes("ai") || category.includes("ai") || slug.includes("automation") || title.includes("automation")) {
+    return domainAiAutomationImg;
+  }
+  if (slug.includes("full-stack") || slug.includes("web-dev") || title.includes("full stack") || category.includes("stack") || category.includes("web")) {
+    return domainFullstackDevImg;
+  }
   if (slug.includes("ethical") || title.includes("ethical") || title.includes("hacking")) {
     return ethicalHackingImg;
   }
@@ -72,13 +81,15 @@ function getCourseTheme(category: string, title?: string) {
   const text = `${category} ${title || ""}`.toLowerCase();
 
   let icon = Award;
-  if (text.includes("programmatic") || text.includes("adtech") || text.includes("media") || text.includes("dv360")) {
+  if (text.includes("ai") || text.includes("automation") || text.includes("bot") || text.includes("agent")) {
+    icon = Bot;
+  } else if (text.includes("programmatic") || text.includes("adtech") || text.includes("media") || text.includes("dv360")) {
     icon = Radio;
   } else if (text.includes("market") || text.includes("seo") || text.includes("social") || text.includes("ads") || text.includes("ad")) {
     icon = Megaphone;
   } else if (text.includes("web") || text.includes("code") || text.includes("frontend") || text.includes("full stack") || text.includes("react") || text.includes("developer")) {
     icon = Code2;
-  } else if (text.includes("data") || text.includes("analytic") || text.includes("bi") || text.includes("sql") || text.includes("python") || text.includes("ai") || text.includes("machine")) {
+  } else if (text.includes("data") || text.includes("analytic") || text.includes("bi") || text.includes("sql") || text.includes("python")) {
     icon = BarChart3;
   } else if (text.includes("cyber") || text.includes("hack") || text.includes("security") || text.includes("soc") || text.includes("network")) {
     icon = ShieldCheck;
@@ -121,13 +132,13 @@ export function CourseCard({ course }: { course: Course | any }) {
         navigate({ to: "/courses/$slug", params: { slug: course.slug } });
       }}
       className={cn(
-        "group flex flex-col justify-between rounded-2xl bg-gradient-to-b border p-4 sm:p-5 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 cursor-pointer h-full select-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none",
+        "group flex flex-col justify-between rounded-xl bg-gradient-to-b border p-3.5 sm:p-4 shadow-2xs transition-all duration-200 hover:shadow-md hover:-translate-y-1 cursor-pointer h-full select-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none",
         theme.bgGradient,
         theme.borderColor,
       )}
     >
       {/* Course Image Header with Floating Badges */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-900 shadow-xs mb-3.5 shrink-0">
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-slate-900 shadow-2xs mb-2.5 shrink-0">
         <img
           src={courseImage}
           alt={course.title}
@@ -137,16 +148,16 @@ export function CourseCard({ course }: { course: Course | any }) {
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-black/30" />
 
         {/* Floating Category & Mode Badges */}
-        <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
+        <div className="absolute top-2 inset-x-2 flex items-center justify-between gap-1.5 z-10">
           <span
             className={cn(
-              "text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border shadow-xs backdrop-blur-md bg-white/95",
+              "text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full border shadow-2xs backdrop-blur-md bg-white/95",
               theme.badgeBg,
             )}
           >
             {displayCategory}
           </span>
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-slate-300 text-[9.5px] font-bold text-slate-800 shadow-xs backdrop-blur-md">
+          <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white/95 border border-slate-300 text-[9px] font-bold text-slate-800 shadow-2xs backdrop-blur-md">
             <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>Live Online</span>
           </div>
@@ -155,85 +166,65 @@ export function CourseCard({ course }: { course: Course | any }) {
         {/* Subtle Theme Icon Accent Floating at Bottom-Right of Image */}
         <div
           className={cn(
-            "absolute bottom-2.5 right-2.5 size-7 rounded-lg flex items-center justify-center shadow-md backdrop-blur-md transition-transform duration-300 group-hover:scale-110",
+            "absolute bottom-2 right-2 size-6 rounded-md flex items-center justify-center shadow-xs backdrop-blur-md transition-transform duration-300 group-hover:scale-110",
             theme.iconBg,
           )}
         >
-          <IconComponent className="size-3.5" aria-hidden="true" />
+          <IconComponent className="size-3" aria-hidden="true" />
         </div>
       </div>
 
       {/* Card Body: Title, Description & Highlights */}
       <div className="flex flex-col flex-1 w-full">
         {/* Course Title */}
-        <div className="min-h-[44px] flex items-center w-full">
-          <h3 className="font-extrabold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-blue-600 transition-colors line-clamp-2 text-left">
+        <div className="min-h-[38px] flex items-center w-full">
+          <h3 className="font-bold text-slate-900 text-[13.5px] sm:text-sm leading-snug group-hover:text-blue-600 transition-colors line-clamp-2 text-left">
             {course.title}
           </h3>
         </div>
 
         {/* Subtitle / Topics / Description */}
-        <div className="mt-1.5 w-full min-h-[54px] flex items-start">
-          <p className="w-full text-xs text-slate-700 leading-relaxed text-justify line-clamp-3 font-normal">
+        <div className="mt-1 w-full min-h-[44px] flex items-start">
+          <p className="w-full text-[11px] text-slate-600 leading-relaxed text-justify line-clamp-2 font-normal">
             {course.description}
           </p>
         </div>
 
-        {/* Learning Journey Strip (if present) */}
-        {course.learningJourney && (
-          <div className="mt-2.5 w-full rounded-lg bg-white border border-slate-300 px-2 py-1 text-center shadow-2xs">
-            <span className="block text-[8px] font-black uppercase tracking-wider text-slate-500">
-              Learning Journey
-            </span>
-            <span className="block text-[9.5px] font-bold text-blue-700 truncate mt-0.5">
-              {course.learningJourney}
-            </span>
-          </div>
-        )}
-
         {/* Skill Chips */}
-        <div className="mt-2.5 w-full min-h-[24px] flex flex-wrap items-center gap-1.5">
+        <div className="mt-2 w-full min-h-[22px] flex flex-wrap items-center gap-1">
           {course.highlights && course.highlights.length > 0 ? (
             course.highlights.slice(0, 3).map((h: string, idx: number) => (
               <span
                 key={idx}
-                className="text-[9px] sm:text-[9.5px] font-semibold px-2 py-0.5 rounded-md border border-slate-300 bg-white text-slate-700 max-w-[140px] truncate shadow-2xs"
+                className="text-[8.5px] font-semibold px-1.5 py-0.5 rounded-md border border-slate-200 bg-white text-slate-600 max-w-[130px] truncate shadow-2xs"
               >
                 {h}
               </span>
             ))
           ) : (
-            <span className="text-[9px] sm:text-[9.5px] font-medium px-2 py-0.5 rounded-md border border-slate-300 bg-white text-slate-700">
-              Interactive Live Training
+            <span className="text-[8.5px] font-medium px-1.5 py-0.5 rounded-md border border-slate-200 bg-white text-slate-600">
+              Live Training
             </span>
           )}
         </div>
       </div>
 
       {/* Bottom Metadata & Action Row */}
-      <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between w-full">
-        <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold text-slate-600">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between w-full">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-600">
           <span className="flex items-center gap-1">
-            <Clock className="size-3 sm:size-3.5 text-slate-500" />
+            <Clock className="size-3 text-slate-400" />
             {course.duration || "12 Weeks"}
           </span>
-          <span className="text-slate-400">•</span>
-          <span className="text-slate-600 font-semibold">
+          <span className="text-slate-300">•</span>
+          <span className="text-slate-500 font-semibold">
             {(course.level || "All Levels").split(" to ")[0]}
           </span>
         </div>
 
-        <div className="flex items-center gap-1 text-[11px] font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
+        <div className="flex items-center gap-1 text-[10.5px] font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
           <span>{course.primaryCta || "View Course"}</span>
-          <span
-            className={cn(
-              "grid size-6 place-items-center rounded-lg transition-all duration-200 shadow-xs ml-1",
-              theme.btnBg,
-            )}
-            aria-hidden="true"
-          >
-            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
-          </span>
+          <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
         </div>
       </div>
     </article>
