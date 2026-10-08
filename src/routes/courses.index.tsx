@@ -42,21 +42,29 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const DOMAIN_SPOTLIGHTS: Record<string, {
-  eyebrow: string;
-  title: string;
-  desc: string;
-  image: string;
-  badgeStyle: string;
-  skills: string[];
-}> = {
+const DOMAIN_SPOTLIGHTS: Record<
+  string,
+  {
+    eyebrow: string;
+    title: string;
+    desc: string;
+    image: string;
+    badgeStyle: string;
+    skills: string[];
+  }
+> = {
   "Cyber Security": {
     eyebrow: "DEFENSE & ETHICAL HACKING",
     title: "Cyber Security & Defensive Operations",
     desc: "Master hands-on penetration testing, vulnerability assessments, network defense, Linux administration, and SOC incident analysis.",
     image: domainCyberSecurityImg,
     badgeStyle: "bg-blue-50 text-blue-800 border-blue-200",
-    skills: ["Ethical Hacking", "Network Defense", "SOC Incident Response", "Vulnerability Assessment"],
+    skills: [
+      "Ethical Hacking",
+      "Network Defense",
+      "SOC Incident Response",
+      "Vulnerability Assessment",
+    ],
   },
   "Digital Marketing": {
     eyebrow: "GROWTH & PERFORMANCE",
@@ -166,9 +174,7 @@ const generalFaqs = [
 
 function CoursesPage() {
   const navigate = useNavigate();
-  const [coursesList, setCoursesList] = useState<FirebaseCourse[]>(() =>
-    getDefaultCoursesList()
-  );
+  const [coursesList, setCoursesList] = useState<FirebaseCourse[]>(() => getDefaultCoursesList());
 
   const [activeTab, setActiveTab] = useState<string>("All Courses");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
@@ -296,14 +302,14 @@ function CoursesPage() {
           "sticky top-16 z-30 text-slate-900 border-b transition-all duration-300 ease-in-out overflow-hidden",
           isHeroScrolled
             ? "bg-white/95 backdrop-blur-md border-slate-200/90 shadow-sm py-1.5 sm:py-2"
-            : "bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 border-slate-200/90 py-4 sm:py-5 lg:py-6 shadow-2xs"
+            : "bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 border-slate-200/90 py-4 sm:py-5 lg:py-6 shadow-2xs",
         )}
       >
         {/* Ambient light glow */}
         <div
           className={cn(
             "pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl transition-opacity duration-300",
-            isHeroScrolled ? "opacity-0" : "opacity-100"
+            isHeroScrolled ? "opacity-0" : "opacity-100",
           )}
           aria-hidden="true"
         />
@@ -311,7 +317,7 @@ function CoursesPage() {
           <div
             className={cn(
               "max-w-5xl transition-all duration-300",
-              isHeroScrolled ? "space-y-0.5" : "space-y-2"
+              isHeroScrolled ? "space-y-0.5" : "space-y-2",
             )}
           >
             {/* Top Row: Breadcrumb */}
@@ -319,7 +325,7 @@ function CoursesPage() {
               aria-label="Breadcrumb"
               className={cn(
                 "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300",
-                isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-[11px] sm:text-xs"
+                isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-[11px] sm:text-xs",
               )}
             >
               <Link to="/" className="hover:text-blue-600 transition-colors">
@@ -336,7 +342,7 @@ function CoursesPage() {
                   "font-display font-extrabold tracking-tight text-slate-900 leading-tight transition-all duration-300",
                   isHeroScrolled
                     ? "text-sm sm:text-base md:text-lg"
-                    : "text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]"
+                    : "text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]",
                 )}
               >
                 Practical Courses for Today&apos;s Digital Careers
@@ -347,10 +353,11 @@ function CoursesPage() {
                   "leading-relaxed font-normal max-w-3xl text-slate-600 transition-all duration-300",
                   isHeroScrolled
                     ? "text-[10.5px] sm:text-xs line-clamp-1 mt-0.5 text-slate-500"
-                    : "text-xs sm:text-[13.5px] mt-1"
+                    : "text-xs sm:text-[13.5px] mt-1",
                 )}
               >
-                Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic Advertising.
+                Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic
+                Advertising.
               </p>
             </div>
           </div>
@@ -376,7 +383,9 @@ function CoursesPage() {
                   </span>
                   <span className="text-slate-300">•</span>
                   <span className="text-xs font-semibold text-slate-500">
-                    Showing <strong className="text-slate-800 font-bold">{visibleCourses.length}</strong> {visibleCourses.length === 1 ? "track" : "tracks"}
+                    Showing{" "}
+                    <strong className="text-slate-800 font-bold">{visibleCourses.length}</strong>{" "}
+                    {visibleCourses.length === 1 ? "track" : "tracks"}
                   </span>
                 </div>
 
@@ -393,14 +402,14 @@ function CoursesPage() {
                           "rounded-xl px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-[0.98]",
                           isActive
                             ? "bg-[#5455f6] text-white shadow-md shadow-indigo-500/25"
-                            : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0]"
+                            : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0]",
                         )}
                       >
                         <span>{tab.label}</span>
                         <span
                           className={cn(
                             "text-[0.7rem] px-1.5 py-0.5 rounded-md font-extrabold",
-                            isActive ? "bg-white/20 text-white" : "bg-indigo-100 text-indigo-700"
+                            isActive ? "bg-white/20 text-white" : "bg-indigo-100 text-indigo-700",
                           )}
                         >
                           {tab.count}
@@ -410,7 +419,6 @@ function CoursesPage() {
                   })}
                 </div>
               </div>
-
 
               {/* 3D Domain Track Spotlight Banner (Connecting Category Tab to 3D Artwork and Subcourses) */}
               {activeTab !== "All Courses" && DOMAIN_SPOTLIGHTS[activeTab] && (
@@ -437,7 +445,8 @@ function CoursesPage() {
                         </span>
                         <span className="text-slate-400 text-xs">•</span>
                         <span className="text-slate-300 text-xs font-semibold">
-                          {visibleCourses.length} {visibleCourses.length === 1 ? "Program" : "Programs"}
+                          {visibleCourses.length}{" "}
+                          {visibleCourses.length === 1 ? "Program" : "Programs"}
                         </span>
                       </div>
 
@@ -471,7 +480,7 @@ function CoursesPage() {
                   "gap-5 sm:gap-6 w-full min-w-0",
                   visibleCourses.length === 1
                     ? "flex justify-center max-w-xl mx-auto"
-                    : "grid sm:grid-cols-2"
+                    : "grid sm:grid-cols-2",
                 )}
               >
                 {visibleCourses.map((course) => (
@@ -604,7 +613,11 @@ function CoursesPage() {
                     <div
                       key={idx}
                       data-reveal={idx % 2 === 0 ? "left" : "top"}
-                      style={{ "--reveal-delay": `${(idx % 2) * 100 + Math.floor(idx / 2) * 80}ms` } as CSSProperties}
+                      style={
+                        {
+                          "--reveal-delay": `${(idx % 2) * 100 + Math.floor(idx / 2) * 80}ms`,
+                        } as CSSProperties
+                      }
                       className="flex items-start gap-3 rounded-xl border border-slate-300 bg-white p-3 sm:p-3.5 shadow-xs min-w-0"
                     >
                       <span className="grid size-6 place-items-center rounded-full bg-blue-50 text-blue-600 text-xs font-bold shrink-0 mt-0.5 border border-blue-200">
@@ -620,10 +633,7 @@ function CoursesPage() {
 
               {/* Program FAQs Section */}
               <div className="space-y-3 pt-4 border-t border-slate-300 w-full min-w-0">
-                <div
-                  data-reveal="left"
-                  className="flex items-center justify-between"
-                >
+                <div data-reveal="left" className="flex items-center justify-between">
                   <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
                     <HelpCircle className="size-5 text-blue-600 shrink-0" />
                     Frequently Asked Questions

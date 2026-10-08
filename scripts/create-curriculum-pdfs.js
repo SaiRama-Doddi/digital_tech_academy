@@ -5,7 +5,16 @@ function escapePdf(str) {
   return str.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
 }
 
-function createSimplePdf({ title, subtitle, duration, category, description, modules, projects, tools }) {
+function createSimplePdf({
+  title,
+  subtitle,
+  duration,
+  category,
+  description,
+  modules,
+  projects,
+  tools,
+}) {
   const lines = [];
 
   // Header band
@@ -39,7 +48,9 @@ function createSimplePdf({ title, subtitle, duration, category, description, mod
   lines.push("/F1 11 Tf");
   lines.push("0.3 0.35 0.9 rg");
   lines.push("40 655 Td");
-  lines.push(`(${escapePdf(`Track: ${category}   |   Duration: ${duration}   |   Mode: Live Online & Labs`)}) Tj`);
+  lines.push(
+    `(${escapePdf(`Track: ${category}   |   Duration: ${duration}   |   Mode: Live Online & Labs`)}) Tj`,
+  );
   lines.push("ET");
 
   // Divider line
@@ -131,7 +142,9 @@ function createSimplePdf({ title, subtitle, duration, category, description, mod
     lines.push("/F2 9 Tf");
     lines.push("0.3 0.3 0.3 rg");
     lines.push(`40 ${y} Td`);
-    lines.push(`(${escapePdf("- Hands-on Virtual Cloud Labs with Real-Time Industry Case Studies")}) Tj`);
+    lines.push(
+      `(${escapePdf("- Hands-on Virtual Cloud Labs with Real-Time Industry Case Studies")}) Tj`,
+    );
     lines.push("ET");
     y -= 16;
   }
@@ -147,14 +160,18 @@ function createSimplePdf({ title, subtitle, duration, category, description, mod
   lines.push("/F1 9.5 Tf");
   lines.push("0.1 0.2 0.6 rg");
   lines.push(`52 ${y - 15} Td`);
-  lines.push(`(${escapePdf("Certification: Official Authorized Digitechademy Completion Credential Included")}) Tj`);
+  lines.push(
+    `(${escapePdf("Certification: Official Authorized Digitechademy Completion Credential Included")}) Tj`,
+  );
   lines.push("ET");
 
   lines.push("BT");
   lines.push("/F2 8.5 Tf");
   lines.push("0.3 0.3 0.3 rg");
   lines.push(`52 ${y - 32} Td`);
-  lines.push(`(${escapePdf("Admissions Hotline: +1 (770) 777-1269   |   Email: admissions@digitechademy.com   |   WhatsApp Assistance Available")}) Tj`);
+  lines.push(
+    `(${escapePdf("Admissions Hotline: +1 (770) 777-1269   |   Email: admissions@digitechademy.com   |   WhatsApp Assistance Available")}) Tj`,
+  );
   lines.push("ET");
 
   // Footer band
@@ -164,7 +181,9 @@ function createSimplePdf({ title, subtitle, duration, category, description, mod
   lines.push("/F2 8 Tf");
   lines.push("1 1 1 rg");
   lines.push("40 10 Td");
-  lines.push(`(${escapePdf("Digitechademy (c) 2026. All rights reserved. Job-Oriented Online Tech & Marketing Academy.")}) Tj`);
+  lines.push(
+    `(${escapePdf("Digitechademy (c) 2026. All rights reserved. Job-Oriented Online Tech & Marketing Academy.")}) Tj`,
+  );
   lines.push("ET");
 
   const streamContent = lines.join("\n");
@@ -174,9 +193,11 @@ function createSimplePdf({ title, subtitle, duration, category, description, mod
   objects.push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
   objects.push("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
   objects.push(
-    "3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>\nendobj\n"
+    "3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>\nendobj\n",
   );
-  objects.push(`4 0 obj\n<< /Length ${streamLength} >>\nstream\n${streamContent}\nendstream\nendobj\n`);
+  objects.push(
+    `4 0 obj\n<< /Length ${streamLength} >>\nstream\n${streamContent}\nendstream\nendobj\n`,
+  );
   objects.push("5 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>\nendobj\n");
   objects.push("6 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n");
 
@@ -214,17 +235,52 @@ const courseList = [
     duration: "16 Weeks (65h Live Labs)",
     description:
       "Develop practical cyber security foundations covering networking, security operations, vulnerability assessment, threat awareness, monitoring, and hands-on defensive tools.",
-    tools: ["Wireshark", "Nmap", "Snort", "Splunk", "Metasploit", "Kali Linux", "Burp Suite", "Mitre ATT&CK"],
+    tools: [
+      "Wireshark",
+      "Nmap",
+      "Snort",
+      "Splunk",
+      "Metasploit",
+      "Kali Linux",
+      "Burp Suite",
+      "Mitre ATT&CK",
+    ],
     modules: [
-      { module: "Module 01", title: "Networking Fundamentals & Protocol Analysis", topics: ["OSI & TCP/IP", "Packet Analysis", "Wireshark Labs"] },
-      { module: "Module 02", title: "Linux for Security Practitioners", topics: ["CLI Proficiency", "User Permissions", "Bash Scripting"] },
-      { module: "Module 03", title: "Vulnerability Assessment & Web Security", topics: ["OWASP Top 10", "Burp Suite Setup", "Reconnaissance"] },
-      { module: "Module 04", title: "Security Operations & SIEM Monitoring", topics: ["Splunk Setup", "Log Correlation", "Alert Triage"] },
-      { module: "Module 05", title: "Defensive Security & Incident Response", topics: ["Incident Lifecycle", "Containment Strategies", "Post-Mortem"] },
+      {
+        module: "Module 01",
+        title: "Networking Fundamentals & Protocol Analysis",
+        topics: ["OSI & TCP/IP", "Packet Analysis", "Wireshark Labs"],
+      },
+      {
+        module: "Module 02",
+        title: "Linux for Security Practitioners",
+        topics: ["CLI Proficiency", "User Permissions", "Bash Scripting"],
+      },
+      {
+        module: "Module 03",
+        title: "Vulnerability Assessment & Web Security",
+        topics: ["OWASP Top 10", "Burp Suite Setup", "Reconnaissance"],
+      },
+      {
+        module: "Module 04",
+        title: "Security Operations & SIEM Monitoring",
+        topics: ["Splunk Setup", "Log Correlation", "Alert Triage"],
+      },
+      {
+        module: "Module 05",
+        title: "Defensive Security & Incident Response",
+        topics: ["Incident Lifecycle", "Containment Strategies", "Post-Mortem"],
+      },
     ],
     projects: [
-      { title: "Enterprise Network Assessment", summary: "Full network vulnerability discovery and remediation report." },
-      { title: "SIEM Threat Detection Lab", summary: "Configured Splunk rules to detect brute-force and privilege escalation." },
+      {
+        title: "Enterprise Network Assessment",
+        summary: "Full network vulnerability discovery and remediation report.",
+      },
+      {
+        title: "SIEM Threat Detection Lab",
+        summary: "Configured Splunk rules to detect brute-force and privilege escalation.",
+      },
     ],
   },
   {
@@ -236,15 +292,41 @@ const courseList = [
       "Develop practical skills across SEO, paid advertising (Google & Meta Ads), social media marketing, content marketing, GA4 measurement, and conversion optimization.",
     tools: ["Google Ads", "Meta Ads", "Semrush", "GA4", "HubSpot", "Canva", "Ahrefs", "Mailchimp"],
     modules: [
-      { module: "Module 01", title: "Digital Marketing Foundations & Strategy", topics: ["Marketing Funnel", "Buyer Personas", "Channel Mix"] },
-      { module: "Module 02", title: "Search Engine Optimization (SEO)", topics: ["Keyword Research", "On-Page SEO", "Technical Auditing"] },
-      { module: "Module 03", title: "Google Ads & Paid Search Advertising", topics: ["Search Campaigns", "Ad Rank & Bidding", "Negative Keywords"] },
-      { module: "Module 04", title: "Meta Ads & Paid Social Media", topics: ["Audience Targeting", "Pixel Tracking", "Creative Testing"] },
-      { module: "Module 05", title: "GA4 Analytics & Attribution Reporting", topics: ["Event Tracking", "Conversion Modeling", "Executive Dashboards"] },
+      {
+        module: "Module 01",
+        title: "Digital Marketing Foundations & Strategy",
+        topics: ["Marketing Funnel", "Buyer Personas", "Channel Mix"],
+      },
+      {
+        module: "Module 02",
+        title: "Search Engine Optimization (SEO)",
+        topics: ["Keyword Research", "On-Page SEO", "Technical Auditing"],
+      },
+      {
+        module: "Module 03",
+        title: "Google Ads & Paid Search Advertising",
+        topics: ["Search Campaigns", "Ad Rank & Bidding", "Negative Keywords"],
+      },
+      {
+        module: "Module 04",
+        title: "Meta Ads & Paid Social Media",
+        topics: ["Audience Targeting", "Pixel Tracking", "Creative Testing"],
+      },
+      {
+        module: "Module 05",
+        title: "GA4 Analytics & Attribution Reporting",
+        topics: ["Event Tracking", "Conversion Modeling", "Executive Dashboards"],
+      },
     ],
     projects: [
-      { title: "Omnichannel Acquisition Campaign", summary: "Designed and executed full funnel paid search and social campaign." },
-      { title: "Technical SEO Audit & Strategy", summary: "Complete live website audit with keyword roadmap and content strategy." },
+      {
+        title: "Omnichannel Acquisition Campaign",
+        summary: "Designed and executed full funnel paid search and social campaign.",
+      },
+      {
+        title: "Technical SEO Audit & Strategy",
+        summary: "Complete live website audit with keyword roadmap and content strategy.",
+      },
     ],
   },
   {
@@ -254,15 +336,42 @@ const courseList = [
     duration: "10 Weeks (50h Live Sessions)",
     description:
       "Develop high-demand skills in programmatic media buying, DSPs (DV360, The Trade Desk), SSPs, Real-Time Bidding, audience data management, and attribution models.",
-    tools: ["DV360", "The Trade Desk", "Google Ad Manager", "Xandr", "MediaMath", "Amazon DSP", "AppsFlyer"],
+    tools: [
+      "DV360",
+      "The Trade Desk",
+      "Google Ad Manager",
+      "Xandr",
+      "MediaMath",
+      "Amazon DSP",
+      "AppsFlyer",
+    ],
     modules: [
-      { module: "Module 01", title: "AdTech & Programmatic Ecosystem", topics: ["DSPs & SSPs", "Ad Exchanges", "RTB Auctions"] },
-      { module: "Module 02", title: "Audience Data & Targeting", topics: ["1st, 2nd, 3rd Party Data", "DMPs & CDPs", "Contextual Targeting"] },
-      { module: "Module 03", title: "DV360 Campaign Setup & Management", topics: ["Insertion Orders", "Line Items", "Inventory Deals (PMP)"] },
-      { module: "Module 04", title: "Measurement, Attribution & Verification", topics: ["Brand Safety", "Viewability", "Multi-Touch Attribution"] },
+      {
+        module: "Module 01",
+        title: "AdTech & Programmatic Ecosystem",
+        topics: ["DSPs & SSPs", "Ad Exchanges", "RTB Auctions"],
+      },
+      {
+        module: "Module 02",
+        title: "Audience Data & Targeting",
+        topics: ["1st, 2nd, 3rd Party Data", "DMPs & CDPs", "Contextual Targeting"],
+      },
+      {
+        module: "Module 03",
+        title: "DV360 Campaign Setup & Management",
+        topics: ["Insertion Orders", "Line Items", "Inventory Deals (PMP)"],
+      },
+      {
+        module: "Module 04",
+        title: "Measurement, Attribution & Verification",
+        topics: ["Brand Safety", "Viewability", "Multi-Touch Attribution"],
+      },
     ],
     projects: [
-      { title: "Cross-Channel Programmatic Media Plan", summary: "Built full DSP media allocation with custom audience segments." },
+      {
+        title: "Cross-Channel Programmatic Media Plan",
+        summary: "Built full DSP media allocation with custom audience segments.",
+      },
     ],
   },
   {
@@ -272,15 +381,43 @@ const courseList = [
     duration: "12 Weeks (55h Live Labs)",
     description:
       "Hands-on introduction to offensive security: network reconnaissance, Linux command line, vulnerability scanning, web application testing, and ethical reporting.",
-    tools: ["Kali Linux", "Wireshark", "Nmap", "Burp Suite", "Metasploit", "OWASP ZAP", "Hydra", "John the Ripper"],
+    tools: [
+      "Kali Linux",
+      "Wireshark",
+      "Nmap",
+      "Burp Suite",
+      "Metasploit",
+      "OWASP ZAP",
+      "Hydra",
+      "John the Ripper",
+    ],
     modules: [
-      { module: "Module 01", title: "Ethical Hacking Foundations & Law", topics: ["Scope of Engagement", "Methodologies", "Reconnaissance"] },
-      { module: "Module 02", title: "Network Scanning & Enumeration", topics: ["Nmap Techniques", "Port Scanning", "Service Fingerprinting"] },
-      { module: "Module 03", title: "Vulnerability Assessment", topics: ["Vulnerability Scanners", "CVE Analysis", "Exploit Verification"] },
-      { module: "Module 04", title: "Web App Penetration Testing", topics: ["SQL Injection", "XSS", "Authentication Bypass"] },
+      {
+        module: "Module 01",
+        title: "Ethical Hacking Foundations & Law",
+        topics: ["Scope of Engagement", "Methodologies", "Reconnaissance"],
+      },
+      {
+        module: "Module 02",
+        title: "Network Scanning & Enumeration",
+        topics: ["Nmap Techniques", "Port Scanning", "Service Fingerprinting"],
+      },
+      {
+        module: "Module 03",
+        title: "Vulnerability Assessment",
+        topics: ["Vulnerability Scanners", "CVE Analysis", "Exploit Verification"],
+      },
+      {
+        module: "Module 04",
+        title: "Web App Penetration Testing",
+        topics: ["SQL Injection", "XSS", "Authentication Bypass"],
+      },
     ],
     projects: [
-      { title: "Controlled Lab Penetration Test", summary: "Executed authorized assessment and compiled executive remediation report." },
+      {
+        title: "Controlled Lab Penetration Test",
+        summary: "Executed authorized assessment and compiled executive remediation report.",
+      },
     ],
   },
   {
@@ -292,13 +429,32 @@ const courseList = [
       "Complete overview of all Digitechademy job-oriented career tracks including Cyber Security, Digital Marketing, Ethical Hacking, and Programmatic Advertising with placement support.",
     tools: ["Wireshark", "Google Ads", "Splunk", "Meta Ads", "Kali Linux", "DV360"],
     modules: [
-      { module: "Track 01", title: "Cyber Security Professional (16 Weeks)", topics: ["Networking", "Linux", "SIEM", "Defensive Operations"] },
-      { module: "Track 02", title: "Digital Marketing Mastery (12 Weeks)", topics: ["SEO", "Google Ads", "Meta Ads", "GA4 Analytics"] },
-      { module: "Track 03", title: "Ethical Hacking & Security (12 Weeks)", topics: ["Recon", "Scanning", "Web App Testing", "Reporting"] },
-      { module: "Track 04", title: "Programmatic Advertising (10 Weeks)", topics: ["DSPs", "SSPs", "DV360", "Attribution"] },
+      {
+        module: "Track 01",
+        title: "Cyber Security Professional (16 Weeks)",
+        topics: ["Networking", "Linux", "SIEM", "Defensive Operations"],
+      },
+      {
+        module: "Track 02",
+        title: "Digital Marketing Mastery (12 Weeks)",
+        topics: ["SEO", "Google Ads", "Meta Ads", "GA4 Analytics"],
+      },
+      {
+        module: "Track 03",
+        title: "Ethical Hacking & Security (12 Weeks)",
+        topics: ["Recon", "Scanning", "Web App Testing", "Reporting"],
+      },
+      {
+        module: "Track 04",
+        title: "Programmatic Advertising (10 Weeks)",
+        topics: ["DSPs", "SSPs", "DV360", "Attribution"],
+      },
     ],
     projects: [
-      { title: "Comprehensive Placement & Internship Support", summary: "Resume review, mock interviews, and direct hiring partner referrals." },
+      {
+        title: "Comprehensive Placement & Internship Support",
+        summary: "Resume review, mock interviews, and direct hiring partner referrals.",
+      },
     ],
   },
 ];
@@ -313,6 +469,6 @@ for (const c of courseList) {
 // Also generate fallback general file
 fs.copyFileSync(
   path.join(outDir, "all-courses-prospectus-curriculum.pdf"),
-  path.join(outDir, "all-courses-prospectus.pdf")
+  path.join(outDir, "all-courses-prospectus.pdf"),
 );
 console.log("All curriculum PDF files created successfully!");

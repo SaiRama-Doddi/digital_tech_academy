@@ -91,7 +91,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "DIGITECHADEMY — LEARN • GROW • ACHIEVE | Cyber Security • Digital Marketing • Programmatic Advertising" },
+      {
+        title:
+          "DIGITECHADEMY — LEARN • GROW • ACHIEVE | Cyber Security • Digital Marketing • Programmatic Advertising",
+      },
       {
         name: "description",
         content:
@@ -148,9 +151,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-white">
-        <div className="flex min-h-screen flex-col bg-white">
-          {children}
-        </div>
+        <div className="flex min-h-screen flex-col bg-white">{children}</div>
         <Scripts />
       </body>
     </html>

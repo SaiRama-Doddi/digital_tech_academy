@@ -378,7 +378,8 @@ export const courses: Course[] = [
       "Go beyond basic digital advertising and learn how programmatic campaigns are planned, launched, monitored and optimized across DV360, CM360, YouTube, audience targeting, bidding, measurement and reporting.",
     primaryCta: "Explore Programmatic Advertising",
     secondaryCta: "Talk to an Expert",
-    audienceText: "Digital marketers, media planners, aspiring programmatic specialists and professionals moving into AdTech.",
+    audienceText:
+      "Digital marketers, media planners, aspiring programmatic specialists and professionals moving into AdTech.",
     learningJourney: "Plan → Launch → Optimize → Measure",
     category: "Programmatic Advertising",
     description:
@@ -478,43 +479,75 @@ export const courses: Course[] = [
       {
         module: "Module 01",
         title: "AdTech & Programmatic Ecosystem",
-        topics: ["History of media buying", "Advertiser vs Publisher stack", "DSPs, SSPs, and Ad Exchanges", "Data Management Platforms (DMP)"],
+        topics: [
+          "History of media buying",
+          "Advertiser vs Publisher stack",
+          "DSPs, SSPs, and Ad Exchanges",
+          "Data Management Platforms (DMP)",
+        ],
       },
       {
         module: "Module 02",
         title: "Real-Time Bidding (RTB) & Deals",
-        topics: ["Open exchanges", "Private marketplaces (PMP)", "Programmatic guaranteed (PG)", "Floor pricing & bid shading"],
+        topics: [
+          "Open exchanges",
+          "Private marketplaces (PMP)",
+          "Programmatic guaranteed (PG)",
+          "Floor pricing & bid shading",
+        ],
       },
       {
         module: "Module 03",
         title: "Audience Targeting & Data Strategies",
-        topics: ["1st, 2nd, and 3rd party data", "Contextual targeting", "Lookalike modeling", "Privacy regulations & cookieless future"],
+        topics: [
+          "1st, 2nd, and 3rd party data",
+          "Contextual targeting",
+          "Lookalike modeling",
+          "Privacy regulations & cookieless future",
+        ],
       },
       {
         module: "Module 04",
         title: "Campaign Setup & Creative Formats",
-        topics: ["Display, video, native, and audio formats", "Dynamic creative optimization (DCO)", "Frequency capping", "Brand safety & fraud prevention"],
+        topics: [
+          "Display, video, native, and audio formats",
+          "Dynamic creative optimization (DCO)",
+          "Frequency capping",
+          "Brand safety & fraud prevention",
+        ],
       },
       {
         module: "Module 05",
         title: "Optimization & Attribution",
-        topics: ["Bid optimization", "Supply path optimization (SPO)", "Multi-touch attribution", "Incremental lift testing"],
+        topics: [
+          "Bid optimization",
+          "Supply path optimization (SPO)",
+          "Multi-touch attribution",
+          "Incremental lift testing",
+        ],
       },
       {
         module: "Module 06",
         title: "Capstone Programmatic Project",
-        topics: ["Media brief analysis", "Platform setup simulation", "Optimization reporting", "Final strategic review"],
+        topics: [
+          "Media brief analysis",
+          "Platform setup simulation",
+          "Optimization reporting",
+          "Final strategic review",
+        ],
       },
     ],
     practicalTraining: marketingPractical,
     projects: [
       {
         title: "Omnichannel programmatic plan",
-        summary: "Design a comprehensive programmatic media campaign spanning display, connected TV, and audio.",
+        summary:
+          "Design a comprehensive programmatic media campaign spanning display, connected TV, and audio.",
       },
       {
         title: "Audience segmentation strategy",
-        summary: "Construct a targeting matrix combining first-party CRM data and contextual signals.",
+        summary:
+          "Construct a targeting matrix combining first-party CRM data and contextual signals.",
       },
       {
         title: "Attribution and ROI analysis",
@@ -540,7 +573,8 @@ export const courses: Course[] = [
         name: "Siddharth",
         course: "Programmatic Advertising Course",
         rating: 5,
-        quote: "Demystified DSPs and real-time bidding completely. The campaign simulations were invaluable.",
+        quote:
+          "Demystified DSPs and real-time bidding completely. The campaign simulations were invaluable.",
       },
       {
         name: "Rhea",
@@ -678,22 +712,42 @@ export const courses: Course[] = [
       {
         module: "Module 01",
         title: "Networking Fundamentals",
-        topics: ["OSI & TCP/IP", "Protocols and ports", "Routing and switching basics", "Packet analysis"],
+        topics: [
+          "OSI & TCP/IP",
+          "Protocols and ports",
+          "Routing and switching basics",
+          "Packet analysis",
+        ],
       },
       {
         module: "Module 02",
         title: "Linux Fundamentals",
-        topics: ["Command line", "File system and permissions", "Users and services", "Shell basics"],
+        topics: [
+          "Command line",
+          "File system and permissions",
+          "Users and services",
+          "Shell basics",
+        ],
       },
       {
         module: "Module 03",
         title: "Security Fundamentals",
-        topics: ["CIA triad", "Threats and attack surfaces", "Cryptography basics", "Security policies"],
+        topics: [
+          "CIA triad",
+          "Threats and attack surfaces",
+          "Cryptography basics",
+          "Security policies",
+        ],
       },
       {
         module: "Module 04",
         title: "Web Security",
-        topics: ["HTTP fundamentals", "Injection flaws", "Authentication issues", "Secure configuration"],
+        topics: [
+          "HTTP fundamentals",
+          "Injection flaws",
+          "Authentication issues",
+          "Secure configuration",
+        ],
       },
       {
         module: "Module 05",
@@ -723,7 +777,12 @@ export const courses: Course[] = [
       {
         module: "Module 10",
         title: "Final Security Project",
-        topics: ["Scope definition", "Assessment execution", "Findings documentation", "Presentation"],
+        topics: [
+          "Scope definition",
+          "Assessment execution",
+          "Findings documentation",
+          "Presentation",
+        ],
       },
     ],
     practicalTraining: securityPractical,
@@ -767,7 +826,8 @@ export const courses: Course[] = [
         name: "Vikram",
         course: "Cyber Security Professional",
         rating: 5,
-        quote: "The labs were the highlight — every concept was followed by something we actually did.",
+        quote:
+          "The labs were the highlight — every concept was followed by something we actually did.",
       },
       {
         name: "Fatima",
@@ -905,12 +965,22 @@ export const courses: Course[] = [
       {
         module: "Module 01",
         title: "Advanced SEO Strategy",
-        topics: ["Search intent mapping", "Topical authority", "Competitor gap analysis", "Content architecture"],
+        topics: [
+          "Search intent mapping",
+          "Topical authority",
+          "Competitor gap analysis",
+          "Content architecture",
+        ],
       },
       {
         module: "Module 02",
         title: "Technical SEO",
-        topics: ["Crawling and indexing", "Site speed", "Structured data", "Log and audit workflows"],
+        topics: [
+          "Crawling and indexing",
+          "Site speed",
+          "Structured data",
+          "Log and audit workflows",
+        ],
       },
       {
         module: "Module 03",
@@ -920,7 +990,12 @@ export const courses: Course[] = [
       {
         module: "Module 04",
         title: "Conversion Optimization",
-        topics: ["Landing page analysis", "Experiment design", "Funnel diagnostics", "Copy and offer testing"],
+        topics: [
+          "Landing page analysis",
+          "Experiment design",
+          "Funnel diagnostics",
+          "Copy and offer testing",
+        ],
       },
       {
         module: "Module 05",
@@ -930,14 +1005,28 @@ export const courses: Course[] = [
       {
         module: "Module 06",
         title: "Practical Project",
-        topics: ["Audit execution", "Optimisation roadmap", "Implementation review", "Results presentation"],
+        topics: [
+          "Audit execution",
+          "Optimisation roadmap",
+          "Implementation review",
+          "Results presentation",
+        ],
       },
     ],
     practicalTraining: marketingPractical,
     projects: [
-      { title: "Technical SEO audit", summary: "Audit a live-style site and prioritise fixes by impact." },
-      { title: "Paid account optimisation", summary: "Restructure a campaign set for efficiency and quality." },
-      { title: "Conversion experiment plan", summary: "Design and document a full CRO test cycle." },
+      {
+        title: "Technical SEO audit",
+        summary: "Audit a live-style site and prioritise fixes by impact.",
+      },
+      {
+        title: "Paid account optimisation",
+        summary: "Restructure a campaign set for efficiency and quality.",
+      },
+      {
+        title: "Conversion experiment plan",
+        summary: "Design and document a full CRO test cycle.",
+      },
     ],
     instructors: [instructors[0]!],
     pricing: {
@@ -1063,9 +1152,18 @@ export const courses: Course[] = [
     ],
     practicalTraining: securityPractical,
     projects: [
-      { title: "Recon and enumeration lab", summary: "Profile a lab target and document its attack surface." },
-      { title: "Vulnerability assessment", summary: "Scan, validate and risk-rate findings in a controlled lab." },
-      { title: "Ethical testing report", summary: "Write a scoped, ethical testing report with remediation advice." },
+      {
+        title: "Recon and enumeration lab",
+        summary: "Profile a lab target and document its attack surface.",
+      },
+      {
+        title: "Vulnerability assessment",
+        summary: "Scan, validate and risk-rate findings in a controlled lab.",
+      },
+      {
+        title: "Ethical testing report",
+        summary: "Write a scoped, ethical testing report with remediation advice.",
+      },
     ],
     instructors: [instructors[1]!],
     pricing: {
@@ -1096,12 +1194,27 @@ export const courses: Course[] = [
       },
     ],
     faqs: [
-      { question: "Is the course beginner friendly?", answer: "Yes, no prior security experience is required." },
+      {
+        question: "Is the course beginner friendly?",
+        answer: "Yes, no prior security experience is required.",
+      },
       { question: "What is the duration?", answer: "12 weeks including lab time." },
-      { question: "Are practical sessions included?", answer: "Yes, labs run alongside every module." },
-      { question: "Is the course online or offline?", answer: "Classroom and live online options are available." },
-      { question: "Will I receive a certificate?", answer: "Yes, after assessment and lab project participation." },
-      { question: "How do I enroll?", answer: "Request a call to check the next batch start date." },
+      {
+        question: "Are practical sessions included?",
+        answer: "Yes, labs run alongside every module.",
+      },
+      {
+        question: "Is the course online or offline?",
+        answer: "Classroom and live online options are available.",
+      },
+      {
+        question: "Will I receive a certificate?",
+        answer: "Yes, after assessment and lab project participation.",
+      },
+      {
+        question: "How do I enroll?",
+        answer: "Request a call to check the next batch start date.",
+      },
     ],
   },
   {
@@ -1116,7 +1229,8 @@ export const courses: Course[] = [
     secondaryCta: "Download Syllabus",
     audienceText:
       "Designed for marketers, tech professionals, operations leads, and founders seeking to automate processes with AI.",
-    learningJourney: "Hands-on projects covering AI agents, webhook automation, CRM pipelines, and LLM integrations.",
+    learningJourney:
+      "Hands-on projects covering AI agents, webhook automation, CRM pipelines, and LLM integrations.",
     category: "AI & Automation",
     description:
       "Automate repetitive tasks, build custom AI bots, and create smart multi-app automation workflows.",
@@ -1146,19 +1260,23 @@ export const courses: Course[] = [
       whatYouLearnDetailed: [
         {
           title: "Prompt Engineering & LLMs",
-          description: "Craft advanced prompts, system messages, and few-shot examples for structured business outputs.",
+          description:
+            "Craft advanced prompts, system messages, and few-shot examples for structured business outputs.",
         },
         {
           title: "Workflow Automation with Zapier & Make",
-          description: "Connect 20+ SaaS tools through multi-branch conditional triggers, routers, and webhooks.",
+          description:
+            "Connect 20+ SaaS tools through multi-branch conditional triggers, routers, and webhooks.",
         },
         {
           title: "AI Agents & Autonomous Assistants",
-          description: "Deploy task-oriented agents that browse the web, parse documents, and execute multi-step routines.",
+          description:
+            "Deploy task-oriented agents that browse the web, parse documents, and execute multi-step routines.",
         },
         {
           title: "Enterprise CRM & MarTech Automation",
-          description: "Automate lead scoring, nurture sequences, and client onboarding pipelines end-to-end.",
+          description:
+            "Automate lead scoring, nurture sequences, and client onboarding pipelines end-to-end.",
         },
       ],
       audience: [
@@ -1191,33 +1309,55 @@ export const courses: Course[] = [
       {
         module: "Module 1",
         title: "Generative AI Fundamentals & Advanced Prompting",
-        topics: ["LLM architectures", "Chain-of-thought prompting", "Structured JSON output", "System prompt optimization"],
+        topics: [
+          "LLM architectures",
+          "Chain-of-thought prompting",
+          "Structured JSON output",
+          "System prompt optimization",
+        ],
       },
       {
         module: "Module 2",
         title: "No-Code Automation with Zapier & Make",
-        topics: ["Triggers and webhooks", "Routers and iterators", "Error handling and retry logic", "Data transformation"],
+        topics: [
+          "Triggers and webhooks",
+          "Routers and iterators",
+          "Error handling and retry logic",
+          "Data transformation",
+        ],
       },
       {
         module: "Module 3",
         title: "Autonomous AI Agents & Tool Calling",
-        topics: ["Function calling with OpenAI", "Memory & state management", "Document parsing", "Browser automation"],
+        topics: [
+          "Function calling with OpenAI",
+          "Memory & state management",
+          "Document parsing",
+          "Browser automation",
+        ],
       },
       {
         module: "Module 4",
         title: "Capstone Enterprise Automation Project",
-        topics: ["End-to-end CRM automation", "Live client demo", "Monitoring & logging", "Portfolio preparation"],
+        topics: [
+          "End-to-end CRM automation",
+          "Live client demo",
+          "Monitoring & logging",
+          "Portfolio preparation",
+        ],
       },
     ],
     practicalTraining: aiPractical,
     projects: [
       {
         title: "Autonomous Lead Qualification Bot",
-        summary: "Build an AI agent that chats with website visitors, scores leads, and pushes qualified records into CRM.",
+        summary:
+          "Build an AI agent that chats with website visitors, scores leads, and pushes qualified records into CRM.",
       },
       {
         title: "Omnichannel Social Content Pipeline",
-        summary: "Automate blog post summaries, social media graphic generation, and cross-platform scheduling.",
+        summary:
+          "Automate blog post summaries, social media graphic generation, and cross-platform scheduling.",
       },
     ],
     instructors: [instructors[0]!],
@@ -1248,10 +1388,20 @@ export const courses: Course[] = [
       },
     ],
     faqs: [
-      { question: "Do I need coding experience?", answer: "No coding background is needed. We cover both no-code and lightweight API integrations." },
-      { question: "What tools will I learn?", answer: "OpenAI APIs, Zapier, Make, Claude, Airtable, and custom agent frameworks." },
+      {
+        question: "Do I need coding experience?",
+        answer:
+          "No coding background is needed. We cover both no-code and lightweight API integrations.",
+      },
+      {
+        question: "What tools will I learn?",
+        answer: "OpenAI APIs, Zapier, Make, Claude, Airtable, and custom agent frameworks.",
+      },
       { question: "What is the duration?", answer: "10 weeks with practical weekly projects." },
-      { question: "Is a certificate provided?", answer: "Yes, upon successful submission of the capstone project." },
+      {
+        question: "Is a certificate provided?",
+        answer: "Yes, upon successful submission of the capstone project.",
+      },
     ],
   },
   {
@@ -1266,7 +1416,8 @@ export const courses: Course[] = [
     secondaryCta: "Download Syllabus",
     audienceText:
       "Ideal for beginners, CS students, and career switchers looking to break into high-paying web development roles.",
-    learningJourney: "Build and deploy 4 production-grade full stack web applications from scratch.",
+    learningJourney:
+      "Build and deploy 4 production-grade full stack web applications from scratch.",
     category: "Full Stack Development",
     description:
       "Master modern web engineering: React, Node.js, Express, PostgreSQL, MongoDB, and AWS deployment.",
@@ -1296,19 +1447,23 @@ export const courses: Course[] = [
       whatYouLearnDetailed: [
         {
           title: "Frontend Engineering & UI Systems",
-          description: "Modern component architectures, state management, hooks, and responsive design systems.",
+          description:
+            "Modern component architectures, state management, hooks, and responsive design systems.",
         },
         {
           title: "Backend Services & API Architecture",
-          description: "Construct robust, performant RESTful APIs with Node.js, validation middlewares, and error handling.",
+          description:
+            "Construct robust, performant RESTful APIs with Node.js, validation middlewares, and error handling.",
         },
         {
           title: "Databases & Data Modeling",
-          description: "Master relational schema design in PostgreSQL and document stores in MongoDB.",
+          description:
+            "Master relational schema design in PostgreSQL and document stores in MongoDB.",
         },
         {
           title: "DevOps & Cloud Deployment",
-          description: "Containerize applications with Docker and deploy to AWS and Vercel with automated CI/CD.",
+          description:
+            "Containerize applications with Docker and deploy to AWS and Vercel with automated CI/CD.",
         },
       ],
       audience: [
@@ -1341,33 +1496,55 @@ export const courses: Course[] = [
       {
         module: "Module 1",
         title: "Frontend Mastery: HTML5, CSS3, TypeScript & React",
-        topics: ["Semantic HTML & TailwindCSS", "TypeScript fundamentals", "React components & hooks", "State management"],
+        topics: [
+          "Semantic HTML & TailwindCSS",
+          "TypeScript fundamentals",
+          "React components & hooks",
+          "State management",
+        ],
       },
       {
         module: "Module 2",
         title: "Backend Mastery: Node.js, Express & Databases",
-        topics: ["Node.js runtime & event loop", "Express routing & middleware", "PostgreSQL & Prisma ORM", "MongoDB"],
+        topics: [
+          "Node.js runtime & event loop",
+          "Express routing & middleware",
+          "PostgreSQL & Prisma ORM",
+          "MongoDB",
+        ],
       },
       {
         module: "Module 3",
         title: "Authentication, Security & API Integration",
-        topics: ["JWT & OAuth2", "CORS & CSRF prevention", "Stripe payment integration", "File upload with S3"],
+        topics: [
+          "JWT & OAuth2",
+          "CORS & CSRF prevention",
+          "Stripe payment integration",
+          "File upload with S3",
+        ],
       },
       {
         module: "Module 4",
         title: "Cloud Deployment & Production Capstone",
-        topics: ["Docker containerization", "CI/CD GitHub Actions", "AWS deployment", "Mock technical interviews"],
+        topics: [
+          "Docker containerization",
+          "CI/CD GitHub Actions",
+          "AWS deployment",
+          "Mock technical interviews",
+        ],
       },
     ],
     practicalTraining: fullstackPractical,
     projects: [
       {
         title: "Real-Time Collaboration Platform",
-        summary: "Build a collaborative workspace with real-time WebSockets, live updates, and secure user permissions.",
+        summary:
+          "Build a collaborative workspace with real-time WebSockets, live updates, and secure user permissions.",
       },
       {
         title: "Full Stack E-Commerce & Subscription SaaS",
-        summary: "Create a complete SaaS app with Stripe billing, user dashboards, database persistence, and analytics.",
+        summary:
+          "Create a complete SaaS app with Stripe billing, user dashboards, database persistence, and analytics.",
       },
     ],
     instructors: [instructors[1]!],
@@ -1387,20 +1564,34 @@ export const courses: Course[] = [
         name: "Aditya S.",
         course: "Full Stack Web Development Masterclass",
         rating: 5,
-        quote: "The project-based learning methodology gave me the real portfolio I needed to land my first software engineering role.",
+        quote:
+          "The project-based learning methodology gave me the real portfolio I needed to land my first software engineering role.",
       },
       {
         name: "Pooja K.",
         course: "Full Stack Web Development Masterclass",
         rating: 5,
-        quote: "Super thorough, modern tech stack (React + TypeScript + Node), and incredible mentor guidance.",
+        quote:
+          "Super thorough, modern tech stack (React + TypeScript + Node), and incredible mentor guidance.",
       },
     ],
     faqs: [
-      { question: "Is this course suitable for complete beginners?", answer: "Yes, we start with programming basics and advance systematically." },
-      { question: "What tech stack is taught?", answer: "React 19, TypeScript, Node.js, Express, PostgreSQL, MongoDB, Docker, and AWS." },
-      { question: "How long is the program?", answer: "16 weeks with live weekend classes and weekday code lab sessions." },
-      { question: "Is placement assistance included?", answer: "Yes, including resume reviews, mock interviews, and hiring partner referrals." },
+      {
+        question: "Is this course suitable for complete beginners?",
+        answer: "Yes, we start with programming basics and advance systematically.",
+      },
+      {
+        question: "What tech stack is taught?",
+        answer: "React 19, TypeScript, Node.js, Express, PostgreSQL, MongoDB, Docker, and AWS.",
+      },
+      {
+        question: "How long is the program?",
+        answer: "16 weeks with live weekend classes and weekday code lab sessions.",
+      },
+      {
+        question: "Is placement assistance included?",
+        answer: "Yes, including resume reviews, mock interviews, and hiring partner referrals.",
+      },
     ],
   },
 ];

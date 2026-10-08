@@ -55,8 +55,7 @@ const learningSteps: LearningStepItem[] = [
   {
     step: "02",
     title: "See It In Action",
-    description:
-      "Watch how the concept is applied in a real-world scenario.",
+    description: "Watch how the concept is applied in a real-world scenario.",
     tagline: "Watch real-world application",
     colorName: "cyan",
     theme: {
@@ -93,8 +92,7 @@ const learningSteps: LearningStepItem[] = [
   {
     step: "04",
     title: "Review",
-    description:
-      "Identify gaps, improve your work, and learn how professionals evaluate results.",
+    description: "Identify gaps, improve your work, and learn how professionals evaluate results.",
     tagline: "Get expert feedback",
     colorName: "sky",
     theme: {
@@ -143,8 +141,7 @@ export function LearningPathRoad({ className }: { className?: string }) {
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.4]"
           style={{
-            backgroundImage:
-              "radial-gradient(#94a3b8 1.2px, transparent 1.2px)",
+            backgroundImage: "radial-gradient(#94a3b8 1.2px, transparent 1.2px)",
             backgroundSize: "24px 24px",
           }}
           aria-hidden="true"
@@ -214,8 +211,20 @@ export function LearningPathRoad({ className }: { className?: string }) {
 
               {/* Road lower 3D extrusion shadow */}
               <filter id="roadShadow" x="-5%" y="-5%" width="110%" height="110%">
-                <feDropShadow dx="0" dy="7" stdDeviation="8" floodColor="#0f172a" floodOpacity="0.12" />
-                <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#0f172a" floodOpacity="0.08" />
+                <feDropShadow
+                  dx="0"
+                  dy="7"
+                  stdDeviation="8"
+                  floodColor="#0f172a"
+                  floodOpacity="0.12"
+                />
+                <feDropShadow
+                  dx="0"
+                  dy="2"
+                  stdDeviation="2"
+                  floodColor="#0f172a"
+                  floodOpacity="0.08"
+                />
               </filter>
             </defs>
 
@@ -591,13 +600,7 @@ export function LearningPathRoad({ className }: { className?: string }) {
  * - text-justify on descriptions
  * - compact and snug padding
  */
-function RoadCard({
-  step,
-  isHighlighted,
-}: {
-  step: LearningStepItem;
-  isHighlighted: boolean;
-}) {
+function RoadCard({ step, isHighlighted }: { step: LearningStepItem; isHighlighted: boolean }) {
   return (
     <div
       className={cn(
@@ -623,7 +626,12 @@ function RoadCard({
         {/* Accent Divider & Bottom Tagline */}
         <div className="flex items-center gap-1.5">
           <div className={cn("h-0.5 w-4 rounded-full shrink-0", step.theme.divider)} />
-          <p className={cn("text-[10.5px] sm:text-[11px] font-bold leading-tight truncate", step.theme.text)}>
+          <p
+            className={cn(
+              "text-[10.5px] sm:text-[11px] font-bold leading-tight truncate",
+              step.theme.text,
+            )}
+          >
             {step.tagline}
           </p>
         </div>

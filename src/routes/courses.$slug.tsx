@@ -3,7 +3,12 @@ import { useState, useEffect, useMemo, type CSSProperties } from "react";
 import { courses, type Course } from "@/data/courses";
 import digitalMarketingImg from "@/assets/course-digital-marketing.jpg";
 import cyberSecurityImg from "@/assets/course-cyber-security.jpg";
-import { getCourseBySlug, subscribeCourses, getLocalCachedCourses, type FirebaseCourse } from "@/services/courseService";
+import {
+  getCourseBySlug,
+  subscribeCourses,
+  getLocalCachedCourses,
+  type FirebaseCourse,
+} from "@/services/courseService";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseDemoSidebar } from "@/components/site/CourseDemoSidebar";
@@ -115,9 +120,7 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
     level: fbCourse.level || "Beginner to Advanced",
     mode: fbCourse.mode || "Classroom & Live Online",
     certificate: fbCourse.certificate || "Course completion certificate",
-    image:
-      fbCourse.image ||
-      (cat === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg),
+    image: fbCourse.image || (cat === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg),
     highlights: Array.isArray(fbCourse.highlights) ? fbCourse.highlights : [],
     overview: {
       heading: `Master ${courseTitle} with Expert Mentorship`,
@@ -253,7 +256,8 @@ function CourseDetailPage() {
     const list =
       allLiveCourses.length > 0
         ? allLiveCourses.filter(
-            (c) => c && c.slug && c.slug !== currentSlug && c.id !== currentId && c.active !== false
+            (c) =>
+              c && c.slug && c.slug !== currentSlug && c.id !== currentId && c.active !== false,
           )
         : courses.filter((c) => c && c.slug && c.slug !== currentSlug);
     return list.slice(0, 3);
@@ -327,14 +331,14 @@ function CourseDetailPage() {
           "sticky top-16 z-30 text-slate-900 border-b transition-all duration-300 ease-in-out overflow-hidden",
           isHeroScrolled
             ? "bg-white/95 backdrop-blur-md border-slate-200/90 shadow-sm py-1.5 sm:py-2"
-            : "bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 border-slate-200/90 py-4 sm:py-5 lg:py-6 shadow-2xs"
+            : "bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 border-slate-200/90 py-4 sm:py-5 lg:py-6 shadow-2xs",
         )}
       >
         {/* Ambient light glow */}
         <div
           className={cn(
             "pointer-events-none absolute left-1/2 -top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 via-sky-400/10 to-indigo-400/10 blur-3xl transition-opacity duration-300",
-            isHeroScrolled ? "opacity-0" : "opacity-100"
+            isHeroScrolled ? "opacity-0" : "opacity-100",
           )}
           aria-hidden="true"
         />
@@ -342,7 +346,7 @@ function CourseDetailPage() {
           <div
             className={cn(
               "max-w-5xl transition-all duration-300",
-              isHeroScrolled ? "space-y-0.5" : "space-y-2"
+              isHeroScrolled ? "space-y-0.5" : "space-y-2",
             )}
           >
             {/* Breadcrumb Row */}
@@ -350,7 +354,7 @@ function CourseDetailPage() {
               aria-label="Breadcrumb"
               className={cn(
                 "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300",
-                isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-[11px] sm:text-xs"
+                isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-[11px] sm:text-xs",
               )}
             >
               <Link to="/" className="hover:text-blue-600 transition-colors">
@@ -371,7 +375,7 @@ function CourseDetailPage() {
                   "font-black tracking-tight text-slate-900 leading-tight transition-all duration-300",
                   isHeroScrolled
                     ? "text-sm sm:text-base md:text-lg sm:whitespace-nowrap"
-                    : "text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] sm:whitespace-nowrap"
+                    : "text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] sm:whitespace-nowrap",
                 )}
               >
                 {displayTitle}
@@ -381,7 +385,7 @@ function CourseDetailPage() {
                   "leading-relaxed font-normal w-full max-w-none transition-all duration-300",
                   isHeroScrolled
                     ? "text-[10.5px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5"
-                    : "text-xs sm:text-sm text-slate-600 mt-1 whitespace-normal md:whitespace-nowrap"
+                    : "text-xs sm:text-sm text-slate-600 mt-1 whitespace-normal md:whitespace-nowrap",
                 )}
               >
                 {course.category === "Cyber Security"
@@ -407,12 +411,10 @@ function CourseDetailPage() {
       <section className="bg-white py-4 sm:py-6">
         <div className="container-site">
           <div className="grid gap-6 lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_390px] items-start">
-            
             {/* ------------------------------------------------------------------- */}
             {/* LEFT COLUMN: Horizontal Tabs & Tab Panels                           */}
             {/* ------------------------------------------------------------------- */}
             <div className="space-y-6">
-              
               {/* Horizontal Tabs: About, Curriculum, Description, FAQ's */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 border-b border-slate-300 pb-4">
                 {tabs.map((tab) => {
@@ -426,7 +428,7 @@ function CourseDetailPage() {
                         "rounded-lg px-6 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer border",
                         isActive
                           ? "bg-[#5455f6] text-white border-indigo-600 shadow-md shadow-indigo-500/25"
-                          : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0] border-slate-300"
+                          : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0] border-slate-300",
                       )}
                     >
                       {tab.label}
@@ -484,7 +486,8 @@ function CourseDetailPage() {
                   </div>
 
                   {/* What You'll Learn Section */}
-                  {((course.overview?.whatYouLearnDetailed && course.overview.whatYouLearnDetailed.length > 0) ||
+                  {((course.overview?.whatYouLearnDetailed &&
+                    course.overview.whatYouLearnDetailed.length > 0) ||
                     (course.overview?.learn && course.overview.learn.length > 0)) && (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -493,7 +496,9 @@ function CourseDetailPage() {
                           What You Will Learn
                         </h3>
                         <span className="text-xs font-bold text-slate-600">
-                          {(course.overview?.whatYouLearnDetailed?.length || course.overview?.learn?.length || 0)}{" "}
+                          {course.overview?.whatYouLearnDetailed?.length ||
+                            course.overview?.learn?.length ||
+                            0}{" "}
                           Core Topics
                         </span>
                       </div>
@@ -574,7 +579,8 @@ function CourseDetailPage() {
                       </h3>
                       <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                         Graduates from this program gain working competence, resume-ready portfolio
-                        projects, and direct preparation for high-demand technical roles across the industry.
+                        projects, and direct preparation for high-demand technical roles across the
+                        industry.
                       </p>
                       <div className="flex flex-wrap gap-2 pt-2">
                         {(course.overview.outcomes || []).map((item, i) => (
@@ -603,7 +609,8 @@ function CourseDetailPage() {
                         Course Curriculum &amp; Syllabus Breakdown
                       </h3>
                       <p className="text-xs text-slate-600 mt-0.5">
-                        Structured modular tracks designed to meet latest industry hiring benchmarks.
+                        Structured modular tracks designed to meet latest industry hiring
+                        benchmarks.
                       </p>
                     </div>
 
@@ -617,12 +624,15 @@ function CourseDetailPage() {
                     </button>
                   </div>
 
-                  {(!course.syllabus || course.syllabus.length === 0) ? (
+                  {!course.syllabus || course.syllabus.length === 0 ? (
                     <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-300 rounded-2xl">
                       <Layers className="size-10 text-slate-400 mx-auto mb-3" />
-                      <h4 className="text-base font-bold text-navy">Curriculum Syllabus in Progress</h4>
+                      <h4 className="text-base font-bold text-navy">
+                        Curriculum Syllabus in Progress
+                      </h4>
                       <p className="text-xs text-slate-600 mt-1 max-w-md mx-auto">
-                        Detailed module topics for this program are currently being structured by our faculty. Contact us to receive syllabus updates.
+                        Detailed module topics for this program are currently being structured by
+                        our faculty. Contact us to receive syllabus updates.
                       </p>
                     </div>
                   ) : (
@@ -636,7 +646,7 @@ function CourseDetailPage() {
                               "border rounded-2xl transition-all duration-200 overflow-hidden shadow-xs",
                               isExpanded
                                 ? "border-indigo-500 bg-indigo-50/30"
-                                : "border-slate-300 bg-white"
+                                : "border-slate-300 bg-white",
                             )}
                           >
                             <button
@@ -745,9 +755,9 @@ function CourseDetailPage() {
                         {course.title} Authorized Certification
                       </h4>
                       <p className="text-xs text-slate-700 leading-relaxed text-justify">
-                        Earn an industry-recognized certificate and verified digital credential
-                        upon completing assessments, labs, and capstones. Add this credential
-                        directly to LinkedIn.
+                        Earn an industry-recognized certificate and verified digital credential upon
+                        completing assessments, labs, and capstones. Add this credential directly to
+                        LinkedIn.
                       </p>
                     </div>
                     <div className="flex justify-center">
@@ -804,16 +814,18 @@ function CourseDetailPage() {
                       Frequently Asked Questions
                     </h3>
                     <p className="text-xs text-slate-600 mt-0.5">
-                      Common queries regarding class timings, batch schedules, fees, and placement assistance.
+                      Common queries regarding class timings, batch schedules, fees, and placement
+                      assistance.
                     </p>
                   </div>
 
-                  {(!course.faqs || course.faqs.length === 0) ? (
+                  {!course.faqs || course.faqs.length === 0 ? (
                     <div className="p-8 sm:p-12 text-center bg-white border border-dashed border-slate-300 rounded-2xl">
                       <HelpCircle className="size-10 text-slate-400 mx-auto mb-3" />
                       <h4 className="text-base font-bold text-navy">No FAQs Available Yet</h4>
                       <p className="text-xs text-slate-600 mt-1 max-w-md mx-auto">
-                        Have questions about this course? Connect with our counselors below for personalized guidance.
+                        Have questions about this course? Connect with our counselors below for
+                        personalized guidance.
                       </p>
                     </div>
                   ) : (
@@ -869,7 +881,6 @@ function CourseDetailPage() {
                   </div>
                 </div>
               )}
-
             </div>
 
             {/* ------------------------------------------------------------------- */}
@@ -878,7 +889,6 @@ function CourseDetailPage() {
             <aside className="lg:sticky lg:top-36 w-full min-w-0">
               <CourseDemoSidebar course={course} />
             </aside>
-
           </div>
         </div>
       </section>
@@ -897,7 +907,8 @@ function CourseDetailPage() {
                 Explore Other Professional Programs
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
-                Looking to explore other career disciplines? Browse our other high-demand certification training courses with live mentors and hands-on labs.
+                Looking to explore other career disciplines? Browse our other high-demand
+                certification training courses with live mentors and hands-on labs.
               </p>
             </div>
             <BtnLink
@@ -918,20 +929,24 @@ function CourseDetailPage() {
                 ? "flex justify-center max-w-md mx-auto"
                 : relatedCourses.length === 2
                   ? "grid grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
-                  : "grid sm:grid-cols-2 lg:grid-cols-3"
+                  : "grid sm:grid-cols-2 lg:grid-cols-3",
             )}
           >
             {relatedCourses.map((otherCourse) => {
               if (!otherCourse || !otherCourse.slug) return null;
               const imageSrc =
                 otherCourse.image ||
-                (otherCourse.category === "Cyber Security" ? cyberSecurityImg : digitalMarketingImg);
+                (otherCourse.category === "Cyber Security"
+                  ? cyberSecurityImg
+                  : digitalMarketingImg);
               const moduleCount =
                 otherCourse.syllabus && Array.isArray(otherCourse.syllabus)
                   ? otherCourse.syllabus.length
                   : 6;
               const levelText =
-                otherCourse.level && typeof otherCourse.level === "string" && otherCourse.level.includes(" to ")
+                otherCourse.level &&
+                typeof otherCourse.level === "string" &&
+                otherCourse.level.includes(" to ")
                   ? otherCourse.level.split(" to ")[0]
                   : otherCourse.level || "Beginner";
               const otherSlug = otherCourse.slug || otherCourse.id;

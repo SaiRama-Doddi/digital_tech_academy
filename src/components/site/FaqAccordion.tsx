@@ -17,7 +17,12 @@ export function FaqAccordion({
   const [open, setOpen] = useState<number | null>(defaultOpen);
 
   return (
-    <div className={cn("divide-y divide-slate-200/80 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs", className)}>
+    <div
+      className={cn(
+        "divide-y divide-slate-200/80 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs",
+        className,
+      )}
+    >
       {items.map((item, index) => {
         const isOpen = open === index;
         return (

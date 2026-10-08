@@ -5,7 +5,13 @@ import { cn } from "@/lib/utils";
 type Item = { name: string; course: string; rating: number; quote: string };
 
 /** Grid on tablet/desktop, smooth auto-scrolling carousel on mobile. */
-export function TestimonialCarousel({ items, onDark }: { items: Item[]; onDark?: boolean | undefined }) {
+export function TestimonialCarousel({
+  items,
+  onDark,
+}: {
+  items: Item[];
+  onDark?: boolean | undefined;
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);

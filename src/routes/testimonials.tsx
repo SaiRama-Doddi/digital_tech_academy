@@ -257,7 +257,11 @@ function TrustAndValuesPage() {
         <div className="container-site section-y-sm w-full min-w-0">
           <dl className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 w-full min-w-0">
             {credibleMetrics.map((stat) => (
-              <div key={stat.label} data-reveal className="border-l border-border-strong pl-3 sm:pl-4 min-w-0">
+              <div
+                key={stat.label}
+                data-reveal
+                className="border-l border-border-strong pl-3 sm:pl-4 min-w-0"
+              >
                 <dd className="font-display text-2xl font-extrabold text-accent-foreground sm:text-3xl">
                   {stat.value}
                 </dd>
@@ -307,10 +311,14 @@ function TrustAndValuesPage() {
               {/* Right Column: Narrative paragraphs */}
               <div className="space-y-4 lg:border-l lg:border-blue-100 lg:pl-10">
                 <p className="text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
-                  At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews, or invent unverified statistics. We believe that true credibility comes from transparent educational delivery and verifiable student progress.
+                  At DIGITECHADEMY, we do not fabricate student testimonials, publish stock reviews,
+                  or invent unverified statistics. We believe that true credibility comes from
+                  transparent educational delivery and verifiable student progress.
                 </p>
                 <p className="text-sm sm:text-base leading-relaxed text-slate-600 font-normal text-justify">
-                  As our current cohort learners complete their capstone defenses and transition into the workforce, verified and attributable student feedback will be published here with full authorization.
+                  As our current cohort learners complete their capstone defenses and transition
+                  into the workforce, verified and attributable student feedback will be published
+                  here with full authorization.
                 </p>
               </div>
             </div>
@@ -335,7 +343,10 @@ function TrustAndValuesPage() {
           </div>
 
           {/* Auto-scrolling Single-Row Quality Standards Marquee */}
-          <div className="relative mt-5 sm:mt-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-hidden py-3" data-reveal>
+          <div
+            className="relative mt-5 sm:mt-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-hidden py-3"
+            data-reveal
+          >
             {/* Subtle gradient edge fades */}
             <div
               className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-white via-white/85 to-transparent"
@@ -349,11 +360,15 @@ function TrustAndValuesPage() {
             <div className="flex w-max animate-quality-marquee hover:[animation-play-state:paused] active:[animation-play-state:paused]">
               {/* Primary Track Set */}
               <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0">
-                {trustPillars.map((pillar, index) => renderQualityPillarCard(pillar, `pillar-a-${index}`))}
+                {trustPillars.map((pillar, index) =>
+                  renderQualityPillarCard(pillar, `pillar-a-${index}`),
+                )}
               </div>
               {/* Duplicated Track Set for Seamless Infinite Loop */}
               <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0" aria-hidden="true">
-                {trustPillars.map((pillar, index) => renderQualityPillarCard(pillar, `pillar-b-${index}`))}
+                {trustPillars.map((pillar, index) =>
+                  renderQualityPillarCard(pillar, `pillar-b-${index}`),
+                )}
               </div>
             </div>
           </div>
@@ -378,7 +393,7 @@ function TrustAndValuesPage() {
                   ? "flex justify-center max-w-lg mx-auto"
                   : testimonials.length === 2
                     ? "grid grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"
-                    : "grid sm:grid-cols-2 lg:grid-cols-3"
+                    : "grid sm:grid-cols-2 lg:grid-cols-3",
               )}
             >
               {testimonials.map((review) => (
@@ -392,7 +407,10 @@ function TrustAndValuesPage() {
       {/* Section 6 — Live Practical Labs Experience CTA */}
       <section className="bg-white py-8 sm:py-12">
         <div className="container-site">
-          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white grid lg:grid-cols-12 items-center" data-reveal>
+          <div
+            className="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white grid lg:grid-cols-12 items-center"
+            data-reveal
+          >
             <div className="lg:col-span-5 h-56 lg:h-full min-h-[220px]">
               <img
                 src={testimonialAnanyaImg}
@@ -409,7 +427,9 @@ function TrustAndValuesPage() {
                 Experience Practical Learning Firsthand
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal text-justify">
-                Join a live demo session before enrolling. Meet our mentors, test-drive our lab simulations, and evaluate whether our practical training approach fits your career aspirations.
+                Join a live demo session before enrolling. Meet our mentors, test-drive our lab
+                simulations, and evaluate whether our practical training approach fits your career
+                aspirations.
               </p>
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <BtnLink

@@ -57,7 +57,16 @@ function OfficialInstagramIcon({ className = "size-9.5" }: { className?: string 
         </radialGradient>
       </defs>
       <rect width="36" height="36" rx="8" fill="url(#footer-ig-radial)" />
-      <rect x="8.5" y="8.5" width="19" height="19" rx="5.5" stroke="#FFFFFF" strokeWidth="2" fill="none" />
+      <rect
+        x="8.5"
+        y="8.5"
+        width="19"
+        height="19"
+        rx="5.5"
+        stroke="#FFFFFF"
+        strokeWidth="2"
+        fill="none"
+      />
       <circle cx="18" cy="18" r="4.8" stroke="#FFFFFF" strokeWidth="2" fill="none" />
       <circle cx="23.2" cy="12.8" r="1.2" fill="#FFFFFF" />
     </svg>
@@ -74,7 +83,8 @@ function OfficialYouTubeIcon({ className = "size-9.5" }: { className?: string })
 }
 
 export function Footer() {
-  const [liveCourses, setLiveCourses] = useState<Array<{ id: string; slug: string; title: string; active?: boolean }>>(courses);
+  const [liveCourses, setLiveCourses] =
+    useState<Array<{ id: string; slug: string; title: string; active?: boolean }>>(courses);
 
   useEffect(() => {
     const cached = getLocalCachedCourses();
@@ -124,7 +134,9 @@ export function Footer() {
                 <span>Cyber Security</span>
               </div>
               <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md font-normal">
-                Digitechademy is a practical learning platform focused on helping learners build relevant digital and technology skills through structured training, practical learning and expert guidance.
+                Digitechademy is a practical learning platform focused on helping learners build
+                relevant digital and technology skills through structured training, practical
+                learning and expert guidance.
               </p>
               <p className="mt-2 text-xs font-bold text-sky-300 tracking-wide">
                 LEARN • GROW • ACHIEVE
@@ -212,17 +224,17 @@ export function Footer() {
                 .filter((c) => c.active !== false)
                 .slice(0, 5)
                 .map((course) => (
-                <li key={course.slug} className="min-w-0">
-                  <Link
-                    to="/courses/$slug"
-                    params={{ slug: course.slug }}
-                    className="group flex items-center gap-1.5 text-slate-300 transition-all duration-200 hover:text-sky-300 hover:translate-x-1 w-full min-w-0 overflow-hidden"
-                  >
-                    <ChevronRight className="size-3 text-indigo-400 shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
-                    <span className="truncate block min-w-0 flex-1">{course.title}</span>
-                  </Link>
-                </li>
-              ))}
+                  <li key={course.slug} className="min-w-0">
+                    <Link
+                      to="/courses/$slug"
+                      params={{ slug: course.slug }}
+                      className="group flex items-center gap-1.5 text-slate-300 transition-all duration-200 hover:text-sky-300 hover:translate-x-1 w-full min-w-0 overflow-hidden"
+                    >
+                      <ChevronRight className="size-3 text-indigo-400 shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
+                      <span className="truncate block min-w-0 flex-1">{course.title}</span>
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
 
@@ -247,7 +259,9 @@ export function Footer() {
                     <span className="block font-bold text-white group-hover:text-sky-300 transition-colors truncate">
                       {site.phone}
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">Admissions Hotline</span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">
+                      Admissions Hotline
+                    </span>
                   </div>
                 </a>
               </li>
@@ -265,7 +279,9 @@ export function Footer() {
                     <span className="block font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
                       WhatsApp Enquiry
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">Instant Counselor Chat</span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">
+                      Instant Counselor Chat
+                    </span>
                   </div>
                 </a>
               </li>
@@ -281,7 +297,9 @@ export function Footer() {
                     <span className="block font-semibold text-white group-hover:text-indigo-300 transition-colors break-all text-xs xl:text-[13px] leading-snug">
                       {site.email}
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">Official Business Email</span>
+                    <span className="block text-[11px] text-slate-400 mt-0.5">
+                      Official Business Email
+                    </span>
                   </div>
                 </a>
               </li>
@@ -305,13 +323,19 @@ export function Footer() {
         <div className="container-site flex flex-col items-center justify-between gap-4 text-xs text-slate-400 lg:flex-row">
           <p className="text-center sm:text-left">
             © 2026 <span className="font-bold text-white">{site.name}</span>. All Rights Reserved.{" "}
-            <span className="text-sky-400 font-semibold tracking-wider">LEARN • GROW • ACHIEVE</span>
+            <span className="text-sky-400 font-semibold tracking-wider">
+              LEARN • GROW • ACHIEVE
+            </span>
           </p>
 
           <div className="flex items-center gap-x-3 text-[11.5px] text-slate-400">
-            <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">Privacy Policy</Link>
+            <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">
+              Privacy Policy
+            </Link>
             <span className="text-slate-700">|</span>
-            <Link to="/terms" className="transition-colors hover:text-sky-300">Terms &amp; Conditions</Link>
+            <Link to="/terms" className="transition-colors hover:text-sky-300">
+              Terms &amp; Conditions
+            </Link>
           </div>
         </div>
       </div>

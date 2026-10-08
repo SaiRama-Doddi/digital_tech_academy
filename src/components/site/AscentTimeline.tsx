@@ -105,7 +105,9 @@ export function AscentTimeline({ className }: { className?: string | undefined }
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-xs font-bold uppercase tracking-wider text-sky-400">Student Success Ascent</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-sky-400">
+                Student Success Ascent
+              </p>
               <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
                 <Sparkles className="size-2.5" /> 5 Milestones
               </span>

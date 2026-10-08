@@ -1,6 +1,7 @@
 # DIGITECHADEMY
-*LEARN • GROW • ACHIEVE*
-*Cyber Security • Digital Marketing • Programmatic Advertising*
+
+_LEARN • GROW • ACHIEVE_
+_Cyber Security • Digital Marketing • Programmatic Advertising_
 
 Build a Premium Cyber Security, Digital Marketing & Programmatic Advertising Training Institute Website
 

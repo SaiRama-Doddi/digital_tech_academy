@@ -33,7 +33,10 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   }, [inView, value]);
 
   return (
-    <span ref={ref} className="text-xl sm:text-2xl lg:text-[1.85rem] font-extrabold text-blue-600 tracking-tight">
+    <span
+      ref={ref}
+      className="text-xl sm:text-2xl lg:text-[1.85rem] font-extrabold text-blue-600 tracking-tight"
+    >
       {display}
       {suffix}
     </span>

@@ -30,7 +30,11 @@ export function TestimonialCard({ name, course, rating, quote, onDark, className
               key={i}
               className={cn(
                 "size-3.5 shrink-0",
-                i < rating ? "fill-accent text-accent" : onDark ? "text-navy-muted" : "text-border-strong",
+                i < rating
+                  ? "fill-accent text-accent"
+                  : onDark
+                    ? "text-navy-muted"
+                    : "text-border-strong",
               )}
               aria-hidden="true"
             />

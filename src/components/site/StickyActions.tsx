@@ -19,7 +19,10 @@ export function StickyActions() {
         aria-label={`Call ${site.name}`}
         className="pointer-events-auto group relative grid size-10 sm:size-12 place-items-center rounded-full bg-blue-600 hover:bg-blue-500 text-white shadow-[0_4px_16px_rgba(37,99,235,0.4)] hover:shadow-[0_6px_22px_rgba(37,99,235,0.6)] transition-all duration-300 hover:scale-110 active:scale-95 animate-call-pulse shrink-0"
       >
-        <Phone className="size-4 sm:size-5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+        <Phone
+          className="size-4 sm:size-5 transition-transform duration-300 group-hover:scale-110"
+          aria-hidden="true"
+        />
         <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-lg bg-slate-900/95 backdrop-blur-sm border border-blue-500/30 px-3 py-1.5 text-xs font-semibold text-white shadow-xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 lg:flex items-center gap-1.5">
           <span className="size-1.5 rounded-full bg-blue-400 animate-pulse" />
           Call Now

@@ -14,4 +14,3 @@ export interface MentorProfile {
 
 // All mentor profiles are dynamically created & managed by the academy administrator
 export const mentors: MentorProfile[] = [];
-

@@ -3,12 +3,21 @@ import { Link } from "@tanstack/react-router";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export function Logo({ onDark = false, className }: { onDark?: boolean | undefined; className?: string | undefined }) {
+export function Logo({
+  onDark = false,
+  className,
+}: {
+  onDark?: boolean | undefined;
+  className?: string | undefined;
+}) {
   return (
     <Link
       to="/"
       aria-label={`${site.name} — home`}
-      className={cn("group flex shrink-0 items-center gap-2.5 sm:gap-3 transition-transform duration-200 select-none", className)}
+      className={cn(
+        "group flex shrink-0 items-center gap-2.5 sm:gap-3 transition-transform duration-200 select-none",
+        className,
+      )}
     >
       <span
         className={cn(
@@ -18,7 +27,11 @@ export function Logo({ onDark = false, className }: { onDark?: boolean | undefin
             : "bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 shadow-blue-500/25 ring-1 ring-white/30",
         )}
       >
-        <svg viewBox="0 0 24 24" className="size-5 sm:size-5.5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          className="size-5 sm:size-5.5 transition-transform duration-300 group-hover:scale-110"
+          aria-hidden="true"
+        >
           <path
             d="M12 2.6 20 5.6v6.1c0 4.6-3.2 8.4-8 9.7-4.8-1.3-8-5.1-8-9.7V5.6l8-3Z"
             fill="none"
@@ -43,7 +56,11 @@ export function Logo({ onDark = false, className }: { onDark?: boolean | undefin
             onDark ? "text-white" : "text-slate-900",
           )}
         >
-          DIGI<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">TECH</span>ADEMY
+          DIGI
+          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            TECH
+          </span>
+          ADEMY
         </span>
         <span
           className={cn(

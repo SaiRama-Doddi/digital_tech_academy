@@ -29,11 +29,31 @@ export const whyChooseUs = [
 ];
 
 export const methodology = [
-  { step: "01", title: "Learn", text: "Understand the principles, terminology, frameworks, and tools behind each subject." },
-  { step: "02", title: "See It In Action", text: "Watch how the concept is applied in a real-world scenario." },
-  { step: "03", title: "Build", text: "Apply your learning to projects, campaigns, case studies, and realistic scenarios." },
-  { step: "04", title: "Review", text: "Identify gaps, improve your work, and learn how professionals evaluate results." },
-  { step: "05", title: "Progress", text: "Build a stronger portfolio of skills and move forward with greater career confidence." },
+  {
+    step: "01",
+    title: "Learn",
+    text: "Understand the principles, terminology, frameworks, and tools behind each subject.",
+  },
+  {
+    step: "02",
+    title: "See It In Action",
+    text: "Watch how the concept is applied in a real-world scenario.",
+  },
+  {
+    step: "03",
+    title: "Build",
+    text: "Apply your learning to projects, campaigns, case studies, and realistic scenarios.",
+  },
+  {
+    step: "04",
+    title: "Review",
+    text: "Identify gaps, improve your work, and learn how professionals evaluate results.",
+  },
+  {
+    step: "05",
+    title: "Progress",
+    text: "Build a stronger portfolio of skills and move forward with greater career confidence.",
+  },
 ];
 
 export const practicalTraining = [
@@ -148,12 +168,32 @@ export const careerReadinessPillars = [
 ];
 
 export const careerBenefits = [
-  { icon: "BadgeCheck", title: "Job-ready skills", text: "Capabilities mapped to actual role requirements." },
-  { icon: "FolderOpen", title: "Portfolio development", text: "Finish with work you can show, not just certificates." },
-  { icon: "Activity", title: "Practical experience", text: "Repeated hands-on practice builds real fluency." },
-  { icon: "Wrench", title: "Industry tools", text: "Confidence across the standard professional toolset." },
+  {
+    icon: "BadgeCheck",
+    title: "Job-ready skills",
+    text: "Capabilities mapped to actual role requirements.",
+  },
+  {
+    icon: "FolderOpen",
+    title: "Portfolio development",
+    text: "Finish with work you can show, not just certificates.",
+  },
+  {
+    icon: "Activity",
+    title: "Practical experience",
+    text: "Repeated hands-on practice builds real fluency.",
+  },
+  {
+    icon: "Wrench",
+    title: "Industry tools",
+    text: "Confidence across the standard professional toolset.",
+  },
   { icon: "Award", title: "Certification", text: "Recognised course completion certificate." },
-  { icon: "Mic", title: "Interview confidence", text: "Mock discussions and project walkthrough practice." },
+  {
+    icon: "Mic",
+    title: "Interview confidence",
+    text: "Mock discussions and project walkthrough practice.",
+  },
 ];
 
 export type Testimonial = {
@@ -193,14 +233,16 @@ export const testimonials: Testimonial[] = [
     course: "Ethical Hacking & Security Fundamentals",
     rating: 5,
     initials: "M",
-    quote: "I joined with zero Linux experience and finished genuinely comfortable in the terminal.",
+    quote:
+      "I joined with zero Linux experience and finished genuinely comfortable in the terminal.",
   },
   {
     name: "Sneha",
     course: "Digital Marketing Mastery",
     rating: 5,
     initials: "S",
-    quote: "Running real campaigns during the course gave me something concrete to show in interviews.",
+    quote:
+      "Running real campaigns during the course gave me something concrete to show in interviews.",
   },
   {
     name: "Vikram",
@@ -214,7 +256,8 @@ export const testimonials: Testimonial[] = [
     course: "Cyber Security Professional",
     rating: 5,
     initials: "F",
-    quote: "Report writing practice was unexpected and turned out to be the most useful skill of all.",
+    quote:
+      "Report writing practice was unexpected and turned out to be the most useful skill of all.",
   },
   {
     name: "Imran",
@@ -388,9 +431,4 @@ export const courseOptions = [
   "Not sure yet",
 ];
 
-export const callTimeOptions = [
-  "Morning",
-  "Afternoon",
-  "Evening",
-  "Anytime",
-];
+export const callTimeOptions = ["Morning", "Afternoon", "Evening", "Anytime"];

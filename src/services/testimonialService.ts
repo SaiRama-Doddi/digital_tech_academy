@@ -41,14 +41,7 @@ const TESTIMONIALS_STORAGE_KEY = "digital_tech_testimonials_db";
 
 export const DEFAULT_TESTIMONIALS: FirebaseTestimonial[] = [];
 
-export const DUMMY_TESTIMONIAL_IDS = [
-  "rev-1",
-  "rev-2",
-  "rev-3",
-  "rev-4",
-  "rev-5",
-  "rev-6",
-];
+export const DUMMY_TESTIMONIAL_IDS = ["rev-1", "rev-2", "rev-3", "rev-4", "rev-5", "rev-6"];
 
 export const DUMMY_TESTIMONIAL_NAMES = [
   "Ramesh K.",
@@ -59,7 +52,9 @@ export const DUMMY_TESTIMONIAL_NAMES = [
   "Kavitha T.",
 ];
 
-export function isDummyTestimonial(item: { id?: string; name?: string } | null | undefined): boolean {
+export function isDummyTestimonial(
+  item: { id?: string; name?: string } | null | undefined,
+): boolean {
   if (!item) return false;
   if (item.id && DUMMY_TESTIMONIAL_IDS.includes(item.id)) return true;
   if (item.name && DUMMY_TESTIMONIAL_NAMES.includes(item.name.trim())) return true;
@@ -152,7 +147,7 @@ export function clearAllTestimonials(): void {
  * Add a new student review to Firebase Firestore & local storage
  */
 export async function addTestimonialToFirebase(
-  input: TestimonialInput
+  input: TestimonialInput,
 ): Promise<FirebaseTestimonial> {
   const newId = `rev-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const item: FirebaseTestimonial = {
@@ -181,7 +176,7 @@ export async function addTestimonialToFirebase(
       Object.entries({
         ...item,
         timestamp: Date.now(),
-      }).filter(([_, v]) => v !== undefined)
+      }).filter(([_, v]) => v !== undefined),
     );
     await setDoc(docRef, firestoreData);
   } catch (err) {
@@ -196,7 +191,7 @@ export async function addTestimonialToFirebase(
  */
 export async function updateTestimonialInFirebase(
   id: string,
-  updates: Partial<FirebaseTestimonial>
+  updates: Partial<FirebaseTestimonial>,
 ): Promise<void> {
   const current = getLocalTestimonials();
   const updated = current.map((t) =>
@@ -206,7 +201,7 @@ export async function updateTestimonialInFirebase(
           ...updates,
           updatedAt: new Date().toISOString(),
         }
-      : t
+      : t,
   );
   saveLocalTestimonials(updated);
 
@@ -241,7 +236,7 @@ export async function deleteTestimonialFromFirebase(id: string): Promise<void> {
  * Subscribe to real-time student reviews
  */
 export function subscribeTestimonials(
-  callback: (testimonials: FirebaseTestimonial[]) => void
+  callback: (testimonials: FirebaseTestimonial[]) => void,
 ): () => void {
   // Fire initial cache
   callback(getLocalTestimonials());
@@ -296,7 +291,7 @@ export function subscribeTestimonials(
       (error) => {
         console.warn("Firestore subscription error for testimonials:", error);
         callback(getLocalTestimonials());
-      }
+      },
     );
 
     return () => {

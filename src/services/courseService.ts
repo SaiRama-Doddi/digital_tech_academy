@@ -186,17 +186,19 @@ export function getLocalCachedCourses(): FirebaseCourse[] {
     }
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
-      const filtered = parsed.filter(
-        (c: any) =>
-          c &&
-          c.id !== "full-stack-java" &&
-          c.slug !== "full-stack-java" &&
-          !c.title?.toLowerCase().includes("full stack java") &&
-          c.id !== "testing",
-      ).map((c: any) => ({
-        ...c,
-        category: normalizeCourseCategory(c.category, c.title, c.slug),
-      }));
+      const filtered = parsed
+        .filter(
+          (c: any) =>
+            c &&
+            c.id !== "full-stack-java" &&
+            c.slug !== "full-stack-java" &&
+            !c.title?.toLowerCase().includes("full stack java") &&
+            c.id !== "testing",
+        )
+        .map((c: any) => ({
+          ...c,
+          category: normalizeCourseCategory(c.category, c.title, c.slug),
+        }));
 
       // Merge in any missing default courses (e.g. programmatic advertising)
       for (const def of defaults) {
@@ -237,7 +239,9 @@ export async function deleteDemoCoursesFromFirebase(): Promise<number> {
     }
   }
   const cached = getLocalCachedCourses();
-  const cleaned = cached.filter((c) => !DEMO_COURSE_IDS.includes(c.id) && !DEMO_COURSE_IDS.includes(c.slug));
+  const cleaned = cached.filter(
+    (c) => !DEMO_COURSE_IDS.includes(c.id) && !DEMO_COURSE_IDS.includes(c.slug),
+  );
   saveLocalCachedCourses(cleaned);
   return count;
 }
@@ -270,13 +274,16 @@ export async function getCoursesFromFirebase(): Promise<FirebaseCourse[]> {
     if (!snapshot.empty) {
       const coursesFromDb: FirebaseCourse[] = snapshot.docs.map((docSnap) => {
         const data = docSnap.data();
-        const rawCategory = data['category'] || "";
-        const rawTitle = data['title'] || "Untitled Course";
-        const rawSlug = data['slug'] || docSnap.id;
+        const rawCategory = data["category"] || "";
+        const rawTitle = data["title"] || "Untitled Course";
+        const rawSlug = data["slug"] || docSnap.id;
         const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
 
         // Auto-heal in Firestore if category was stored incorrectly
-        if (rawCategory !== category && (category === "Programmatic Advertising" || category === "Cyber Security")) {
+        if (
+          rawCategory !== category &&
+          (category === "Programmatic Advertising" || category === "Cyber Security")
+        ) {
           updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
         }
 
@@ -285,28 +292,28 @@ export async function getCoursesFromFirebase(): Promise<FirebaseCourse[]> {
           slug: rawSlug,
           title: rawTitle,
           category,
-          description: data['description'] || "",
-          longDescription: data['longDescription'] || data['description'] || "",
-          about: data['about'] || {
-            description: data['longDescription'] || data['description'] || "",
-            learn: Array.isArray(data['highlights']) ? data['highlights'] : [],
+          description: data["description"] || "",
+          longDescription: data["longDescription"] || data["description"] || "",
+          about: data["about"] || {
+            description: data["longDescription"] || data["description"] || "",
+            learn: Array.isArray(data["highlights"]) ? data["highlights"] : [],
             audience: [],
             outcomes: [],
           },
-          duration: data['duration'] || "12 Weeks",
-          level: data['level'] || "Beginner to Advanced",
-          mode: data['mode'] || "Live Online & Classroom",
-          certificate: data['certificate'] || "Certificate of Completion",
-          instructor: data['instructor'] || "Expert Trainer",
-          price: data['price'] || "₹24,999",
-          highlights: Array.isArray(data['highlights']) ? data['highlights'] : [],
-          syllabus: Array.isArray(data['syllabus']) ? data['syllabus'] : [],
-          faqs: Array.isArray(data['faqs']) ? data['faqs'] : [],
-          students: typeof data['students'] === "number" ? data['students'] : 0,
-          active: data['active'] !== false,
-          featured: data['featured'] === true,
-          image: data['image'] || "",
-          createdAt: data['createdAt'] ? String(data['createdAt']) : Date.now(),
+          duration: data["duration"] || "12 Weeks",
+          level: data["level"] || "Beginner to Advanced",
+          mode: data["mode"] || "Live Online & Classroom",
+          certificate: data["certificate"] || "Certificate of Completion",
+          instructor: data["instructor"] || "Expert Trainer",
+          price: data["price"] || "₹24,999",
+          highlights: Array.isArray(data["highlights"]) ? data["highlights"] : [],
+          syllabus: Array.isArray(data["syllabus"]) ? data["syllabus"] : [],
+          faqs: Array.isArray(data["faqs"]) ? data["faqs"] : [],
+          students: typeof data["students"] === "number" ? data["students"] : 0,
+          active: data["active"] !== false,
+          featured: data["featured"] === true,
+          image: data["image"] || "",
+          createdAt: data["createdAt"] ? String(data["createdAt"]) : Date.now(),
         };
       });
 
@@ -328,7 +335,7 @@ export async function getCoursesFromFirebase(): Promise<FirebaseCourse[]> {
  */
 export function subscribeCourses(
   onUpdate: (courses: FirebaseCourse[]) => void,
-  onError?: (error: unknown) => void
+  onError?: (error: unknown) => void,
 ): () => void {
   try {
     const colRef = collection(db, "courses");
@@ -336,53 +343,58 @@ export function subscribeCourses(
       colRef,
       (snapshot) => {
         if (!snapshot.empty) {
-          const list: FirebaseCourse[] = snapshot.docs.map((docSnap) => {
-            const data = docSnap.data();
-            const rawCategory = data['category'] || "";
-            const rawTitle = data['title'] || "Untitled Course";
-            const rawSlug = data['slug'] || docSnap.id;
-            const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
+          const list: FirebaseCourse[] = snapshot.docs
+            .map((docSnap) => {
+              const data = docSnap.data();
+              const rawCategory = data["category"] || "";
+              const rawTitle = data["title"] || "Untitled Course";
+              const rawSlug = data["slug"] || docSnap.id;
+              const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
 
-            // Auto-heal in Firestore if category was stored incorrectly
-            if (rawCategory !== category && (category === "Programmatic Advertising" || category === "Cyber Security")) {
-              updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
-            }
+              // Auto-heal in Firestore if category was stored incorrectly
+              if (
+                rawCategory !== category &&
+                (category === "Programmatic Advertising" || category === "Cyber Security")
+              ) {
+                updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
+              }
 
-            return {
-              id: docSnap.id,
-              slug: rawSlug,
-              title: rawTitle,
-              category,
-              description: data['description'] || "",
-              longDescription: data['longDescription'] || data['description'] || "",
-              about: data['about'] || {
-                description: data['longDescription'] || data['description'] || "",
-                learn: Array.isArray(data['highlights']) ? data['highlights'] : [],
-                audience: [],
-                outcomes: [],
-              },
-              duration: data['duration'] || "12 Weeks",
-              level: data['level'] || "Beginner to Advanced",
-              mode: data['mode'] || "Live Online & Classroom",
-              certificate: data['certificate'] || "Certificate of Completion",
-              instructor: data['instructor'] || "Expert Trainer",
-              price: data['price'] || "₹24,999",
-              highlights: Array.isArray(data['highlights']) ? data['highlights'] : [],
-              syllabus: Array.isArray(data['syllabus']) ? data['syllabus'] : [],
-              faqs: Array.isArray(data['faqs']) ? data['faqs'] : [],
-              students: typeof data['students'] === "number" ? data['students'] : 0,
-              active: data['active'] !== false,
-              featured: data['featured'] === true,
-              image: data['image'] || "",
-              createdAt: data['createdAt'] ? String(data['createdAt']) : Date.now(),
-            };
-          }).filter(
-            (c) =>
-              c.id !== "full-stack-java" &&
-              c.slug !== "full-stack-java" &&
-              !c.title?.toLowerCase().includes("full stack java") &&
-              c.id !== "testing",
-          );
+              return {
+                id: docSnap.id,
+                slug: rawSlug,
+                title: rawTitle,
+                category,
+                description: data["description"] || "",
+                longDescription: data["longDescription"] || data["description"] || "",
+                about: data["about"] || {
+                  description: data["longDescription"] || data["description"] || "",
+                  learn: Array.isArray(data["highlights"]) ? data["highlights"] : [],
+                  audience: [],
+                  outcomes: [],
+                },
+                duration: data["duration"] || "12 Weeks",
+                level: data["level"] || "Beginner to Advanced",
+                mode: data["mode"] || "Live Online & Classroom",
+                certificate: data["certificate"] || "Certificate of Completion",
+                instructor: data["instructor"] || "Expert Trainer",
+                price: data["price"] || "₹24,999",
+                highlights: Array.isArray(data["highlights"]) ? data["highlights"] : [],
+                syllabus: Array.isArray(data["syllabus"]) ? data["syllabus"] : [],
+                faqs: Array.isArray(data["faqs"]) ? data["faqs"] : [],
+                students: typeof data["students"] === "number" ? data["students"] : 0,
+                active: data["active"] !== false,
+                featured: data["featured"] === true,
+                image: data["image"] || "",
+                createdAt: data["createdAt"] ? String(data["createdAt"]) : Date.now(),
+              };
+            })
+            .filter(
+              (c) =>
+                c.id !== "full-stack-java" &&
+                c.slug !== "full-stack-java" &&
+                !c.title?.toLowerCase().includes("full stack java") &&
+                c.id !== "testing",
+            );
           saveLocalCachedCourses(list);
           onUpdate(list);
         } else {
@@ -394,7 +406,7 @@ export function subscribeCourses(
         console.warn("Firestore subscription error, falling back to cache:", error);
         onUpdate(getLocalCachedCourses());
         if (onError) onError(error);
-      }
+      },
     );
 
     return unsubscribe;
@@ -409,7 +421,7 @@ export function subscribeCourses(
  * Add a new course to Firebase Firestore and local backup.
  */
 export async function addCourseToFirebase(
-  courseInput: Omit<FirebaseCourse, "id">
+  courseInput: Omit<FirebaseCourse, "id">,
 ): Promise<FirebaseCourse> {
   const newId =
     courseInput.slug?.trim() ||
@@ -427,7 +439,10 @@ export async function addCourseToFirebase(
 
   // 1. Write to local cache first for instant optimistic response
   const cached = getLocalCachedCourses();
-  const updatedList = [newCourse, ...cached.filter((c) => c.id !== newCourse.id && c.slug !== newCourse.slug)];
+  const updatedList = [
+    newCourse,
+    ...cached.filter((c) => c.id !== newCourse.id && c.slug !== newCourse.slug),
+  ];
   saveLocalCachedCourses(updatedList);
 
   // 2. Persist to Firestore
@@ -438,7 +453,7 @@ export async function addCourseToFirebase(
         ...newCourse,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
-      }).filter(([_, v]) => v !== undefined)
+      }).filter(([_, v]) => v !== undefined),
     );
     await setDoc(docRef, firestoreData);
   } catch (err) {
@@ -453,11 +468,13 @@ export async function addCourseToFirebase(
  */
 export async function updateCourseInFirebase(
   id: string,
-  updates: Partial<FirebaseCourse>
+  updates: Partial<FirebaseCourse>,
 ): Promise<void> {
   // Update local cache
   const cached = getLocalCachedCourses();
-  const updatedList = cached.map((c) => (c.id === id ? { ...c, ...updates, updatedAt: Date.now() } : c));
+  const updatedList = cached.map((c) =>
+    c.id === id ? { ...c, ...updates, updatedAt: Date.now() } : c,
+  );
   saveLocalCachedCourses(updatedList);
 
   // Update Firestore
@@ -493,7 +510,10 @@ export async function deleteCourseFromFirebase(id: string): Promise<void> {
 /**
  * Seed default courses into Firebase Firestore.
  */
-export async function seedDefaultCoursesToFirebase(): Promise<{ count: number; error?: string | undefined }> {
+export async function seedDefaultCoursesToFirebase(): Promise<{
+  count: number;
+  error?: string | undefined;
+}> {
   const defaults = getDefaultCoursesList();
   let successCount = 0;
   let lastError: string | undefined;

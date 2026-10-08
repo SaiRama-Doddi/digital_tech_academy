@@ -19,11 +19,7 @@ import { z } from "zod";
 
 import heroImg from "@/assets/hero-tech.jpg";
 import { Btn } from "@/components/site/Btn";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { requestAdminOtpFn, verifyAdminOtpFn } from "@/lib/server/admin-auth";
 import { saveAdminSession, isUserAdminAuthenticated } from "@/lib/auth";
 
@@ -183,7 +179,9 @@ function AdminLoginPage() {
             <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-200 bg-clip-text text-transparent block uppercase">
               DIGITECHADEMY
             </span>
-            <span className="text-[11px] text-blue-300 font-medium">Enterprise Management Portal</span>
+            <span className="text-[11px] text-blue-300 font-medium">
+              Enterprise Management Portal
+            </span>
           </div>
         </div>
 
@@ -197,7 +195,8 @@ function AdminLoginPage() {
             Secure Admin Access with One-Time Email Passcodes.
           </h1>
           <p className="mt-4 text-sm lg:text-base text-slate-300 leading-relaxed">
-            All administrative logins are protected with instant Gmail OTP verification codes sent directly to your registered administrator address.
+            All administrative logins are protected with instant Gmail OTP verification codes sent
+            directly to your registered administrator address.
           </p>
 
           {/* Quick Info Grid */}
@@ -303,7 +302,9 @@ function AdminLoginPage() {
                         setErrorMsg(null);
                       }}
                       className={`w-full rounded-xl border bg-white pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 ${
-                        emailError ? "border-red-400 focus:border-red-600 focus:ring-red-600" : "border-slate-200"
+                        emailError
+                          ? "border-red-400 focus:border-red-600 focus:ring-red-600"
+                          : "border-slate-200"
                       }`}
                     />
                   </div>
@@ -349,12 +350,30 @@ function AdminLoginPage() {
                     autoFocus
                   >
                     <InputOTPGroup className="gap-2">
-                      <InputOTPSlot index={0} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
-                      <InputOTPSlot index={1} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
-                      <InputOTPSlot index={2} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
-                      <InputOTPSlot index={3} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
-                      <InputOTPSlot index={4} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
-                      <InputOTPSlot index={5} className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20" />
+                      <InputOTPSlot
+                        index={0}
+                        className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                      />
+                      <InputOTPSlot
+                        index={1}
+                        className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                      />
+                      <InputOTPSlot
+                        index={2}
+                        className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                      />
+                      <InputOTPSlot
+                        index={3}
+                        className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                      />
+                      <InputOTPSlot
+                        index={4}
+                        className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                      />
+                      <InputOTPSlot
+                        index={5}
+                        className="size-11 sm:size-12 rounded-xl text-lg font-bold border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20"
+                      />
                     </InputOTPGroup>
                   </InputOTP>
 
@@ -366,7 +385,10 @@ function AdminLoginPage() {
                             Direct Security Passcode
                           </span>
                           <span className="text-xs text-slate-600 font-medium">
-                            Code: <strong className="font-mono text-blue-900 text-sm tracking-widest">{devCode}</strong>
+                            Code:{" "}
+                            <strong className="font-mono text-blue-900 text-sm tracking-widest">
+                              {devCode}
+                            </strong>
                           </span>
                         </div>
                         <button
@@ -401,9 +423,7 @@ function AdminLoginPage() {
                       className="text-blue-600 hover:text-blue-700 font-bold disabled:text-slate-400 flex items-center gap-1 transition-colors"
                     >
                       <RotateCcw className="size-3" />
-                      {resendCooldown > 0
-                        ? `Resend in ${resendCooldown}s`
-                        : "Resend Code"}
+                      {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend Code"}
                     </button>
                   </div>
                 </div>
@@ -437,7 +457,9 @@ function AdminLoginPage() {
               </div>
               <p className="text-slate-600 text-xs">
                 Email OTP codes will be delivered directly to:{" "}
-                <strong className="text-slate-800 break-all font-mono">sunilneelakantams@gmail.com</strong>
+                <strong className="text-slate-800 break-all font-mono">
+                  sunilneelakantams@gmail.com
+                </strong>
               </p>
             </div>
           </div>

@@ -18,7 +18,9 @@ import { StatsSection } from "@/components/site/StatsSection";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About DIGITECHADEMY | Cyber Security, Digital Marketing & Programmatic Advertising" },
+      {
+        title: "About DIGITECHADEMY | Cyber Security, Digital Marketing & Programmatic Advertising",
+      },
       {
         name: "description",
         content:
@@ -27,7 +29,8 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: "About DIGITECHADEMY — LEARN • GROW • ACHIEVE" },
       {
         property: "og:description",
-        content: "Learn practical skills. Build real-world confidence. Become career ready with DIGITECHADEMY.",
+        content:
+          "Learn practical skills. Build real-world confidence. Become career ready with DIGITECHADEMY.",
       },
       { property: "og:url", content: "/about" },
     ],
@@ -73,7 +76,10 @@ function AboutPage() {
       {/* Section 2 — Introduction */}
       <section className="bg-white">
         <div className="container-site py-6 sm:py-8 lg:py-10 grid items-center gap-6 lg:grid-cols-2 lg:gap-10">
-          <div className="overflow-hidden rounded-2xl border border-slate-300 shadow-sm" data-reveal="left">
+          <div
+            className="overflow-hidden rounded-2xl border border-slate-300 shadow-sm"
+            data-reveal="left"
+          >
             <img
               src={aboutImg}
               alt="Hands-on technology training lab at DIGITECHADEMY with learners and mentor"
@@ -92,10 +98,14 @@ function AboutPage() {
                 description={
                   <>
                     <span className="sm:hidden text-slate-700">
-                      DIGITECHADEMY combines structured concepts, practical application, industry tools, and real projects for job-ready skills.
+                      DIGITECHADEMY combines structured concepts, practical application, industry
+                      tools, and real projects for job-ready skills.
                     </span>
                     <span className="hidden sm:inline text-slate-700">
-                      We believe effective training should go beyond completing lessons. DIGITECHADEMY combines structured concepts, practical application, industry tools, guided projects, and continuous improvement to create a learning experience built around real skills.
+                      We believe effective training should go beyond completing lessons.
+                      DIGITECHADEMY combines structured concepts, practical application, industry
+                      tools, guided projects, and continuous improvement to create a learning
+                      experience built around real skills.
                     </span>
                   </>
                 }
@@ -138,10 +148,13 @@ function AboutPage() {
               <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200 transition-transform duration-300 group-hover:scale-105">
                 <Compass className="size-5" aria-hidden="true" />
               </span>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">Our Vision</h2>
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                Our Vision
+              </h2>
             </div>
             <p className="text-xs sm:text-sm leading-relaxed text-slate-600 text-justify">
-              To build a trusted learning ecosystem where learners develop practical digital skills and thrive in modern tech roles.
+              To build a trusted learning ecosystem where learners develop practical digital skills
+              and thrive in modern tech roles.
             </p>
           </article>
 
@@ -154,10 +167,13 @@ function AboutPage() {
               <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200 transition-transform duration-300 group-hover:scale-105">
                 <Target className="size-5" aria-hidden="true" />
               </span>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">Our Mission</h2>
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                Our Mission
+              </h2>
             </div>
             <p className="text-xs sm:text-sm leading-relaxed text-slate-600 text-justify">
-              To deliver hands-on, industry-relevant training that prepares learners with real skills, practical experience, and career confidence.
+              To deliver hands-on, industry-relevant training that prepares learners with real
+              skills, practical experience, and career confidence.
             </p>
           </article>
         </div>
@@ -166,10 +182,7 @@ function AboutPage() {
       {/* Section 8 — Why Learners Choose Us */}
       <section className="bg-white border-t border-slate-200">
         <div className="container-site py-6 sm:py-8 lg:py-10">
-          <SectionHeading
-            eyebrow="WHY LEARNERS CHOOSE US"
-            title="Why Learners Choose Us"
-          />
+          <SectionHeading eyebrow="WHY LEARNERS CHOOSE US" title="Why Learners Choose Us" />
           <div className="mt-6 sm:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-2">
             {whyLearnersChooseUs.map((item, index) => {
               const IconComp = item.icon;
@@ -177,7 +190,11 @@ function AboutPage() {
                 <article
                   key={item.title}
                   data-reveal={index % 2 === 0 ? "left" : "top"}
-                  style={{ "--reveal-delay": `${(index % 2) * 120 + Math.floor(index / 2) * 80}ms` } as React.CSSProperties}
+                  style={
+                    {
+                      "--reveal-delay": `${(index % 2) * 120 + Math.floor(index / 2) * 80}ms`,
+                    } as React.CSSProperties
+                  }
                   className="group relative flex flex-col justify-between rounded-xl sm:rounded-2xl border border-slate-300 bg-white pt-5 sm:pt-6 pb-3.5 sm:pb-5 px-3.5 sm:px-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl hover:shadow-navy/5"
                 >
                   {/* Icon badge placed on the top border */}
@@ -188,7 +205,9 @@ function AboutPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-xs sm:text-base font-extrabold text-navy leading-snug mt-0.5 sm:mt-1">{item.title}</h3>
+                    <h3 className="text-xs sm:text-base font-extrabold text-navy leading-snug mt-0.5 sm:mt-1">
+                      {item.title}
+                    </h3>
                     <p className="mt-1 sm:mt-1.5 text-[11px] sm:text-xs md:text-sm leading-relaxed text-slate-700 font-normal">
                       {item.text}
                     </p>
@@ -202,4 +221,3 @@ function AboutPage() {
     </SiteLayout>
   );
 }
-

@@ -65,14 +65,15 @@ export const PRESET_AVATARS: { id: string; label: string; src: string }[] = [];
  * Generates an ultra-crisp SVG initials monogram avatar when no photo is uploaded
  */
 export function getDefaultMentorAvatar(name?: string): string {
-  const initials = (name || "Faculty")
-    .trim()
-    .split(/\s+/)
-    .map((n) => n[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join("")
-    .toUpperCase() || "FA";
+  const initials =
+    (name || "Faculty")
+      .trim()
+      .split(/\s+/)
+      .map((n) => n[0])
+      .filter(Boolean)
+      .slice(0, 2)
+      .join("")
+      .toUpperCase() || "FA";
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
     <defs>
       <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -139,7 +140,7 @@ export function getLocalMentors(): FirebaseMentor[] {
     if (Array.isArray(parsed)) {
       // Strictly filter out any demo/dummy mentors
       const cleaned = parsed.filter(
-        (m) => !DEMO_MENTOR_IDS.includes(m.id) && !DEMO_MENTOR_NAMES.includes(m.name)
+        (m) => !DEMO_MENTOR_IDS.includes(m.id) && !DEMO_MENTOR_NAMES.includes(m.name),
       );
       if (cleaned.length !== parsed.length) {
         localStorage.setItem(MENTORS_STORAGE_KEY, JSON.stringify(cleaned));
@@ -157,7 +158,7 @@ export function saveLocalMentors(mentorsList: FirebaseMentor[]) {
   if (typeof window === "undefined") return;
   try {
     const cleaned = mentorsList.filter(
-      (m) => !DEMO_MENTOR_IDS.includes(m.id) && !DEMO_MENTOR_NAMES.includes(m.name)
+      (m) => !DEMO_MENTOR_IDS.includes(m.id) && !DEMO_MENTOR_NAMES.includes(m.name),
     );
     localStorage.setItem(MENTORS_STORAGE_KEY, JSON.stringify(cleaned));
     window.dispatchEvent(new CustomEvent("dta_mentors_updated", { detail: cleaned }));
@@ -199,7 +200,7 @@ export async function deleteDemoMentorsFromFirebase(): Promise<number> {
   // Clean local storage cache
   const current = getLocalMentors();
   const cleaned = current.filter(
-    (m) => !DEMO_MENTOR_IDS.includes(m.id) && !DEMO_MENTOR_NAMES.includes(m.name)
+    (m) => !DEMO_MENTOR_IDS.includes(m.id) && !DEMO_MENTOR_NAMES.includes(m.name),
   );
   saveLocalMentors(cleaned);
   return count;
@@ -255,9 +256,7 @@ export async function fetchMentorsFromFirebase(): Promise<FirebaseMentor[]> {
 /**
  * Real-time listener for mentors
  */
-export function subscribeMentors(
-  callback: (mentors: FirebaseMentor[]) => void
-): () => void {
+export function subscribeMentors(callback: (mentors: FirebaseMentor[]) => void): () => void {
   // 1. Initial fire with local cache (demo mentors already filtered)
   callback(getLocalMentors());
 
@@ -323,7 +322,7 @@ export function subscribeMentors(
       },
       (err) => {
         console.warn("Firestore mentors onSnapshot error:", err);
-      }
+      },
     );
   } catch (err) {
     console.warn("Failed to subscribe to mentors Firestore collection:", err);
@@ -340,9 +339,7 @@ export function subscribeMentors(
 /**
  * Add a new mentor to Firebase and local cache
  */
-export async function addMentorToFirebase(
-  input: MentorInput
-): Promise<FirebaseMentor> {
+export async function addMentorToFirebase(input: MentorInput): Promise<FirebaseMentor> {
   const styles = getTrackBadgeStyle(input.track);
   const newId = `mentor-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const item: FirebaseMentor = {
@@ -369,7 +366,7 @@ export async function addMentorToFirebase(
       Object.entries({
         ...item,
         timestamp: Date.now(),
-      }).filter(([_, v]) => v !== undefined)
+      }).filter(([_, v]) => v !== undefined),
     );
     await setDoc(docRef, firestoreData);
   } catch (err) {
@@ -384,7 +381,7 @@ export async function addMentorToFirebase(
  */
 export async function updateMentorInFirebase(
   id: string,
-  updates: Partial<FirebaseMentor>
+  updates: Partial<FirebaseMentor>,
 ): Promise<void> {
   const styles = updates.track ? getTrackBadgeStyle(updates.track) : null;
   const current = getLocalMentors();
@@ -413,7 +410,7 @@ export async function updateMentorInFirebase(
         badgeBg: updates.badgeBg || (styles ? styles.badgeBg : undefined),
         gradient: updates.gradient || (styles ? styles.gradient : undefined),
         updatedAt: new Date().toISOString(),
-      }).filter(([_, v]) => v !== undefined)
+      }).filter(([_, v]) => v !== undefined),
     );
     await updateDoc(docRef, firestoreUpdates);
   } catch (err) {

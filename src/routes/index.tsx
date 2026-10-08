@@ -55,8 +55,6 @@ import cyberPhase5Img from "@/assets/cyber-phase5-3d.jpg";
 import domainCyberSecurityImg from "@/assets/domain-cyber-security.jpg";
 import domainDigitalMarketingImg from "@/assets/domain-digital-marketing.jpg";
 import domainProgrammaticAdsImg from "@/assets/domain-programmatic-ads.jpg";
-import domainAiAutomationImg from "@/assets/domain-ai-automation.jpg";
-import domainFullstackDevImg from "@/assets/domain-fullstack-dev.jpg";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseCard } from "@/components/site/CourseCard";
 import { CountUp } from "@/components/site/CountUp";
@@ -67,10 +65,14 @@ import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { Hero3DCardsCarousel } from "@/components/site/Hero3DCardsCarousel";
+import { HeroCarousel } from "@/components/site/HeroCarousel";
 import { homeFaqs, practicalTraining, whoIsForAudience } from "@/data/content";
 import { courses } from "@/data/courses";
-import { subscribeCourses, normalizeCourseCategory, type FirebaseCourse } from "@/services/courseService";
+import {
+  subscribeCourses,
+  normalizeCourseCategory,
+  type FirebaseCourse,
+} from "@/services/courseService";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -142,8 +144,8 @@ function Home() {
 
   return (
     <SiteLayout>
-      {/* 3. Hero */}
-      <Hero onSelectDomain={setSelectedDomain} />
+      {/* 3. Hero Carousel */}
+      <HeroCarousel onSelectDomain={setSelectedDomain} />
 
       {/* 4. USP / Trust Strip */}
       <UspTrustStrip />
@@ -155,14 +157,11 @@ function Home() {
       <CorePrograms selectedDomain={selectedDomain} onSelectDomain={setSelectedDomain} />
 
       {/* 7. Programmatic Advertising Differentiator (Appears when Digital Marketing or Programmatic Advertising is clicked) */}
-      {(selectedDomain === "Digital Marketing" || selectedDomain === "Programmatic Advertising") && (
-        <ProgrammaticDifferentiator />
-      )}
+      {(selectedDomain === "Digital Marketing" ||
+        selectedDomain === "Programmatic Advertising") && <ProgrammaticDifferentiator />}
 
       {/* 8. Cyber Security Differentiator (Appears when Cyber Security is clicked) */}
-      {selectedDomain === "Cyber Security" && (
-        <CyberSecurityDifferentiator />
-      )}
+      {selectedDomain === "Cyber Security" && <CyberSecurityDifferentiator />}
 
       {/* 9. Digitechademy Learning Method */}
       <DigitechademyLearningMethod />
@@ -188,282 +187,6 @@ function Home() {
   );
 }
 
-/**
- * Rotating Trust Highlights Tag (displays Practical Training, Industry Mentorship, Real-World Projects, Career-Focused Learning one by one)
- */
-const TRUST_HIGHLIGHTS = [
-  {
-    icon: CheckCircle2,
-    text: "Practical Training",
-    textColor: "text-blue-700",
-    iconColor: "text-blue-600",
-    badgeClass: "bg-blue-50/85 border-blue-200/80 shadow-blue-500/5",
-  },
-  {
-    icon: Users,
-    text: "Industry Mentorship",
-    textColor: "text-indigo-700",
-    iconColor: "text-indigo-600",
-    badgeClass: "bg-indigo-50/85 border-indigo-200/80 shadow-indigo-500/5",
-  },
-  {
-    icon: Cpu,
-    text: "Real-World Projects",
-    textColor: "text-sky-700",
-    iconColor: "text-sky-600",
-    badgeClass: "bg-sky-50/85 border-sky-200/80 shadow-sky-500/5",
-  },
-  {
-    icon: Award,
-    text: "Career-Focused Learning",
-    textColor: "text-emerald-700",
-    iconColor: "text-emerald-600",
-    badgeClass: "bg-emerald-50/85 border-emerald-200/80 shadow-emerald-500/5",
-  },
-];
-
-function RotatingTrustBadge() {
-  const [index, setIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % TRUST_HIGHLIGHTS.length);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  const current = TRUST_HIGHLIGHTS[index] ?? TRUST_HIGHLIGHTS[0]!;
-  const IconComponent = current.icon;
-
-  return (
-    <div
-      className="mt-6 pt-4 border-t border-slate-200/60 flex items-center gap-3"
-      data-reveal
-      style={{ "--reveal-delay": "300ms" } as React.CSSProperties}
-    >
-      <div
-        className={cn(
-          "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 shadow-xs transition-all duration-500",
-          current.badgeClass
-        )}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        aria-live="polite"
-      >
-        <div
-          key={index}
-          className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-1 duration-300 text-xs sm:text-[13px] font-bold"
-        >
-          <IconComponent className={cn("size-3.5 sm:size-4 shrink-0", current.iconColor)} />
-          <span className={cn("whitespace-nowrap font-bold", current.textColor)}>
-            {current.text}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/**
- * =========================================================================
- * 3. HERO & ANIMATED INTERACTIVE LAB SIMULATOR
- * =========================================================================
- */
-const HERO_DOMAINS = [
-  {
-    id: "cyber",
-    headlinePart1: "MASTER THE SKILLS.",
-    headlinePart2: "CYBER SECURITY DEFENSE.",
-    tagline: "Learn ethical hacking, SOC analysis, and Kali Linux sandboxes from seasoned practitioners.",
-    accentGradient: "from-blue-600 via-sky-500 to-cyan-500",
-    badgeLabel: "CYBER SECURITY • SOC LABS",
-    badgeColor: "border-blue-300 bg-blue-50/90 text-blue-700",
-  },
-  {
-    id: "programmatic",
-    headlinePart1: "MASTER THE SKILLS.",
-    headlinePart2: "PROGRAMMATIC ADVERTISING.",
-    tagline: "Master DV360 DSP, CM360 ad serving, real-time bidding, and programmatic campaign strategies.",
-    accentGradient: "from-blue-600 via-sky-500 to-cyan-500",
-    badgeLabel: "PROGRAMMATIC ADVERTISING • DV360",
-    badgeColor: "border-blue-300 bg-blue-50/90 text-blue-700",
-  },
-  {
-    id: "growth",
-    headlinePart1: "MASTER THE SKILLS.",
-    headlinePart2: "PERFORMANCE MARKETING.",
-    tagline: "Execute Google Ads, Meta campaigns, and GA4 analytics to drive measurable business growth.",
-    accentGradient: "from-blue-600 via-sky-500 to-cyan-500",
-    badgeLabel: "DIGITAL MARKETING • GA4 ANALYTICS",
-    badgeColor: "border-sky-300 bg-sky-50/90 text-sky-700",
-  },
-];
-
-function Hero({ onSelectDomain }: { onSelectDomain?: ((domain: string) => void) | undefined } = {}) {
-  const [domainIndex, setDomainIndex] = useState(0);
-
-  // Auto-cycle headline domain every 3.6s
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDomainIndex((prev) => (prev + 1) % HERO_DOMAINS.length);
-    }, 3600);
-    return () => clearInterval(timer);
-  }, []);
-
-  const currentDomain = HERO_DOMAINS[domainIndex] ?? HERO_DOMAINS[0]!;
-
-  return (
-    <section className="relative overflow-hidden bg-white pb-6 pt-3 sm:pt-4 lg:pb-8 lg:pt-6">
-      {/* Dynamic Background Tech & Data Transformation Video */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-30 mix-blend-multiply transition-opacity duration-1000 filter contrast-105"
-        >
-          <source src="/hero-tech-bg.mp4" type="video/mp4" />
-        </video>
-        {/* Soft gradient masks to keep typography, badges and 3D cards 100% legible */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-white/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/30 via-transparent to-transparent" />
-      </div>
-
-      {/* High-tech matrix background grid overlay */}
-      <div
-        className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-[0.08] pointer-events-none"
-        aria-hidden="true"
-      />
-
-      {/* Premium ambient glow orbs */}
-      <div
-        className="pointer-events-none absolute right-[-5%] sm:right-[5%] top-[5%] size-[18rem] sm:size-[38rem] rounded-full bg-gradient-to-tr from-sky-300/35 via-blue-200/25 to-transparent blur-3xl animate-pulse-glow"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute left-[-5%] sm:left-[5%] top-[20%] size-[16rem] sm:size-[32rem] rounded-full bg-gradient-to-br from-indigo-200/30 via-blue-100/35 to-transparent blur-3xl animate-pulse-glow"
-        style={{ animationDelay: "2s" }}
-        aria-hidden="true"
-      />
-
-      <div className="container-site relative z-10">
-        <div className="grid lg:grid-cols-12 items-center gap-8 lg:gap-8 xl:gap-14 w-full">
-          {/* Left Column: Text & CTAs (7 cols on lg/xl) */}
-          <div className="lg:col-span-7 w-full text-left flex flex-col justify-center min-w-0">
-            {/* Eyebrow: INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED */}
-            <div
-              className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 rounded-full border border-blue-200/90 bg-gradient-to-r from-blue-50/95 via-sky-50/80 to-indigo-50/95 px-3 py-1.5 sm:px-4 sm:py-1.5 shadow-[0_2px_12px_-2px_rgba(37,99,235,0.14)] backdrop-blur-md mb-3 sm:mb-3.5 w-fit transition-all duration-300 hover:border-blue-400 hover:shadow-[0_4px_16px_-2px_rgba(37,99,235,0.2)]"
-              data-reveal
-            >
-              <span className="relative flex size-2 shrink-0">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              <span className="text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider sm:tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 truncate">
-                INDUSTRY-LED • PRACTICAL • CAREER-FOCUSED
-              </span>
-              <Sparkles className="size-3 text-amber-500 shrink-0 animate-pulse" aria-hidden="true" />
-            </div>
-
-            {/* Dynamic Animated H1 */}
-            <h1
-              className="text-[1.12rem] xs:text-[1.26rem] sm:text-[1.65rem] md:text-[1.85rem] lg:text-[1.8rem] xl:text-[2.15rem] 2xl:text-[2.4rem] font-black leading-[1.18] sm:leading-[1.14] tracking-tight text-slate-900"
-              data-reveal
-              style={{ "--reveal-delay": "80ms" } as React.CSSProperties}
-            >
-              <span className="block">MASTER THE SKILLS.</span>
-              <span
-                key={currentDomain.id}
-                className={cn(
-                  "block text-transparent bg-clip-text bg-gradient-to-r break-words sm:break-normal animate-in fade-in slide-in-from-bottom-2 duration-500",
-                  currentDomain.accentGradient,
-                )}
-              >
-                {currentDomain.headlinePart2}
-              </span>
-            </h1>
-
-            {/* Subheading */}
-            <p
-              className="mt-3.5 sm:mt-4 text-xs sm:text-[15px] lg:text-base text-slate-600 leading-relaxed max-w-lg lg:max-w-xl font-normal text-justify sm:text-left"
-              data-reveal
-              style={{ "--reveal-delay": "160ms" } as React.CSSProperties}
-            >
-              Learn Cyber Security, Programmatic Advertising &amp; Digital Marketing from industry practitioners through practical training, real-world scenarios, guided capstone projects and hands-on tool learning.
-            </p>
-
-            {/* Official Supporting Line: Learn. Practice. Build. Become Industry Ready. */}
-            <div
-              className="mt-3 sm:mt-3.5 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-50/95 via-indigo-50/80 to-sky-50/90 border border-blue-200/90 px-3.5 py-1.5 shadow-2xs w-fit max-w-full"
-              data-reveal
-              style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
-            >
-              <span className="relative flex size-2 shrink-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-blue-600" />
-              </span>
-              <span className="text-xs sm:text-[13px] font-extrabold text-blue-900 tracking-wide truncate">
-                Learn. Practice. Build. Become Industry Ready.
-              </span>
-            </div>
-
-
-            {/* CTAs: Explore Programs / Talk to an Expert (Side-by-side on mobile) */}
-            <div
-              className="mt-5 sm:mt-6 flex flex-row items-center gap-2 sm:gap-3.5 w-full max-w-md sm:max-w-none"
-              data-reveal
-              style={{ "--reveal-delay": "240ms" } as React.CSSProperties}
-            >
-              <a
-                href="#courses"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const coursesElem = document.getElementById("courses");
-                  if (coursesElem) {
-                    coursesElem.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                className="relative overflow-hidden flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:brightness-110 text-white font-bold h-10.5 sm:h-12 px-2.5 sm:px-7 text-[11px] min-[380px]:text-xs sm:text-base rounded-xl shadow-lg shadow-blue-600/25 active:scale-[0.98] transition-all flex items-center gap-1.5 sm:gap-2 group whitespace-nowrap min-w-0"
-              >
-                {/* Subtle Shimmer Slide Effect */}
-                <div
-                  className="pointer-events-none absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 animate-shimmer-slide"
-                  aria-hidden="true"
-                />
-                <span className="relative z-10 truncate">Explore Programs</span>
-                <ArrowRight className="relative z-10 size-3.5 sm:size-4 transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
-              </a>
-
-              <BtnLink
-                to="/request-call"
-                variant="outline"
-                size="md"
-                className="flex-1 sm:flex-initial justify-center h-10.5 sm:h-12 px-2.5 sm:px-6 rounded-xl bg-white/95 hover:bg-slate-50 text-slate-800 font-bold border border-slate-300/90 shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 sm:gap-2 text-[11px] min-[380px]:text-xs sm:text-base active:scale-[0.98] cursor-pointer whitespace-nowrap min-w-0"
-              >
-                <span className="grid size-5 sm:size-6 place-items-center rounded-full bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
-                  <PhoneCall className="size-2.5 sm:size-3" aria-hidden="true" />
-                </span>
-                <span className="truncate">Talk to an Expert</span>
-              </BtnLink>
-            </div>
-
-            {/* Rotating Trust Tag */}
-            <RotatingTrustBadge />
-          </div>
-
-          {/* Right Column: Interactive 3D Cards Showcase Carousel (5 cols on lg/xl) */}
-          <div className="lg:col-span-5 relative w-full flex justify-center lg:justify-end mt-4 lg:mt-0" data-reveal="right">
-            <Hero3DCardsCarousel onSelectDomain={onSelectDomain} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /**
  * =========================================================================
@@ -688,7 +411,10 @@ function WhyDigitechademy() {
                       item.color,
                     )}
                   >
-                    <ItemIcon className="size-3.5 sm:size-4 transition-transform duration-300" aria-hidden="true" />
+                    <ItemIcon
+                      className="size-3.5 sm:size-4 transition-transform duration-300"
+                      aria-hidden="true"
+                    />
                   </span>
 
                   {/* Text Details */}
@@ -762,24 +488,6 @@ type DomainTrack = {
 
 const DOMAIN_TRACKS: DomainTrack[] = [
   {
-    id: "cyber-security",
-    name: "Cyber Security",
-    eyebrow: "DEFENSE & ETHICAL HACKING",
-    badgeStyle: "bg-blue-50 text-blue-800 border-blue-200/90",
-    title: "Cyber Security",
-    description:
-      "Master network defense, Linux administration, vulnerability assessment, and real-world ethical security testing.",
-    icon: ShieldCheck,
-    iconBg: "bg-blue-100 text-blue-700 ring-1 ring-blue-200/80",
-    image: domainCyberSecurityImg,
-    cardBorder: "border-slate-300",
-    cardHoverBorder: "hover:border-blue-600",
-    cardBg: "bg-gradient-to-b from-blue-50/30 via-white to-white",
-    hoverShadow: "hover:shadow-xl hover:shadow-blue-500/10",
-    btnHoverBg: "group-hover:bg-blue-600",
-    skills: ["Ethical Hacking", "Network Defense", "Vulnerability Assessment", "Linux Security"],
-  },
-  {
     id: "digital-marketing",
     name: "Digital Marketing",
     eyebrow: "GROWTH & PERFORMANCE",
@@ -798,6 +506,24 @@ const DOMAIN_TRACKS: DomainTrack[] = [
     skills: ["SEO Strategy", "Google & Meta Ads", "Social Media", "Conversion Analytics"],
   },
   {
+    id: "cyber-security",
+    name: "Cyber Security",
+    eyebrow: "DEFENSE & ETHICAL HACKING",
+    badgeStyle: "bg-blue-50 text-blue-800 border-blue-200/90",
+    title: "Cyber Security",
+    description:
+      "Master network defense, Linux administration, vulnerability assessment, and real-world ethical security testing.",
+    icon: ShieldCheck,
+    iconBg: "bg-blue-100 text-blue-700 ring-1 ring-blue-200/80",
+    image: domainCyberSecurityImg,
+    cardBorder: "border-slate-300",
+    cardHoverBorder: "hover:border-blue-600",
+    cardBg: "bg-gradient-to-b from-blue-50/30 via-white to-white",
+    hoverShadow: "hover:shadow-xl hover:shadow-blue-500/10",
+    btnHoverBg: "group-hover:bg-blue-600",
+    skills: ["Ethical Hacking", "Network Defense", "Vulnerability Assessment", "Linux Security"],
+  },
+  {
     id: "programmatic-advertising",
     name: "Programmatic Advertising",
     eyebrow: "ADTECH & REAL-TIME BIDDING",
@@ -814,42 +540,6 @@ const DOMAIN_TRACKS: DomainTrack[] = [
     hoverShadow: "hover:shadow-xl hover:shadow-blue-500/10",
     btnHoverBg: "group-hover:bg-blue-600",
     skills: ["DV360 & CM360", "Real-Time Bidding", "Audience Targeting", "DSP & SSP Platforms"],
-  },
-  {
-    id: "ai-automation",
-    name: "AI & Automation",
-    eyebrow: "AI AGENTS & SMART WORKFLOWS",
-    badgeStyle: "bg-amber-50 text-amber-800 border-amber-200/90",
-    title: "AI & Automation",
-    description:
-      "Automate business operations, AI agents, Zapier workflows, and smart CRM integrations.",
-    icon: Bot,
-    iconBg: "bg-amber-100 text-amber-700 ring-1 ring-amber-200/80",
-    image: domainAiAutomationImg,
-    cardBorder: "border-slate-300",
-    cardHoverBorder: "hover:border-amber-500",
-    cardBg: "bg-gradient-to-b from-amber-50/30 via-white to-white",
-    hoverShadow: "hover:shadow-xl hover:shadow-amber-500/10",
-    btnHoverBg: "group-hover:bg-amber-600",
-    skills: ["AI Agents", "Zapier & Webhooks", "CRM Automation", "Chatbot Funnels"],
-  },
-  {
-    id: "fullstack-dev",
-    name: "Full Stack Development",
-    eyebrow: "REACT & NODE.JS ENGINEERING",
-    badgeStyle: "bg-sky-50 text-sky-800 border-sky-200/90",
-    title: "Full Stack Development",
-    description:
-      "Build scalable, high-performance modern web apps with React, Node.js, databases, and APIs.",
-    icon: Code2,
-    iconBg: "bg-sky-100 text-sky-700 ring-1 ring-sky-200/80",
-    image: domainFullstackDevImg,
-    cardBorder: "border-slate-300",
-    cardHoverBorder: "hover:border-sky-500",
-    cardBg: "bg-gradient-to-b from-sky-50/30 via-white to-white",
-    hoverShadow: "hover:shadow-xl hover:shadow-sky-500/10",
-    btnHoverBg: "group-hover:bg-sky-600",
-    skills: ["React & TypeScript", "Node.js & Express", "Databases & APIs", "Full Stack Architecture"],
   },
 ];
 
@@ -933,7 +623,8 @@ function CorePrograms({
 }: CoreProgramsProps = {}) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [internalSelectedDomain, setInternalSelectedDomain] = useState<string | null>(null);
-  const selectedDomain = externalSelectedDomain !== undefined ? externalSelectedDomain : internalSelectedDomain;
+  const selectedDomain =
+    externalSelectedDomain !== undefined ? externalSelectedDomain : internalSelectedDomain;
   const setSelectedDomain = (val: string | null) => {
     if (onSelectDomain) {
       onSelectDomain(val);
@@ -981,7 +672,7 @@ function CorePrograms({
     (index: number) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -1068,7 +759,10 @@ function CorePrograms({
     >
       <div className="container-site">
         {/* Section Header: Title on Left, Navigation Controls & Link Up on Right */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-2 sm:mb-2.5" data-reveal>
+        <div
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-2 sm:mb-2.5"
+          data-reveal
+        >
           <div className="min-w-0">
             <div className="eyebrow text-xs inline-flex items-center gap-2 text-blue-700 mb-1.5">
               <span className="h-px w-5 sm:w-6 bg-blue-600" aria-hidden="true" />
@@ -1110,8 +804,12 @@ function CorePrograms({
             </Link>
           </div>
         </div>
-        <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-5xl mb-5 sm:mb-6" data-reveal>
-          Select a specialized domain to explore dedicated hands-on programs, live lab environments, and job-ready technical curriculums.
+        <p
+          className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-5xl mb-5 sm:mb-6"
+          data-reveal
+        >
+          Select a specialized domain to explore dedicated hands-on programs, live lab environments,
+          and job-ready technical curriculums.
         </p>
 
         {/* 5 Domain Cards with Auto-Scrolling Carousel */}
@@ -1154,8 +852,12 @@ function CorePrograms({
                         track.cardHoverBorder,
                         track.cardBg,
                         track.hoverShadow,
-                        isSelected ? "ring-2 ring-blue-600 border-blue-600 bg-blue-50/25 shadow-md scale-[1.01]" : isSnapActive ? "ring-1 ring-blue-400/50" : "",
-                        "hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                        isSelected
+                          ? "ring-2 ring-blue-600 border-blue-600 bg-blue-50/25 shadow-md scale-[1.01]"
+                          : isSnapActive
+                            ? "ring-1 ring-blue-400/50"
+                            : "",
+                        "hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-blue-500",
                       )}
                     >
                       <div>
@@ -1171,10 +873,20 @@ function CorePrograms({
 
                           {/* Floating Icon & Eyebrow Badge */}
                           <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
-                            <div className={cn("size-8 rounded-lg flex items-center justify-center backdrop-blur-md bg-white/95 shadow-xs", track.iconBg)}>
+                            <div
+                              className={cn(
+                                "size-8 rounded-lg flex items-center justify-center backdrop-blur-md bg-white/95 shadow-xs",
+                                track.iconBg,
+                              )}
+                            >
                               <TrackIcon className="size-4" />
                             </div>
-                            <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-[9.5px] font-extrabold uppercase tracking-wider backdrop-blur-md bg-white/95 border shadow-xs", track.badgeStyle)}>
+                            <span
+                              className={cn(
+                                "inline-flex items-center px-2.5 py-0.5 rounded-full text-[9.5px] font-extrabold uppercase tracking-wider backdrop-blur-md bg-white/95 border shadow-xs",
+                                track.badgeStyle,
+                              )}
+                            >
                               {track.eyebrow}
                             </span>
                           </div>
@@ -1188,8 +900,17 @@ function CorePrograms({
 
                       {/* Clean Compact Footer */}
                       <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
-                        <span>{count} {count === 1 ? "Program" : "Programs"}</span>
-                        <span className={cn("inline-flex items-center gap-1 font-bold transition-colors", isSelected ? "text-blue-700" : "text-blue-600 group-hover:text-blue-700")}>
+                        <span>
+                          {count} {count === 1 ? "Program" : "Programs"}
+                        </span>
+                        <span
+                          className={cn(
+                            "inline-flex items-center gap-1 font-bold transition-colors",
+                            isSelected
+                              ? "text-blue-700"
+                              : "text-blue-600 group-hover:text-blue-700",
+                          )}
+                        >
                           <span>{isSelected ? "Selected" : "Explore"}</span>
                           <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
                         </span>
@@ -1212,7 +933,9 @@ function CorePrograms({
                     onClick={() => scrollToTrack(i)}
                     className={cn(
                       "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                      selectedIndex === i ? "w-7 bg-blue-600 shadow-xs" : "w-2 bg-slate-300 hover:bg-slate-400"
+                      selectedIndex === i
+                        ? "w-7 bg-blue-600 shadow-xs"
+                        : "w-2 bg-slate-300 hover:bg-slate-400",
                     )}
                     aria-label={`Go to ${track.title}`}
                   />
@@ -1230,7 +953,12 @@ function CorePrograms({
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-slate-100 hover:bg-slate-200/80 text-slate-600 transition-colors cursor-pointer border border-slate-200/70"
               title={isAutoScrollPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
             >
-              <span className={cn("size-1.5 rounded-full", isAutoScrollPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse")} />
+              <span
+                className={cn(
+                  "size-1.5 rounded-full",
+                  isAutoScrollPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse",
+                )}
+              />
               <span>{isAutoScrollPaused ? "Auto-scroll: Paused" : "Auto-scrolling"}</span>
             </button>
           </div>
@@ -1247,7 +975,7 @@ function CorePrograms({
                     ? "flex justify-center max-w-[320px] sm:max-w-[340px] mx-auto"
                     : displayedCourses.length === 2
                       ? "grid sm:grid-cols-2 max-w-2xl mx-auto"
-                      : "grid sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto"
+                      : "grid sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto",
                 )}
               >
                 {displayedCourses.map((course, cIdx) => (
@@ -1257,15 +985,15 @@ function CorePrograms({
                     style={{ "--reveal-delay": `${cIdx * 100}ms` } as React.CSSProperties}
                     className="h-full"
                   >
-                    <CourseCard
-                      course={course as any}
-                    />
+                    <CourseCard course={course as any} />
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-10 px-4 bg-white rounded-2xl border border-slate-200/80">
-                <p className="text-slate-600 text-sm">No active courses currently available in this domain.</p>
+                <p className="text-slate-600 text-sm">
+                  No active courses currently available in this domain.
+                </p>
               </div>
             )}
           </div>
@@ -1288,7 +1016,8 @@ function ProgrammaticDifferentiator() {
       dotColor: "bg-sky-400",
       name: "DV360",
       desc: "Campaign planning, targeting, bidding and optimization.",
-      color: "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
+      color:
+        "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
       hoverGlow: "from-sky-500/10",
       accentGradient: "from-sky-400 via-cyan-400 to-blue-500",
     },
@@ -1298,7 +1027,8 @@ function ProgrammaticDifferentiator() {
       dotColor: "bg-blue-400",
       name: "CM360",
       desc: "Ad serving, tracking, attribution and campaign measurement.",
-      color: "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
+      color:
+        "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
       hoverGlow: "from-blue-500/10",
       accentGradient: "from-blue-400 via-sky-500 to-cyan-400",
     },
@@ -1308,7 +1038,8 @@ function ProgrammaticDifferentiator() {
       dotColor: "bg-sky-400",
       name: "YouTube Advertising",
       desc: "Audience strategy, video campaigns and performance analysis.",
-      color: "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
+      color:
+        "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
       hoverGlow: "from-sky-500/10",
       accentGradient: "from-sky-400 via-cyan-400 to-blue-600",
     },
@@ -1318,7 +1049,8 @@ function ProgrammaticDifferentiator() {
       dotColor: "bg-blue-400",
       name: "Audience & Targeting",
       desc: "Understand how audiences are built, segmented and activated.",
-      color: "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
+      color:
+        "bg-blue-500/15 text-blue-400 border-blue-400/30 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-400 group-hover:shadow-[0_0_18px_rgba(59,130,246,0.4)]",
       hoverGlow: "from-blue-500/10",
       accentGradient: "from-blue-500 via-sky-500 to-cyan-400",
     },
@@ -1328,7 +1060,8 @@ function ProgrammaticDifferentiator() {
       dotColor: "bg-cyan-400",
       name: "Optimization",
       desc: "Learn how traders identify performance issues and make optimization decisions.",
-      color: "bg-cyan-500/15 text-cyan-400 border-cyan-400/30 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-400 group-hover:shadow-[0_0_18px_rgba(6,182,212,0.4)]",
+      color:
+        "bg-cyan-500/15 text-cyan-400 border-cyan-400/30 group-hover:bg-cyan-500 group-hover:text-slate-950 group-hover:border-cyan-400 group-hover:shadow-[0_0_18px_rgba(6,182,212,0.4)]",
       hoverGlow: "from-cyan-500/10",
       accentGradient: "from-cyan-400 via-sky-500 to-blue-600",
     },
@@ -1338,16 +1071,14 @@ function ProgrammaticDifferentiator() {
       dotColor: "bg-sky-400",
       name: "Reporting & Measurement",
       desc: "Turn campaign data into actionable media insights.",
-      color: "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
+      color:
+        "bg-sky-500/15 text-sky-400 border-sky-400/30 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 group-hover:shadow-[0_0_18px_rgba(56,189,248,0.4)]",
       hoverGlow: "from-sky-500/10",
       accentGradient: "from-sky-400 via-blue-500 to-indigo-600",
     },
   ];
 
-  const renderPillarCard = (
-    item: (typeof programmaticPillars)[number],
-    key: string,
-  ) => {
+  const renderPillarCard = (item: (typeof programmaticPillars)[number], key: string) => {
     const ItemIcon = item.icon;
     return (
       <div
@@ -1371,7 +1102,10 @@ function ProgrammaticDifferentiator() {
                 item.color,
               )}
             >
-              <ItemIcon className="size-4.5 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
+              <ItemIcon
+                className="size-4.5 transition-transform duration-300 group-hover:scale-110"
+                aria-hidden="true"
+              />
             </span>
             <span className="inline-flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-bold text-slate-700 uppercase tracking-wider bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200 transition-all duration-300 group-hover:border-blue-400/50 group-hover:text-blue-700 group-hover:bg-blue-50">
               <span className={cn("size-1.5 rounded-full animate-pulse", item.dotColor)} />
@@ -1402,9 +1136,15 @@ function ProgrammaticDifferentiator() {
   };
 
   return (
-    <section id="programmatic-differentiator" className="bg-slate-50/80 relative py-7 sm:py-10 overflow-hidden border-t border-slate-200/80">
+    <section
+      id="programmatic-differentiator"
+      className="bg-slate-50/80 relative py-7 sm:py-10 overflow-hidden border-t border-slate-200/80"
+    >
       <div className="container-site relative z-10">
-        <div className="max-w-4xl lg:max-w-6xl flex flex-col sm:flex-row sm:items-end justify-between gap-4" data-reveal>
+        <div
+          className="max-w-4xl lg:max-w-6xl flex flex-col sm:flex-row sm:items-end justify-between gap-4"
+          data-reveal
+        >
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700 mb-3 shadow-xs">
               <Radio className="size-3.5 text-blue-600 animate-pulse" />
@@ -1419,7 +1159,9 @@ function ProgrammaticDifferentiator() {
             </h2>
 
             <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-5xl">
-              Programmatic advertising isn't just about running ads. It's about understanding audiences, inventory, bidding, targeting, pacing, optimization, measurement and media performance.
+              Programmatic advertising isn't just about running ads. It's about understanding
+              audiences, inventory, bidding, targeting, pacing, optimization, measurement and media
+              performance.
             </p>
           </div>
         </div>
@@ -1439,11 +1181,15 @@ function ProgrammaticDifferentiator() {
           <div className="flex w-max animate-programmatic-marquee hover:[animation-play-state:paused] active:[animation-play-state:paused]">
             {/* Primary Track Set */}
             <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0">
-              {programmaticPillars.map((item, index) => renderPillarCard(item, `pillar-a-${index}`))}
+              {programmaticPillars.map((item, index) =>
+                renderPillarCard(item, `pillar-a-${index}`),
+              )}
             </div>
             {/* Duplicated Track Set for Seamless Infinite Loop */}
             <div className="flex gap-4 sm:gap-5 pr-4 sm:pr-5 shrink-0" aria-hidden="true">
-              {programmaticPillars.map((item, index) => renderPillarCard(item, `pillar-b-${index}`))}
+              {programmaticPillars.map((item, index) =>
+                renderPillarCard(item, `pillar-b-${index}`),
+              )}
             </div>
           </div>
         </div>
@@ -1511,7 +1257,7 @@ function CyberSecurityDifferentiator() {
     (index: number) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -1551,9 +1297,11 @@ function CyberSecurityDifferentiator() {
       image: cyberPhase1Img,
       badge: "FOUNDATIONS",
       dotColor: "bg-cyan-400 shadow-[0_0_8px_#22d3ee]",
-      cardBorder: "border-cyan-500/25 hover:border-cyan-400/80 hover:shadow-[0_0_25px_rgba(6,182,212,0.25)]",
+      cardBorder:
+        "border-cyan-500/25 hover:border-cyan-400/80 hover:shadow-[0_0_25px_rgba(6,182,212,0.25)]",
       badgeStyle: "text-cyan-300 bg-cyan-950/80 border-cyan-500/30",
-      iconStyle: "text-cyan-400 bg-cyan-500/10 border-cyan-500/30 group-hover:bg-cyan-500/20 group-hover:border-cyan-400",
+      iconStyle:
+        "text-cyan-400 bg-cyan-500/10 border-cyan-500/30 group-hover:bg-cyan-500/20 group-hover:border-cyan-400",
       stepColor: "text-cyan-400 bg-cyan-950/90 border-cyan-500/40",
       glow: "from-cyan-500/15",
     },
@@ -1565,9 +1313,11 @@ function CyberSecurityDifferentiator() {
       image: cyberPhase2Img,
       badge: "TOOLING & OS",
       dotColor: "bg-purple-400 shadow-[0_0_8px_#c084fc]",
-      cardBorder: "border-purple-500/25 hover:border-purple-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
+      cardBorder:
+        "border-purple-500/25 hover:border-purple-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
       badgeStyle: "text-purple-300 bg-purple-950/80 border-purple-500/30",
-      iconStyle: "text-purple-400 bg-purple-500/10 border-purple-500/30 group-hover:bg-purple-500/20 group-hover:border-purple-400",
+      iconStyle:
+        "text-purple-400 bg-purple-500/10 border-purple-500/30 group-hover:bg-purple-500/20 group-hover:border-purple-400",
       stepColor: "text-purple-400 bg-purple-950/90 border-purple-500/40",
       glow: "from-purple-500/15",
     },
@@ -1579,9 +1329,11 @@ function CyberSecurityDifferentiator() {
       image: cyberPhase3Img,
       badge: "HANDS-ON",
       dotColor: "bg-emerald-400 shadow-[0_0_8px_#34d399]",
-      cardBorder: "border-emerald-500/25 hover:border-emerald-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
+      cardBorder:
+        "border-emerald-500/25 hover:border-emerald-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
       badgeStyle: "text-emerald-300 bg-emerald-950/80 border-emerald-500/30",
-      iconStyle: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30 group-hover:bg-emerald-500/20 group-hover:border-emerald-400",
+      iconStyle:
+        "text-emerald-400 bg-emerald-500/10 border-emerald-500/30 group-hover:bg-emerald-500/20 group-hover:border-emerald-400",
       stepColor: "text-emerald-400 bg-emerald-950/90 border-emerald-500/40",
       glow: "from-emerald-500/15",
     },
@@ -1593,9 +1345,11 @@ function CyberSecurityDifferentiator() {
       image: cyberPhase4Img,
       badge: "ASSESSMENT",
       dotColor: "bg-amber-400 shadow-[0_0_8px_#fbbf24]",
-      cardBorder: "border-amber-500/25 hover:border-amber-400/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.25)]",
+      cardBorder:
+        "border-amber-500/25 hover:border-amber-400/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.25)]",
       badgeStyle: "text-amber-300 bg-amber-950/80 border-amber-500/30",
-      iconStyle: "text-amber-400 bg-amber-500/10 border-amber-500/30 group-hover:bg-amber-500/20 group-hover:border-amber-400",
+      iconStyle:
+        "text-amber-400 bg-amber-500/10 border-amber-500/30 group-hover:bg-amber-500/20 group-hover:border-amber-400",
       stepColor: "text-amber-400 bg-amber-950/90 border-amber-500/40",
       glow: "from-amber-500/15",
     },
@@ -1607,9 +1361,11 @@ function CyberSecurityDifferentiator() {
       image: cyberPhase5Img,
       badge: "REAL SCENARIOS",
       dotColor: "bg-pink-400 shadow-[0_0_8px_#f472b6]",
-      cardBorder: "border-pink-500/25 hover:border-pink-400/80 hover:shadow-[0_0_25px_rgba(236,72,153,0.25)]",
+      cardBorder:
+        "border-pink-500/25 hover:border-pink-400/80 hover:shadow-[0_0_25px_rgba(236,72,153,0.25)]",
       badgeStyle: "text-pink-300 bg-pink-950/80 border-pink-500/30",
-      iconStyle: "text-pink-400 bg-pink-500/10 border-pink-500/30 group-hover:bg-pink-500/20 group-hover:border-pink-400",
+      iconStyle:
+        "text-pink-400 bg-pink-500/10 border-pink-500/30 group-hover:bg-pink-500/20 group-hover:border-pink-400",
       stepColor: "text-pink-400 bg-pink-950/90 border-pink-500/40",
       glow: "from-pink-500/15",
     },
@@ -1618,8 +1374,16 @@ function CyberSecurityDifferentiator() {
   const hudVectors = [
     { icon: Search, label: "DETECT", color: "text-cyan-400 border-cyan-500/30 bg-cyan-950/50" },
     { icon: BarChart3, label: "ANALYZE", color: "text-sky-400 border-sky-500/30 bg-sky-950/50" },
-    { icon: ShieldCheck, label: "SECURE", color: "text-emerald-400 border-emerald-500/30 bg-emerald-950/50" },
-    { icon: Settings, label: "DEFEND", color: "text-indigo-400 border-indigo-500/30 bg-indigo-950/50" },
+    {
+      icon: ShieldCheck,
+      label: "SECURE",
+      color: "text-emerald-400 border-emerald-500/30 bg-emerald-950/50",
+    },
+    {
+      icon: Settings,
+      label: "DEFEND",
+      color: "text-indigo-400 border-indigo-500/30 bg-indigo-950/50",
+    },
   ];
 
   return (
@@ -1649,12 +1413,21 @@ function CyberSecurityDifferentiator() {
         }}
         aria-hidden="true"
       />
-      <div className="pointer-events-none absolute -top-32 left-1/3 size-96 rounded-full bg-cyan-500/10 blur-[100px] z-0" aria-hidden="true" />
-      <div className="pointer-events-none absolute -bottom-32 right-1/4 size-96 rounded-full bg-blue-600/10 blur-[100px] z-0" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute -top-32 left-1/3 size-96 rounded-full bg-cyan-500/10 blur-[100px] z-0"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-32 right-1/4 size-96 rounded-full bg-blue-600/10 blur-[100px] z-0"
+        aria-hidden="true"
+      />
 
       <div className="container-site relative z-10">
         {/* Unified Compact Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-5 sm:mb-6" data-reveal>
+        <div
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-5 sm:mb-6"
+          data-reveal
+        >
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-950/70 px-3 py-1 text-[10.5px] sm:text-xs font-bold uppercase tracking-wider text-cyan-300 backdrop-blur-md mb-2.5 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
               <ShieldCheck className="size-3.5 text-cyan-400 animate-pulse" />
@@ -1669,7 +1442,9 @@ function CyberSecurityDifferentiator() {
             </h2>
 
             <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-2xl">
-              Cyber Security is not learned by memorizing definitions. Learn how systems work, where vulnerabilities occur, and how security professionals identify, analyze, and respond to threats.
+              Cyber Security is not learned by memorizing definitions. Learn how systems work, where
+              vulnerabilities occur, and how security professionals identify, analyze, and respond
+              to threats.
             </p>
           </div>
 
@@ -1833,7 +1608,7 @@ function CyberSecurityDifferentiator() {
                 "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
                 selectedIndex === i
                   ? "w-6 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
-                  : "w-1.5 bg-slate-700 hover:bg-slate-600"
+                  : "w-1.5 bg-slate-700 hover:bg-slate-600",
               )}
               aria-label={`Go to phase ${i + 1}`}
             />
@@ -1850,7 +1625,8 @@ function CyberSecurityDifferentiator() {
               <ShieldCheck className="size-3.5" />
             </span>
             <span className="text-[11px] sm:text-xs">
-              <strong className="text-white font-bold">The Practical Defense Pathway:</strong> Structured progression from network fundamentals to real-world attack mitigation.
+              <strong className="text-white font-bold">The Practical Defense Pathway:</strong>{" "}
+              Structured progression from network fundamentals to real-world attack mitigation.
             </span>
           </div>
 
@@ -1871,7 +1647,10 @@ function CyberSecurityDifferentiator() {
  */
 function DigitechademyLearningMethod() {
   return (
-    <section id="methodology" className="bg-white relative py-5 sm:py-8 overflow-hidden border-t border-slate-200/80">
+    <section
+      id="methodology"
+      className="bg-white relative py-5 sm:py-8 overflow-hidden border-t border-slate-200/80"
+    >
       <div className="container-site relative z-10">
         <SectionHeading
           eyebrow="DIGITECHADEMY LEARNING METHOD"
@@ -1911,7 +1690,10 @@ function PracticalLearning() {
     <section className="bg-slate-50/80 py-7 sm:py-10 overflow-hidden border-b border-slate-200/80">
       <div className="container-site">
         {/* Header Row: Title & Badges on Left, Action Buttons Up on Right */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3" data-reveal="left">
+        <div
+          className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3"
+          data-reveal="left"
+        >
           <div className="min-w-0 text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-2">
               <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
@@ -1941,8 +1723,13 @@ function PracticalLearning() {
         </div>
 
         {/* Paragraph brought below across full width, wrapping cleanly */}
-        <p className="mb-5 sm:mb-6 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-5xl" data-reveal="left">
-          At Digitechademy, practical learning is not an optional add-on. You'll work through exercises, projects, case studies, tools and realistic scenarios designed to help you understand how professionals approach real problems.
+        <p
+          className="mb-5 sm:mb-6 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-5xl"
+          data-reveal="left"
+        >
+          At Digitechademy, practical learning is not an optional add-on. You'll work through
+          exercises, projects, case studies, tools and realistic scenarios designed to help you
+          understand how professionals approach real problems.
         </p>
 
         {/* 5 Practical Learning Cards Grid Across Full Width */}
@@ -1962,58 +1749,61 @@ function PracticalLearning() {
                   isActive
                     ? "border-blue-500 bg-white shadow-xl shadow-blue-500/10 -translate-y-1.5 ring-1 ring-blue-400/40"
                     : "border-slate-200/90 bg-white/90 hover:border-blue-400 hover:bg-white hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1.5",
-                  index === 4 ? "sm:col-span-2 lg:col-span-1" : ""
+                  index === 4 ? "sm:col-span-2 lg:col-span-1" : "",
                 )}
               >
-                  {/* Top Animated Accent Border Gradient */}
-                  <div
-                    className={cn(
-                      "absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500 transition-transform duration-300 origin-left",
-                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                    )}
-                  />
+                {/* Top Animated Accent Border Gradient */}
+                <div
+                  className={cn(
+                    "absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500 transition-transform duration-300 origin-left",
+                    isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                  )}
+                />
 
-                  {/* Subtle Hover & Active Radial Ambient Glow */}
-                  <div
-                    className={cn(
-                      "pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-blue-50/50 via-transparent to-transparent transition-opacity duration-300",
-                      isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                    )}
-                  />
+                {/* Subtle Hover & Active Radial Ambient Glow */}
+                <div
+                  className={cn(
+                    "pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-blue-50/50 via-transparent to-transparent transition-opacity duration-300",
+                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+                  )}
+                />
 
-                  <div className="relative z-10 flex flex-col">
-                    <div className="flex items-center gap-2.5">
-                      <span
-                        className={cn(
-                          "grid size-8 sm:size-8.5 shrink-0 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md",
-                          isActive
-                            ? "bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/30 scale-105 rotate-3"
-                            : "bg-blue-50 text-blue-600 border-blue-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600"
-                        )}
-                      >
-                        <Icon name={item.icon} className="size-4 sm:size-4.5 transition-transform duration-300 group-hover:scale-110" />
-                      </span>
+                <div className="relative z-10 flex flex-col">
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={cn(
+                        "grid size-8 sm:size-8.5 shrink-0 place-items-center rounded-xl border transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md",
+                        isActive
+                          ? "bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/30 scale-105 rotate-3"
+                          : "bg-blue-50 text-blue-600 border-blue-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600",
+                      )}
+                    >
+                      <Icon
+                        name={item.icon}
+                        className="size-4 sm:size-4.5 transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </span>
 
-                      <h3
-                        className={cn(
-                          "text-xs sm:text-[13px] font-black leading-tight transition-all duration-200 min-w-0 flex-1",
-                          isActive
-                            ? "text-blue-700 translate-x-0.5"
-                            : "text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5"
-                        )}
-                      >
-                        {item.title}
-                      </h3>
-                    </div>
-
-                    <p className="mt-2 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-left">
-                      {item.text}
-                    </p>
+                    <h3
+                      className={cn(
+                        "text-xs sm:text-[13px] font-black leading-tight transition-all duration-200 min-w-0 flex-1",
+                        isActive
+                          ? "text-blue-700 translate-x-0.5"
+                          : "text-slate-900 group-hover:text-blue-600 group-hover:translate-x-0.5",
+                      )}
+                    >
+                      {item.title}
+                    </h3>
                   </div>
-                </article>
-              );
-            })}
-          </div>
+
+                  <p className="mt-2 text-xs text-slate-600 group-hover:text-slate-700 leading-relaxed font-normal transition-colors duration-200 text-left">
+                    {item.text}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
 
         {/* Closing Line Callout */}
         <div className="mt-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 p-3.5 sm:p-4.5 text-white shadow-md border border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
@@ -2022,9 +1812,12 @@ function PracticalLearning() {
               <Sparkles className="size-4.5 text-blue-300" />
             </div>
             <div>
-              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-blue-300/90">Closing Philosophy</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-bold text-blue-300/90">
+                Closing Philosophy
+              </p>
               <p className="text-xs sm:text-sm md:text-base font-bold tracking-tight text-white mt-0.5">
-                Knowledge Gets You Started. <span className="text-blue-400">Practice Makes You Job Ready.</span>
+                Knowledge Gets You Started.{" "}
+                <span className="text-blue-400">Practice Makes You Job Ready.</span>
               </p>
             </div>
           </div>
@@ -2069,7 +1862,7 @@ function WhoIsThisFor() {
     (index: number) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -2113,12 +1906,16 @@ function WhoIsThisFor() {
               Programs Structured for Distinct Career Aspirations
             </h2>
             <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-4xl">
-              Whether launching your first career, transitioning domains, or upgrading into high-paying specialized fields, DIGITECHADEMY provides clear, guided entry points.
+              Whether launching your first career, transitioning domains, or upgrading into
+              high-paying specialized fields, DIGITECHADEMY provides clear, guided entry points.
             </p>
           </div>
 
           {/* Navigation Controls */}
-          <div className="flex items-center gap-2.5 shrink-0 self-end md:self-auto" data-reveal="right">
+          <div
+            className="flex items-center gap-2.5 shrink-0 self-end md:self-auto"
+            data-reveal="right"
+          >
             <button
               type="button"
               onClick={scrollPrev}
@@ -2201,7 +1998,7 @@ function WhoIsThisFor() {
                 "h-2 rounded-full transition-all duration-300 cursor-pointer",
                 selectedIndex === i
                   ? "w-7 bg-blue-600 shadow-xs"
-                  : "w-2 bg-slate-300 hover:bg-slate-400"
+                  : "w-2 bg-slate-300 hover:bg-slate-400",
               )}
               aria-label={`Go to slide ${i + 1}`}
             />
@@ -2222,7 +2019,6 @@ function CareerReadiness() {
     <section className="bg-white relative py-7 sm:py-10 lg:py-12 overflow-hidden border-b border-slate-200/80">
       <div className="container-site relative z-10">
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
-          
           {/* Left Column: Visual Student Frame with Royal Blue Accent Backdrop */}
           <div className="lg:col-span-5 relative" data-reveal="left">
             <div className="relative mx-auto max-w-md lg:max-w-none">
@@ -2286,7 +2082,9 @@ function CareerReadiness() {
 
                 <div className="min-w-0 flex-1">
                   <p className="text-xs sm:text-[13px] leading-relaxed text-slate-700 font-medium">
-                    Our industry-aligned curriculum is crafted to match global technology standards, providing you with strong practical foundations to excel in modern roles worldwide.
+                    Our industry-aligned curriculum is crafted to match global technology standards,
+                    providing you with strong practical foundations to excel in modern roles
+                    worldwide.
                   </p>
                 </div>
               </div>
@@ -2304,7 +2102,8 @@ function CareerReadiness() {
                     Assured Job Assistance &amp; Placement Support
                   </h3>
                   <p className="mt-0.5 text-[11.5px] sm:text-xs text-slate-600 leading-relaxed font-normal">
-                    Resume optimization, mock technical interview preparation, and direct hiring partner referrals.
+                    Resume optimization, mock technical interview preparation, and direct hiring
+                    partner referrals.
                   </p>
                 </div>
               </div>
@@ -2314,7 +2113,9 @@ function CareerReadiness() {
             <div className="rounded-2xl border border-slate-200/90 bg-white p-3 sm:p-3.5 shadow-2xs">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-blue-700">The Core Framework</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-blue-700">
+                    The Core Framework
+                  </span>
                   <p className="text-xs sm:text-[13px] font-bold text-slate-900">
                     A certificate alone doesn&apos;t build a career.
                   </p>
@@ -2365,16 +2166,12 @@ function CareerReadiness() {
                 <span>Talk to a Career Mentor</span>
               </BtnLink>
             </div>
-
           </div>
-
         </div>
       </div>
     </section>
   );
 }
-
-
 
 /**
  * =========================================================================
@@ -2400,7 +2197,10 @@ function FaqSection() {
 
       <div className="container-site relative z-10">
         {/* Section Header: Title on Left, Action Buttons Up on Right */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3" data-reveal="top">
+        <div
+          className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3"
+          data-reveal="top"
+        >
           <div className="min-w-0 text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/70 border border-blue-200 text-blue-800 text-xs font-bold tracking-wider uppercase mb-2">
               <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
@@ -2436,8 +2236,12 @@ function FaqSection() {
         </div>
 
         {/* Paragraph brought below across full width, wrapping cleanly */}
-        <p className="mb-5 sm:mb-6 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-5xl" data-reveal="top">
-          Find clear, straightforward answers about eligibility, hands-on learning, offered programs, prerequisites, and certifications at DIGITECHADEMY.
+        <p
+          className="mb-5 sm:mb-6 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-5xl"
+          data-reveal="top"
+        >
+          Find clear, straightforward answers about eligibility, hands-on learning, offered
+          programs, prerequisites, and certifications at DIGITECHADEMY.
         </p>
 
         {/* FAQs Side by Side in 2 Balanced Columns */}
@@ -2449,4 +2253,3 @@ function FaqSection() {
     </section>
   );
 }
-

@@ -55,17 +55,32 @@ export function ProcessTimeline({
                 aria-hidden="true"
               />
               <span className="relative grid size-10 place-items-center rounded-full bg-gradient-to-b from-sky-400 via-blue-600 to-blue-800 text-white border-2 border-sky-300/40 shadow-sm transition-transform duration-300 group-hover:scale-110">
-                <Icon name={step.icon ?? defaultIcons[step.step] ?? "BookOpen"} className="size-4.5 text-white" />
+                <Icon
+                  name={step.icon ?? defaultIcons[step.step] ?? "BookOpen"}
+                  className="size-4.5 text-white"
+                />
               </span>
             </div>
           </div>
 
-          <span className="font-display text-lg font-black text-sky-400 tracking-tight">{step.step}</span>
-          <h3 className={cn("mt-1 text-base font-bold leading-snug", onDark ? "text-white group-hover:text-sky-300" : "text-slate-900")}>
+          <span className="font-display text-lg font-black text-sky-400 tracking-tight">
+            {step.step}
+          </span>
+          <h3
+            className={cn(
+              "mt-1 text-base font-bold leading-snug",
+              onDark ? "text-white group-hover:text-sky-300" : "text-slate-900",
+            )}
+          >
             {step.title}
           </h3>
           {step.text ? (
-            <p className={cn("mt-2 text-xs sm:text-[13px] leading-relaxed", onDark ? "text-slate-300" : "text-slate-600")}>
+            <p
+              className={cn(
+                "mt-2 text-xs sm:text-[13px] leading-relaxed",
+                onDark ? "text-slate-300" : "text-slate-600",
+              )}
+            >
               {step.text}
             </p>
           ) : null}

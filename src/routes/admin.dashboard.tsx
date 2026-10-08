@@ -121,7 +121,8 @@ export const Route = createFileRoute("/admin/dashboard")({
   component: AdminDashboardPage,
 });
 
-type TabType = "dashboard" | "enquiries" | "courses" | "testimonials" | "instructors" | "faqs" | "settings";
+type TabType =
+  "dashboard" | "enquiries" | "courses" | "testimonials" | "instructors" | "faqs" | "settings";
 
 // --- TYPES FOR DASHBOARD DATA ---
 interface Enquiry {
@@ -451,9 +452,7 @@ function AdminDashboardPage() {
                     {item.badge && (
                       <span
                         className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                          isActive
-                            ? "bg-white/20 text-white"
-                            : "bg-purple-100 text-[#9a55ff]"
+                          isActive ? "bg-white/20 text-white" : "bg-purple-100 text-[#9a55ff]"
                         }`}
                       >
                         {item.badge}
@@ -546,7 +545,9 @@ function AdminDashboardPage() {
                 <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight capitalize">
                   {activeTab}
                 </h1>
-                <p className="text-xs text-slate-400 font-medium">DIGITECHADEMY Enterprise Control</p>
+                <p className="text-xs text-slate-400 font-medium">
+                  DIGITECHADEMY Enterprise Control
+                </p>
               </div>
             </div>
 
@@ -685,7 +686,9 @@ function DashboardOverviewTab({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
             <div>
               <h3 className="text-base font-black text-slate-800">Visit And Sales Statistics</h3>
-              <p className="text-xs text-slate-400">Monthly student interest & conversion metrics</p>
+              <p className="text-xs text-slate-400">
+                Monthly student interest & conversion metrics
+              </p>
             </div>
             <div className="flex items-center gap-3 text-xs font-bold">
               <span className="flex items-center gap-1 text-slate-600">
@@ -794,7 +797,9 @@ function DashboardOverviewTab({
       <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h3 className="text-base font-black text-slate-800">Recent Student Admissions Status</h3>
+            <h3 className="text-base font-black text-slate-800">
+              Recent Student Admissions Status
+            </h3>
             <p className="text-xs text-slate-400">Live callback requests and enrollment states</p>
           </div>
           <button
@@ -826,7 +831,8 @@ function DashboardOverviewTab({
                     </div>
                     <p className="text-xs font-bold text-slate-700">No Student Enquiries Yet</p>
                     <p className="text-[11px] text-slate-400 mt-0.5">
-                      New leads submitted via website contact forms and demo popups will appear here in real-time.
+                      New leads submitted via website contact forms and demo popups will appear here
+                      in real-time.
                     </p>
                   </td>
                 </tr>
@@ -863,8 +869,10 @@ function DashboardOverviewTab({
                         </div>
                         <div>
                           <div>{item.name}</div>
-                          {'phone' in item && Boolean((item as any).phone) && (
-                            <div className="text-[10px] text-slate-400 font-normal">{(item as any).phone}</div>
+                          {"phone" in item && Boolean((item as any).phone) && (
+                            <div className="text-[10px] text-slate-400 font-normal">
+                              {(item as any).phone}
+                            </div>
                           )}
                         </div>
                       </td>
@@ -881,7 +889,9 @@ function DashboardOverviewTab({
                         <div className="w-28 bg-slate-100 rounded-full h-2 overflow-hidden">
                           <div
                             className={`h-full rounded-full ${progressBar}`}
-                            style={{ width: `${item.progress || (item.status === "Converted" ? 100 : item.status === "Contacted" ? 60 : item.status === "Follow-up" ? 80 : 20)}%` }}
+                            style={{
+                              width: `${item.progress || (item.status === "Converted" ? 100 : item.status === "Contacted" ? 60 : item.status === "Follow-up" ? 80 : 20)}%`,
+                            }}
                           />
                         </div>
                       </td>
@@ -944,7 +954,7 @@ function ManageEnquiriesTab() {
   const handleDeleteDemoLeads = async () => {
     if (
       !window.confirm(
-        "Are you sure you want to delete all dummy/sample leads? Any real website submissions will be preserved."
+        "Are you sure you want to delete all dummy/sample leads? Any real website submissions will be preserved.",
       )
     ) {
       return;
@@ -1030,10 +1040,7 @@ function ManageEnquiriesTab() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute(
-      "download",
-      `student_leads_${new Date().toISOString().split("T")[0]}.csv`
-    );
+    link.setAttribute("download", `student_leads_${new Date().toISOString().split("T")[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1171,7 +1178,9 @@ function ManageEnquiriesTab() {
                         </div>
                         <div>
                           <div className="text-slate-900 font-black">{enq.name}</div>
-                          <span className="text-[11px] text-slate-400 font-normal block">{formattedDate}</span>
+                          <span className="text-[11px] text-slate-400 font-normal block">
+                            {formattedDate}
+                          </span>
                         </div>
                       </div>
                     </td>
@@ -1200,7 +1209,7 @@ function ManageEnquiriesTab() {
                         {cleanPhone && (
                           <a
                             href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-                              `Hi ${enq.name}, thank you for requesting a demo for ${enq.course} at DIGITECHADEMY. How can our counselors assist you?`
+                              `Hi ${enq.name}, thank you for requesting a demo for ${enq.course} at DIGITECHADEMY. How can our counselors assist you?`,
                             )}`}
                             target="_blank"
                             rel="noreferrer"
@@ -1236,11 +1245,21 @@ function ManageEnquiriesTab() {
                           enq.status,
                         )} rounded-full px-3 py-1 outline-none shadow-xs cursor-pointer`}
                       >
-                        <option value="New" className="text-slate-800 bg-white font-bold">New</option>
-                        <option value="Contacted" className="text-slate-800 bg-white font-bold">Contacted</option>
-                        <option value="Follow-up" className="text-slate-800 bg-white font-bold">Follow-up</option>
-                        <option value="Converted" className="text-slate-800 bg-white font-bold">Converted</option>
-                        <option value="Closed" className="text-slate-800 bg-white font-bold">Closed</option>
+                        <option value="New" className="text-slate-800 bg-white font-bold">
+                          New
+                        </option>
+                        <option value="Contacted" className="text-slate-800 bg-white font-bold">
+                          Contacted
+                        </option>
+                        <option value="Follow-up" className="text-slate-800 bg-white font-bold">
+                          Follow-up
+                        </option>
+                        <option value="Converted" className="text-slate-800 bg-white font-bold">
+                          Converted
+                        </option>
+                        <option value="Closed" className="text-slate-800 bg-white font-bold">
+                          Closed
+                        </option>
                       </select>
                     </td>
                     <td className="py-4 px-3 text-right">
@@ -1334,18 +1353,14 @@ function ManageEnquiriesTab() {
                   onChange={(e) => setNewEnquiry({ ...newEnquiry, course: e.target.value })}
                   className="w-full rounded-xl border border-slate-200 p-2.5 text-xs sm:text-sm text-slate-800 outline-none focus:border-[#b66dff]"
                 >
-                  <option value="Digital Marketing Mastery">
-                    Digital Marketing Mastery
-                  </option>
+                  <option value="Digital Marketing Mastery">Digital Marketing Mastery</option>
                   <option value="Cyber Security & Ethical Hacking">
                     Cyber Security & Ethical Hacking
                   </option>
                   <option value="Advanced SEO & Performance Marketing">
                     Advanced SEO & Performance Marketing
                   </option>
-                  <option value="Web Development Bootcamp">
-                    Web Development Bootcamp
-                  </option>
+                  <option value="Web Development Bootcamp">Web Development Bootcamp</option>
                   <option value="Data Analytics with Python & BI">
                     Data Analytics with Python & BI
                   </option>
@@ -1384,7 +1399,9 @@ function ManageCoursesTab() {
   const [isSaving, setIsSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string } | null>(
+    null,
+  );
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1462,7 +1479,8 @@ function ManageCoursesTab() {
     setEditingCourse(null);
     setCourseModalTab("basic");
     setFormTitle("");
-    const cat = defaultCategory || (selectedCategory !== "All" ? selectedCategory : "Cyber Security");
+    const cat =
+      defaultCategory || (selectedCategory !== "All" ? selectedCategory : "Cyber Security");
     setFormCategory(cat);
     setFormCustomCategory("");
     setFormSlug("");
@@ -1518,19 +1536,17 @@ function ManageCoursesTab() {
     // About
     setFormAboutDesc(course.about?.description || "");
     setFormAboutLearn(
-      course.about?.learn && course.about.learn.length > 0
-        ? course.about.learn.join("\n")
-        : ""
+      course.about?.learn && course.about.learn.length > 0 ? course.about.learn.join("\n") : "",
     );
     setFormAboutAudience(
       course.about?.audience && course.about.audience.length > 0
         ? course.about.audience.join("\n")
-        : ""
+        : "",
     );
     setFormAboutOutcomes(
       course.about?.outcomes && course.about.outcomes.length > 0
         ? course.about.outcomes.join("\n")
-        : ""
+        : "",
     );
 
     // Curriculum
@@ -1540,7 +1556,7 @@ function ManageCoursesTab() {
           module: s.module,
           title: s.title,
           topicsText: (s.topics || []).join("\n"),
-        }))
+        })),
       );
     } else {
       setFormSyllabus([]);
@@ -1555,7 +1571,7 @@ function ManageCoursesTab() {
         course.faqs.map((f) => ({
           question: f.question,
           answer: f.answer,
-        }))
+        })),
       );
     } else {
       setFormCourseFaqs([]);
@@ -1579,10 +1595,10 @@ function ManageCoursesTab() {
   const handleUpdateSyllabusModule = (
     index: number,
     field: "module" | "title" | "topicsText",
-    value: string
+    value: string,
   ) => {
     setFormSyllabus((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item)),
     );
   };
 
@@ -1601,13 +1617,9 @@ function ManageCoursesTab() {
     ]);
   };
 
-  const handleUpdateFaq = (
-    index: number,
-    field: "question" | "answer",
-    value: string
-  ) => {
+  const handleUpdateFaq = (index: number, field: "question" | "answer", value: string) => {
     setFormCourseFaqs((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item)),
     );
   };
 
@@ -1636,9 +1648,7 @@ function ManageCoursesTab() {
     }
 
     const finalCategory =
-      formCategory === "Other"
-        ? formCustomCategory.trim() || "General"
-        : formCategory;
+      formCategory === "Other" ? formCustomCategory.trim() || "General" : formCategory;
 
     const highlightsArray = formHighlights
       .split(",")
@@ -1754,8 +1764,6 @@ function ManageCoursesTab() {
     }
   };
 
-
-
   // Dynamically calculate category statistics strictly according to the actual courses present
   const { availableCategories, categoryStats } = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -1787,8 +1795,7 @@ function ManageCoursesTab() {
   // Filter courses
   const filteredCourses = courses.filter((c) => {
     const matchesCategory =
-      selectedCategory === "All" ||
-      c.category.toLowerCase() === selectedCategory.toLowerCase();
+      selectedCategory === "All" || c.category.toLowerCase() === selectedCategory.toLowerCase();
     const q = searchQuery.toLowerCase();
     const matchesSearch =
       !q ||
@@ -1808,7 +1815,7 @@ function ManageCoursesTab() {
             "p-4 rounded-2xl flex items-center justify-between text-xs sm:text-sm font-bold border transition-all animate-in fade-in slide-in-from-top-2",
             feedback.type === "success"
               ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-              : "bg-rose-50 text-rose-800 border-rose-200"
+              : "bg-rose-50 text-rose-800 border-rose-200",
           )}
         >
           <div className="flex items-center gap-2">
@@ -1842,7 +1849,8 @@ function ManageCoursesTab() {
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-1">
-              Add and manage curriculum courses stored in Firebase Firestore across all popular categories
+              Add and manage curriculum courses stored in Firebase Firestore across all popular
+              categories
             </p>
           </div>
 
@@ -1876,14 +1884,16 @@ function ManageCoursesTab() {
                 "px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5",
                 selectedCategory === "All"
                   ? "bg-[#b66dff] text-white border-[#b66dff] shadow-sm shadow-purple-500/20"
-                  : "bg-slate-50 text-slate-600 border-slate-200/80 hover:bg-slate-100"
+                  : "bg-slate-50 text-slate-600 border-slate-200/80 hover:bg-slate-100",
               )}
             >
               <span>All Courses</span>
               <span
                 className={cn(
                   "px-1.5 py-0.2 rounded-full text-[10px]",
-                  selectedCategory === "All" ? "bg-white/25 text-white" : "bg-slate-200 text-slate-700"
+                  selectedCategory === "All"
+                    ? "bg-white/25 text-white"
+                    : "bg-slate-200 text-slate-700",
                 )}
               >
                 {courses.length}
@@ -1901,14 +1911,14 @@ function ManageCoursesTab() {
                     "px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5",
                     isSelected
                       ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50",
                   )}
                 >
                   <span>{cat}</span>
                   <span
                     className={cn(
                       "px-1.5 py-0.2 rounded-full text-[10px]",
-                      isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                      isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600",
                     )}
                   >
                     {count}
@@ -1975,7 +1985,9 @@ function ManageCoursesTab() {
               </button>
             )}
             <button
-              onClick={() => handleOpenAddModal(selectedCategory !== "All" ? selectedCategory : undefined)}
+              onClick={() =>
+                handleOpenAddModal(selectedCategory !== "All" ? selectedCategory : undefined)
+              }
               className="text-xs font-bold text-white bg-[#b66dff] hover:bg-[#a655ff] px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-sm shadow-purple-500/20"
             >
               <Plus className="size-3.5" />
@@ -1996,7 +2008,7 @@ function ManageCoursesTab() {
                   <span
                     className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-black border",
-                      getCategoryBadgeClass(course.category)
+                      getCategoryBadgeClass(course.category),
                     )}
                   >
                     {course.category}
@@ -2063,7 +2075,8 @@ function ManageCoursesTab() {
                   </span>
                   <span className="flex items-center gap-1">
                     <User className="size-3.5 text-slate-400" />
-                    Lead: <strong className="text-slate-700 font-semibold">{course.instructor}</strong>
+                    Lead:{" "}
+                    <strong className="text-slate-700 font-semibold">{course.instructor}</strong>
                   </span>
                   <span className="flex items-center gap-1 font-bold text-slate-800">
                     Fee: {course.price}
@@ -2152,10 +2165,13 @@ function ManageCoursesTab() {
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug">
-                    {editingCourse ? `Edit Program: ${editingCourse.title}` : "Create Academic Program"}
+                    {editingCourse
+                      ? `Edit Program: ${editingCourse.title}`
+                      : "Create Academic Program"}
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Save directly into Firebase Firestore: Basic Info, About & Outcomes, Curriculum, Description, and FAQs
+                    Save directly into Firebase Firestore: Basic Info, About & Outcomes, Curriculum,
+                    Description, and FAQs
                   </p>
                 </div>
               </div>
@@ -2176,7 +2192,7 @@ function ManageCoursesTab() {
                   "px-3.5 py-2 text-xs font-bold rounded-t-xl border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
                   courseModalTab === "basic"
                     ? "border-[#b66dff] text-[#b66dff] bg-white shadow-xs"
-                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60"
+                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60",
                 )}
               >
                 <Bookmark className="size-3.5" />
@@ -2190,7 +2206,7 @@ function ManageCoursesTab() {
                   "px-3.5 py-2 text-xs font-bold rounded-t-xl border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
                   courseModalTab === "about"
                     ? "border-[#b66dff] text-[#b66dff] bg-white shadow-xs"
-                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60"
+                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60",
                 )}
               >
                 <Info className="size-3.5" />
@@ -2204,7 +2220,7 @@ function ManageCoursesTab() {
                   "px-3.5 py-2 text-xs font-bold rounded-t-xl border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
                   courseModalTab === "curriculum"
                     ? "border-[#b66dff] text-[#b66dff] bg-white shadow-xs"
-                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60"
+                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60",
                 )}
               >
                 <Layers className="size-3.5" />
@@ -2218,7 +2234,7 @@ function ManageCoursesTab() {
                   "px-3.5 py-2 text-xs font-bold rounded-t-xl border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
                   courseModalTab === "description"
                     ? "border-[#b66dff] text-[#b66dff] bg-white shadow-xs"
-                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60"
+                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60",
                 )}
               >
                 <FileText className="size-3.5" />
@@ -2232,7 +2248,7 @@ function ManageCoursesTab() {
                   "px-3.5 py-2 text-xs font-bold rounded-t-xl border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
                   courseModalTab === "faqs"
                     ? "border-[#b66dff] text-[#b66dff] bg-white shadow-xs"
-                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60"
+                    : "border-transparent text-slate-500 hover:text-slate-800 hover:bg-white/60",
                 )}
               >
                 <HelpCircle className="size-3.5" />
@@ -2441,7 +2457,9 @@ function ManageCoursesTab() {
                       <Info className="size-5 text-[#b66dff] shrink-0 mt-0.5" />
                       <div className="text-xs text-purple-900 leading-relaxed">
                         <strong className="font-bold">Course "About" Tab Configuration:</strong>{" "}
-                        These sections appear on the course detail page under the <strong>About</strong> tab, including what students will learn, who should attend, and expected career outcomes.
+                        These sections appear on the course detail page under the{" "}
+                        <strong>About</strong> tab, including what students will learn, who should
+                        attend, and expected career outcomes.
                       </div>
                     </div>
 
@@ -2472,7 +2490,9 @@ function ManageCoursesTab() {
                       </div>
                       <textarea
                         rows={4}
-                        placeholder={"Hands-on production projects\nCore architecture & design patterns\nDatabase design & API integration\nLive deployment and cloud workflows"}
+                        placeholder={
+                          "Hands-on production projects\nCore architecture & design patterns\nDatabase design & API integration\nLive deployment and cloud workflows"
+                        }
                         value={formAboutLearn}
                         onChange={(e) => setFormAboutLearn(e.target.value)}
                         className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed font-mono"
@@ -2489,7 +2509,9 @@ function ManageCoursesTab() {
                         </div>
                         <textarea
                           rows={4}
-                          placeholder={"Graduates & college students\nWorking developers upskilling\nCareer transitioners"}
+                          placeholder={
+                            "Graduates & college students\nWorking developers upskilling\nCareer transitioners"
+                          }
                           value={formAboutAudience}
                           onChange={(e) => setFormAboutAudience(e.target.value)}
                           className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed font-mono"
@@ -2505,7 +2527,9 @@ function ManageCoursesTab() {
                         </div>
                         <textarea
                           rows={4}
-                          placeholder={"Job-ready portfolio\nInterview preparation assistance\nRecognized completion certificate"}
+                          placeholder={
+                            "Job-ready portfolio\nInterview preparation assistance\nRecognized completion certificate"
+                          }
                           value={formAboutOutcomes}
                           onChange={(e) => setFormAboutOutcomes(e.target.value)}
                           className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed font-mono"
@@ -2575,7 +2599,9 @@ function ManageCoursesTab() {
                                   type="text"
                                   placeholder={`Module ${idx + 1}`}
                                   value={mod.module}
-                                  onChange={(e) => handleUpdateSyllabusModule(idx, "module", e.target.value)}
+                                  onChange={(e) =>
+                                    handleUpdateSyllabusModule(idx, "module", e.target.value)
+                                  }
                                   className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] text-slate-800 font-semibold"
                                 />
                               </div>
@@ -2588,7 +2614,9 @@ function ManageCoursesTab() {
                                   type="text"
                                   placeholder="e.g. Master React Hooks & State Management"
                                   value={mod.title}
-                                  onChange={(e) => handleUpdateSyllabusModule(idx, "title", e.target.value)}
+                                  onChange={(e) =>
+                                    handleUpdateSyllabusModule(idx, "title", e.target.value)
+                                  }
                                   className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] text-slate-800 font-bold"
                                 />
                               </div>
@@ -2599,13 +2627,19 @@ function ManageCoursesTab() {
                                 <label className="block text-[11px] font-bold text-slate-600">
                                   Topics Covered (one per line)
                                 </label>
-                                <span className="text-[10px] text-slate-400">One bullet point per line</span>
+                                <span className="text-[10px] text-slate-400">
+                                  One bullet point per line
+                                </span>
                               </div>
                               <textarea
                                 rows={3}
-                                placeholder={"Components & JSX\nProps and State\nuseEffect and Lifecycle"}
+                                placeholder={
+                                  "Components & JSX\nProps and State\nuseEffect and Lifecycle"
+                                }
                                 value={mod.topicsText}
-                                onChange={(e) => handleUpdateSyllabusModule(idx, "topicsText", e.target.value)}
+                                onChange={(e) =>
+                                  handleUpdateSyllabusModule(idx, "topicsText", e.target.value)
+                                }
                                 className="w-full px-3 py-2 text-xs bg-white border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] text-slate-800 font-mono leading-relaxed"
                               />
                             </div>
@@ -2622,8 +2656,12 @@ function ManageCoursesTab() {
                     <div className="bg-purple-50/60 border border-purple-100 rounded-2xl p-4 flex items-start gap-3">
                       <FileText className="size-5 text-[#b66dff] shrink-0 mt-0.5" />
                       <div className="text-xs text-purple-900 leading-relaxed">
-                        <strong className="font-bold">Course "Description" Tab Configuration:</strong>{" "}
-                        Provide an in-depth explanation of practical training, real-world laboratory assignments, industrial workflows, tool integrations, and mentorship methodology.
+                        <strong className="font-bold">
+                          Course "Description" Tab Configuration:
+                        </strong>{" "}
+                        Provide an in-depth explanation of practical training, real-world laboratory
+                        assignments, industrial workflows, tool integrations, and mentorship
+                        methodology.
                       </div>
                     </div>
 
@@ -2633,7 +2671,9 @@ function ManageCoursesTab() {
                       </label>
                       <textarea
                         rows={10}
-                        placeholder={"Our training model centers around immersive, project-based learning...\n\nEvery session includes live coding walkthroughs, code reviews, and industry-standard best practices...\n\nStudents will work on 3 end-to-end projects deployed to production environments..."}
+                        placeholder={
+                          "Our training model centers around immersive, project-based learning...\n\nEvery session includes live coding walkthroughs, code reviews, and industry-standard best practices...\n\nStudents will work on 3 end-to-end projects deployed to production environments..."
+                        }
                         value={formLongDescription}
                         onChange={(e) => setFormLongDescription(e.target.value)}
                         className="w-full px-3.5 py-3 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed"
@@ -2817,7 +2857,7 @@ function ManageTestimonialsTab() {
   const handleDeleteDemoReviews = async () => {
     if (
       !window.confirm(
-        "Are you sure you want to delete all demo student reviews from Firebase & local cache?"
+        "Are you sure you want to delete all demo student reviews from Firebase & local cache?",
       )
     ) {
       return;
@@ -2956,7 +2996,8 @@ function ManageTestimonialsTab() {
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              Add and manage student feedback, course ratings, and featured testimonials for the public site
+              Add and manage student feedback, course ratings, and featured testimonials for the
+              public site
             </p>
           </div>
 
@@ -3201,13 +3242,25 @@ function ManageTestimonialsTab() {
                   className="w-full rounded-xl border border-slate-200 p-2.5 text-xs sm:text-sm text-slate-800 outline-none focus:border-[#b66dff] bg-white cursor-pointer"
                 >
                   <option value="Digital Marketing Mastery">Digital Marketing Mastery</option>
-                  <option value="Cyber Security & Ethical Hacking">Cyber Security & Ethical Hacking</option>
-                  <option value="Advanced SEO & Performance Marketing">Advanced SEO & Performance Marketing</option>
+                  <option value="Cyber Security & Ethical Hacking">
+                    Cyber Security & Ethical Hacking
+                  </option>
+                  <option value="Advanced SEO & Performance Marketing">
+                    Advanced SEO & Performance Marketing
+                  </option>
                   <option value="Web Development Bootcamp">Web Development Bootcamp</option>
-                  <option value="Data Analytics with Python & BI">Data Analytics with Python & BI</option>
-                  <option value="Network Defense & Security Operations">Network Defense & Security Operations</option>
-                  <option value="Programmatic Advertising Course">Programmatic Advertising Course</option>
-                  <option value="Ethical Hacking & Security Fundamentals">Ethical Hacking & Security Fundamentals</option>
+                  <option value="Data Analytics with Python & BI">
+                    Data Analytics with Python & BI
+                  </option>
+                  <option value="Network Defense & Security Operations">
+                    Network Defense & Security Operations
+                  </option>
+                  <option value="Programmatic Advertising Course">
+                    Programmatic Advertising Course
+                  </option>
+                  <option value="Ethical Hacking & Security Fundamentals">
+                    Ethical Hacking & Security Fundamentals
+                  </option>
                 </select>
               </div>
 
@@ -3294,7 +3347,9 @@ function ManageTestimonialsTab() {
                   disabled={isSubmitting}
                   className="px-5 py-2 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 shadow-md shadow-purple-500/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
                 >
-                  {isSubmitting && <div className="size-3 border-2 border-white border-t-transparent rounded-full animate-spin" />}
+                  {isSubmitting && (
+                    <div className="size-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  )}
                   <span>{editingReview ? "Update Review" : "Save Student Review"}</span>
                 </button>
               </div>
@@ -3476,7 +3531,10 @@ function ManageInstructorsTab() {
     if (mentor.image?.startsWith("data:")) {
       setCustomMode("upload");
       setUploadedFileName("Uploaded Custom Image");
-    } else if (mentor.image && (mentor.image.startsWith("http://") || mentor.image.startsWith("https://"))) {
+    } else if (
+      mentor.image &&
+      (mentor.image.startsWith("http://") || mentor.image.startsWith("https://"))
+    ) {
       setCustomMode("url");
       setUploadedFileName(null);
     } else {
@@ -3510,9 +3568,7 @@ function ManageInstructorsTab() {
     }
 
     const finalTrack =
-      formTrack === "Other"
-        ? formCustomTrack.trim() || "Technology & Digital"
-        : formTrack;
+      formTrack === "Other" ? formCustomTrack.trim() || "Technology & Digital" : formTrack;
 
     const skillsArray = formSkillsText
       .split(/[\n,]+/)
@@ -3589,7 +3645,7 @@ function ManageInstructorsTab() {
   const handleDeleteMentor = async (mentor: FirebaseMentor) => {
     if (
       !window.confirm(
-        `Are you sure you want to remove mentor "${mentor.name}" from the faculty catalog? This will also remove them from the website.`
+        `Are you sure you want to remove mentor "${mentor.name}" from the faculty catalog? This will also remove them from the website.`,
       )
     ) {
       return;
@@ -3606,7 +3662,7 @@ function ManageInstructorsTab() {
   const handleDeleteDemoMentors = async () => {
     if (
       !window.confirm(
-        "Delete all demo mentors (Arjun, Priya, Vikram, Sneha, Karthik) from Firebase and local cache? Any custom mentors you created will be preserved."
+        "Delete all demo mentors (Arjun, Priya, Vikram, Sneha, Karthik) from Firebase and local cache? Any custom mentors you created will be preserved.",
       )
     ) {
       return;
@@ -3668,7 +3724,8 @@ function ManageInstructorsTab() {
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-0.5">
-            Admin-controlled faculty profiles rendered dynamically across /about and /courses ({mentors.length} active)
+            Admin-controlled faculty profiles rendered dynamically across /about and /courses (
+            {mentors.length} active)
           </p>
         </div>
 
@@ -3805,9 +3862,7 @@ function ManageInstructorsTab() {
                     <h4 className="text-sm font-black text-slate-900 truncate mt-1">
                       {mentor.name}
                     </h4>
-                    <p className="text-xs font-semibold text-[#b66dff] truncate">
-                      {mentor.role}
-                    </p>
+                    <p className="text-xs font-semibold text-[#b66dff] truncate">{mentor.role}</p>
                   </div>
                 </div>
 
@@ -3897,7 +3952,9 @@ function ManageInstructorsTab() {
                 </div>
                 <div>
                   <h4 className="text-base font-black text-slate-900">
-                    {editingMentor ? `Edit Mentor: ${editingMentor.name}` : "Add New Faculty Mentor"}
+                    {editingMentor
+                      ? `Edit Mentor: ${editingMentor.name}`
+                      : "Add New Faculty Mentor"}
                   </h4>
                   <p className="text-[11px] text-slate-400 font-medium">
                     This profile will appear live on the /about and /courses pages
@@ -3993,7 +4050,9 @@ function ManageInstructorsTab() {
                         <option value="Programmatic Advertising">Programmatic Advertising</option>
                         <option value="Paid Social & Growth">Paid Social & Growth</option>
                         <option value="Offensive Security">Offensive Security</option>
-                        <option value="Web Development & Engineering">Web Development & Engineering</option>
+                        <option value="Web Development & Engineering">
+                          Web Development & Engineering
+                        </option>
                         <option value="Data Analytics & AI">Data Analytics & AI</option>
                         <option value="Other">Other / Custom Track...</option>
                       </select>
@@ -4109,7 +4168,9 @@ function ManageInstructorsTab() {
                   <div className="bg-purple-50/70 border border-purple-100 rounded-2xl p-3.5 flex items-center gap-3">
                     <Sparkles className="size-5 text-[#b66dff] shrink-0" />
                     <p className="text-xs text-purple-900 leading-relaxed">
-                      Choose how to set the mentor photo: <strong>upload an image file from your computer</strong> or <strong>enter a direct image URL link</strong>.
+                      Choose how to set the mentor photo:{" "}
+                      <strong>upload an image file from your computer</strong> or{" "}
+                      <strong>enter a direct image URL link</strong>.
                     </p>
                   </div>
 
@@ -4137,8 +4198,12 @@ function ManageInstructorsTab() {
                           <Upload className="size-6" />
                         </div>
                         <div>
-                          <span className="text-xs font-black text-slate-800 block">Upload Image</span>
-                          <span className="text-[10px] text-slate-400 block">Browse local computer file (PNG, JPG, WebP)</span>
+                          <span className="text-xs font-black text-slate-800 block">
+                            Upload Image
+                          </span>
+                          <span className="text-[10px] text-slate-400 block">
+                            Browse local computer file (PNG, JPG, WebP)
+                          </span>
                         </div>
                         {customMode === "upload" && (
                           <span className="text-[9px] font-black text-[#b66dff] bg-white px-2.5 py-0.5 rounded-full border border-purple-200">
@@ -4160,8 +4225,12 @@ function ManageInstructorsTab() {
                           <LinkIcon className="size-6 text-[#b66dff]" />
                         </div>
                         <div>
-                          <span className="text-xs font-black text-slate-800 block">Image URL Link</span>
-                          <span className="text-[10px] text-slate-400 block">Direct web link to image (https://...)</span>
+                          <span className="text-xs font-black text-slate-800 block">
+                            Image URL Link
+                          </span>
+                          <span className="text-[10px] text-slate-400 block">
+                            Direct web link to image (https://...)
+                          </span>
                         </div>
                         {customMode === "url" && (
                           <span className="text-[9px] font-black text-[#b66dff] bg-white px-2.5 py-0.5 rounded-full border border-purple-200">
@@ -4225,7 +4294,9 @@ function ManageInstructorsTab() {
                         {isProcessingImage ? (
                           <div className="flex flex-col items-center gap-2">
                             <RefreshCw className="size-7 animate-spin text-[#b66dff]" />
-                            <span className="text-xs font-bold text-slate-700">Optimizing photo for web...</span>
+                            <span className="text-xs font-bold text-slate-700">
+                              Optimizing photo for web...
+                            </span>
                           </div>
                         ) : formCustomImage && formCustomImage.startsWith("data:") ? (
                           <div className="flex flex-col items-center gap-1.5">
@@ -4249,7 +4320,8 @@ function ManageInstructorsTab() {
                                 Click to Browse Image or Drag &amp; Drop Here
                               </span>
                               <span className="text-[11px] text-slate-400 block mt-0.5">
-                                Supports PNG, JPG, JPEG, or WebP (auto-scaled to crisp 400x400 avatar)
+                                Supports PNG, JPG, JPEG, or WebP (auto-scaled to crisp 400x400
+                                avatar)
                               </span>
                             </div>
                           </>
@@ -4358,7 +4430,8 @@ function ManageInstructorsTab() {
                       className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed"
                     />
                     <span className="text-[10.5px] text-slate-400 mt-1 block">
-                      Displayed when learners click &quot;View Bio &amp; Insights&quot; on the website.
+                      Displayed when learners click &quot;View Bio &amp; Insights&quot; on the
+                      website.
                     </span>
                   </div>
                 </div>
@@ -4398,7 +4471,9 @@ function ManageInstructorsTab() {
                     </div>
                     <textarea
                       rows={4}
-                      placeholder={"1-on-1 live campaign teardowns & budget waste reduction\nTechnical SEO site audits and crawler log inspections\nConversion rate optimization (CRO) & multi-touch attribution modeling"}
+                      placeholder={
+                        "1-on-1 live campaign teardowns & budget waste reduction\nTechnical SEO site audits and crawler log inspections\nConversion rate optimization (CRO) & multi-touch attribution modeling"
+                      }
                       value={formFocusText}
                       onChange={(e) => setFormFocusText(e.target.value)}
                       className="w-full px-3.5 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-[#b66dff] focus:bg-white text-slate-800 leading-relaxed font-mono"
@@ -4458,7 +4533,9 @@ function ManageInstructorsTab() {
                     {isSubmitting && (
                       <div className="size-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     )}
-                    <span>{editingMentor ? "Update Mentor Profile" : "Publish Mentor Profile"}</span>
+                    <span>
+                      {editingMentor ? "Update Mentor Profile" : "Publish Mentor Profile"}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -4508,7 +4585,10 @@ function ManageFaqsTab() {
 
       <div className="grid gap-3">
         {faqs.map((faq) => (
-          <div key={faq.id} className="border border-slate-200/80 p-4 rounded-xl bg-white shadow-xs">
+          <div
+            key={faq.id}
+            className="border border-slate-200/80 p-4 rounded-xl bg-white shadow-xs"
+          >
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-purple-50 text-[#b66dff] border border-purple-100">
                 {faq.category}
@@ -4533,7 +4613,7 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
   const handlePurgeAllDummyData = async () => {
     if (
       !window.confirm(
-        "Are you sure you want to delete all dummy data (sample leads, sample student reviews, and demo faculty mentors) from Firebase Firestore and local browser cache? Any real website submissions and custom content will be preserved."
+        "Are you sure you want to delete all dummy data (sample leads, sample student reviews, and demo faculty mentors) from Firebase Firestore and local browser cache? Any real website submissions and custom content will be preserved.",
       )
     ) {
       return;
@@ -4544,7 +4624,7 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
       const tCount = await deleteDummyTestimonialsFromFirebase();
       const mCount = await deleteDemoMentorsFromFirebase();
       setPurgeStatus(
-        `All dummy data purged successfully from Firebase and local cache! (Cleaned ${eCount} dummy leads, ${tCount} dummy reviews, ${mCount} demo mentors).`
+        `All dummy data purged successfully from Firebase and local cache! (Cleaned ${eCount} dummy leads, ${tCount} dummy reviews, ${mCount} demo mentors).`,
       );
     } catch (err: any) {
       setPurgeStatus(err?.message || "Failed to purge dummy data.");
@@ -4557,7 +4637,9 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
   return (
     <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
       <div className="border-b border-slate-100 pb-5 mb-6">
-        <h3 className="text-lg font-black text-slate-900">Console Security & Server Configuration</h3>
+        <h3 className="text-lg font-black text-slate-900">
+          Console Security & Server Configuration
+        </h3>
         <p className="text-xs text-slate-400 mt-0.5">
           System health, email SMTP verification transport, and database connectors
         </p>
@@ -4574,7 +4656,8 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
               <div>
                 <h4 className="text-sm font-black text-slate-900">Delete All Dummy / Demo Data</h4>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Permanently purge all pre-seeded dummy enquiries, sample student reviews, and demo faculty mentors from Firebase Firestore and browser cache.
+                  Permanently purge all pre-seeded dummy enquiries, sample student reviews, and demo
+                  faculty mentors from Firebase Firestore and browser cache.
                 </p>
               </div>
             </div>
@@ -4679,7 +4762,8 @@ function ManageSettingsTab({ session }: { session: AdminSession | null }) {
               Project ID: <strong className="text-slate-700">digital-tech-dd790</strong>
             </p>
             <p className="text-xs text-slate-500 mt-1">
-              Auth Domain: <strong className="text-slate-700">digital-tech-dd790.firebaseapp.com</strong>
+              Auth Domain:{" "}
+              <strong className="text-slate-700">digital-tech-dd790.firebaseapp.com</strong>
             </p>
           </div>
         </div>

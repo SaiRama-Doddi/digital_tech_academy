@@ -63,7 +63,8 @@ export const DUMMY_ENQUIRY_NAMES = [
 
 export function isDummyEnquiry(item: { id?: string; name?: string } | null | undefined): boolean {
   if (!item) return false;
-  if (item.id && (DUMMY_ENQUIRY_IDS.includes(item.id) || item.id.startsWith("enq-sample"))) return true;
+  if (item.id && (DUMMY_ENQUIRY_IDS.includes(item.id) || item.id.startsWith("enq-sample")))
+    return true;
   if (item.name && DUMMY_ENQUIRY_NAMES.includes(item.name.trim())) return true;
   return false;
 }
@@ -148,7 +149,11 @@ export async function deleteDummyEnquiriesFromFirebase(): Promise<number> {
     for (const d of snap.docs) {
       const data = d.data() as Record<string, any>;
       const name = String(data["name"] || "").trim();
-      if (DUMMY_ENQUIRY_IDS.includes(d.id) || d.id.startsWith("enq-sample") || DUMMY_ENQUIRY_NAMES.includes(name)) {
+      if (
+        DUMMY_ENQUIRY_IDS.includes(d.id) ||
+        d.id.startsWith("enq-sample") ||
+        DUMMY_ENQUIRY_NAMES.includes(name)
+      ) {
         await deleteDoc(doc(db, "enquiries", d.id));
         count++;
       }
@@ -181,9 +186,7 @@ export function clearAllEnquiries(): void {
 /**
  * Add a new enquiry to Firebase Firestore and local cache
  */
-export async function addEnquiryToFirebase(
-  input: EnquiryInput
-): Promise<FirebaseEnquiry> {
+export async function addEnquiryToFirebase(input: EnquiryInput): Promise<FirebaseEnquiry> {
   const newId = `enq-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
   const enquiry: FirebaseEnquiry = {
     ...input,
@@ -206,7 +209,7 @@ export async function addEnquiryToFirebase(
       Object.entries({
         ...enquiry,
         timestamp: Date.now(),
-      }).filter(([_, v]) => v !== undefined)
+      }).filter(([_, v]) => v !== undefined),
     );
     await setDoc(docRef, firestoreData);
   } catch (err) {
@@ -219,9 +222,7 @@ export async function addEnquiryToFirebase(
 /**
  * Subscribe to real-time enquiry updates
  */
-export function subscribeEnquiries(
-  callback: (enquiries: FirebaseEnquiry[]) => void
-): () => void {
+export function subscribeEnquiries(callback: (enquiries: FirebaseEnquiry[]) => void): () => void {
   // Initial fire with local cache
   callback(getLocalEnquiries());
 
@@ -279,7 +280,7 @@ export function subscribeEnquiries(
       (error) => {
         console.warn("Firestore subscription error for enquiries:", error);
         callback(getLocalEnquiries());
-      }
+      },
     );
 
     return () => {
@@ -305,7 +306,7 @@ export function subscribeEnquiries(
  */
 export async function updateEnquiryInFirebase(
   id: string,
-  updates: Partial<FirebaseEnquiry>
+  updates: Partial<FirebaseEnquiry>,
 ): Promise<void> {
   const current = getLocalEnquiries();
   const updated = current.map((item) =>
@@ -315,7 +316,7 @@ export async function updateEnquiryInFirebase(
           ...updates,
           updatedAt: new Date().toISOString(),
         }
-      : item
+      : item,
   );
   saveLocalEnquiries(updated);
 

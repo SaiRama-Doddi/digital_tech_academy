@@ -12,19 +12,26 @@ interface StoredOtp {
 const otpStore = new Map<string, StoredOtp>();
 
 // Cleanup expired OTPs every 15 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [email, entry] of otpStore.entries()) {
-    if (entry.expiresAt < now) {
-      otpStore.delete(email);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [email, entry] of otpStore.entries()) {
+      if (entry.expiresAt < now) {
+        otpStore.delete(email);
+      }
     }
-  }
-}, 15 * 60 * 1000);
+  },
+  15 * 60 * 1000,
+);
 
 // Authorized admin emails list (case-insensitive)
 function getAuthorizedEmails(): string[] {
   const envAdmin = process.env["ADMIN_EMAIL"]?.trim().toLowerCase();
-  const list = ["sunilkumarneelakantam@gmail.com", "sunilneelakantams@gmail.com", "admin@digitechademy.com"];
+  const list = [
+    "sunilkumarneelakantam@gmail.com",
+    "sunilneelakantams@gmail.com",
+    "admin@digitechademy.com",
+  ];
   if (envAdmin && !list.includes(envAdmin)) {
     list.push(envAdmin);
   }

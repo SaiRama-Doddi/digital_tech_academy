@@ -19,11 +19,7 @@ import {
 import { site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { addEnquiryToFirebase } from "@/services/enquiryService";
-import {
-  CountryFlag,
-  COUNTRY_CODES,
-  type CountryCodeItem,
-} from "@/components/site/CountryFlag";
+import { CountryFlag, COUNTRY_CODES, type CountryCodeItem } from "@/components/site/CountryFlag";
 import {
   subscribeCourses,
   getLocalCachedCourses,
@@ -33,9 +29,7 @@ import {
 export function DemoClassModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [fullName, setFullName] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(
-    COUNTRY_CODES[0]!
-  );
+  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(COUNTRY_CODES[0]!);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [course, setCourse] = useState("");
@@ -51,7 +45,7 @@ export function DemoClassModal() {
         c.id !== "full-stack-java" &&
         c.slug !== "full-stack-java" &&
         !c.title?.toLowerCase().includes("full stack java") &&
-        c.id !== "testing"
+        c.id !== "testing",
     );
     return active.map((c) => ({ id: c.id, title: c.title.trim() }));
   });
@@ -66,7 +60,7 @@ export function DemoClassModal() {
           c.id !== "full-stack-java" &&
           c.slug !== "full-stack-java" &&
           !c.title?.toLowerCase().includes("full stack java") &&
-          c.id !== "testing"
+          c.id !== "testing",
       );
       if (active.length > 0) {
         setLiveCourses(active.map((c) => ({ id: c.id, title: c.title.trim() })));
@@ -82,7 +76,7 @@ export function DemoClassModal() {
             c.id !== "full-stack-java" &&
             c.slug !== "full-stack-java" &&
             !c.title?.toLowerCase().includes("full stack java") &&
-            c.id !== "testing"
+            c.id !== "testing",
         );
         setLiveCourses(active.map((c) => ({ id: c.id, title: c.title.trim() })));
       } else {
@@ -150,7 +144,9 @@ export function DemoClassModal() {
     const cleanPhone = phone.replace(/\D/g, "");
     const minRequired = selectedCountry.minDigits || selectedCountry.digits;
     if (!cleanPhone || cleanPhone.length < minRequired) {
-      setErrorMsg(`Please enter a valid ${selectedCountry.digits}-digit mobile number for ${selectedCountry.name}.`);
+      setErrorMsg(
+        `Please enter a valid ${selectedCountry.digits}-digit mobile number for ${selectedCountry.name}.`,
+      );
       return;
     }
     if (!email.trim() || !email.includes("@")) {
@@ -196,14 +192,20 @@ export function DemoClassModal() {
         aria-hidden="true"
       />
       <div className="relative z-10 w-full max-w-[460px]">
-        <div className="absolute -inset-1.5 rounded-[32px] bg-gradient-to-r from-blue-600/30 via-sky-500/30 to-blue-700/30 blur-2xl opacity-70 pointer-events-none" aria-hidden="true" />
+        <div
+          className="absolute -inset-1.5 rounded-[32px] bg-gradient-to-r from-blue-600/30 via-sky-500/30 to-blue-700/30 blur-2xl opacity-70 pointer-events-none"
+          aria-hidden="true"
+        />
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="demo-class-modal-title"
           className="relative w-full max-h-[94vh] overflow-y-auto no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden rounded-2xl sm:rounded-[28px] bg-white/98 backdrop-blur-2xl p-4 sm:p-5 lg:p-6 shadow-[0_25px_70px_-15px_rgba(15,23,42,0.3),0_0_0_1px_rgba(255,255,255,0.95)] border border-slate-300 text-slate-800 animate-in zoom-in-95 duration-200"
         >
-          <div className="absolute inset-x-8 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent pointer-events-none" aria-hidden="true" />
+          <div
+            className="absolute inset-x-8 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/80 to-transparent pointer-events-none"
+            aria-hidden="true"
+          />
           <button
             type="button"
             onClick={handleClose}
@@ -222,10 +224,13 @@ export function DemoClassModal() {
                 Demo Seat Reserved!
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-700 leading-relaxed max-w-xs mx-auto">
-                Thank you, <span className="font-bold text-slate-900">{fullName.split(" ")[0]}</span>.
-                Our academic coordinator will call you on{" "}
-                <span className="font-bold text-blue-600">{selectedCountry.code} {phone}</span> with
-                your live demo class access link.
+                Thank you,{" "}
+                <span className="font-bold text-slate-900">{fullName.split(" ")[0]}</span>. Our
+                academic coordinator will call you on{" "}
+                <span className="font-bold text-blue-600">
+                  {selectedCountry.code} {phone}
+                </span>{" "}
+                with your live demo class access link.
               </p>
               <div className="mt-6 flex flex-col gap-2.5">
                 <a
@@ -283,7 +288,9 @@ export function DemoClassModal() {
               )}
               <form onSubmit={handleSubmit} className="mt-2.5 sm:mt-3 space-y-2">
                 <div className="relative group">
-                  <label htmlFor="demo-fullname" className="sr-only">Full Name</label>
+                  <label htmlFor="demo-fullname" className="sr-only">
+                    Full Name
+                  </label>
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                     <User className="size-3.5 sm:size-4" />
                   </div>
@@ -298,10 +305,14 @@ export function DemoClassModal() {
                 </div>
                 <div className="flex gap-1.5 sm:gap-2">
                   <div className="relative shrink-0 flex items-center">
-                    <label htmlFor="demo-country" className="sr-only">Country Code</label>
+                    <label htmlFor="demo-country" className="sr-only">
+                      Country Code
+                    </label>
                     <div className="h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 px-2 sm:px-2.5 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
                       <CountryFlag country={selectedCountry.country} />
-                      <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
+                      <span className="text-xs sm:text-sm font-bold text-slate-700">
+                        {selectedCountry.code}
+                      </span>
                       <ChevronDown className="size-3 text-slate-400 shrink-0" />
                     </div>
                     <select
@@ -325,7 +336,9 @@ export function DemoClassModal() {
                     </select>
                   </div>
                   <div className="relative flex-1 min-w-0 group">
-                    <label htmlFor="demo-phone" className="sr-only">Phone Number</label>
+                    <label htmlFor="demo-phone" className="sr-only">
+                      Phone Number
+                    </label>
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                       <Phone className="size-3.5 sm:size-4" />
                     </div>
@@ -336,10 +349,15 @@ export function DemoClassModal() {
                       maxLength={selectedCountry.digits}
                       value={phone}
                       onChange={(e) => {
-                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, selectedCountry.digits);
+                        const cleaned = e.target.value
+                          .replace(/\D/g, "")
+                          .slice(0, selectedCountry.digits);
                         setPhone(cleaned);
                       }}
-                      placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
+                      placeholder={
+                        selectedCountry.placeholder ||
+                        `Enter ${selectedCountry.digits}-digit number`
+                      }
                       className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-14 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                     />
                     <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">
@@ -348,7 +366,9 @@ export function DemoClassModal() {
                   </div>
                 </div>
                 <div className="relative group">
-                  <label htmlFor="demo-email" className="sr-only">Email Address</label>
+                  <label htmlFor="demo-email" className="sr-only">
+                    Email Address
+                  </label>
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                     <Mail className="size-3.5 sm:size-4" />
                   </div>
@@ -362,7 +382,9 @@ export function DemoClassModal() {
                   />
                 </div>
                 <div className="relative group">
-                  <label htmlFor="demo-course" className="sr-only">Select your course</label>
+                  <label htmlFor="demo-course" className="sr-only">
+                    Select your course
+                  </label>
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
                     <GraduationCap className="size-3.5 sm:size-4" />
                   </div>
@@ -373,7 +395,9 @@ export function DemoClassModal() {
                     className="w-full h-9.5 sm:h-10 rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-8.5 sm:pl-9 pr-8 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   >
                     <option value="" disabled>
-                      {liveCourses.length === 0 ? "Loading published courses..." : "Select your course"}
+                      {liveCourses.length === 0
+                        ? "Loading published courses..."
+                        : "Select your course"}
                     </option>
                     {liveCourses.map((c) => (
                       <option key={c.id} value={c.title}>

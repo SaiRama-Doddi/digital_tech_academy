@@ -89,7 +89,8 @@ const stages: StageData[] = [
     outputBadge: "Module 1 Cleared",
     outputStat: "32+ Core Concepts",
     image: stageLearnImg,
-    imageAlt: "Students learning core digital marketing and cybersecurity principles in a modern training room",
+    imageAlt:
+      "Students learning core digital marketing and cybersecurity principles in a modern training room",
   },
   {
     id: "action",
@@ -105,8 +106,7 @@ const stages: StageData[] = [
       glow: "from-cyan-500/20 via-blue-600/10 to-transparent",
     },
     icon: PlayCircle,
-    description:
-      "Watch how the concept is applied in a real-world scenario.",
+    description: "Watch how the concept is applied in a real-world scenario.",
     highlights: [
       "Live walkthroughs of authentic industry scenarios & live environments",
       "Observe expert decision-making, configuration, and troubleshooting",
@@ -130,7 +130,8 @@ const stages: StageData[] = [
     outputBadge: "Real-World Demo Cleared",
     outputStat: "18+ Scenario Teardowns",
     image: stagePracticeImg,
-    imageAlt: "Watch how concepts are applied in real-world scenarios with live mentor walkthroughs",
+    imageAlt:
+      "Watch how concepts are applied in real-world scenarios with live mentor walkthroughs",
   },
   {
     id: "build",
@@ -171,7 +172,8 @@ const stages: StageData[] = [
     outputBadge: "Portfolio Grade",
     outputStat: "4.8x ROAS / Zero Critical CVEs",
     image: stageBuildImg,
-    imageAlt: "Tech professional presenting digital marketing capstone growth metrics and cyber defense results in a conference room",
+    imageAlt:
+      "Tech professional presenting digital marketing capstone growth metrics and cyber defense results in a conference room",
   },
   {
     id: "review",
@@ -212,7 +214,8 @@ const stages: StageData[] = [
     outputBadge: "1-on-1 Review Cleared",
     outputStat: "Score: 96/100 Approved",
     image: stageReviewImg,
-    imageAlt: "Senior industry mentor reviewing campaign performance dashboards and code audit reports 1-on-1 with a student",
+    imageAlt:
+      "Senior industry mentor reviewing campaign performance dashboards and code audit reports 1-on-1 with a student",
   },
   {
     id: "progress",
@@ -248,12 +251,19 @@ const stages: StageData[] = [
         desc: "Exclusive access to hiring pipelines across top agencies, tech companies, and security firms.",
       },
     ],
-    tools: ["Portfolio Review", "Mock Interviews", "ATS Resume", "LinkedIn Brand", "Hiring Network"],
+    tools: [
+      "Portfolio Review",
+      "Mock Interviews",
+      "ATS Resume",
+      "LinkedIn Brand",
+      "Hiring Network",
+    ],
     outputTitle: "Verified Credential Profile",
     outputBadge: "Career Ready",
     outputStat: "Career Ready & Certified",
     image: stageProgressImg,
-    imageAlt: "Graduate professional celebrating placement readiness with course credentials in a corporate office",
+    imageAlt:
+      "Graduate professional celebrating placement readiness with course credentials in a corporate office",
   },
 ];
 
@@ -355,10 +365,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
                 >
                   <div
                     key={`progress-${activeStageIndex}-${cycleKey}`}
-                    className={cn(
-                      "h-full rounded-full bg-gradient-to-r",
-                      stg.color.gradient,
-                    )}
+                    className={cn("h-full rounded-full bg-gradient-to-r", stg.color.gradient)}
                     style={{
                       animation: "learning-stage-fill 4500ms linear forwards",
                     }}
@@ -394,8 +401,7 @@ export function StudentLearningPath({ className }: { className?: string }) {
 
               {/* Stage Title */}
               <h3 className="text-sm sm:text-base md:text-lg font-extrabold text-slate-900 tracking-tight leading-snug">
-                {currentStage.title}:{" "}
-                <span className="text-blue-600">{currentStage.subtitle}</span>
+                {currentStage.title}: <span className="text-blue-600">{currentStage.subtitle}</span>
               </h3>
 
               {/* Short description */}
@@ -406,7 +412,10 @@ export function StudentLearningPath({ className }: { className?: string }) {
               {/* 2 Clean Highlights */}
               <div className="space-y-1 pt-0.5">
                 {currentStage.highlights.map((item) => (
-                  <div key={item} className="flex items-start sm:items-center gap-1.5 text-[11px] sm:text-xs text-slate-700">
+                  <div
+                    key={item}
+                    className="flex items-start sm:items-center gap-1.5 text-[11px] sm:text-xs text-slate-700"
+                  >
                     <CheckCircle2 className="size-3 text-emerald-600 shrink-0 mt-0.5 sm:mt-0" />
                     <span className="leading-tight">{item}</span>
                   </div>
@@ -415,7 +424,9 @@ export function StudentLearningPath({ className }: { className?: string }) {
 
               {/* Clean Tool Chips */}
               <div className="flex flex-wrap items-center gap-1 pt-0.5">
-                <span className="text-[9.5px] sm:text-[10px] font-semibold text-slate-400 mr-0.5">Tools:</span>
+                <span className="text-[9.5px] sm:text-[10px] font-semibold text-slate-400 mr-0.5">
+                  Tools:
+                </span>
                 {currentStage.tools.map((t) => (
                   <span
                     key={t}
@@ -485,7 +496,9 @@ export function StudentLearningPath({ className }: { className?: string }) {
               <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   type="button"
-                  onClick={() => selectStage((activeStageIndex - 1 + stages.length) % stages.length)}
+                  onClick={() =>
+                    selectStage((activeStageIndex - 1 + stages.length) % stages.length)
+                  }
                   className="px-2 py-0.5 rounded-md border border-slate-300 text-[10px] font-semibold text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
                 >
                   ← Prev
@@ -541,7 +554,9 @@ export function StudentLearningPath({ className }: { className?: string }) {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
                   </span>
-                  <span className="truncate">Stage {currentStage.step} • {currentStage.outputTitle}</span>
+                  <span className="truncate">
+                    Stage {currentStage.step} • {currentStage.outputTitle}
+                  </span>
                 </div>
               </div>
 

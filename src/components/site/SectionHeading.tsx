@@ -40,10 +40,13 @@ export function SectionHeading({
         <span
           className={cn(
             "eyebrow text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2",
-            onDark ? "text-sky-400" : "text-blue-700"
+            onDark ? "text-sky-400" : "text-blue-700",
           )}
         >
-          <span className={cn("h-px w-5 sm:w-6", onDark ? "bg-sky-400" : "bg-blue-600")} aria-hidden="true" />
+          <span
+            className={cn("h-px w-5 sm:w-6", onDark ? "bg-sky-400" : "bg-blue-600")}
+            aria-hidden="true"
+          />
           <span>{eyebrow}</span>
         </span>
       ) : null}

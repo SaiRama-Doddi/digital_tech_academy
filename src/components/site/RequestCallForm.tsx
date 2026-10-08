@@ -7,10 +7,7 @@ import { CountryFlag, COUNTRY_CODES, type CountryCodeItem } from "./CountryFlag"
 import { callTimeOptions, courseOptions } from "@/data/content";
 import { cn } from "@/lib/utils";
 import { addEnquiryToFirebase } from "@/services/enquiryService";
-import {
-  subscribeCourses,
-  getLocalCachedCourses,
-} from "@/services/courseService";
+import { subscribeCourses, getLocalCachedCourses } from "@/services/courseService";
 
 const schema = z.object({
   name: z
@@ -18,10 +15,7 @@ const schema = z.object({
     .trim()
     .min(2, { message: "Please enter your full name" })
     .max(80, { message: "Name must be less than 80 characters" }),
-  phone: z
-    .string()
-    .trim()
-    .min(1, { message: "Please enter your phone number" }),
+  phone: z.string().trim().min(1, { message: "Please enter your phone number" }),
   email: z
     .string()
     .trim()
@@ -29,7 +23,11 @@ const schema = z.object({
     .max(160, { message: "Email is too long" }),
   course: z.string().min(1, { message: "Select a course" }),
   callTime: z.string().min(1, { message: "Select a preferred call time" }),
-  message: z.string().trim().max(600, { message: "Message must be under 600 characters" }).optional(),
+  message: z
+    .string()
+    .trim()
+    .max(600, { message: "Message must be under 600 characters" })
+    .optional(),
 });
 
 type Values = z.infer<typeof schema>;
@@ -60,7 +58,7 @@ export function RequestCallForm({
         c.id !== "full-stack-java" &&
         c.slug !== "full-stack-java" &&
         !c.title?.toLowerCase().includes("full stack java") &&
-        c.id !== "testing"
+        c.id !== "testing",
     );
     if (active.length > 0) return active.map((c) => c.title.trim());
     return courseOptions;
@@ -76,7 +74,7 @@ export function RequestCallForm({
           c.id !== "full-stack-java" &&
           c.slug !== "full-stack-java" &&
           !c.title?.toLowerCase().includes("full stack java") &&
-          c.id !== "testing"
+          c.id !== "testing",
       );
       if (active.length > 0) setLiveCourseList(active.map((c) => c.title.trim()));
     }
@@ -90,7 +88,7 @@ export function RequestCallForm({
             c.id !== "full-stack-java" &&
             c.slug !== "full-stack-java" &&
             !c.title?.toLowerCase().includes("full stack java") &&
-            c.id !== "testing"
+            c.id !== "testing",
         );
         if (active.length > 0) {
           setLiveCourseList(active.map((c) => c.title.trim()));
@@ -161,7 +159,8 @@ export function RequestCallForm({
         <h3 className="text-xl font-bold text-foreground">Request received</h3>
         <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
           Thank you, {values.name.split(" ")[0]}. Our admissions team will call you during your
-          preferred time slot to discuss {values.course === "Not sure yet" ? "the right program for you" : values.course}.
+          preferred time slot to discuss{" "}
+          {values.course === "Not sure yet" ? "the right program for you" : values.course}.
         </p>
         <Btn
           variant="outline"
@@ -210,7 +209,9 @@ export function RequestCallForm({
               </label>
               <div className="h-full rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-slate-100 px-2.5 py-2 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
                 <CountryFlag country={selectedCountry.country} />
-                <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
+                <span className="text-xs sm:text-sm font-bold text-slate-700">
+                  {selectedCountry.code}
+                </span>
                 <ChevronDown className="size-3 text-slate-400 shrink-0 -ml-0.5" />
               </div>
               <select
@@ -227,7 +228,11 @@ export function RequestCallForm({
                 aria-label="Country Code"
               >
                 {COUNTRY_CODES.map((c) => (
-                  <option key={`${c.country}-${c.code}`} value={c.country} className="text-slate-900 font-semibold">
+                  <option
+                    key={`${c.country}-${c.code}`}
+                    value={c.country}
+                    className="text-slate-900 font-semibold"
+                  >
                     {c.name} ({c.code}) - {c.digits} digits
                   </option>
                 ))}
@@ -244,12 +249,20 @@ export function RequestCallForm({
                 maxLength={selectedCountry.digits}
                 value={values.phone}
                 onChange={(e) => {
-                  const cleaned = e.target.value.replace(/\D/g, "").slice(0, selectedCountry.digits);
+                  const cleaned = e.target.value
+                    .replace(/\D/g, "")
+                    .slice(0, selectedCountry.digits);
                   set("phone", cleaned);
                 }}
-                placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
+                placeholder={
+                  selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`
+                }
                 aria-invalid={Boolean(errors.phone)}
-                className={cn(fieldClass, "pr-14 font-mono", errors.phone ? "border-accent" : "border-input")}
+                className={cn(
+                  fieldClass,
+                  "pr-14 font-mono",
+                  errors.phone ? "border-accent" : "border-input",
+                )}
               />
               <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">
                 {values.phone.length}/{selectedCountry.digits}
@@ -291,7 +304,12 @@ export function RequestCallForm({
           </select>
         </Field>
 
-        <Field label="Preferred Call Time" error={errors.callTime} htmlFor="rc-time" className="sm:col-span-2">
+        <Field
+          label="Preferred Call Time"
+          error={errors.callTime}
+          htmlFor="rc-time"
+          className="sm:col-span-2"
+        >
           <div className="flex flex-wrap gap-2">
             {callTimeOptions.map((option) => (
               <button
@@ -313,7 +331,12 @@ export function RequestCallForm({
           <input id="rc-time" type="hidden" name="callTime" value={values.callTime} readOnly />
         </Field>
 
-        <Field label="Message" error={errors.message} htmlFor="rc-message" className="sm:col-span-2">
+        <Field
+          label="Message"
+          error={errors.message}
+          htmlFor="rc-message"
+          className="sm:col-span-2"
+        >
           <textarea
             id="rc-message"
             name="message"
@@ -322,7 +345,11 @@ export function RequestCallForm({
             value={values.message}
             onChange={(e) => set("message", e.target.value)}
             placeholder="Tell us about your learning goal or question."
-            className={cn(fieldClass, "resize-y", errors.message ? "border-accent" : "border-input")}
+            className={cn(
+              fieldClass,
+              "resize-y",
+              errors.message ? "border-accent" : "border-input",
+            )}
           />
         </Field>
       </div>
@@ -366,7 +393,10 @@ function Field({
 }) {
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={htmlFor} className="text-xs font-bold uppercase tracking-[0.1em] text-foreground/70">
+      <label
+        htmlFor={htmlFor}
+        className="text-xs font-bold uppercase tracking-[0.1em] text-foreground/70"
+      >
         {label}
       </label>
       {children}

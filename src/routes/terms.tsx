@@ -135,9 +135,10 @@ function TermsPage() {
               </div>
             </div>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
-              Welcome to <strong className="font-black text-navy">DIGITECHADEMY</strong>. By accessing
-              our website, browsing our curriculum, submitting course enquiries, or registering for
-              training programs, you acknowledge and agree to the following terms and conditions.
+              Welcome to <strong className="font-black text-navy">DIGITECHADEMY</strong>. By
+              accessing our website, browsing our curriculum, submitting course enquiries, or
+              registering for training programs, you acknowledge and agree to the following terms
+              and conditions.
             </p>
           </div>
 
@@ -192,8 +193,8 @@ function TermsPage() {
                   Have Questions Regarding These Terms?
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Speak with our admissions and administrative support team for any clarification on course
-                  policies, schedules, or enrollment conditions.
+                  Speak with our admissions and administrative support team for any clarification on
+                  course policies, schedules, or enrollment conditions.
                 </p>
               </div>
 
@@ -213,7 +214,10 @@ function TermsPage() {
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 px-5 rounded-xl shadow-md flex items-center gap-2 group"
                 >
                   <span>Talk to an Expert</span>
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  <ArrowRight
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </BtnLink>
               </div>
             </div>

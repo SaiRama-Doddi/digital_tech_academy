@@ -22,7 +22,17 @@ const coursesData = [
     level: "Beginner to Advanced",
     summary:
       "Our online Cyber security training and placement program is fully job-oriented and includes real-time project work for hands-on learning. The Cyber Security Training Online Certification Course is developed by certified experts to deliver industry-ready skills covering networking, Linux, vulnerability assessment, SIEM operations, and defensive security.",
-    tools: ["Wireshark", "Nmap", "Snort", "Splunk", "Metasploit", "Kali Linux", "Burp Suite", "Mitre ATT&CK", "OWASP ZAP"],
+    tools: [
+      "Wireshark",
+      "Nmap",
+      "Snort",
+      "Splunk",
+      "Metasploit",
+      "Kali Linux",
+      "Burp Suite",
+      "Mitre ATT&CK",
+      "OWASP ZAP",
+    ],
     audience: [
       "Beginners and fresh graduates aspiring for a Cyber Security Analyst role",
       "IT Support and System Administrators transitioning into Information Security",
@@ -105,11 +115,13 @@ const coursesData = [
     projects: [
       {
         title: "Corporate Network Vulnerability Assessment",
-        description: "Conducted authorized discovery, port mapping, and vulnerability auditing across a simulated corporate intranet using Nmap, Nessus, and Wireshark.",
+        description:
+          "Conducted authorized discovery, port mapping, and vulnerability auditing across a simulated corporate intranet using Nmap, Nessus, and Wireshark.",
       },
       {
         title: "Enterprise SOC Threat Monitoring with Splunk",
-        description: "Ingested server and firewall logs into Splunk Enterprise, developed detection rules for unauthorized access, and created an executive security posture dashboard.",
+        description:
+          "Ingested server and firewall logs into Splunk Enterprise, developed detection rules for unauthorized access, and created an executive security posture dashboard.",
       },
     ],
   },
@@ -123,7 +135,17 @@ const coursesData = [
     level: "Beginner to Advanced",
     summary:
       "Our online Digital Marketing training and placement program is fully job-oriented and includes real-time project work for hands-on learning. Learn how digital channels work together to drive traffic, generate qualified leads, scale revenues, and optimize ROI using industry-standard tools.",
-    tools: ["Google Ads", "Meta Ads", "Semrush", "GA4 Analytics", "HubSpot", "Canva", "Ahrefs", "Mailchimp", "Google Search Console"],
+    tools: [
+      "Google Ads",
+      "Meta Ads",
+      "Semrush",
+      "GA4 Analytics",
+      "HubSpot",
+      "Canva",
+      "Ahrefs",
+      "Mailchimp",
+      "Google Search Console",
+    ],
     audience: [
       "Aspiring marketers and fresh graduates seeking high-growth digital agency roles",
       "Traditional marketing professionals transitioning into digital & performance marketing",
@@ -198,11 +220,13 @@ const coursesData = [
     projects: [
       {
         title: "End-to-End Omnichannel Lead Generation Campaign",
-        description: "Planned and executed an integrated campaign combining paid Google Search ads, Meta retargeting, and dedicated landing pages resulting in verified low-cost conversions.",
+        description:
+          "Planned and executed an integrated campaign combining paid Google Search ads, Meta retargeting, and dedicated landing pages resulting in verified low-cost conversions.",
       },
       {
         title: "Complete Enterprise SEO Audit & Growth Roadmap",
-        description: "Analyzed an existing business website, fixed technical crawl errors, optimized on-page search elements, and built an organic content calendar.",
+        description:
+          "Analyzed an existing business website, fixed technical crawl errors, optimized on-page search elements, and built an organic content calendar.",
       },
     ],
   },
@@ -216,7 +240,16 @@ const coursesData = [
     level: "Beginner to Advanced",
     summary:
       "Develop high-demand technical capabilities in automated programmatic media buying, DSPs, SSPs, real-time bidding auctions (RTB), audience segmentation, and attribution analysis. Learn the core AdTech infrastructure powering billion-dollar media budgets.",
-    tools: ["DV360", "The Trade Desk", "Google Ad Manager", "Xandr", "MediaMath", "Amazon DSP", "AppsFlyer", "IAS"],
+    tools: [
+      "DV360",
+      "The Trade Desk",
+      "Google Ad Manager",
+      "Xandr",
+      "MediaMath",
+      "Amazon DSP",
+      "AppsFlyer",
+      "IAS",
+    ],
     audience: [
       "Media planners, buyers, and performance marketers aiming to master AdTech stacks",
       "Digital agency account managers looking to run scalable display, native & video campaigns",
@@ -276,7 +309,8 @@ const coursesData = [
     projects: [
       {
         title: "Multi-Million Dollar Programmatic Media Allocation Plan",
-        description: "Built a complete media plan allocating budgets across CTV, Audio, Mobile, and Desktop using private marketplace inventory deals and custom behavioral segments.",
+        description:
+          "Built a complete media plan allocating budgets across CTV, Audio, Mobile, and Desktop using private marketplace inventory deals and custom behavioral segments.",
       },
     ],
   },
@@ -290,7 +324,17 @@ const coursesData = [
     level: "Beginner to Intermediate",
     summary:
       "A hands-on, practical entry point into ethical hacking and offensive security. Build essential foundations in networking and Linux, then work through structured reconnaissance, vulnerability scanning, system exploitation, and penetration testing in controlled, ethical lab environments.",
-    tools: ["Kali Linux", "Wireshark", "Nmap", "Burp Suite", "Metasploit", "OWASP ZAP", "Hydra", "John the Ripper", "Aircrack-ng"],
+    tools: [
+      "Kali Linux",
+      "Wireshark",
+      "Nmap",
+      "Burp Suite",
+      "Metasploit",
+      "OWASP ZAP",
+      "Hydra",
+      "John the Ripper",
+      "Aircrack-ng",
+    ],
     audience: [
       "Beginners and students passionate about ethical hacking and offensive security",
       "IT professionals preparing for CEH (Certified Ethical Hacker) and OSCP credentials",
@@ -346,7 +390,8 @@ const coursesData = [
     projects: [
       {
         title: "Full-Scope Black-Box Penetration Testing Project",
-        description: "Executed complete reconnaissance, scanning, vulnerability identification, exploitation, and compiled a corporate executive remediation report.",
+        description:
+          "Executed complete reconnaissance, scanning, vulnerability identification, exploitation, and compiled a corporate executive remediation report.",
       },
     ],
   },
@@ -360,7 +405,16 @@ const coursesData = [
     level: "All Skill Levels",
     summary:
       "Comprehensive prospectus covering all DIGITECHADEMY job-oriented career tracks including Cyber Security, Digital Marketing, Ethical Hacking, and Programmatic Advertising with dedicated 1-on-1 placement preparation and mentorship.",
-    tools: ["Wireshark", "Google Ads", "Splunk", "Meta Ads", "Kali Linux", "DV360", "Semrush", "Burp Suite"],
+    tools: [
+      "Wireshark",
+      "Google Ads",
+      "Splunk",
+      "Meta Ads",
+      "Kali Linux",
+      "DV360",
+      "Semrush",
+      "Burp Suite",
+    ],
     audience: [
       "Students, fresh graduates, and career changers exploring high-growth technology and digital marketing careers",
       "Corporate teams and professionals seeking certified, hands-on skill upgrading",
@@ -370,35 +424,57 @@ const coursesData = [
         num: "Track 01",
         title: "Cyber Security Training Online (16 Weeks / 65h Labs)",
         duration: "16 Weeks",
-        topics: ["Networking fundamentals", "Linux administration", "OWASP web security", "Splunk SIEM operations", "Incident handling"],
+        topics: [
+          "Networking fundamentals",
+          "Linux administration",
+          "OWASP web security",
+          "Splunk SIEM operations",
+          "Incident handling",
+        ],
         labs: "Hands-on virtual cloud labs, network packet triage, and enterprise threat detection.",
       },
       {
         num: "Track 02",
         title: "Digital Marketing Mastery (12 Weeks / 60h Sessions)",
         duration: "12 Weeks",
-        topics: ["Comprehensive SEO strategy", "Google Ads search & display", "Meta Ads paid social", "GA4 analytics & Looker Studio"],
+        topics: [
+          "Comprehensive SEO strategy",
+          "Google Ads search & display",
+          "Meta Ads paid social",
+          "GA4 analytics & Looker Studio",
+        ],
         labs: "Live budget campaign execution, technical site audit, and conversion optimization.",
       },
       {
         num: "Track 03",
         title: "Programmatic Advertising & AdTech (10 Weeks / 50h Sessions)",
         duration: "10 Weeks",
-        topics: ["RTB auctions & deal types", "Audience data & DMPs", "DV360 & Trade Desk setups", "Multi-touch attribution models"],
+        topics: [
+          "RTB auctions & deal types",
+          "Audience data & DMPs",
+          "DV360 & Trade Desk setups",
+          "Multi-touch attribution models",
+        ],
         labs: "End-to-end multi-channel programmatic media plan and inventory bidding simulation.",
       },
       {
         num: "Track 04",
         title: "Ethical Hacking & Security Fundamentals (12 Weeks / 55h Labs)",
         duration: "12 Weeks",
-        topics: ["OSINT & Reconnaissance", "Nmap network scanning", "Metasploit exploitation", "Web app security testing"],
+        topics: [
+          "OSINT & Reconnaissance",
+          "Nmap network scanning",
+          "Metasploit exploitation",
+          "Web app security testing",
+        ],
         labs: "Black-box penetration testing and executive vulnerability remediation reporting.",
       },
     ],
     projects: [
       {
         title: "100% Job Placement Assistance Program",
-        description: "Resume reconstruction, LinkedIn optimization, mock interviews with hiring managers, and direct corporate partner interview referrals.",
+        description:
+          "Resume reconstruction, LinkedIn optimization, mock interviews with hiring managers, and direct corporate partner interview referrals.",
       },
     ],
   },
@@ -767,7 +843,7 @@ function generateHtml(course) {
         </ul>
         ${m.labs ? `<div class="lab-note"><strong>Lab Milestone:</strong> ${m.labs}</div>` : ""}
       </div>
-    `
+    `,
       )
       .join("")}
   </div>
@@ -782,7 +858,7 @@ function generateHtml(course) {
         <div class="project-title">${p.title}</div>
         <div class="project-desc">${p.description}</div>
       </div>
-    `
+    `,
       )
       .join("")}
   </div>
@@ -838,6 +914,6 @@ for (const c of coursesData) {
 // Copy fallback prospectus
 fs.copyFileSync(
   path.join(outDir, "all-courses-prospectus-curriculum.pdf"),
-  path.join(outDir, "all-courses-prospectus.pdf")
+  path.join(outDir, "all-courses-prospectus.pdf"),
 );
 console.log("All corporate curriculum PDFs compiled successfully!");

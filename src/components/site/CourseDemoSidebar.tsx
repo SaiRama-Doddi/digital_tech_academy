@@ -24,11 +24,7 @@ import {
   getLocalCachedCourses,
   type FirebaseCourse,
 } from "@/services/courseService";
-import {
-  CountryFlag,
-  COUNTRY_CODES,
-  type CountryCodeItem,
-} from "@/components/site/CountryFlag";
+import { CountryFlag, COUNTRY_CODES, type CountryCodeItem } from "@/components/site/CountryFlag";
 
 interface CourseDemoSidebarProps {
   course?: Course;
@@ -37,12 +33,12 @@ interface CourseDemoSidebarProps {
 export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
   const activeCourse = course || (courses[0] as Course);
   const [fullName, setFullName] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(
-    COUNTRY_CODES[0]!
-  );
+  const [selectedCountry, setSelectedCountry] = useState<CountryCodeItem>(COUNTRY_CODES[0]!);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [selectedCourse, setSelectedCourse] = useState(activeCourse.title || "Cyber Security Course");
+  const [selectedCourse, setSelectedCourse] = useState(
+    activeCourse.title || "Cyber Security Course",
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -57,13 +53,13 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
           c.id !== "full-stack-java" &&
           c.slug !== "full-stack-java" &&
           !c.title?.toLowerCase().includes("full stack java") &&
-          c.id !== "testing"
+          c.id !== "testing",
       );
       if (active.length > 0) {
         return active.map((c) => ({ id: c.id, title: c.title.trim() }));
       }
       return courses.map((c) => ({ id: c.id, title: c.title.trim() }));
-    }
+    },
   );
 
   useEffect(() => {
@@ -76,7 +72,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
           c.id !== "full-stack-java" &&
           c.slug !== "full-stack-java" &&
           !c.title?.toLowerCase().includes("full stack java") &&
-          c.id !== "testing"
+          c.id !== "testing",
       );
       if (active.length > 0) {
         setLiveCourseOptions(active.map((c) => ({ id: c.id, title: c.title.trim() })));
@@ -94,9 +90,9 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                 c.id !== "full-stack-java" &&
                 c.slug !== "full-stack-java" &&
                 !c.title?.toLowerCase().includes("full stack java") &&
-                c.id !== "testing"
+                c.id !== "testing",
             )
-            .map((c) => ({ id: c.id, title: c.title.trim() }))
+            .map((c) => ({ id: c.id, title: c.title.trim() })),
         );
       }
     });
@@ -119,7 +115,9 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
     const cleanPhone = phone.replace(/\D/g, "");
     const minRequired = selectedCountry.minDigits || selectedCountry.digits;
     if (!cleanPhone || cleanPhone.length < minRequired) {
-      setErrorMsg(`Please enter a valid ${selectedCountry.digits}-digit mobile number for ${selectedCountry.name}.`);
+      setErrorMsg(
+        `Please enter a valid ${selectedCountry.digits}-digit mobile number for ${selectedCountry.name}.`,
+      );
       return;
     }
     if (!email.trim() || !email.includes("@")) {
@@ -175,10 +173,13 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
             <div className="relative mx-auto grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 text-white shadow-lg shadow-emerald-500/30">
               <CheckCircle2 className="size-8 stroke-[2.5]" />
             </div>
-            <h4 className="mt-3 text-lg font-black text-slate-900 tracking-tight">Registration Confirmed!</h4>
+            <h4 className="mt-3 text-lg font-black text-slate-900 tracking-tight">
+              Registration Confirmed!
+            </h4>
             <p className="mt-1.5 text-xs text-slate-700 leading-relaxed">
-              Thank you, <strong className="text-slate-900">{fullName}</strong>. Your free demo class seat
-              for <strong className="text-blue-600">{selectedCourse}</strong> is reserved.
+              Thank you, <strong className="text-slate-900">{fullName}</strong>. Your free demo
+              class seat for <strong className="text-blue-600">{selectedCourse}</strong> is
+              reserved.
             </p>
             <div className="mt-5 space-y-2">
               <a
@@ -254,7 +255,9 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   </label>
                   <div className="h-full rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 px-2.5 py-2 text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)] pointer-events-none shrink-0 transition-colors">
                     <CountryFlag country={selectedCountry.country} />
-                    <span className="text-xs sm:text-sm font-bold text-slate-700">{selectedCountry.code}</span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-700">
+                      {selectedCountry.code}
+                    </span>
                     <ChevronDown className="size-3 text-slate-400 shrink-0 -ml-0.5" />
                   </div>
                   <select
@@ -271,7 +274,11 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                     aria-label="Country Code"
                   >
                     {COUNTRY_CODES.map((c) => (
-                      <option key={`${c.country}-${c.code}`} value={c.country} className="text-slate-900 font-semibold">
+                      <option
+                        key={`${c.country}-${c.code}`}
+                        value={c.country}
+                        className="text-slate-900 font-semibold"
+                      >
                         {c.name} ({c.code}) - {c.digits} digits
                       </option>
                     ))}
@@ -292,10 +299,14 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                     maxLength={selectedCountry.digits}
                     value={phone}
                     onChange={(e) => {
-                      const cleaned = e.target.value.replace(/\D/g, "").slice(0, selectedCountry.digits);
+                      const cleaned = e.target.value
+                        .replace(/\D/g, "")
+                        .slice(0, selectedCountry.digits);
                       setPhone(cleaned);
                     }}
-                    placeholder={selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`}
+                    placeholder={
+                      selectedCountry.placeholder || `Enter ${selectedCountry.digits}-digit number`
+                    }
                     className="w-full rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-14 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-500 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                   />
                   <span className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-bold text-slate-400 font-mono">

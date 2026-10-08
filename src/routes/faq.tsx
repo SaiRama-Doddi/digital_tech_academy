@@ -34,7 +34,8 @@ export const Route = createFileRoute("/faq")({
       { property: "og:title", content: "Frequently Asked Questions | DIGITECHADEMY" },
       {
         property: "og:description",
-        content: "Find clear answers about DIGITECHADEMY courses, practical lab formats, eligibility, and enrollment.",
+        content:
+          "Find clear answers about DIGITECHADEMY courses, practical lab formats, eligibility, and enrollment.",
       },
       { property: "og:url", content: "/faq" },
     ],
@@ -54,10 +55,22 @@ const categoryIcons: Record<string, typeof HelpCircle> = {
 
 const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
   General: { bg: "bg-blue-500/10", text: "text-blue-600", border: "border-blue-300/40" },
-  "Digital Marketing": { bg: "bg-blue-500/10", text: "text-blue-600", border: "border-blue-300/40" },
-  "Programmatic Advertising": { bg: "bg-sky-500/10", text: "text-sky-600", border: "border-sky-300/40" },
+  "Digital Marketing": {
+    bg: "bg-blue-500/10",
+    text: "text-blue-600",
+    border: "border-blue-300/40",
+  },
+  "Programmatic Advertising": {
+    bg: "bg-sky-500/10",
+    text: "text-sky-600",
+    border: "border-sky-300/40",
+  },
   "Cyber Security": { bg: "bg-blue-600/10", text: "text-blue-700", border: "border-blue-300/40" },
-  "Enrollment & Support": { bg: "bg-sky-500/10", text: "text-sky-600", border: "border-sky-300/40" },
+  "Enrollment & Support": {
+    bg: "bg-sky-500/10",
+    text: "text-sky-600",
+    border: "border-sky-300/40",
+  },
 };
 
 function FaqPage() {
@@ -72,7 +85,7 @@ function FaqPage() {
       cat.items.map((item) => ({
         ...item,
         category: cat.title,
-      }))
+      })),
     );
   }, []);
 
@@ -142,15 +155,20 @@ function FaqPage() {
                       "inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer shadow-xs whitespace-nowrap",
                       isActive
                         ? "bg-slate-900 text-white shadow-md shadow-slate-900/15 ring-2 ring-slate-900/10"
-                        : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 hover:border-slate-300"
+                        : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 hover:border-slate-300",
                     )}
                   >
-                    <IconComp className={cn("size-3.5 shrink-0", isActive ? "text-sky-400" : "text-slate-500")} />
+                    <IconComp
+                      className={cn(
+                        "size-3.5 shrink-0",
+                        isActive ? "text-sky-400" : "text-slate-500",
+                      )}
+                    />
                     <span>{cat}</span>
                     <span
                       className={cn(
                         "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold",
-                        isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                        isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500",
                       )}
                     >
                       {count}
@@ -170,7 +188,8 @@ function FaqPage() {
               {/* Header with Results Count and Expand/Collapse All */}
               <div className="flex items-center justify-between pb-2 border-b border-slate-200/80 text-xs">
                 <div className="text-slate-500 font-semibold">
-                  Showing <span className="text-slate-900 font-bold">{filteredItems.length}</span> questions
+                  Showing <span className="text-slate-900 font-bold">{filteredItems.length}</span>{" "}
+                  questions
                 </div>
                 <div className="flex items-center gap-3">
                   <button
@@ -197,7 +216,9 @@ function FaqPage() {
                   <div className="grid size-12 mx-auto place-items-center rounded-full bg-slate-100 text-slate-400">
                     <HelpCircle className="size-6" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-800">No questions found in this category</h3>
+                  <h3 className="text-base font-bold text-slate-800">
+                    No questions found in this category
+                  </h3>
                   <p className="text-xs text-slate-500 max-w-md mx-auto">
                     Please select another category or reach out to our team directly.
                   </p>
@@ -237,7 +258,7 @@ function FaqPage() {
                           "rounded-2xl border transition-all duration-200 bg-white overflow-hidden shadow-xs",
                           isOpen
                             ? "border-blue-500/40 ring-2 ring-blue-500/10 shadow-md"
-                            : "border-slate-200/90 hover:border-slate-300"
+                            : "border-slate-200/90 hover:border-slate-300",
                         )}
                       >
                         <h3>
@@ -254,7 +275,7 @@ function FaqPage() {
                                     "inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider border",
                                     colors.bg,
                                     colors.text,
-                                    colors.border
+                                    colors.border,
                                   )}
                                 >
                                   {item.category}
@@ -263,7 +284,7 @@ function FaqPage() {
                               <span
                                 className={cn(
                                   "block text-sm sm:text-base font-extrabold transition-colors leading-snug",
-                                  isOpen ? "text-blue-700" : "text-slate-900"
+                                  isOpen ? "text-blue-700" : "text-slate-900",
                                 )}
                               >
                                 {item.question}
@@ -275,11 +296,15 @@ function FaqPage() {
                                 "grid size-7 sm:size-8 shrink-0 place-items-center rounded-xl border transition-all duration-200 mt-0.5",
                                 isOpen
                                   ? "border-blue-600 bg-blue-600 text-white shadow-sm shadow-blue-500/20"
-                                  : "border-slate-200 bg-slate-100 text-slate-600 group-hover:bg-slate-200"
+                                  : "border-slate-200 bg-slate-100 text-slate-600 group-hover:bg-slate-200",
                               )}
                               aria-hidden="true"
                             >
-                              {isOpen ? <Minus className="size-3.5" /> : <Plus className="size-3.5" />}
+                              {isOpen ? (
+                                <Minus className="size-3.5" />
+                              ) : (
+                                <Plus className="size-3.5" />
+                              )}
                             </span>
                           </button>
                         </h3>
@@ -287,7 +312,7 @@ function FaqPage() {
                         <div
                           className={cn(
                             "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
-                            isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                            isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
                           )}
                         >
                           <div className="overflow-hidden">
@@ -322,12 +347,15 @@ function FaqPage() {
                   </h3>
 
                   <p className="text-xs text-slate-300 leading-relaxed font-normal">
-                    Our academic advisors are online to assist with syllabus, pricing, batch timings, and career paths.
+                    Our academic advisors are online to assist with syllabus, pricing, batch
+                    timings, and career paths.
                   </p>
 
                   <div className="space-y-2.5 pt-2">
                     <a
-                      href={whatsappLink("Hi DIGITECHADEMY, I have a quick question about your courses.")}
+                      href={whatsappLink(
+                        "Hi DIGITECHADEMY, I have a quick question about your courses.",
+                      )}
                       target="_blank"
                       rel="noreferrer"
                       className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-2.5 px-4 transition-all shadow-md shadow-emerald-600/20 active:scale-[0.99]"
@@ -397,4 +425,3 @@ function FaqPage() {
     </SiteLayout>
   );
 }
-

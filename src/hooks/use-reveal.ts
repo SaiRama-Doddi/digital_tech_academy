@@ -9,7 +9,9 @@ export function useRevealRoot<T extends HTMLElement = HTMLDivElement>() {
     if (!root) return;
 
     if (typeof IntersectionObserver === "undefined") {
-      root.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
+      root
+        .querySelectorAll<HTMLElement>("[data-reveal]")
+        .forEach((el) => el.classList.add("is-visible"));
       return;
     }
 

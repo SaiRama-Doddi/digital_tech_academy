@@ -128,7 +128,9 @@ function ContactPage() {
             <Clock className="size-5 text-accent shrink-0" aria-hidden="true" />
             <p className="text-sm font-bold text-navy">{site.hours}</p>
             <span className="text-slate-300 hidden sm:inline">•</span>
-            <p className="text-xs sm:text-sm text-slate-500">Enquiries outside these hours are answered next working day.</p>
+            <p className="text-xs sm:text-sm text-slate-500">
+              Enquiries outside these hours are answered next working day.
+            </p>
           </div>
         </div>
       </section>
@@ -192,12 +194,22 @@ function ContactPage() {
               <h3 className="text-sm font-extrabold text-navy">What Happens Next?</h3>
               <ul className="space-y-2.5 text-xs text-slate-600">
                 <li className="flex items-start gap-2.5">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">1</span>
-                  <span><strong>15-Minute Callback:</strong> An academic counselor connects with you during your chosen time slot.</span>
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">
+                    1
+                  </span>
+                  <span>
+                    <strong>15-Minute Callback:</strong> An academic counselor connects with you
+                    during your chosen time slot.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-sky-100 text-sky-700 text-[10px] font-bold">2</span>
-                  <span><strong>Personalized Guidance:</strong> Understand curriculum details, live projects, and career opportunities.</span>
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-sky-100 text-sky-700 text-[10px] font-bold">
+                    2
+                  </span>
+                  <span>
+                    <strong>Personalized Guidance:</strong> Understand curriculum details, live
+                    projects, and career opportunities.
+                  </span>
                 </li>
               </ul>
             </div>

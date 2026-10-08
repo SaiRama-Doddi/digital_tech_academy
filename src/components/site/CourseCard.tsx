@@ -39,10 +39,22 @@ export function getCourseImage(course: any): string {
   const title = (course?.title || "").toLowerCase();
   const category = (course?.category || "").toLowerCase();
 
-  if (slug.includes("ai") || title.includes("ai") || category.includes("ai") || slug.includes("automation") || title.includes("automation")) {
+  if (
+    slug.includes("ai") ||
+    title.includes("ai") ||
+    category.includes("ai") ||
+    slug.includes("automation") ||
+    title.includes("automation")
+  ) {
     return domainAiAutomationImg;
   }
-  if (slug.includes("full-stack") || slug.includes("web-dev") || title.includes("full stack") || category.includes("stack") || category.includes("web")) {
+  if (
+    slug.includes("full-stack") ||
+    slug.includes("web-dev") ||
+    title.includes("full stack") ||
+    category.includes("stack") ||
+    category.includes("web")
+  ) {
     return domainFullstackDevImg;
   }
   if (slug.includes("ethical") || title.includes("ethical") || title.includes("hacking")) {
@@ -81,21 +93,67 @@ function getCourseTheme(category: string, title?: string) {
   const text = `${category} ${title || ""}`.toLowerCase();
 
   let icon = Award;
-  if (text.includes("ai") || text.includes("automation") || text.includes("bot") || text.includes("agent")) {
+  if (
+    text.includes("ai") ||
+    text.includes("automation") ||
+    text.includes("bot") ||
+    text.includes("agent")
+  ) {
     icon = Bot;
-  } else if (text.includes("programmatic") || text.includes("adtech") || text.includes("media") || text.includes("dv360")) {
+  } else if (
+    text.includes("programmatic") ||
+    text.includes("adtech") ||
+    text.includes("media") ||
+    text.includes("dv360")
+  ) {
     icon = Radio;
-  } else if (text.includes("market") || text.includes("seo") || text.includes("social") || text.includes("ads") || text.includes("ad")) {
+  } else if (
+    text.includes("market") ||
+    text.includes("seo") ||
+    text.includes("social") ||
+    text.includes("ads") ||
+    text.includes("ad")
+  ) {
     icon = Megaphone;
-  } else if (text.includes("web") || text.includes("code") || text.includes("frontend") || text.includes("full stack") || text.includes("react") || text.includes("developer")) {
+  } else if (
+    text.includes("web") ||
+    text.includes("code") ||
+    text.includes("frontend") ||
+    text.includes("full stack") ||
+    text.includes("react") ||
+    text.includes("developer")
+  ) {
     icon = Code2;
-  } else if (text.includes("data") || text.includes("analytic") || text.includes("bi") || text.includes("sql") || text.includes("python")) {
+  } else if (
+    text.includes("data") ||
+    text.includes("analytic") ||
+    text.includes("bi") ||
+    text.includes("sql") ||
+    text.includes("python")
+  ) {
     icon = BarChart3;
-  } else if (text.includes("cyber") || text.includes("hack") || text.includes("security") || text.includes("soc") || text.includes("network")) {
+  } else if (
+    text.includes("cyber") ||
+    text.includes("hack") ||
+    text.includes("security") ||
+    text.includes("soc") ||
+    text.includes("network")
+  ) {
     icon = ShieldCheck;
-  } else if (text.includes("design") || text.includes("ui") || text.includes("ux") || text.includes("creative") || text.includes("graphic")) {
+  } else if (
+    text.includes("design") ||
+    text.includes("ui") ||
+    text.includes("ux") ||
+    text.includes("creative") ||
+    text.includes("graphic")
+  ) {
     icon = Palette;
-  } else if (text.includes("business") || text.includes("manage") || text.includes("product") || text.includes("leadership")) {
+  } else if (
+    text.includes("business") ||
+    text.includes("manage") ||
+    text.includes("product") ||
+    text.includes("leadership")
+  ) {
     icon = Briefcase;
   }
 
@@ -230,4 +288,3 @@ export function CourseCard({ course }: { course: Course | any }) {
     </article>
   );
 }
-

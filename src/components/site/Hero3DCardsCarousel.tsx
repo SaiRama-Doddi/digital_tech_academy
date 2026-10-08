@@ -253,7 +253,7 @@ export function Hero3DCardsCarousel({ onSelectDomain }: Hero3DCardsCarouselProps
               }}
               className={cn(
                 "group absolute top-0 w-[92%] max-w-[355px] sm:max-w-[385px] xl:max-w-[405px] h-[390px] sm:h-[415px] lg:h-[430px] rounded-3xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-700 ease-out cursor-pointer overflow-hidden text-white shadow-2xl",
-                isCenter ? card.borderGlow : "shadow-slate-950/60 ring-1 ring-white/5"
+                isCenter ? card.borderGlow : "shadow-slate-950/60 ring-1 ring-white/5",
               )}
               style={{
                 transform: transformStyle,
@@ -275,7 +275,7 @@ export function Hero3DCardsCarousel({ onSelectDomain }: Hero3DCardsCarouselProps
                 <div
                   className={cn(
                     "pointer-events-none absolute inset-0 opacity-35 mix-blend-color-dodge bg-gradient-to-b",
-                    card.gradientTheme
+                    card.gradientTheme,
                   )}
                   aria-hidden="true"
                 />
@@ -302,7 +302,7 @@ export function Hero3DCardsCarousel({ onSelectDomain }: Hero3DCardsCarouselProps
                 <span
                   className={cn(
                     "inline-flex items-center gap-1.5 text-[9px] sm:text-[9.5px] font-mono font-black backdrop-blur-md px-2.5 py-1 rounded-full shrink-0 border border-white/10",
-                    card.tagColor
+                    card.tagColor,
                   )}
                 >
                   <span className="size-1.5 rounded-full bg-current animate-ping" />
@@ -351,7 +351,9 @@ export function Hero3DCardsCarousel({ onSelectDomain }: Hero3DCardsCarouselProps
               aria-label={`Go to slide ${dotIdx + 1}`}
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
-                dotIdx === activeIndex ? "w-6 bg-blue-600 shadow-xs" : "w-1.5 bg-slate-300 hover:bg-slate-400"
+                dotIdx === activeIndex
+                  ? "w-6 bg-blue-600 shadow-xs"
+                  : "w-1.5 bg-slate-300 hover:bg-slate-400",
               )}
             />
           ))}

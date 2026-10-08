@@ -35,8 +35,10 @@ export function FinalCta() {
 
             {/* Description */}
             <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-2xl lg:max-w-3xl">
-              Whether you&apos;re starting your career, switching fields or upgrading your existing skills,
-              <br className="hidden sm:inline" /> Digitechademy helps you move from learning concepts to applying them with confidence.
+              Whether you&apos;re starting your career, switching fields or upgrading your existing
+              skills,
+              <br className="hidden sm:inline" /> Digitechademy helps you move from learning
+              concepts to applying them with confidence.
             </p>
 
             {/* Tagline Ribbon */}
@@ -110,8 +112,12 @@ export function FinalCta() {
                     <Sparkles className="size-4 text-sky-300" />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-sky-400 font-bold">100% Practical Training</p>
-                    <p className="text-xs sm:text-sm font-bold text-white truncate">Job-Ready Project Defenses</p>
+                    <p className="text-[10px] uppercase tracking-wider text-sky-400 font-bold">
+                      100% Practical Training
+                    </p>
+                    <p className="text-xs sm:text-sm font-bold text-white truncate">
+                      Job-Ready Project Defenses
+                    </p>
                   </div>
                 </div>
                 <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold shrink-0">

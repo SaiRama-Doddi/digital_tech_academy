@@ -135,10 +135,10 @@ function PrivacyPolicyPage() {
               </div>
             </div>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
-              At <strong className="font-black text-navy">DIGITECHADEMY</strong>, accessible from our
-              website, protecting the privacy of our prospective students, enrolled learners, and visitors
-              is essential to our educational mission. This document outlines how data and technology are
-              managed across our online presence.
+              At <strong className="font-black text-navy">DIGITECHADEMY</strong>, accessible from
+              our website, protecting the privacy of our prospective students, enrolled learners,
+              and visitors is essential to our educational mission. This document outlines how data
+              and technology are managed across our online presence.
             </p>
           </div>
 
@@ -193,8 +193,8 @@ function PrivacyPolicyPage() {
                   Have Questions About Our Privacy Practices?
                 </h3>
                 <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  Speak with our admissions and administrative support team for any questions regarding your
-                  information, courses, or enrollment.
+                  Speak with our admissions and administrative support team for any questions
+                  regarding your information, courses, or enrollment.
                 </p>
               </div>
 
@@ -214,7 +214,10 @@ function PrivacyPolicyPage() {
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 px-5 rounded-xl shadow-md flex items-center gap-2 group"
                 >
                   <span>Talk to an Expert</span>
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  <ArrowRight
+                    className="size-4 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
                 </BtnLink>
               </div>
             </div>

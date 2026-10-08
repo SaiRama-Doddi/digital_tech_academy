@@ -5,8 +5,10 @@ if (typeof process !== "undefined" && typeof process.on === "function") {
     if (
       err &&
       typeof err === "object" &&
-      ("code" in err && err.code === "ERR_INVALID_STATE" ||
-       "message" in err && typeof err.message === "string" && err.message.includes("Controller is already closed"))
+      (("code" in err && err.code === "ERR_INVALID_STATE") ||
+        ("message" in err &&
+          typeof err.message === "string" &&
+          err.message.includes("Controller is already closed")))
     ) {
       // Ignored: Known Node 20.16 webstream adapter abort race condition
       return;
@@ -18,5 +20,3 @@ if (typeof process !== "undefined" && typeof process.on === "function") {
 export default createStartHandler({
   handler: defaultStreamHandler,
 });
-
-

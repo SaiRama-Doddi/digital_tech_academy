@@ -18,14 +18,17 @@ export const site = {
   hours: "Mon – Sat · 9:30 AM to 7:30 PM",
 } as const;
 
-export function whatsappLink(message = "Hi, I would like to know more about Digitechademy training programs.") {
+export function whatsappLink(
+  message = "Hi, I would like to know more about Digitechademy training programs.",
+) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
 export const navLinks = [
   { label: "Home", to: "/" },
-  { label: "Courses", to: "/courses" },
   { label: "About", to: "/about" },
+  { label: "Courses", to: "/courses" },
+  { label: "Reviews", to: "/testimonials" },
   { label: "FAQ", to: "/faq" },
   { label: "Contact", to: "/contact" },
 ] as const;

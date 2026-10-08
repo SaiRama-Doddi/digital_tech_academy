@@ -19,7 +19,8 @@ export const Route = createFileRoute("/request-call")({
       { property: "og:title", content: "Request a Call | DIGITECHADEMY" },
       {
         property: "og:description",
-        content: "Share your details and the DIGITECHADEMY admissions team will call you at your preferred time.",
+        content:
+          "Share your details and the DIGITECHADEMY admissions team will call you at your preferred time.",
       },
       { property: "og:url", content: "/request-call" },
     ],
@@ -51,7 +52,12 @@ function RequestCallPage() {
                 team directly.
               </p>
               <div className="mt-5 flex flex-col gap-3">
-                <BtnAnchor href={site.phoneHref} variant="primary" size="md" className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/10 h-11 rounded-lg">
+                <BtnAnchor
+                  href={site.phoneHref}
+                  variant="primary"
+                  size="md"
+                  className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/10 h-11 rounded-lg"
+                >
                   <Phone className="size-4" aria-hidden="true" />
                   {site.phone}
                 </BtnAnchor>

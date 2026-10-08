@@ -29,7 +29,7 @@ fs.writeFileSync(
     <p>Professional curriculum brochure generated successfully via Edge headless.</p>
   </div>
 </body>
-</html>`
+</html>`,
 );
 
 const edgePath = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";

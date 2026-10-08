@@ -11,8 +11,7 @@ export const btnVariants = cva(
       variant: {
         primary:
           "bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground hover:shadow-accent",
-        accent:
-          "bg-accent text-accent-foreground hover:brightness-110 hover:shadow-accent",
+        accent: "bg-accent text-accent-foreground hover:brightness-110 hover:shadow-accent",
         outline:
           "border border-border-strong bg-transparent text-foreground hover:border-accent hover:text-accent",
         onDark:
@@ -41,14 +40,8 @@ export function Btn({ className, variant, size, ...props }: ComponentProps<"butt
 // 1. Create a styled anchor component that supports ref forwarding and our custom Variants props
 const BtnLinkComponent = forwardRef<HTMLAnchorElement, ComponentProps<"a"> & Variants>(
   ({ className, variant, size, ...props }, ref) => {
-    return (
-      <a
-        ref={ref}
-        className={cn(btnVariants({ variant, size }), className)}
-        {...props}
-      />
-    );
-  }
+    return <a ref={ref} className={cn(btnVariants({ variant, size }), className)} {...props} />;
+  },
 );
 
 BtnLinkComponent.displayName = "BtnLinkComponent";
@@ -56,12 +49,6 @@ BtnLinkComponent.displayName = "BtnLinkComponent";
 // 2. Wrap it with TanStack Router's createLink helper to inject all Link props (to, params, search, etc.) type-safely
 export const BtnLink = createLink(BtnLinkComponent);
 
-export function BtnAnchor({
-  className,
-  variant,
-  size,
-  ...props
-}: ComponentProps<"a"> & Variants) {
+export function BtnAnchor({ className, variant, size, ...props }: ComponentProps<"a"> & Variants) {
   return <a className={cn(btnVariants({ variant, size }), className)} {...props} />;
 }
-
