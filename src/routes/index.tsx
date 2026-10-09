@@ -318,6 +318,79 @@ function WhyDigitechademy() {
     },
   ];
 
+  const allCards = [...row1Cards, ...row2Cards];
+
+  const renderCard = (
+    item: (typeof row1Cards)[0],
+    idx: number,
+    cardClass?: string
+  ) => {
+    const ItemIcon = item.icon;
+    return (
+      <div
+        key={item.title}
+        data-reveal="bottom-to-up"
+        style={{ "--reveal-delay": `${idx * 70}ms` } as React.CSSProperties}
+        className={cn(
+          "group relative flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs",
+          "transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/50",
+          item.accentBorder,
+          cardClass
+        )}
+      >
+        {/* Top Accent Line */}
+        <div
+          className={cn(
+            "absolute top-0 inset-x-0 h-1 rounded-t-2xl bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+            item.accentLine
+          )}
+          aria-hidden="true"
+        />
+
+        <div>
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <span
+              className={cn(
+                "grid size-10 place-items-center rounded-xl border shadow-2xs transition-transform duration-300 group-hover:scale-105",
+                item.iconBg
+              )}
+            >
+              <ItemIcon className="size-5 stroke-[2.2]" />
+            </span>
+
+            <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors uppercase font-mono">
+              {item.step} // 05
+            </span>
+          </div>
+
+          <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-blue-600 mb-1">
+            {item.eyebrow}
+          </span>
+
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+            {item.title}
+          </h3>
+
+          <p className="mt-1.5 text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
+            {item.desc}
+          </p>
+        </div>
+
+        {/* Tight bottom tags without hollow gap */}
+        <div className="mt-3.5 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
+          {item.pills.map((pill) => (
+            <span
+              key={pill}
+              className="inline-flex items-center text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 border border-slate-200/80"
+            >
+              {pill}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section className="relative py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-white via-slate-50/50 to-white overflow-hidden border-b border-slate-200/80">
       <div className="container-site relative z-10">
@@ -343,138 +416,32 @@ function WhyDigitechademy() {
           </p>
         </div>
 
-        {/* Top Row: 2 Key Foundations (Equal Width & Compact Height) */}
-        <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-          {row1Cards.map((item, idx) => {
-            const ItemIcon = item.icon;
-            return (
-              <div
-                key={item.title}
-                data-reveal="bottom-to-up"
-                style={{ "--reveal-delay": `${idx * 80}ms` } as React.CSSProperties}
-                className={cn(
-                  "group relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs",
-                  "transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/50",
-                  item.accentBorder,
-                )}
-              >
-                {/* Top Accent Line */}
-                <div
-                  className={cn(
-                    "absolute top-0 inset-x-0 h-1 rounded-t-2xl bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-                    item.accentLine,
-                  )}
-                  aria-hidden="true"
-                />
-
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <span
-                    className={cn(
-                      "grid size-10 place-items-center rounded-xl border shadow-2xs transition-transform duration-300 group-hover:scale-105",
-                      item.iconBg,
-                    )}
-                  >
-                    <ItemIcon className="size-5 stroke-[2.2]" />
-                  </span>
-
-                  <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors uppercase font-mono">
-                    {item.step} // 05
-                  </span>
-                </div>
-
-                <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-blue-600 mb-1">
-                  {item.eyebrow}
-                </span>
-
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                  {item.title}
-                </h3>
-
-                <p className="mt-1.5 text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
-                  {item.desc}
-                </p>
-
-                {/* Tight bottom tags without hollow gap */}
-                <div className="mt-3.5 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
-                  {item.pills.map((pill) => (
-                    <span
-                      key={pill}
-                      className="inline-flex items-center text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 border border-slate-200/80"
-                    >
-                      {pill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+        {/* Mobile View (< md): Single Horizontal Scrolling Row */}
+        <div className="mt-6 md:hidden">
+          <div className="flex items-center justify-between mb-2.5 px-0.5 text-xs font-semibold text-slate-500">
+            <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400">5 Pillars</span>
+            <span className="text-[11px] font-medium text-blue-600 flex items-center gap-1">
+              Scroll across →
+            </span>
+          </div>
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6 no-scrollbar touch-pan-x scroll-smooth">
+            {allCards.map((item, idx) =>
+              renderCard(item, idx, "w-[82vw] max-w-[310px] shrink-0 snap-start")
+            )}
+          </div>
         </div>
 
-        {/* Bottom Row: 3 Focus Pillars (Equal Height & Compact Flow) */}
-        <div className="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {row2Cards.map((item, idx) => {
-            const ItemIcon = item.icon;
-            return (
-              <div
-                key={item.title}
-                data-reveal="bottom-to-up"
-                style={{ "--reveal-delay": `${(idx + 2) * 80}ms` } as React.CSSProperties}
-                className={cn(
-                  "group relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs",
-                  "transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/50",
-                  item.accentBorder,
-                )}
-              >
-                {/* Top Accent Line */}
-                <div
-                  className={cn(
-                    "absolute top-0 inset-x-0 h-1 rounded-t-2xl bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-                    item.accentLine,
-                  )}
-                  aria-hidden="true"
-                />
+        {/* Desktop / Tablet View (>= md): 2 Structured Grid Rows */}
+        <div className="hidden md:block">
+          {/* Top Row: 2 Key Foundations (Equal Width & Compact Height) */}
+          <div className="mt-8 grid grid-cols-2 gap-5">
+            {row1Cards.map((item, idx) => renderCard(item, idx))}
+          </div>
 
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <span
-                    className={cn(
-                      "grid size-10 place-items-center rounded-xl border shadow-2xs transition-transform duration-300 group-hover:scale-105",
-                      item.iconBg,
-                    )}
-                  >
-                    <ItemIcon className="size-5 stroke-[2.2]" />
-                  </span>
-
-                  <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors uppercase font-mono">
-                    {item.step} // 05
-                  </span>
-                </div>
-
-                <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-blue-600 mb-1">
-                  {item.eyebrow}
-                </span>
-
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
-                  {item.title}
-                </h3>
-
-                <p className="mt-1.5 text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
-                  {item.desc}
-                </p>
-
-                {/* Tight bottom tags without hollow gap */}
-                <div className="mt-3.5 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
-                  {item.pills.map((pill) => (
-                    <span
-                      key={pill}
-                      className="inline-flex items-center text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 border border-slate-200/80"
-                    >
-                      {pill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+          {/* Bottom Row: 3 Focus Pillars (Equal Height & Compact Flow) */}
+          <div className="mt-5 grid grid-cols-3 gap-5">
+            {row2Cards.map((item, idx) => renderCard(item, idx + 2))}
+          </div>
         </div>
 
         {/* Sleek Horizontal Benchmark Strip */}
