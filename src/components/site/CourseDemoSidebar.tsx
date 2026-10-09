@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -99,12 +99,35 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
     return () => unsub();
   }, []);
 
+  const dropdownOptions = useMemo(() => {
+    const list = [...liveCourseOptions];
+    if (
+      activeCourse?.title &&
+      !list.some((c) => c.title.toLowerCase() === activeCourse.title.toLowerCase())
+    ) {
+      list.unshift({ id: activeCourse.id || activeCourse.slug, title: activeCourse.title });
+    }
+    return list;
+  }, [liveCourseOptions, activeCourse]);
+
   // Update selected course if activeCourse changes
   useEffect(() => {
     if (activeCourse?.title) {
-      setSelectedCourse(activeCourse.title);
+      const match = dropdownOptions.find(
+        (c) =>
+          c.title.toLowerCase() === activeCourse.title.toLowerCase() ||
+          c.id === activeCourse.id ||
+          (c as any).slug === activeCourse.slug ||
+          c.title.toLowerCase().includes(activeCourse.title.toLowerCase()) ||
+          activeCourse.title.toLowerCase().includes(c.title.toLowerCase()),
+      );
+      if (match) {
+        setSelectedCourse(match.title);
+      } else {
+        setSelectedCourse(activeCourse.title);
+      }
     }
-  }, [activeCourse?.title]);
+  }, [activeCourse?.title, activeCourse?.id, activeCourse?.slug, dropdownOptions]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -347,7 +370,7 @@ export function CourseDemoSidebar({ course }: CourseDemoSidebarProps) {
                   onChange={(e) => setSelectedCourse(e.target.value)}
                   className="w-full rounded-xl border border-slate-300 bg-slate-50/70 hover:bg-slate-50 pl-9 pr-8 py-2.5 text-xs sm:text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-500/15 cursor-pointer shadow-[inset_0_1px_2px_rgba(15,23,42,0.03)]"
                 >
-                  {liveCourseOptions.map((c) => (
+                  {dropdownOptions.map((c) => (
                     <option key={c.id} value={c.title}>
                       {c.title}
                     </option>

@@ -266,6 +266,8 @@ export async function clearAllCoursesFromFirebase(): Promise<void> {
  * Fetch all courses from Firebase Firestore.
  * Merges with local cache / defaults if Firestore is empty or offline.
  */
+const autoHealedDocIds = new Set<string>();
+
 export async function getCoursesFromFirebase(): Promise<FirebaseCourse[]> {
   try {
     const colRef = collection(db, "courses");
@@ -279,11 +281,13 @@ export async function getCoursesFromFirebase(): Promise<FirebaseCourse[]> {
         const rawSlug = data["slug"] || docSnap.id;
         const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
 
-        // Auto-heal in Firestore if category was stored incorrectly
+        // Auto-heal in Firestore if category was stored incorrectly (once per document)
         if (
           rawCategory !== category &&
-          (category === "Programmatic Advertising" || category === "Cyber Security")
+          (category === "Programmatic Advertising" || category === "Cyber Security") &&
+          !autoHealedDocIds.has(docSnap.id)
         ) {
+          autoHealedDocIds.add(docSnap.id);
           updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
         }
 
@@ -351,11 +355,13 @@ export function subscribeCourses(
               const rawSlug = data["slug"] || docSnap.id;
               const category = normalizeCourseCategory(rawCategory, rawTitle, rawSlug);
 
-              // Auto-heal in Firestore if category was stored incorrectly
+              // Auto-heal in Firestore if category was stored incorrectly (once per document)
               if (
                 rawCategory !== category &&
-                (category === "Programmatic Advertising" || category === "Cyber Security")
+                (category === "Programmatic Advertising" || category === "Cyber Security") &&
+                !autoHealedDocIds.has(docSnap.id)
               ) {
+                autoHealedDocIds.add(docSnap.id);
                 updateDoc(doc(db, "courses", docSnap.id), { category }).catch(() => {});
               }
 

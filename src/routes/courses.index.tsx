@@ -267,7 +267,7 @@ function CoursesPage() {
 
   useEffect(() => {
     const onScroll = () => {
-      setIsHeroScrolled(window.scrollY > 40);
+      setIsHeroScrolled(window.scrollY > 80);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -295,13 +295,13 @@ function CoursesPage() {
   return (
     <SiteLayout>
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (Sticky Header Banner with Shrink on Scroll)                */}
+      {/* 1. HERO SECTION (Sticky Courses Catalog Banner with Shrink on Scroll)       */}
       {/* ========================================================================= */}
       <section
         className={cn(
-          "sticky top-16 z-30 text-slate-900 border-b transition-all duration-300 ease-in-out overflow-hidden",
+          "sticky top-0 z-30 text-slate-900 border-b transition-all duration-300 ease-in-out overflow-hidden",
           isHeroScrolled
-            ? "bg-white/95 backdrop-blur-md border-slate-200/90 shadow-sm py-1.5 sm:py-2"
+            ? "bg-white/95 backdrop-blur-md border-slate-200/90 shadow-md py-2 sm:py-2.5"
             : "bg-gradient-to-r from-slate-50 via-sky-50/70 to-blue-50/50 border-slate-200/90 py-4 sm:py-5 lg:py-6 shadow-2xs",
         )}
       >
@@ -314,51 +314,96 @@ function CoursesPage() {
           aria-hidden="true"
         />
         <div className="container-site relative z-10">
-          <div
-            className={cn(
-              "max-w-5xl transition-all duration-300",
-              isHeroScrolled ? "space-y-0.5" : "space-y-2",
-            )}
-          >
-            {/* Top Row: Breadcrumb */}
-            <nav
-              aria-label="Breadcrumb"
+          <div className="flex items-start gap-3 sm:gap-4 w-full">
+            {/* Left Menu Button to Open Full Navbar */}
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-site-nav"))}
+              aria-label="Open Navigation Menu"
+              title="Open Menu"
               className={cn(
-                "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300",
-                isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-[11px] sm:text-xs",
+                "group inline-flex items-center gap-2 rounded-xl transition-all duration-200 cursor-pointer shrink-0 select-none shadow-xs hover:shadow-md active:scale-95",
+                isHeroScrolled
+                  ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/25 px-2.5 sm:px-3 py-1.5 mt-0.5"
+                  : "bg-white/95 hover:bg-white text-slate-800 border border-slate-200/90 hover:border-blue-500/50 px-2.5 sm:px-3.5 py-1.5 sm:py-2 mt-1",
               )}
             >
-              <Link to="/" className="hover:text-blue-600 transition-colors">
-                Home
-              </Link>
-              <span className="text-slate-400">»</span>
-              <span className="text-slate-900 font-semibold">All Courses</span>
-            </nav>
-
-            {/* Title & Subtitle */}
-            <div className="pt-0">
-              <h1
+              <div className="flex flex-col justify-center items-center gap-1 size-3.5 sm:size-4">
+                <span
+                  className={cn(
+                    "h-0.5 w-3.5 sm:w-4 rounded-full transition-all duration-200",
+                    isHeroScrolled ? "bg-white" : "bg-slate-700 group-hover:bg-blue-600",
+                  )}
+                />
+                <span
+                  className={cn(
+                    "h-0.5 w-2.5 sm:w-3 self-start rounded-full transition-all duration-200 group-hover:w-3.5 sm:group-hover:w-4",
+                    isHeroScrolled ? "bg-white/90" : "bg-slate-700 group-hover:bg-blue-600",
+                  )}
+                />
+                <span
+                  className={cn(
+                    "h-0.5 w-3.5 sm:w-4 rounded-full transition-all duration-200",
+                    isHeroScrolled ? "bg-white" : "bg-slate-700 group-hover:bg-blue-600",
+                  )}
+                />
+              </div>
+              <span
                 className={cn(
-                  "font-display font-extrabold tracking-tight text-slate-900 leading-tight transition-all duration-300",
-                  isHeroScrolled
-                    ? "text-sm sm:text-base md:text-lg"
-                    : "text-lg sm:text-xl md:text-2xl lg:text-[1.75rem]",
+                  "font-bold text-[11px] sm:text-xs tracking-wide",
+                  isHeroScrolled ? "text-white" : "text-slate-700 group-hover:text-blue-600",
                 )}
               >
-                Practical Courses for Today&apos;s Digital Careers
-              </h1>
+                Menu
+              </span>
+            </button>
 
-              <p
+            <div
+              className={cn(
+                "flex-1 min-w-0 transition-all duration-300",
+                isHeroScrolled ? "space-y-0.5" : "space-y-2",
+              )}
+            >
+              {/* Top Row: Breadcrumb */}
+              <nav
+                aria-label="Breadcrumb"
                 className={cn(
-                  "leading-relaxed font-normal max-w-3xl text-slate-600 transition-all duration-300",
-                  isHeroScrolled
-                    ? "text-[10.5px] sm:text-xs line-clamp-1 mt-0.5 text-slate-500"
-                    : "text-xs sm:text-[13.5px] mt-1",
+                  "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300",
+                  isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-xs sm:text-sm",
                 )}
               >
-                Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic
-                Advertising.
-              </p>
+                <Link to="/" className="hover:text-blue-600 transition-colors">
+                  Home
+                </Link>
+                <span className="text-slate-400">»</span>
+                <span className="text-slate-900 font-bold">All Courses</span>
+              </nav>
+
+              {/* Title & Subtitle */}
+              <div className="pt-0">
+                <h1
+                  className={cn(
+                    "font-display font-extrabold tracking-tight text-slate-900 leading-tight transition-all duration-300",
+                    isHeroScrolled
+                      ? "text-sm sm:text-base md:text-lg"
+                      : "text-xl sm:text-2xl md:text-3xl lg:text-[2rem]",
+                  )}
+                >
+                  Practical Courses for Today&apos;s Digital Careers
+                </h1>
+
+                <p
+                  className={cn(
+                    "leading-relaxed font-normal max-w-3xl text-slate-600 transition-all duration-300",
+                    isHeroScrolled
+                      ? "text-[10.5px] sm:text-xs line-clamp-1 mt-0.5 text-slate-500"
+                      : "text-xs sm:text-sm md:text-[14px] mt-1.5",
+                  )}
+                >
+                  Industry-recognized training in Cyber Security, Digital Marketing &amp; Programmatic
+                  Advertising.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -680,7 +725,7 @@ function CoursesPage() {
             {/* ------------------------------------------------------------------- */}
             {/* RIGHT COLUMN: Video Demo Card + JOIN FREE DEMO CLASS Form           */}
             {/* ------------------------------------------------------------------- */}
-            <aside className="lg:sticky lg:top-36 w-full min-w-0">
+            <aside className="lg:sticky lg:top-20 w-full min-w-0">
               <CourseDemoSidebar />
             </aside>
           </div>

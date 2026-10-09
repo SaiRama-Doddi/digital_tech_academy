@@ -211,20 +211,28 @@ export function Header() {
     }
   }, [searchOpen]);
 
-  // Keyboard shortcut (Escape to close search, Cmd/Ctrl+K to open search)
+  // Keyboard shortcut (Escape to close search/menu, Cmd/Ctrl+K to open search)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setSearchOpen((prev) => !prev);
       }
-      if (e.key === "Escape" && searchOpen) {
-        setSearchOpen(false);
+      if (e.key === "Escape") {
+        if (mobileOpen) setMobileOpen(false);
+        if (searchOpen) setSearchOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [searchOpen]);
+  }, [mobileOpen, searchOpen]);
+
+  // Listen for open-site-nav event dispatched from sticky banner Menu buttons
+  useEffect(() => {
+    const handleOpenNav = () => setMobileOpen(true);
+    window.addEventListener("open-site-nav", handleOpenNav);
+    return () => window.removeEventListener("open-site-nav", handleOpenNav);
+  }, []);
 
   // Lock body scroll when mobile menu or search drawer is open
   useEffect(() => {
@@ -238,6 +246,7 @@ export function Header() {
     };
   }, [mobileOpen, searchOpen]);
 
+  const isHomePage = pathname === "/";
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
 
   const currentCategoryData = useMemo(() => {
@@ -282,6 +291,17 @@ export function Header() {
             <div className="relative overflow-hidden flex-1 min-w-0 h-4 flex items-center mx-1 [mask-image:linear-gradient(to_right,transparent,black_6px,black_calc(100%-6px),transparent)]">
               <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused]">
                 <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]">
+                  <span className="text-slate-200 font-medium whitespace-nowrap">
+                    New Batches Starting Soon
+                  </span>
+                  <span className="text-amber-400/90 font-bold whitespace-nowrap">
+                    • Limited Seats
+                  </span>
+                  <span className="text-sky-300 font-semibold whitespace-nowrap">
+                    • Fast-Track Batches
+                  </span>
+                </div>
+                <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]" aria-hidden="true">
                   <span className="text-slate-200 font-medium whitespace-nowrap">
                     New Batches Starting Soon
                   </span>
@@ -345,6 +365,20 @@ export function Header() {
                       •
                     </span>
                   </div>
+                  <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]" aria-hidden="true">
+                    <span className="text-slate-200 font-medium whitespace-nowrap">
+                      New Batches Starting Soon
+                    </span>
+                    <span className="text-amber-300 font-bold whitespace-nowrap">
+                      • Practical Live Training
+                    </span>
+                    <span className="text-sky-300 font-medium whitespace-nowrap">
+                      • Weekend &amp; Weekday Batches
+                    </span>
+                    <span className="text-slate-600 select-none" aria-hidden="true">
+                      •
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -380,12 +414,17 @@ export function Header() {
       {/* ========================================================================= */}
       {/* 2. FLOATING FROSTED GLASS CAPSULE NAVBAR (EXACT REFERENCE MODEL)          */}
       {/* ========================================================================= */}
-      <header className="sticky top-2.5 sm:top-3.5 z-50 w-full px-3 sm:px-6 lg:px-8 pointer-events-none">
+      <header
+        className={cn(
+          "w-full px-3 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300",
+          isHomePage ? "sticky top-2.5 sm:top-3.5 z-50" : "relative my-2 sm:my-3 z-40",
+        )}
+      >
         <div
           className={cn(
             "pointer-events-auto mx-auto max-w-7xl rounded-full transition-all duration-300 ease-in-out",
             "px-3.5 sm:px-5 lg:px-6 py-2 sm:py-2.5",
-            scrolled
+            scrolled && isHomePage
               ? "bg-white/90 shadow-[0_16px_40px_-10px_rgba(15,23,42,0.16)] border border-slate-200/90 backdrop-blur-2xl"
               : "bg-white/75 shadow-[0_12px_36px_-8px_rgba(15,23,42,0.1),0_1px_3px_rgba(0,0,0,0.05)] border border-white/85 backdrop-blur-xl",
           )}
@@ -621,23 +660,48 @@ export function Header() {
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* 3. MOBILE MENU DROPDOWN DRAWER (Frosted Glass Container)                  */}
-        {/* ========================================================================= */}
-        {mobileOpen && (
+      </header>
+
+      {/* ========================================================================= */}
+      {/* 3. RESPONSIVE SITE NAVIGATION SLIDE-OVER DRAWER (Mobile + Desktop)        */}
+      {/* ========================================================================= */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[100] flex animate-in fade-in duration-200">
+          {/* Backdrop Blur Overlay */}
           <div
-            id="mobile-nav"
-            className="pointer-events-auto mx-auto max-w-7xl mt-2 overflow-hidden rounded-3xl border border-slate-200/90 bg-white/95 backdrop-blur-2xl shadow-2xl transition-all duration-300 lg:hidden"
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity cursor-pointer"
+            onClick={() => setMobileOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Slide-over Side Panel from LEFT */}
+          <div
+            id="site-nav-drawer"
+            className="relative z-10 w-full max-w-[340px] sm:max-w-[420px] bg-white h-full shadow-2xl border-r border-slate-200/90 flex flex-col animate-in slide-in-from-left duration-300 ease-out"
           >
-            <div className="p-4 space-y-3.5 max-h-[calc(85vh-5rem)] overflow-y-auto overscroll-contain">
-              {/* Quick Search in Mobile Menu */}
+            {/* Top Drawer Header with Logo & Close Button */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/80">
+              <Logo />
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+                className="grid size-9 place-items-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-100 transition-colors shadow-2xs cursor-pointer active:scale-95"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            {/* Scrollable Navigation Body */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+              {/* Quick Search Button in Drawer */}
               <button
                 type="button"
                 onClick={() => {
                   setMobileOpen(false);
                   setSearchOpen(true);
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-slate-100 text-slate-500 border border-slate-200 text-xs font-medium text-left cursor-pointer"
+                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200/80 text-slate-500 border border-slate-200 text-xs font-medium text-left transition-colors cursor-pointer"
               >
                 <Search className="size-4 text-slate-400" />
                 <span className="flex-1">Search courses &amp; certifications...</span>
@@ -647,17 +711,18 @@ export function Header() {
               </button>
 
               {/* Navigation Links */}
-              <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
+              <nav aria-label="Main navigation drawer" className="space-y-1">
                 {headerNavLinks.map((link) => {
                   if (link.label === "Courses") {
                     return (
                       <div
                         key={link.to}
-                        className="space-y-1 rounded-2xl bg-slate-50/80 p-2 border border-slate-200/80"
+                        className="space-y-1 rounded-2xl bg-slate-50/90 p-2 border border-slate-200/80"
                       >
                         <div className="flex items-center justify-between">
                           <Link
                             to={link.to}
+                            onClick={() => setMobileOpen(false)}
                             className={cn(
                               "flex-1 px-2.5 py-1.5 text-sm font-bold transition-colors flex items-center gap-2",
                               isActive(link.to) ? "text-blue-600" : "text-slate-800",
@@ -731,7 +796,7 @@ export function Header() {
                                             );
                                           }
                                         }}
-                                        className="block py-1 px-2 rounded-lg hover:bg-slate-50 text-xs font-medium text-slate-700"
+                                        className="block py-1 px-2 rounded-lg hover:bg-slate-50 text-xs font-medium text-slate-700 hover:text-blue-600 transition-colors"
                                       >
                                         {sub.title}
                                       </Link>
@@ -751,11 +816,12 @@ export function Header() {
                     <Link
                       key={link.to}
                       to={link.to}
+                      onClick={() => setMobileOpen(false)}
                       className={cn(
                         "flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-bold transition-all",
                         active
                           ? "bg-blue-600 text-white shadow-xs"
-                          : "text-slate-700 hover:bg-slate-100",
+                          : "text-slate-700 hover:bg-slate-100 hover:text-slate-900",
                       )}
                     >
                       <span>{link.label}</span>
@@ -766,10 +832,10 @@ export function Header() {
               </nav>
 
               {/* Quick Actions (Call & WhatsApp) */}
-              <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+              <div className="grid grid-cols-2 gap-2 text-xs pt-2">
                 <a
                   href={site.phoneHref}
-                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-700 font-bold hover:shadow-xs transition-all text-center"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-700 font-bold hover:bg-blue-100 transition-all text-center"
                 >
                   <Phone className="size-3.5" />
                   <span className="text-[11.5px]">Call Admissions</span>
@@ -778,28 +844,37 @@ export function Header() {
                   href={whatsappLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 font-bold hover:shadow-xs transition-all text-center"
+                  className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 font-bold hover:bg-emerald-100 transition-all text-center"
                 >
                   <MessageCircle className="size-3.5" />
                   <span className="text-[11.5px]">WhatsApp</span>
                 </a>
               </div>
 
-              {/* Primary Mobile CTA */}
-              <div className="pt-1">
+              {/* Primary Drawer CTA */}
+              <div className="pt-2">
                 <Link
                   to="/courses"
                   onClick={() => setMobileOpen(false)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 text-xs rounded-full shadow-md flex items-center justify-center gap-2 active:scale-[0.99] transition-all cursor-pointer"
+                  className="w-full bg-[linear-gradient(135deg,#0284c7_0%,#2563eb_50%,#4f46e5_100%)] hover:brightness-110 text-white font-bold h-11 text-xs rounded-xl shadow-md flex items-center justify-center gap-2 active:scale-[0.99] transition-all cursor-pointer"
                 >
-                  <span>Get Started</span>
+                  <span>Explore All Courses</span>
                   <ArrowRight className="size-3.5 text-white" />
                 </Link>
               </div>
             </div>
+
+            {/* Bottom Brand Credential Strip */}
+            <div className="p-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span className="flex items-center gap-1 font-semibold text-slate-700">
+                <ShieldCheck className="size-3.5 text-emerald-600" />
+                100% Practical Training
+              </span>
+              <span className="text-[10px] text-slate-400">DIGITECHADEMY</span>
+            </div>
           </div>
-        )}
-      </header>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* 4. INTERACTIVE SEARCH MODAL DIALOG                                        */}

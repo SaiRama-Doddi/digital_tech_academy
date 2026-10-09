@@ -42,10 +42,8 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import aboutImg from "@/assets/about-training.jpg";
 import heroImg from "@/assets/hero-tech.jpg";
 import heroStudentImg from "@/assets/hero-student.jpg";
-import careerReadinessStudentImg from "@/assets/career-readiness-student.jpg";
 import cyberHeroBg from "@/assets/cyber-hero-bg.jpg";
 import cyberPhase1Img from "@/assets/cyber-phase1-3d.jpg";
 import cyberPhase2Img from "@/assets/cyber-phase2-3d.jpg";
@@ -59,7 +57,6 @@ import { BtnLink } from "@/components/site/Btn";
 import { CourseCard } from "@/components/site/CourseCard";
 import { CountUp } from "@/components/site/CountUp";
 import { FaqAccordion } from "@/components/site/FaqAccordion";
-import { FinalCta } from "@/components/site/FinalCta";
 import { DemoClassModal } from "@/components/site/DemoClassModal";
 import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
@@ -172,14 +169,8 @@ function Home() {
       {/* 11. Who Is This For? */}
       <WhoIsThisFor />
 
-      {/* 12. Career Readiness */}
-      <CareerReadiness />
-
       {/* 13. FAQ */}
       <FaqSection />
-
-      {/* 14. Final CTA */}
-      <FinalCta />
 
       {/* Interactive Global Demo Class Modal */}
       <DemoClassModal />
@@ -262,199 +253,279 @@ function UspTrustStrip() {
 
 /**
  * =========================================================================
- * 5. WHY DIGITECHADEMY
+ * 5. WHY DIGITECHADEMY — COMPACT PREMIUM 5-PILLAR SHOWCASE (ZERO GAPS)
  * =========================================================================
  */
 function WhyDigitechademy() {
+  const row1Cards = [
+    {
+      step: "01",
+      eyebrow: "PRACTICAL PEDAGOGY",
+      title: "Industry-Led Training",
+      desc: "Learn concepts through an industry-focused lens, not just theory. Curriculum structured around active company workflows, live agency briefs, and real operational demands.",
+      icon: Briefcase,
+      iconBg: "bg-blue-50 text-blue-600 border-blue-200/80",
+      accentBorder: "hover:border-blue-500",
+      accentLine: "from-blue-600 via-indigo-500 to-blue-400",
+      pills: ["Live Agency Briefs", "Real-World Projects", "Zero Dry Theory"],
+    },
+    {
+      step: "02",
+      eyebrow: "ACTIVE APPLICATION",
+      title: "Hands-On Practice",
+      desc: "Practice the skills you are learning through exercises, live consoles, sandbox labs, and realistic scenarios instead of passive video lectures.",
+      icon: Terminal,
+      iconBg: "bg-sky-50 text-sky-600 border-sky-200/80",
+      accentBorder: "hover:border-sky-500",
+      accentLine: "from-sky-500 via-cyan-500 to-blue-500",
+      pills: ["Command Line & Consoles", "Interactive Sandboxes", "Real-Time Problem Solving"],
+    },
+  ];
+
+  const row2Cards = [
+    {
+      step: "03",
+      eyebrow: "PORTFOLIO DELIVERABLES",
+      title: "Build Work You Can Talk About",
+      desc: "Use capstone projects and documented performance outcomes to demonstrate your capabilities with tangible proof during hiring interviews.",
+      icon: Award,
+      iconBg: "bg-indigo-50 text-indigo-600 border-indigo-200/80",
+      accentBorder: "hover:border-indigo-500",
+      accentLine: "from-indigo-600 via-purple-500 to-blue-600",
+      pills: ["Campaign Case Studies", "Security Audit Reports", "Interview Portfolio"],
+    },
+    {
+      step: "04",
+      eyebrow: "ENTERPRISE TOOLSTACK",
+      title: "Industry-Relevant Skills",
+      desc: "Focus on modern tools, enterprise workflows (DV360, Meta Ads, Wireshark, Linux, GA4) relevant to current digital & technology roles.",
+      icon: Target,
+      iconBg: "bg-cyan-50 text-cyan-700 border-cyan-200/80",
+      accentBorder: "hover:border-cyan-500",
+      accentLine: "from-cyan-500 via-blue-500 to-indigo-500",
+      pills: ["DV360 & CM360", "Meta & Google Ads", "Linux & Wireshark"],
+    },
+    {
+      step: "05",
+      eyebrow: "PERSONALIZED SUPPORT",
+      title: "Guidance, Not Just Content",
+      desc: "Learn with structured guidance, personalized feedback, continuous support and practical direction from experienced practitioners.",
+      icon: Users,
+      iconBg: "bg-blue-50 text-blue-600 border-blue-200/80",
+      accentBorder: "hover:border-blue-500",
+      accentLine: "from-blue-500 via-indigo-500 to-violet-500",
+      pills: ["Personalized Reviews", "Doubt Clearing", "Career Coaching"],
+    },
+  ];
+
   return (
-    <section className="bg-white py-7 sm:py-10 overflow-hidden border-b border-slate-200/60">
-      <div className="container-site grid items-center gap-6 lg:grid-cols-12 lg:gap-8 xl:gap-10">
-        {/* Left Column: Visual graphic */}
-        <div className="relative lg:col-span-5" data-reveal="left">
-          <div className="overflow-hidden rounded-3xl border border-slate-200/80 shadow-xl bg-slate-950 aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] relative">
-            <img
-              src={aboutImg}
-              alt="DIGITECHADEMY practical skills and industry training"
-              loading="lazy"
-              width={1200}
-              height={1008}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 text-white">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-600/80 text-[10.5px] font-black uppercase tracking-wider text-sky-200 mb-1.5 backdrop-blur-xs">
-                <Sparkles className="size-3" />
-                LEARN • GROW • ACHIEVE
-              </span>
-              <p className="font-bold text-sm sm:text-base text-white">
-                Learn practical skills. Build real-world confidence.
-              </p>
-              <p className="text-xs text-slate-300 mt-0.5">
-                100% hands-on training with 10 dedicated mentors.
-              </p>
-            </div>
+    <section className="relative py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-white via-slate-50/50 to-white overflow-hidden border-b border-slate-200/80">
+      <div className="container-site relative z-10">
+        {/* Section Header: Left Aligned */}
+        <div className="text-left max-w-4xl" data-reveal="left">
+          <div className="eyebrow text-xs inline-flex items-center gap-2 text-blue-700 mb-2">
+            <span className="h-px w-5 sm:w-6 bg-blue-600" aria-hidden="true" />
+            <span className="font-bold uppercase tracking-wider">WHY DIGITECHADEMY</span>
           </div>
 
-          {/* Floating Pill Badge */}
-          <div className="absolute -bottom-3 -right-2 rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md p-3.5 shadow-lg hidden sm:flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
-              <CheckCircle2 className="size-5" />
-            </span>
-            <div>
-              <p className="font-display text-sm font-black text-slate-900">Career Ready</p>
-              <p className="text-[11px] font-semibold text-slate-500">100% Placement Assistance</p>
-            </div>
-          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2]">
+            What Makes{" "}
+            <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent">
+              DIGITECHADEMY
+            </span>{" "}
+            Different?
+          </h2>
+
+          <p className="mt-2.5 text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-3xl">
+            We eliminate outdated theory and passive tutorials. Our industry-focused training is
+            built around live tools, real projects, and 1-on-1 mentorship so you build true workplace
+            competence.
+          </p>
         </div>
 
-        {/* Right Column: Heading and 5 Exact Differentiators */}
-        <div className="lg:col-span-7">
-          <div data-reveal="right">
-            <SectionHeading
-              eyebrow="WHY DIGITECHADEMY"
-              title="What Makes DIGITECHADEMY Different?"
-              singleLine={false}
-              align="left"
-            />
-          </div>
-
-          <div className="mt-6 grid gap-2.5 sm:gap-3">
-            {[
-              {
-                title: "Industry-Led Training",
-                desc: "Learn concepts through an industry-focused lens, not just theory.",
-                icon: Briefcase,
-                color: "bg-blue-50 text-blue-700 border-blue-200",
-                hoverBorder: "hover:border-blue-500",
-                hoverGlow: "hover:shadow-blue-500/10",
-                accentGradient: "group-hover:from-blue-50/60",
-                barColor: "bg-blue-600",
-              },
-              {
-                title: "Hands-On Practice",
-                desc: "Practice the skills you are learning through exercises and realistic scenarios.",
-                icon: Terminal,
-                color: "bg-sky-50 text-sky-700 border-sky-200",
-                hoverBorder: "hover:border-sky-500",
-                hoverGlow: "hover:shadow-sky-500/10",
-                accentGradient: "group-hover:from-sky-50/60",
-                barColor: "bg-sky-500",
-              },
-              {
-                title: "Build Work You Can Talk About",
-                desc: "Use projects and practical outcomes to demonstrate what you can actually do.",
-                icon: Award,
-                color: "bg-blue-50 text-blue-700 border-blue-200",
-                hoverBorder: "hover:border-blue-500",
-                hoverGlow: "hover:shadow-blue-500/10",
-                accentGradient: "group-hover:from-blue-50/60",
-                barColor: "bg-blue-600",
-              },
-              {
-                title: "Industry-Relevant Skills",
-                desc: "Focus on tools, workflows and skills relevant to modern digital and technology roles.",
-                icon: Target,
-                color: "bg-sky-50 text-sky-700 border-sky-200",
-                hoverBorder: "hover:border-sky-500",
-                hoverGlow: "hover:shadow-sky-500/10",
-                accentGradient: "group-hover:from-sky-50/60",
-                barColor: "bg-sky-500",
-              },
-              {
-                title: "Guidance, Not Just Content",
-                desc: "Learn with structured guidance, feedback and practical direction.",
-                icon: Users,
-                color: "bg-blue-50 text-blue-700 border-blue-200",
-                hoverBorder: "hover:border-blue-500",
-                hoverGlow: "hover:shadow-blue-500/10",
-                accentGradient: "group-hover:from-blue-50/60",
-                barColor: "bg-blue-600",
-              },
-            ].map((item, index) => {
-              const ItemIcon = item.icon;
-              return (
+        {/* Top Row: 2 Key Foundations (Equal Width & Compact Height) */}
+        <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {row1Cards.map((item, idx) => {
+            const ItemIcon = item.icon;
+            return (
+              <div
+                key={item.title}
+                data-reveal="bottom-to-up"
+                style={{ "--reveal-delay": `${idx * 80}ms` } as React.CSSProperties}
+                className={cn(
+                  "group relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs",
+                  "transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/50",
+                  item.accentBorder,
+                )}
+              >
+                {/* Top Accent Line */}
                 <div
-                  key={item.title}
-                  data-reveal="left-to-right"
-                  style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
                   className={cn(
-                    "differentiator-card group relative flex items-start gap-3 rounded-xl border border-slate-300 bg-white p-3 sm:p-3.5 shadow-2xs overflow-hidden",
-                    "transition-all duration-300 ease-out",
-                    "hover:translate-x-1.5 sm:hover:translate-x-2.5 hover:-translate-y-0.5 hover:shadow-md",
-                    "active:scale-[0.985] active:translate-x-0.5",
-                    item.hoverBorder,
-                    item.hoverGlow,
+                    "absolute top-0 inset-x-0 h-1 rounded-t-2xl bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                    item.accentLine,
                   )}
-                >
-                  {/* Interactive left accent bar */}
+                  aria-hidden="true"
+                />
+
+                <div className="flex items-center justify-between gap-3 mb-3">
                   <span
                     className={cn(
-                      "absolute left-0 top-0 bottom-0 w-1 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-1.5",
-                      item.barColor,
-                    )}
-                    aria-hidden="true"
-                  />
-
-                  {/* Subtle hover gradient background */}
-                  <div
-                    className={cn(
-                      "pointer-events-none absolute inset-0 bg-gradient-to-r via-white to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-                      item.accentGradient,
-                    )}
-                    aria-hidden="true"
-                  />
-
-                  {/* Icon badge with interactive rotate & scale */}
-                  <span
-                    className={cn(
-                      "relative z-10 grid size-7.5 sm:size-8 shrink-0 place-items-center rounded-lg border mt-0.5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-2xs",
-                      item.color,
+                      "grid size-10 place-items-center rounded-xl border shadow-2xs transition-transform duration-300 group-hover:scale-105",
+                      item.iconBg,
                     )}
                   >
-                    <ItemIcon
-                      className="size-3.5 sm:size-4 transition-transform duration-300"
-                      aria-hidden="true"
-                    />
+                    <ItemIcon className="size-5 stroke-[2.2]" />
                   </span>
 
-                  {/* Text Details */}
-                  <div className="relative z-10 min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug transition-colors duration-200 group-hover:text-blue-950">
-                        {item.title}
-                      </h4>
-                      <ChevronRight
-                        className="size-3.5 text-slate-400 opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 shrink-0 hidden sm:block"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <p className="mt-0.5 text-xs text-slate-600 leading-relaxed font-normal text-justify">
-                      {item.desc}
-                    </p>
-                  </div>
+                  <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors uppercase font-mono">
+                    {item.step} // 05
+                  </span>
                 </div>
-              );
-            })}
+
+                <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-blue-600 mb-1">
+                  {item.eyebrow}
+                </span>
+
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+                  {item.title}
+                </h3>
+
+                <p className="mt-1.5 text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
+                  {item.desc}
+                </p>
+
+                {/* Tight bottom tags without hollow gap */}
+                <div className="mt-3.5 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
+                  {item.pills.map((pill) => (
+                    <span
+                      key={pill}
+                      className="inline-flex items-center text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 border border-slate-200/80"
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom Row: 3 Focus Pillars (Equal Height & Compact Flow) */}
+        <div className="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {row2Cards.map((item, idx) => {
+            const ItemIcon = item.icon;
+            return (
+              <div
+                key={item.title}
+                data-reveal="bottom-to-up"
+                style={{ "--reveal-delay": `${(idx + 2) * 80}ms` } as React.CSSProperties}
+                className={cn(
+                  "group relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs",
+                  "transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/50",
+                  item.accentBorder,
+                )}
+              >
+                {/* Top Accent Line */}
+                <div
+                  className={cn(
+                    "absolute top-0 inset-x-0 h-1 rounded-t-2xl bg-gradient-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+                    item.accentLine,
+                  )}
+                  aria-hidden="true"
+                />
+
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span
+                    className={cn(
+                      "grid size-10 place-items-center rounded-xl border shadow-2xs transition-transform duration-300 group-hover:scale-105",
+                      item.iconBg,
+                    )}
+                  >
+                    <ItemIcon className="size-5 stroke-[2.2]" />
+                  </span>
+
+                  <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors uppercase font-mono">
+                    {item.step} // 05
+                  </span>
+                </div>
+
+                <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-blue-600 mb-1">
+                  {item.eyebrow}
+                </span>
+
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+                  {item.title}
+                </h3>
+
+                <p className="mt-1.5 text-xs sm:text-[13px] text-slate-600 leading-relaxed font-normal">
+                  {item.desc}
+                </p>
+
+                {/* Tight bottom tags without hollow gap */}
+                <div className="mt-3.5 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
+                  {item.pills.map((pill) => (
+                    <span
+                      key={pill}
+                      className="inline-flex items-center text-[10.5px] font-semibold px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 border border-slate-200/80"
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Sleek Horizontal Benchmark Strip */}
+        <div
+          data-reveal="bottom-to-up"
+          className="mt-6 rounded-2xl border border-slate-200/90 bg-gradient-to-r from-blue-50/60 via-indigo-50/40 to-sky-50/50 p-4 sm:p-5 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 justify-center md:justify-start">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
+              <span className="text-xs sm:text-sm font-bold text-slate-800">
+                100% Hands-On Labs
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
+              <span className="text-xs sm:text-sm font-bold text-slate-800">
+                10+ Dedicated Mentors
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
+              <span className="text-xs sm:text-sm font-bold text-slate-800">
+                Live Capstone Projects
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
+              <span className="text-xs sm:text-sm font-bold text-slate-800">
+                1:1 Placement Support
+              </span>
+            </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto justify-center">
             <BtnLink
               to="/courses"
               variant="primary"
-              size="md"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm"
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm shadow-xs flex items-center gap-1.5"
             >
               <span>Explore Programs</span>
-              <ArrowRight className="size-3.5 ml-1.5" />
+              <ArrowRight className="size-3.5" />
             </BtnLink>
-
             <BtnLink
-              to="/about"
+              to="/request-call"
               variant="outline"
-              size="md"
-              className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm"
+              size="sm"
+              className="border-slate-300 text-slate-800 hover:bg-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm bg-white/80"
             >
-              <span>About the Academy</span>
+              <span>Talk to an Expert</span>
             </BtnLink>
           </div>
         </div>
@@ -618,22 +689,10 @@ interface CoreProgramsProps {
 }
 
 function CorePrograms({
-  selectedDomain: externalSelectedDomain,
+  selectedDomain,
   onSelectDomain,
 }: CoreProgramsProps = {}) {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [internalSelectedDomain, setInternalSelectedDomain] = useState<string | null>(null);
-  const selectedDomain =
-    externalSelectedDomain !== undefined ? externalSelectedDomain : internalSelectedDomain;
-  const setSelectedDomain = (val: string | null) => {
-    if (onSelectDomain) {
-      onSelectDomain(val);
-    } else {
-      setInternalSelectedDomain(val);
-    }
-  };
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
   const [liveCourses, setLiveCourses] = useState<FirebaseCourse[]>(() =>
     courses.map((c) => ({
       id: c.id,
@@ -653,65 +712,6 @@ function CorePrograms({
       image: c.image || "",
     })),
   );
-
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    skipSnaps: false,
-  });
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const scrollToTrack = useCallback(
-    (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index);
-    },
-    [emblaApi],
-  );
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-    onSelect();
-
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
-  // Auto-scroll loop
-  useEffect(() => {
-    if (!emblaApi || isAutoScrollPaused || selectedDomain) return;
-
-    const interval = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 3400);
-
-    return () => clearInterval(interval);
-  }, [emblaApi, isAutoScrollPaused, selectedDomain]);
-
-  // Scroll to active domain track when selectedDomain is updated
-  useEffect(() => {
-    if (selectedDomain && emblaApi) {
-      const idx = DOMAIN_TRACKS.findIndex((t) => t.name === selectedDomain);
-      if (idx !== -1) {
-        emblaApi.scrollTo(idx);
-      }
-    }
-  }, [selectedDomain, emblaApi]);
 
   useEffect(() => {
     const unsub = subscribeCourses((coursesList) => {
@@ -735,32 +735,16 @@ function CorePrograms({
     return counts;
   }, [activeCourses]);
 
-  const displayedCourses = useMemo(() => {
-    if (!selectedDomain) return [];
-    return activeCourses.filter((c) => matchesDomain(c, selectedDomain));
-  }, [activeCourses, selectedDomain]);
-
-  const handleSelectDomain = (domainName: string | null) => {
-    setSelectedDomain(domainName);
-    if (sectionRef.current) {
-      const topOffset = -70;
-      const y = sectionRef.current.getBoundingClientRect().top + window.pageYOffset + topOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
-
-  const selectedTrack = DOMAIN_TRACKS.find((t) => t.name === selectedDomain);
-
   return (
     <section
       id="courses"
       ref={sectionRef}
-      className="bg-white py-7 sm:py-10 border-y border-slate-200/80 overflow-hidden"
+      className="bg-white py-8 sm:py-12 border-y border-slate-200/80 overflow-hidden"
     >
       <div className="container-site">
-        {/* Section Header: Title on Left, Navigation Controls & Link Up on Right */}
+        {/* Section Header: Title on Left, Link on Right */}
         <div
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-2 sm:mb-2.5"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4"
           data-reveal
         >
           <div className="min-w-0">
@@ -774,27 +758,6 @@ function CorePrograms({
           </div>
 
           <div className="flex items-center gap-2.5 sm:gap-3 self-start sm:self-center shrink-0">
-            {!selectedDomain && (
-              <div className="flex items-center gap-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/90 shadow-2xs">
-                <button
-                  type="button"
-                  onClick={scrollPrev}
-                  aria-label="Previous domain track"
-                  className="p-1.5 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-white transition-all cursor-pointer shadow-none hover:shadow-xs active:scale-95"
-                >
-                  <ChevronLeft className="size-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={scrollNext}
-                  aria-label="Next domain track"
-                  className="p-1.5 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-white transition-all cursor-pointer shadow-none hover:shadow-xs active:scale-95"
-                >
-                  <ChevronRight className="size-4" />
-                </button>
-              </div>
-            )}
-
             <Link
               to="/courses"
               className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors whitespace-nowrap"
@@ -805,199 +768,102 @@ function CorePrograms({
           </div>
         </div>
         <p
-          className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-5xl mb-5 sm:mb-6"
+          className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal max-w-4xl mb-6 sm:mb-8"
           data-reveal
         >
-          Select a specialized domain to explore dedicated hands-on programs, live lab environments,
-          and job-ready technical curriculums.
+          Explore our specialized career tracks. Select any domain below to view complete in-depth
+          program details, practical curriculums, live lab environments, and career outcomes.
         </p>
 
-        {/* 5 Domain Cards with Auto-Scrolling Carousel */}
-        <div>
-          <div
-            ref={emblaRef}
-            onMouseEnter={() => setIsAutoScrollPaused(true)}
-            onMouseLeave={() => setIsAutoScrollPaused(false)}
-            onTouchStart={() => setIsAutoScrollPaused(true)}
-            onTouchEnd={() => {
-              setTimeout(() => setIsAutoScrollPaused(false), 2500);
-            }}
-            className="overflow-hidden p-1 -m-1 cursor-grab active:cursor-grabbing"
-          >
-            <div className="flex -ml-4 sm:-ml-5 py-2">
-              {DOMAIN_TRACKS.map((track, idx) => {
-                const TrackIcon = track.icon;
-                const count = domainCounts[track.name] || 0;
-                const isSelected = selectedDomain === track.name;
-                const isSnapActive = selectedIndex === idx;
+        {/* 3 Domain Cards in a Responsive Grid (Mobile 1 col, Tablet 2 col, Desktop 3 col) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {DOMAIN_TRACKS.map((track) => {
+            const TrackIcon = track.icon;
+            const count = domainCounts[track.name] || 0;
 
-                return (
-                  <div
-                    key={track.id}
-                    className="min-w-0 shrink-0 grow-0 pl-4 sm:pl-5 basis-full sm:basis-1/2 lg:basis-1/3"
-                  >
-                    <div
-                      onClick={() => handleSelectDomain(isSelected ? null : track.name)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          handleSelectDomain(isSelected ? null : track.name);
-                        }
-                      }}
-                      className={cn(
-                        "h-full core-program-card group relative flex flex-col justify-between rounded-xl p-4 sm:p-5 transition-all duration-200 cursor-pointer border shadow-2xs select-none",
-                        track.cardBorder,
-                        track.cardHoverBorder,
-                        track.cardBg,
-                        track.hoverShadow,
-                        isSelected
-                          ? "ring-2 ring-blue-600 border-blue-600 bg-blue-50/25 shadow-md scale-[1.01]"
-                          : isSnapActive
-                            ? "ring-1 ring-blue-400/50"
-                            : "",
-                        "hover:-translate-y-1 hover:shadow-md focus:outline-hidden focus:ring-2 focus:ring-blue-500",
-                      )}
-                    >
-                      <div>
-                        {/* Card 3D Image Banner */}
-                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl mb-3.5 bg-slate-900 shadow-xs">
-                          <img
-                            src={track.image}
-                            alt={track.title}
-                            className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20" />
-
-                          {/* Floating Icon & Eyebrow Badge */}
-                          <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
-                            <div
-                              className={cn(
-                                "size-8 rounded-lg flex items-center justify-center backdrop-blur-md bg-white/95 shadow-xs",
-                                track.iconBg,
-                              )}
-                            >
-                              <TrackIcon className="size-4" />
-                            </div>
-                            <span
-                              className={cn(
-                                "inline-flex items-center px-2.5 py-0.5 rounded-full text-[9.5px] font-extrabold uppercase tracking-wider backdrop-blur-md bg-white/95 border shadow-xs",
-                                track.badgeStyle,
-                              )}
-                            >
-                              {track.eyebrow}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Domain Main Heading */}
-                        <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
-                          {track.title}
-                        </h3>
-                      </div>
-
-                      {/* Clean Compact Footer */}
-                      <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
-                        <span>
-                          {count} {count === 1 ? "Program" : "Programs"}
-                        </span>
-                        <span
-                          className={cn(
-                            "inline-flex items-center gap-1 font-bold transition-colors",
-                            isSelected
-                              ? "text-blue-700"
-                              : "text-blue-600 group-hover:text-blue-700",
-                          )}
-                        >
-                          <span>{isSelected ? "Selected" : "Explore"}</span>
-                          <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Carousel Indicator Dots & Auto-scroll State */}
-          <div className="flex items-center justify-between mt-4 pt-1">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5">
-                {DOMAIN_TRACKS.map((track, i) => (
-                  <button
-                    key={track.id}
-                    type="button"
-                    onClick={() => scrollToTrack(i)}
-                    className={cn(
-                      "h-2 rounded-full transition-all duration-300 cursor-pointer",
-                      selectedIndex === i
-                        ? "w-7 bg-blue-600 shadow-xs"
-                        : "w-2 bg-slate-300 hover:bg-slate-400",
-                    )}
-                    aria-label={`Go to ${track.title}`}
-                  />
-                ))}
-              </div>
-              <span className="text-[11px] font-semibold text-slate-400 ml-1.5 hidden sm:inline">
-                {selectedIndex + 1} / {DOMAIN_TRACKS.length}
-              </span>
-            </div>
-
-            {/* Pause/Resume Auto-scroll Toggle */}
-            <button
-              type="button"
-              onClick={() => setIsAutoScrollPaused((prev) => !prev)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-slate-100 hover:bg-slate-200/80 text-slate-600 transition-colors cursor-pointer border border-slate-200/70"
-              title={isAutoScrollPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
-            >
-              <span
+            return (
+              <Link
+                key={track.id}
+                to="/courses/$slug"
+                params={{ slug: track.id }}
                 className={cn(
-                  "size-1.5 rounded-full",
-                  isAutoScrollPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse",
-                )}
-              />
-              <span>{isAutoScrollPaused ? "Auto-scroll: Paused" : "Auto-scrolling"}</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Selected Domain Courses Grid (Rendered cleanly below cards without extra top bar) */}
-        {selectedDomain && (
-          <div className="mt-8 pt-6 border-t border-slate-200/80 space-y-4 animate-in fade-in duration-300">
-            {displayedCourses.length > 0 ? (
-              <div
-                className={cn(
-                  "gap-5 w-full",
-                  displayedCourses.length === 1
-                    ? "flex justify-center max-w-[320px] sm:max-w-[340px] mx-auto"
-                    : displayedCourses.length === 2
-                      ? "grid sm:grid-cols-2 max-w-2xl mx-auto"
-                      : "grid sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto",
+                  "core-program-card group relative flex flex-col justify-between rounded-2xl p-4 sm:p-5 transition-all duration-300 border shadow-2xs select-none bg-white",
+                  track.cardBorder,
+                  track.cardHoverBorder,
+                  track.cardBg,
+                  track.hoverShadow,
+                  "hover:-translate-y-1.5 hover:shadow-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500",
                 )}
               >
-                {displayedCourses.map((course, cIdx) => (
-                  <div
-                    key={course.id || course.slug}
-                    data-reveal="bottom-to-up"
-                    style={{ "--reveal-delay": `${cIdx * 100}ms` } as React.CSSProperties}
-                    className="h-full"
-                  >
-                    <CourseCard course={course as any} />
+                <div>
+                  {/* Card 3D Image Banner */}
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl mb-4 bg-slate-900 shadow-xs">
+                    <img
+                      src={track.image}
+                      alt={track.title}
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/20" />
+
+                    {/* Floating Icon & Eyebrow Badge */}
+                    <div className="absolute top-2.5 inset-x-2.5 flex items-center justify-between gap-2 z-10">
+                      <div
+                        className={cn(
+                          "size-8 rounded-lg flex items-center justify-center backdrop-blur-md bg-white/95 shadow-xs",
+                          track.iconBg,
+                        )}
+                      >
+                        <TrackIcon className="size-4" />
+                      </div>
+                      <span
+                        className={cn(
+                          "inline-flex items-center px-2.5 py-0.5 rounded-full text-[9.5px] font-extrabold uppercase tracking-wider backdrop-blur-md bg-white/95 border shadow-xs",
+                          track.badgeStyle,
+                        )}
+                      >
+                        {track.eyebrow}
+                      </span>
+                    </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-10 px-4 bg-white rounded-2xl border border-slate-200/80">
-                <p className="text-slate-600 text-sm">
-                  No active courses currently available in this domain.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
+
+                  {/* Domain Main Heading */}
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                    {track.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed line-clamp-3">
+                    {track.description}
+                  </p>
+
+                  {/* Skills tags */}
+                  <div className="flex flex-wrap gap-1.5 mt-3.5">
+                    {track.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100/90 text-slate-700 border border-slate-200/70"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Clean Compact Footer */}
+                <div className="pt-3.5 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
+                  <span className="text-slate-500">
+                    {count} {count === 1 ? "Program" : "Programs"}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
+                    <span>View Program Details</span>
+                    <ArrowRight className="size-3.5 group-hover:translate-x-1.5 transition-transform" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -2003,170 +1869,6 @@ function WhoIsThisFor() {
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * =========================================================================
- * 15. CAREER READINESS
- * =========================================================================
- */
-function CareerReadiness() {
-  return (
-    <section className="bg-white relative py-7 sm:py-10 lg:py-12 overflow-hidden border-b border-slate-200/80">
-      <div className="container-site relative z-10">
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center">
-          {/* Left Column: Visual Student Frame with Royal Blue Accent Backdrop */}
-          <div className="lg:col-span-5 relative" data-reveal="left">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-              {/* Royal Blue / Indigo Geometric Accent Backdrop Box */}
-              <div
-                className="absolute -top-3 -left-3 sm:-top-3.5 sm:-left-3.5 w-3/4 h-full rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-sky-500 -z-10 shadow-lg shadow-blue-600/20 opacity-95"
-                aria-hidden="true"
-              />
-
-              {/* Main Student Image Frame */}
-              <div className="relative overflow-hidden rounded-3xl border-2 border-white shadow-xl bg-slate-900 aspect-[4/4.2] sm:aspect-[4/4]">
-                <img
-                  src={careerReadinessStudentImg}
-                  alt="Student with laptop giving thumbs up"
-                  loading="lazy"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
-
-                {/* Floating Bottom Pill Badge */}
-                <div className="absolute bottom-3 left-3 right-3 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md flex items-center gap-2.5">
-                  <span className="grid size-8 sm:size-9 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-xs">
-                    <CheckCircle2 className="size-4.5 sm:size-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="font-extrabold text-xs sm:text-[13px] text-slate-900 leading-tight">
-                      100% Practical Training
-                    </p>
-                    <p className="text-[10px] sm:text-[11px] font-semibold text-slate-500 truncate">
-                      Job-Ready Skills &amp; Placement Support
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Heading, Concise Highlight Cards & Framework */}
-          <div className="lg:col-span-7 space-y-3.5 sm:space-y-4" data-reveal="right">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wider uppercase mb-2">
-                <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-                CAREER READINESS
-              </div>
-
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2]">
-                We are the best in <span className="text-blue-600">training...</span>
-              </h2>
-
-              <p className="mt-1 text-xs sm:text-[13px] font-semibold text-slate-500">
-                Learn with your next career move in mind.
-              </p>
-            </div>
-
-            {/* Primary Blue Highlight Card */}
-            <div className="rounded-2xl border border-blue-100/90 bg-gradient-to-r from-blue-50/70 via-indigo-50/40 to-blue-50/70 p-3.5 sm:p-4 shadow-2xs">
-              <div className="flex items-start gap-3">
-                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-blue-600 text-white shadow-2xs mt-0.5">
-                  <Check className="size-3.5 stroke-[3]" />
-                </span>
-
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-[13px] leading-relaxed text-slate-700 font-medium">
-                    Our industry-aligned curriculum is crafted to match global technology standards,
-                    providing you with strong practical foundations to excel in modern roles
-                    worldwide.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Assured Job Assistance Card */}
-            <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 sm:p-4 shadow-2xs">
-              <div className="flex items-start gap-3">
-                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-500 text-white shadow-2xs mt-0.5">
-                  <Check className="size-3.5 stroke-[3]" />
-                </span>
-
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-xs sm:text-[13px] font-extrabold text-slate-900 leading-snug">
-                    Assured Job Assistance &amp; Placement Support
-                  </h3>
-                  <p className="mt-0.5 text-[11.5px] sm:text-xs text-slate-600 leading-relaxed font-normal">
-                    Resume optimization, mock technical interview preparation, and direct hiring
-                    partner referrals.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* The Core Framework Strip */}
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-3 sm:p-3.5 shadow-2xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-blue-700">
-                    The Core Framework
-                  </span>
-                  <p className="text-xs sm:text-[13px] font-bold text-slate-900">
-                    A certificate alone doesn&apos;t build a career.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-1 rounded-xl">
-                  <span className="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-[10.5px] font-bold">
-                    Skills
-                  </span>
-                  <span className="text-slate-400 font-bold text-xs">+</span>
-                  <span className="px-2 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700 text-[10.5px] font-bold">
-                    Practice
-                  </span>
-                  <span className="text-slate-400 font-bold text-xs">+</span>
-                  <span className="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-700 text-[10.5px] font-bold">
-                    Projects
-                  </span>
-                  <span className="text-slate-400 font-bold text-xs">+</span>
-                  <span className="px-2 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700 text-[10.5px] font-bold">
-                    Confidence
-                  </span>
-                  <span className="text-blue-600 font-bold text-xs">=</span>
-                  <span className="px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10.5px] font-black tracking-tight shadow-xs">
-                    Career Ready
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* CTAs */}
-            <div className="pt-0.5 flex flex-wrap items-center gap-2.5">
-              <BtnLink
-                to="/courses"
-                variant="primary"
-                size="md"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4.5 py-2 rounded-xl text-xs sm:text-[13px] shadow-sm flex items-center gap-1.5"
-              >
-                <span>Explore Career Programs</span>
-                <ArrowRight className="size-3.5" />
-              </BtnLink>
-
-              <BtnLink
-                to="/request-call"
-                variant="outline"
-                size="md"
-                className="border-slate-300 text-slate-800 hover:bg-slate-50 font-bold px-4.5 py-2 rounded-xl text-xs sm:text-[13px]"
-              >
-                <span>Talk to a Career Mentor</span>
-              </BtnLink>
-            </div>
-          </div>
         </div>
       </div>
     </section>

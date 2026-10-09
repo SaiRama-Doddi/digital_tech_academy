@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 10px; }
+    .frame-container { display: flex; flex-direction: column; gap: 15px; }
+    .frame { background: #111; border: 2px solid #555; padding: 5px; }
+    h2 { font-size: 16px; margin: 0 0 5px 0; color: #00ffcc; }
+    img { width: 100%; max-width: 1100px; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Video Frames from issue-video-rectify it.mp4</h1>
+  <div id="status">Starting...</div>
+  <div class="frame-container" id="frames"></div>
+  <video id="v" src="/src/assets/issue-video-rectify%20it.mp4" muted playsinline preload="auto" style="display:none"></video>
+
+  <script>
+    const v = document.getElementById('v');
+    const status = document.getElementById('status');
+    const frames = document.getElementById('frames');
+    const timestamps = [0.05, 0.3, 0.6, 0.9, 1.2, 1.35];
+    let currentIdx = 0;
+
+    v.addEventListener('loadeddata', () => {
+      status.innerText = 'Video loaded, capturing frames...';
+      captureNext();
+    });
+
+    function captureNext() {
+      if (currentIdx >= timestamps.length) {
+        status.innerText = 'DONE capturing all ' + timestamps.length + ' frames!';
+        document.body.classList.add('ready');
+        return;
+      }
+      v.currentTime = timestamps[currentIdx];
+    }
+
+    v.addEventListener('seeked', () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = v.videoWidth || 1280;
+      canvas.height = v.videoHeight || 720;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+      
+      const frameDiv = document.createElement('div');
+      frameDiv.className = 'frame';
+      const h = document.createElement('h2');
+      h.innerText = `Frame ${currentIdx + 1} at ${timestamps[currentIdx]}s`;
+      frameDiv.appendChild(h);
+      
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/jpeg', 0.85);
+      frameDiv.appendChild(img);
+      frames.appendChild(frameDiv);
+
+      currentIdx++;
+      setTimeout(captureNext, 50);
+    });
+
+    v.addEventListener('error', (e) => {
+      status.innerText = 'Video error: ' + (v.error ? v.error.message : 'unknown');
+    });
+  </script>
+</body>
+</html>
