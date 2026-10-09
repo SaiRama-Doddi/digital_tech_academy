@@ -74,6 +74,7 @@ import {
   addCourseToFirebase,
   updateCourseInFirebase,
   deleteCourseFromFirebase,
+  seedAllCoursesToFirebase,
   clearAllCoursesFromFirebase,
 } from "@/services/courseService";
 import {
@@ -130,7 +131,7 @@ export const Route = createFileRoute("/admin/dashboard")({
   component: AdminDashboardPage,
 });
 
-type TabType = "dashboard" | "enquiries" | "courses" | "faqs" | "settings";
+type TabType = "dashboard" | "enquiries" | "courses" | "faqs";
 
 // --- TYPES FOR DASHBOARD DATA ---
 interface Enquiry {
@@ -399,11 +400,19 @@ function AdminDashboardPage() {
       {/* =========================================================================
           MAIN CONTAINER: SIDEBAR + CONTENT AREA
       ========================================================================= */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* SIDEBAR NAVIGATION */}
+      <div className="flex-1 flex w-full relative">
+        {/* Mobile Sidebar Backdrop */}
+        {isSidebarOpen && (
+          <div
+            onClick={() => setIsSidebarOpen(false)}
+            className="fixed inset-0 top-[70px] bg-slate-900/40 backdrop-blur-xs z-20 lg:hidden"
+          />
+        )}
+
+        {/* SIDEBAR NAVIGATION - STICKY */}
         <aside
-          className={`fixed inset-y-0 left-0 top-[70px] z-30 w-64 bg-white border-r border-slate-200/80 p-5 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 overflow-y-auto ${
-            isSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
+          className={`fixed lg:sticky top-[70px] left-0 z-30 w-64 h-[calc(100vh-70px)] bg-white border-r border-slate-200/80 p-5 flex flex-col justify-between transition-transform duration-300 ease-in-out shrink-0 overflow-y-auto ${
+            isSidebarOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0"
           }`}
         >
           <div>
@@ -434,7 +443,6 @@ function AdminDashboardPage() {
                 },
                 { id: "courses", label: "Course Catalog", icon: BookOpen },
                 { id: "faqs", label: "Knowledgebase FAQs", icon: HelpCircle },
-                { id: "settings", label: "Security & SMTP", icon: Shield },
               ].map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
@@ -469,20 +477,6 @@ function AdminDashboardPage() {
               })}
             </nav>
 
-            {/* Action CTA Button in Sidebar */}
-            <div className="mt-8">
-              <button
-                onClick={() => {
-                  setActiveTab("enquiries");
-                  setIsSidebarOpen(false);
-                }}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all"
-              >
-                <Plus className="size-4" />
-                <span>+ View All Enquiries</span>
-              </button>
-            </div>
-
             {/* Category / Status Filter */}
             <div className="mt-8 pt-6 border-t border-slate-100">
               <span className="text-[11px] font-black uppercase tracking-wider text-slate-400 block mb-3">
@@ -514,7 +508,7 @@ function AdminDashboardPage() {
         {/* =========================================================================
             MAIN DASHBOARD CONTENT AREA
         ========================================================================= */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
           {/* TOP ANNOUNCEMENT BANNER */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs mb-7">
             <div className="flex items-center gap-3">
@@ -579,7 +573,6 @@ function AdminDashboardPage() {
           {activeTab === "enquiries" && <ManageEnquiriesTab />}
           {activeTab === "courses" && <ManageCoursesTab />}
           {activeTab === "faqs" && <ManageFaqsTab />}
-          {activeTab === "settings" && <ManageSettingsTab session={session} />}
         </main>
       </div>
     </div>
@@ -1768,6 +1761,34 @@ function ManageCoursesTab() {
     }
   };
 
+  const [isSyncingCourses, setIsSyncingCourses] = useState(false);
+
+  const handleSyncAllCourses = async () => {
+    if (
+      !window.confirm(
+        "Upload and store all 8 official courses (with full syllabus, highlights, learning outcomes, FAQs and pricing) into your Firebase Firestore 'courses' database collection?",
+      )
+    ) {
+      return;
+    }
+    setIsSyncingCourses(true);
+    try {
+      const count = await seedAllCoursesToFirebase();
+      setFeedback({
+        type: "success",
+        text: `Successfully synced and stored all ${count} complete course programs into Firebase Firestore!`,
+      });
+    } catch (err: any) {
+      setFeedback({
+        type: "error",
+        text: err?.message || "Failed to sync courses to Firestore.",
+      });
+    } finally {
+      setIsSyncingCourses(false);
+      setTimeout(() => setFeedback(null), 5000);
+    }
+  };
+
   // Dynamically calculate category statistics strictly according to the actual courses present
   const { availableCategories, categoryStats } = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -1860,6 +1881,16 @@ function ManageCoursesTab() {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              onClick={handleSyncAllCourses}
+              disabled={isSyncingCourses}
+              className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl border border-slate-200 transition-colors cursor-pointer disabled:opacity-60"
+              title="Push and store all 8 official courses with full syllabus to Firestore database"
+            >
+              <RefreshCw className={`size-3.5 ${isSyncingCourses ? "animate-spin" : ""}`} />
+              <span>{isSyncingCourses ? "Syncing to Cloud..." : "Sync All 8 Courses to Cloud"}</span>
+            </button>
+
             <button
               onClick={() => handleOpenAddModal()}
               className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white text-xs font-black flex items-center gap-1.5 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 hover:opacity-95 transition-opacity cursor-pointer"

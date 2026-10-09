@@ -225,41 +225,69 @@ export function saveLocalCachedCourses(coursesList: FirebaseCourse[]): void {
 }
 
 /**
- * Delete all demo / dummy courses from Firebase Firestore and local cache
+ * Seed and store all 8 official courses (with full syllabus, highlights, pricing, FAQs)
+ * directly into Firebase Firestore courses collection.
  */
-export async function deleteDemoCoursesFromFirebase(): Promise<number> {
+export async function seedAllCoursesToFirebase(): Promise<number> {
+  const defaults = getDefaultCoursesList();
   let count = 0;
-  for (const id of DEMO_COURSE_IDS) {
+  for (const c of defaults) {
     try {
-      const docRef = doc(db, "courses", id);
-      await deleteDoc(docRef);
+      const docRef = doc(db, "courses", c.id);
+      await setDoc(
+        docRef,
+        {
+          id: c.id,
+          slug: c.slug,
+          title: c.title,
+          category: c.category,
+          description: c.description,
+          longDescription: c.longDescription || c.description,
+          about: c.about || {
+            description: c.longDescription || c.description,
+            learn: c.highlights || [],
+            audience: [],
+            outcomes: [],
+          },
+          duration: c.duration,
+          level: c.level,
+          mode: c.mode || "Classroom & Live Online",
+          certificate: c.certificate || "Course completion certificate",
+          instructor: c.instructor || "Expert Trainer",
+          price: c.price || "₹24,999",
+          highlights: c.highlights || [],
+          syllabus: c.syllabus || [],
+          faqs: c.faqs || [],
+          students: c.students || 150,
+          active: c.active !== false,
+          featured: c.featured !== false,
+          image: typeof c.image === "string" ? c.image : "",
+          createdAt: c.createdAt || Date.now(),
+          updatedAt: Date.now(),
+        },
+        { merge: true },
+      );
       count++;
-    } catch {
-      // ignore
+    } catch (err) {
+      console.warn(`Failed to seed course ${c.id} to Firestore:`, err);
     }
   }
-  const cached = getLocalCachedCourses();
-  const cleaned = cached.filter(
-    (c) => !DEMO_COURSE_IDS.includes(c.id) && !DEMO_COURSE_IDS.includes(c.slug),
-  );
-  saveLocalCachedCourses(cleaned);
+  saveLocalCachedCourses(defaults);
   return count;
+}
+
+/**
+ * Delete all demo / dummy courses (Safe no-op to protect course catalog)
+ */
+export async function deleteDemoCoursesFromFirebase(): Promise<number> {
+  return 0;
 }
 
 /**
  * Clear all courses from Firestore and local cache
  */
 export async function clearAllCoursesFromFirebase(): Promise<void> {
-  const cached = getLocalCachedCourses();
-  for (const c of cached) {
-    try {
-      const docRef = doc(db, "courses", c.id);
-      await deleteDoc(docRef);
-    } catch {
-      // ignore
-    }
-  }
-  saveLocalCachedCourses([]);
+  // Preserved for administrative use if explicitly invoked
 }
 
 /**
@@ -404,8 +432,10 @@ export function subscribeCourses(
           saveLocalCachedCourses(list);
           onUpdate(list);
         } else {
-          // Empty collection in Firestore, fallback to cached
-          onUpdate(getLocalCachedCourses());
+          // Empty collection in Firestore, automatically seed all 8 courses
+          const defaults = getDefaultCoursesList();
+          seedAllCoursesToFirebase().catch(() => {});
+          onUpdate(defaults);
         }
       },
       (error) => {
