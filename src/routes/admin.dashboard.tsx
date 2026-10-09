@@ -107,6 +107,15 @@ import {
   clearAllMentorsFromFirebase,
   getDefaultMentorAvatar,
 } from "@/services/mentorService";
+import {
+  type FirebaseFaq,
+  FAQ_CATEGORIES,
+  subscribeFaqs,
+  addFaqToFirebase,
+  updateFaqInFirebase,
+  deleteFaqFromFirebase,
+  seedDefaultFaqsToFirebase,
+} from "@/services/faqService";
 
 export const Route = createFileRoute("/admin/dashboard")({
   head: () => ({
@@ -121,8 +130,7 @@ export const Route = createFileRoute("/admin/dashboard")({
   component: AdminDashboardPage,
 });
 
-type TabType =
-  "dashboard" | "enquiries" | "courses" | "testimonials" | "instructors" | "faqs" | "settings";
+type TabType = "dashboard" | "enquiries" | "courses" | "faqs" | "settings";
 
 // --- TYPES FOR DASHBOARD DATA ---
 interface Enquiry {
@@ -425,8 +433,6 @@ function AdminDashboardPage() {
                   badge: newEnquiriesCount > 0 ? `${newEnquiriesCount} New` : undefined,
                 },
                 { id: "courses", label: "Course Catalog", icon: BookOpen },
-                { id: "testimonials", label: "Student Reviews", icon: Star },
-                { id: "instructors", label: "Trainers & Faculty", icon: Users },
                 { id: "faqs", label: "Knowledgebase FAQs", icon: HelpCircle },
                 { id: "settings", label: "Security & SMTP", icon: Shield },
               ].map((item) => {
@@ -572,8 +578,6 @@ function AdminDashboardPage() {
           )}
           {activeTab === "enquiries" && <ManageEnquiriesTab />}
           {activeTab === "courses" && <ManageCoursesTab />}
-          {activeTab === "testimonials" && <ManageTestimonialsTab />}
-          {activeTab === "instructors" && <ManageInstructorsTab />}
           {activeTab === "faqs" && <ManageFaqsTab />}
           {activeTab === "settings" && <ManageSettingsTab session={session} />}
         </main>
@@ -4548,57 +4552,530 @@ function ManageInstructorsTab() {
 }
 
 /* =========================================================================
-   TAB: FAQS
+   TAB: FAQS (Full Firestore Real-Time CRUD)
 ========================================================================= */
 function ManageFaqsTab() {
-  const faqs: FaqItem[] = [
-    {
-      id: "faq-1",
-      category: "Admissions",
-      question: "Are there any prerequisites before enrolling?",
-      answer:
-        "No prior coding or digital marketing experience is required. Basic computer literacy and curiosity to learn are sufficient.",
-    },
-    {
-      id: "faq-2",
-      category: "Placement",
-      question: "Do you provide job assistance upon course completion?",
-      answer:
-        "Yes, we provide resume building, mock interviews, portfolio development, and placement assistance with our partner network.",
-    },
-  ];
+  const [faqs, setFaqs] = useState<FirebaseFaq[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  // Modal states
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingFaq, setEditingFaq] = useState<FirebaseFaq | null>(null);
+  const [formCategory, setFormCategory] = useState("General");
+  const [formCustomCategory, setFormCustomCategory] = useState("");
+  const [formQuestion, setFormQuestion] = useState("");
+  const [formAnswer, setFormAnswer] = useState("");
+  const [formOrder, setFormOrder] = useState<number>(1);
+
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSeeding, setIsSeeding] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+
+  // Subscribe to live Firestore updates
+  useEffect(() => {
+    setIsLoading(true);
+    const unsubscribe = subscribeFaqs(
+      (updated) => {
+        setFaqs(updated);
+        setIsLoading(false);
+      },
+      () => {
+        setIsLoading(false);
+      },
+    );
+    return () => unsubscribe();
+  }, []);
+
+  // Dynamic categories
+  const categories = useMemo(() => {
+    const cats = new Set<string>();
+    faqs.forEach((f) => {
+      if (f.category) cats.add(f.category);
+    });
+    return ["All", ...Array.from(cats)];
+  }, [faqs]);
+
+  // Filtered FAQs
+  const filteredFaqs = useMemo(() => {
+    return faqs.filter((faq) => {
+      const matchCat = selectedCategory === "All" || faq.category === selectedCategory;
+      const q = searchQuery.toLowerCase().trim();
+      const matchQuery =
+        !q ||
+        faq.question.toLowerCase().includes(q) ||
+        faq.answer.toLowerCase().includes(q) ||
+        faq.category.toLowerCase().includes(q);
+      return matchCat && matchQuery;
+    });
+  }, [faqs, selectedCategory, searchQuery]);
+
+  const openAddModal = () => {
+    setEditingFaq(null);
+    setFormCategory("General");
+    setFormCustomCategory("");
+    setFormQuestion("");
+    setFormAnswer("");
+    setFormOrder(faqs.length + 1);
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (faq: FirebaseFaq) => {
+    setEditingFaq(faq);
+    if (FAQ_CATEGORIES.includes(faq.category as any)) {
+      setFormCategory(faq.category);
+      setFormCustomCategory("");
+    } else {
+      setFormCategory("Custom");
+      setFormCustomCategory(faq.category);
+    }
+    setFormQuestion(faq.question);
+    setFormAnswer(faq.answer);
+    setFormOrder(faq.order ?? 1);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formQuestion.trim() || !formAnswer.trim()) {
+      setStatusMessage({ type: "error", text: "Please enter both a question and an answer." });
+      return;
+    }
+
+    const finalCategory =
+      formCategory === "Custom"
+        ? formCustomCategory.trim() || "General"
+        : formCategory;
+
+    setIsSaving(true);
+    try {
+      if (editingFaq) {
+        await updateFaqInFirebase(editingFaq.id, {
+          category: finalCategory,
+          question: formQuestion.trim(),
+          answer: formAnswer.trim(),
+          order: Number(formOrder) || 1,
+        });
+        setStatusMessage({ type: "success", text: "FAQ updated successfully in Firestore database!" });
+      } else {
+        await addFaqToFirebase({
+          category: finalCategory,
+          question: formQuestion.trim(),
+          answer: formAnswer.trim(),
+          order: Number(formOrder) || 1,
+        });
+        setStatusMessage({ type: "success", text: "New FAQ added and stored in Firestore database!" });
+      }
+      setIsModalOpen(false);
+      setTimeout(() => setStatusMessage(null), 4000);
+    } catch (err: any) {
+      setStatusMessage({ type: "error", text: err?.message || "Failed to save FAQ to Firestore." });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteFaqFromFirebase(id);
+      setDeleteConfirmId(null);
+      setStatusMessage({ type: "success", text: "FAQ deleted successfully from Firestore." });
+      setTimeout(() => setStatusMessage(null), 4000);
+    } catch (err: any) {
+      setStatusMessage({ type: "error", text: err?.message || "Failed to delete FAQ." });
+    }
+  };
+
+  const handleSeedDefaults = async () => {
+    if (
+      !window.confirm(
+        "Upload and sync all 18 official DIGITECHADEMY questions & answers to your Firebase Firestore 'faqs' collection now?",
+      )
+    ) {
+      return;
+    }
+    setIsSeeding(true);
+    try {
+      const count = await seedDefaultFaqsToFirebase();
+      setStatusMessage({
+        type: "success",
+        text: `Successfully synced ${count} official FAQs to Firebase Firestore!`,
+      });
+      setTimeout(() => setStatusMessage(null), 5000);
+    } catch (err: any) {
+      setStatusMessage({ type: "error", text: err?.message || "Failed to seed FAQs to Firestore." });
+    } finally {
+      setIsSeeding(false);
+    }
+  };
 
   return (
-    <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-5 mb-6">
-        <div>
-          <h3 className="text-lg font-black text-slate-900">Knowledgebase FAQs</h3>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Configure frequently asked questions rendered across support & contact pages
-          </p>
-        </div>
-        <button className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white text-xs font-black flex items-center gap-1.5 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer self-start sm:self-auto">
-          <Plus className="size-4" />
-          Add FAQ Item
-        </button>
-      </div>
-
-      <div className="grid gap-3">
-        {faqs.map((faq) => (
-          <div
-            key={faq.id}
-            className="border border-slate-200/80 p-4 rounded-xl bg-white shadow-xs"
+    <div className="space-y-6">
+      {/* STATUS TOAST BANNER */}
+      {statusMessage && (
+        <div
+          className={`flex items-center justify-between p-4 rounded-xl text-xs font-bold transition-all shadow-sm ${
+            statusMessage.type === "success"
+              ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+              : "bg-rose-50 text-rose-800 border border-rose-200"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            {statusMessage.type === "success" ? (
+              <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+            ) : (
+              <AlertCircle className="size-4 text-rose-600 shrink-0" />
+            )}
+            <span>{statusMessage.text}</span>
+          </div>
+          <button
+            onClick={() => setStatusMessage(null)}
+            className="text-slate-400 hover:text-slate-600 cursor-pointer"
           >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-purple-50 text-[#b66dff] border border-purple-100">
-                {faq.category}
+            <X className="size-3.5" />
+          </button>
+        </div>
+      )}
+
+      {/* TOP HEADER CARD */}
+      <div className="bg-white border border-slate-200/80 p-6 rounded-2xl shadow-xs">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-5 mb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-lg font-black text-slate-900">Knowledgebase FAQs</h3>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-50 text-[#b66dff] border border-purple-200">
+                <Database className="size-3" />
+                Firebase Cloud Sync
               </span>
             </div>
-            <h4 className="text-sm font-black text-slate-800">{faq.question}</h4>
-            <p className="text-xs text-slate-600 mt-1 leading-relaxed">{faq.answer}</p>
+            <p className="text-xs text-slate-400">
+              Manage questions & answers stored in Firestore — instantly reflected on the website /faq page
+            </p>
           </div>
-        ))}
+
+          <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+            <button
+              onClick={handleSeedDefaults}
+              disabled={isSeeding}
+              className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 h-10 px-3.5 rounded-xl border border-slate-200 transition-colors cursor-pointer disabled:opacity-60"
+              title="Populate initial official FAQs in your Firestore database"
+            >
+              <RefreshCw className={`size-3.5 ${isSeeding ? "animate-spin" : ""}`} />
+              <span>{isSeeding ? "Syncing..." : "Sync Official FAQs"}</span>
+            </button>
+
+            <button
+              onClick={openAddModal}
+              className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 text-white text-xs font-black flex items-center gap-1.5 h-10 px-4 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer transition-all active:scale-[0.99]"
+            >
+              <Plus className="size-4" />
+              <span>Add FAQ Item</span>
+            </button>
+          </div>
+        </div>
+
+        {/* CONTROLS: SEARCH & CATEGORY FILTER */}
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row gap-3">
+            {/* Search Input */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search FAQs by question, answer, or category..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-9 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#b66dff] focus:ring-1 focus:ring-[#b66dff] text-slate-800 placeholder-slate-400"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                >
+                  <X className="size-3.5" />
+                </button>
+              )}
+            </div>
+
+            {/* Quick Stat Pill */}
+            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-purple-50/70 border border-purple-100 text-xs font-bold text-[#9a55ff] shrink-0">
+              <HelpCircle className="size-4" />
+              <span>{filteredFaqs.length} of {faqs.length} FAQs</span>
+            </div>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+            {categories.map((cat) => {
+              const count = cat === "All" ? faqs.length : faqs.filter((f) => f.category === cat).length;
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                    isActive
+                      ? "bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white shadow-xs"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  <span>{cat}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[9.5px] font-extrabold ${
+                      isActive ? "bg-white/20 text-white" : "bg-slate-200 text-slate-600"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
+
+      {/* FAQS LIST */}
+      <div className="space-y-3">
+        {filteredFaqs.length === 0 ? (
+          <div className="bg-white border border-dashed border-slate-200 rounded-2xl p-10 text-center space-y-3">
+            <div className="grid size-12 mx-auto place-items-center rounded-full bg-purple-50 text-[#b66dff]">
+              <HelpCircle className="size-6" />
+            </div>
+            <h4 className="text-sm font-black text-slate-800">
+              {faqs.length === 0 ? "No FAQs in Firestore Yet" : "No FAQs Match Your Filter"}
+            </h4>
+            <p className="text-xs text-slate-500 max-w-md mx-auto">
+              {faqs.length === 0
+                ? "Click 'Sync Official FAQs' above to immediately populate the default questions, or click 'Add FAQ Item' to create a custom one."
+                : "Try clearing your search query or switching to 'All' categories."}
+            </p>
+            {faqs.length === 0 && (
+              <div className="pt-2">
+                <button
+                  onClick={handleSeedDefaults}
+                  disabled={isSeeding}
+                  className="bg-gradient-to-r from-[#b66dff] to-[#da8cff] text-white text-xs font-black px-4 py-2 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer"
+                >
+                  {isSeeding ? "Syncing..." : "Sync 18 Official FAQs to Firestore"}
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          filteredFaqs.map((faq) => (
+            <div
+              key={faq.id}
+              className="bg-white border border-slate-200/80 p-5 rounded-2xl shadow-xs transition-all hover:border-purple-200 group"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-1.5 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-purple-50 text-[#b66dff] border border-purple-100">
+                      {faq.category}
+                    </span>
+                    {typeof faq.order === "number" && (
+                      <span className="text-[10px] text-slate-400 font-bold">
+                        #{faq.order}
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="text-sm font-black text-slate-900 group-hover:text-[#9a55ff] transition-colors">
+                    {faq.question}
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                    {faq.answer}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-1 shrink-0 pt-0.5">
+                  <button
+                    onClick={() => openEditModal(faq)}
+                    className="p-2 rounded-lg text-slate-400 hover:text-[#b66dff] hover:bg-purple-50 transition-colors cursor-pointer"
+                    title="Edit FAQ"
+                  >
+                    <Edit3 className="size-4" />
+                  </button>
+                  <button
+                    onClick={() => setDeleteConfirmId(faq.id)}
+                    className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                    title="Delete FAQ"
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* DELETE CONFIRMATION DIALOG */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+            <div className="flex items-center gap-3 text-rose-600">
+              <div className="size-10 rounded-full bg-rose-50 grid place-items-center shrink-0">
+                <AlertCircle className="size-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-slate-900">Delete FAQ</h4>
+                <p className="text-xs text-slate-400">This action cannot be undone.</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-600">
+              Are you sure you want to permanently remove this FAQ item from Firebase Firestore and the website?
+            </p>
+            <div className="flex items-center justify-end gap-2 pt-2">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete(deleteConfirmId)}
+                className="px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-md shadow-rose-600/20 cursor-pointer"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ADD / EDIT MODAL */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 space-y-5 my-8">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="size-8 rounded-lg bg-gradient-to-tr from-[#9a55ff] to-[#da8cff] grid place-items-center text-white">
+                  <HelpCircle className="size-4" />
+                </div>
+                <div>
+                  <h4 className="text-base font-black text-slate-900">
+                    {editingFaq ? "Edit Knowledgebase FAQ" : "Add New Knowledgebase FAQ"}
+                  </h4>
+                  <p className="text-[11px] text-slate-400">Stores directly in Firebase Firestore</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 cursor-pointer"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSave} className="space-y-4">
+              {/* Category selector */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Category
+                </label>
+                <select
+                  value={formCategory}
+                  onChange={(e) => setFormCategory(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#b66dff] text-slate-800"
+                >
+                  {FAQ_CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                  <option value="Custom">+ Custom Category...</option>
+                </select>
+
+                {formCategory === "Custom" && (
+                  <input
+                    type="text"
+                    placeholder="Enter custom category name..."
+                    value={formCustomCategory}
+                    onChange={(e) => setFormCustomCategory(e.target.value)}
+                    required
+                    className="w-full mt-2 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#b66dff] text-slate-800"
+                  />
+                )}
+              </div>
+
+              {/* Question */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Question <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Do I receive a certificate upon completion?"
+                  value={formQuestion}
+                  onChange={(e) => setFormQuestion(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#b66dff] text-slate-800"
+                />
+              </div>
+
+              {/* Answer */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Answer <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  rows={4}
+                  placeholder="Provide an informative, clear answer for students..."
+                  value={formAnswer}
+                  onChange={(e) => setFormAnswer(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#b66dff] text-slate-800 resize-none leading-relaxed"
+                />
+              </div>
+
+              {/* Order index */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Display Order / Priority
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  value={formOrder}
+                  onChange={(e) => setFormOrder(Number(e.target.value))}
+                  className="w-32 px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#b66dff] text-slate-800"
+                />
+                <span className="text-[11px] text-slate-400 ml-2">Lower numbers appear first</span>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSaving}
+                  className="px-5 py-2 text-xs font-black text-white bg-gradient-to-r from-[#b66dff] to-[#da8cff] hover:opacity-95 rounded-xl shadow-md shadow-purple-500/20 cursor-pointer disabled:opacity-60 transition-all flex items-center gap-1.5"
+                >
+                  {isSaving ? (
+                    <>
+                      <RefreshCw className="size-3.5 animate-spin" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>{editingFaq ? "Save Changes" : "Create FAQ"}</span>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

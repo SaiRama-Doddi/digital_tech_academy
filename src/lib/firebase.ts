@@ -6,22 +6,22 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey:
     (import.meta.env["VITE_FIREBASE_API_KEY"] as string | undefined) ||
-    "AIzaSyBtxW60E2HuQ7W9ceklKCNabUt-JRP4RVk",
+    "AIzaSyDlTnbqsBrLepfI_JWPkjLFeuNEo0oW-ik",
   authDomain:
     (import.meta.env["VITE_FIREBASE_AUTH_DOMAIN"] as string | undefined) ||
-    "digital-tech-dd790.firebaseapp.com",
+    "digital-and-cyber.firebaseapp.com",
   projectId:
-    (import.meta.env["VITE_FIREBASE_PROJECT_ID"] as string | undefined) || "digital-tech-dd790",
+    (import.meta.env["VITE_FIREBASE_PROJECT_ID"] as string | undefined) || "digital-and-cyber",
   storageBucket:
     (import.meta.env["VITE_FIREBASE_STORAGE_BUCKET"] as string | undefined) ||
-    "digital-tech-dd790.firebasestorage.app",
+    "digital-and-cyber.firebasestorage.app",
   messagingSenderId:
-    (import.meta.env["VITE_FIREBASE_MESSAGING_SENDER_ID"] as string | undefined) || "1034712213292",
+    (import.meta.env["VITE_FIREBASE_MESSAGING_SENDER_ID"] as string | undefined) || "298584402851",
   appId:
     (import.meta.env["VITE_FIREBASE_APP_ID"] as string | undefined) ||
-    "1:1034712213292:web:b5c17f24a83f4ddde8ee89",
+    "1:298584402851:web:54301f5391d10f39e60816",
   measurementId:
-    (import.meta.env["VITE_FIREBASE_MEASUREMENT_ID"] as string | undefined) || "G-4FKFHYL073",
+    (import.meta.env["VITE_FIREBASE_MEASUREMENT_ID"] as string | undefined) || "G-EHD33LVK05",
 };
 
 // Initialize Firebase App (prevent duplicate initialization during HMR / SSR)

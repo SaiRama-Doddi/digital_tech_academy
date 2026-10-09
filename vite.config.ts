@@ -34,9 +34,9 @@ export default defineConfig({
       prerender: { enabled: false },
       server: { entry: "src/server.ts" },
     }),
-    nitro({
-      preset: process.env.VERCEL ? "vercel" : undefined,
-    }),
+    nitro(
+      process.env["VERCEL"] ? { preset: "vercel" } : {},
+    ),
     viteReact(),
   ],
 });

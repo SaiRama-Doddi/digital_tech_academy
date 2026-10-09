@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -18,9 +18,13 @@ import {
 
 import { PageHero } from "@/components/site/PageHero";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { faqCategories } from "@/data/content";
 import { site, whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import {
+  subscribeFaqs,
+  getLocalCachedFaqs,
+  type FirebaseFaq,
+} from "@/services/faqService";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -78,31 +82,39 @@ function FaqPage() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({
     "Who can join Digitechademy?": true,
   });
+  const [faqList, setFaqList] = useState<FirebaseFaq[]>(() => getLocalCachedFaqs());
 
-  // Flattened all items with their respective category for universal search & filter
-  const allFaqItems = useMemo(() => {
-    return faqCategories.flatMap((cat) =>
-      cat.items.map((item) => ({
-        ...item,
-        category: cat.title,
-      })),
-    );
+  // Subscribe to real-time Firestore FAQ updates
+  useEffect(() => {
+    const unsubscribe = subscribeFaqs((updated) => {
+      setFaqList(updated);
+    });
+    return () => unsubscribe();
   }, []);
+
+  // Compute dynamic categories present in the database
+  const categories = useMemo(() => {
+    const cats = new Set<string>();
+    faqList.forEach((item) => {
+      if (item.category) cats.add(item.category);
+    });
+    return ["All", ...Array.from(cats)];
+  }, [faqList]);
 
   // Filtered list based on selected category
   const filteredItems = useMemo(() => {
-    if (activeCategory === "All") return allFaqItems;
-    return allFaqItems.filter((item) => item.category === activeCategory);
-  }, [allFaqItems, activeCategory]);
+    if (activeCategory === "All") return faqList;
+    return faqList.filter((item) => item.category === activeCategory);
+  }, [faqList, activeCategory]);
 
   // Compute count per category
   const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = { All: allFaqItems.length };
-    faqCategories.forEach((cat) => {
-      counts[cat.title] = cat.items.length;
+    const counts: Record<string, number> = { All: faqList.length };
+    faqList.forEach((item) => {
+      counts[item.category] = (counts[item.category] || 0) + 1;
     });
     return counts;
-  }, [allFaqItems]);
+  }, [faqList]);
 
   const toggleItem = (question: string) => {
     setOpenItems((prev) => ({
@@ -139,7 +151,7 @@ function FaqPage() {
           {/* ========================================================================= */}
           <div className="max-w-6xl mx-auto mb-5 px-2 sm:px-0" data-reveal>
             <div className="flex items-center justify-start md:justify-center gap-1.5 sm:gap-2 p-1 overflow-x-auto no-scrollbar whitespace-nowrap">
-              {["All", ...faqCategories.map((c) => c.title)].map((cat) => {
+              {categories.map((cat) => {
                 const isActive = activeCategory === cat;
                 const IconComp = categoryIcons[cat] || HelpCircle;
                 const count = categoryCounts[cat] || 0;
