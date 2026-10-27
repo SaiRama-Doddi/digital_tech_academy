@@ -12,6 +12,7 @@ import {
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseDemoSidebar } from "@/components/site/CourseDemoSidebar";
+import { CourseRichDescription } from "@/components/site/CourseRichDescription";
 import {
   Award,
   BookOpen,
@@ -173,6 +174,22 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
     testimonials: [],
     faqs: Array.isArray(fbCourse.faqs) ? fbCourse.faqs : [],
   };
+}
+
+function renderFormattedText(text?: string | null) {
+  if (!text) return null;
+  if (!text.includes("**")) return text;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="font-semibold text-slate-900">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
 }
 
 function CourseDetailPage() {
@@ -390,36 +407,38 @@ function CourseDetailPage() {
             <div
               className={cn(
                 "flex-1 min-w-0 transition-all duration-300",
-                isHeroScrolled ? "space-y-0.5" : "space-y-2",
+                isHeroScrolled ? "space-y-1" : "space-y-2 sm:space-y-2.5",
               )}
             >
               {/* Breadcrumb Row */}
               <nav
                 aria-label="Breadcrumb"
                 className={cn(
-                  "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300",
+                  "flex items-center gap-1.5 text-slate-500 font-medium transition-all duration-300 flex-wrap",
                   isHeroScrolled ? "text-[10px] sm:text-[11px]" : "text-xs sm:text-sm",
                 )}
               >
-                <Link to="/" className="hover:text-blue-600 transition-colors">
+                <Link to="/" className="hover:text-blue-600 transition-colors shrink-0">
                   Home
                 </Link>
-                <span className="text-slate-400">»</span>
-                <Link to="/courses" className="hover:text-blue-600 transition-colors">
+                <span className="text-slate-400 shrink-0">»</span>
+                <Link to="/courses" className="hover:text-blue-600 transition-colors shrink-0">
                   Courses
                 </Link>
-                <span className="text-slate-400">»</span>
-                <span className="text-slate-900 font-bold line-clamp-1">{displayTitle}</span>
+                <span className="text-slate-400 shrink-0">»</span>
+                <span className="text-slate-700 font-semibold truncate max-w-[240px] sm:max-w-md lg:max-w-xl">
+                  {course.title || displayTitle}
+                </span>
               </nav>
 
               {/* Course Main Title & Subtitle */}
-              <div className="pt-0">
+              <div className="pt-0.5">
                 <h1
                   className={cn(
-                    "font-black tracking-tight text-slate-950 leading-tight transition-all duration-300",
+                    "font-black tracking-tight text-slate-950 leading-snug sm:leading-tight transition-all duration-300 break-words [text-wrap:balance]",
                     isHeroScrolled
-                      ? "text-sm sm:text-base md:text-lg sm:whitespace-nowrap"
-                      : "text-xl sm:text-2xl lg:text-3xl sm:whitespace-nowrap",
+                      ? "text-sm sm:text-base md:text-lg line-clamp-1"
+                      : "text-xl sm:text-2xl lg:text-[1.85rem] xl:text-3xl",
                   )}
                 >
                   {displayTitle}
@@ -429,12 +448,12 @@ function CourseDetailPage() {
                     "leading-relaxed font-normal w-full max-w-4xl transition-all duration-300",
                     isHeroScrolled
                       ? "text-[10.5px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5"
-                      : "text-xs sm:text-sm text-slate-600 mt-1.5",
+                      : "text-xs sm:text-sm text-slate-600 mt-2 sm:mt-2.5",
                   )}
                 >
                   {course.category === "Cyber Security"
                     ? "Comprehensive practical training for mastering essential Cyber Security skills remotely."
-                    : course.heroDescription || course.description}
+                    : renderFormattedText(course.heroDescription || course.description)}
                 </p>
               </div>
 
@@ -489,15 +508,13 @@ function CourseDetailPage() {
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Opening Lead Paragraph from screenshot */}
                   <div className="bg-white rounded-2xl border border-slate-300 p-6 sm:p-7 shadow-xs space-y-4">
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-justify">
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-left">
                       Our online {course.title} training and placement program is fully job-oriented
                       and includes real-time project work for hands-on learning. The{" "}
                       <strong className="text-navy">{displayTitle} Course</strong> is developed by
                       certified experts to deliver industry-ready skills.
                     </p>
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
-                      {course.longDescription || course.description}
-                    </p>
+                    <CourseRichDescription content={course.longDescription || course.description} />
                   </div>
 
                   {/* Key Highlights / Program Features */}
@@ -747,9 +764,9 @@ function CourseDetailPage() {
                     <h3 className="text-base sm:text-lg font-black text-navy">
                       Program Overview &amp; Training Methodology
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
-                      {course.practicalLearning?.description || course.longDescription}
-                    </p>
+                    <CourseRichDescription
+                      content={course.practicalLearning?.description || course.longDescription}
+                    />
                   </div>
 
                   {/* Practical Labs & Portfolio Projects */}
