@@ -356,30 +356,28 @@ export function HeroCarousel({ onSelectDomain }: HeroCarouselProps) {
       />
 
       {/* ========================================================================= */}
-      {/* DESKTOP SIDE ARROWS (Visible on Large Screens)                            */}
-      {/* ========================================================================= */}
-      <button
-        type="button"
-        onClick={prevSlide}
-        aria-label="Previous Slide"
-        className="hidden lg:grid absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-40 size-11 xl:size-12 place-items-center rounded-full bg-slate-900/80 hover:bg-blue-600/80 border border-slate-700/80 hover:border-cyan-400 text-slate-300 hover:text-white shadow-[0_0_20px_rgba(0,0,0,0.6)] backdrop-blur-xl transition-all active:scale-90 cursor-pointer"
-      >
-        <ChevronLeft className="size-5 xl:size-6" />
-      </button>
-
-      <button
-        type="button"
-        onClick={nextSlide}
-        aria-label="Next Slide"
-        className="hidden lg:grid absolute right-4 xl:right-6 top-1/2 -translate-y-1/2 z-40 size-11 xl:size-12 place-items-center rounded-full bg-slate-900/80 hover:bg-blue-600/80 border border-slate-700/80 hover:border-cyan-400 text-slate-300 hover:text-white shadow-[0_0_20px_rgba(0,0,0,0.6)] backdrop-blur-xl transition-all active:scale-90 cursor-pointer"
-      >
-        <ChevronRight className="size-5 xl:size-6" />
-      </button>
-
-      {/* ========================================================================= */}
       {/* MAIN CAROUSEL CONTENT CONTAINER                                           */}
       {/* ========================================================================= */}
-      <div className="container-site relative z-10 w-full pt-1 sm:pt-2 lg:pt-3 pb-3 sm:pb-5 px-4 sm:px-8 lg:px-14">
+      <div className="container-site relative z-10 w-full pt-1 sm:pt-2 lg:pt-3 pb-3 sm:pb-5 px-4 sm:px-8 lg:px-20 xl:px-24">
+        {/* DESKTOP SIDE ARROWS (Safely positioned in gutter margins, never overriding text or floating cards) */}
+        <button
+          type="button"
+          onClick={prevSlide}
+          aria-label="Previous Slide"
+          className="hidden lg:grid absolute left-2 lg:left-3 xl:left-4 top-1/2 -translate-y-1/2 z-40 size-10 xl:size-11 place-items-center rounded-full bg-slate-900/85 hover:bg-cyan-500/20 border border-slate-700/80 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 shadow-[0_0_20px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all active:scale-90 cursor-pointer"
+        >
+          <ChevronLeft className="size-5 xl:size-5.5" />
+        </button>
+
+        <button
+          type="button"
+          onClick={nextSlide}
+          aria-label="Next Slide"
+          className="hidden lg:grid absolute right-2 lg:right-3 xl:right-4 top-1/2 -translate-y-1/2 z-40 size-10 xl:size-11 place-items-center rounded-full bg-slate-900/85 hover:bg-cyan-500/20 border border-slate-700/80 hover:border-cyan-400 text-slate-300 hover:text-cyan-300 shadow-[0_0_20px_rgba(0,0,0,0.7)] backdrop-blur-xl transition-all active:scale-90 cursor-pointer"
+        >
+          <ChevronRight className="size-5 xl:size-5.5" />
+        </button>
+
         {/* Slides Track - ONLY Active Slide Rendered to Prevent Any Ghost Layer Overlap */}
         <div key={slide.id} className="relative w-full animate-in fade-in duration-500 ease-out">
           <div className="grid lg:grid-cols-12 items-center gap-6 sm:gap-8 lg:gap-6 xl:gap-12 w-full">
