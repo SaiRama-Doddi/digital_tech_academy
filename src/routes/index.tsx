@@ -445,43 +445,63 @@ function WhyDigitechademy() {
         </div>
 
         {/* Sleek Horizontal Benchmark Strip */}
+        {/* High-Impact Highlighted Benchmark Banner */}
         <div
+          id="benchmark-banner"
           data-reveal="bottom-to-up"
-          className="mt-6 rounded-2xl border border-slate-200/90 bg-gradient-to-r from-blue-50/60 via-indigo-50/40 to-sky-50/50 p-4 sm:p-5 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4"
+          className="mt-8 rounded-2xl border border-sky-400/35 bg-gradient-to-r from-[#091738] via-[#0b224e] to-[#07132e] p-4 sm:p-5 text-white shadow-xl shadow-blue-950/25 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-5"
         >
-          <div className="flex flex-wrap items-center gap-3 sm:gap-6 justify-center md:justify-start">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
-              <span className="text-xs sm:text-sm font-bold text-slate-800">
+          {/* Ambient Glow Effects */}
+          <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-blue-500/20 blur-3xl" />
+          <div className="pointer-events-none absolute -left-16 -bottom-16 size-48 rounded-full bg-emerald-500/15 blur-3xl" />
+          <div className="pointer-events-none absolute top-1/2 left-1/3 -translate-y-1/2 size-36 rounded-full bg-indigo-500/15 blur-2xl" />
+
+          {/* Highlight Badges */}
+          <div className="relative z-10 flex flex-wrap items-center gap-2 sm:gap-2.5 justify-center lg:justify-start">
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 shrink-0">
+                <CheckCircle2 className="size-3.5 stroke-[2.5]" />
+              </span>
+              <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
                 100% Hands-On Labs
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
-              <span className="text-xs sm:text-sm font-bold text-slate-800">
+
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-sky-500/25 border border-sky-400/40 text-sky-300 shrink-0">
+                <CheckCircle2 className="size-3.5 stroke-[2.5]" />
+              </span>
+              <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
                 10+ Dedicated Mentors
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
-              <span className="text-xs sm:text-sm font-bold text-slate-800">
+
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-indigo-500/25 border border-indigo-400/40 text-indigo-300 shrink-0">
+                <CheckCircle2 className="size-3.5 stroke-[2.5]" />
+              </span>
+              <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
                 Live Capstone Projects
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-blue-600 shrink-0" />
-              <span className="text-xs sm:text-sm font-bold text-slate-800">
+
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-amber-500/25 border border-amber-400/40 text-amber-300 shrink-0">
+                <CheckCircle2 className="size-3.5 stroke-[2.5]" />
+              </span>
+              <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
                 1:1 Placement Support
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto justify-center">
+          {/* Action CTAs */}
+          <div className="relative z-10 flex items-center gap-2 sm:gap-2.5 shrink-0 w-full sm:w-auto justify-center">
             <BtnLink
               to="/courses"
               variant="primary"
               size="sm"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm shadow-xs flex items-center gap-1.5"
+              className="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600 hover:from-blue-600 hover:to-sky-600 text-white font-extrabold px-3.5 sm:px-4.5 py-2 rounded-xl text-xs sm:text-sm shadow-md shadow-blue-500/30 ring-2 ring-white/20 transition-all hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 whitespace-nowrap"
             >
               <span>Explore Programs</span>
               <ArrowRight className="size-3.5" />
@@ -490,7 +510,7 @@ function WhyDigitechademy() {
               to="/request-call"
               variant="outline"
               size="sm"
-              className="border-slate-300 text-slate-800 hover:bg-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm bg-white/80"
+              className="border border-sky-400/40 bg-sky-950/60 hover:bg-sky-500 hover:text-slate-950 text-sky-200 font-bold px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm transition-all hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap"
             >
               <span>Talk to an Expert</span>
             </BtnLink>
