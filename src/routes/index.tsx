@@ -184,22 +184,8 @@ function UspTrustStrip() {
   return (
     <section className="bg-white border-y border-slate-200/80 py-4 sm:py-5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)]">
       <div className="container-site">
-        {/* Row 1: Key Credible Statistics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 lg:divide-x lg:divide-slate-200/80">
-          <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
-            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-600 border border-blue-100 shadow-xs">
-              <Users className="size-4 sm:size-5" aria-hidden="true" />
-            </span>
-            <div className="min-w-0">
-              <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
-                <CountUp value={3} suffix="k+" />
-              </p>
-              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate">
-                Learners Mentored
-              </p>
-            </div>
-          </div>
-
+        {/* Row 1: Key Credible Statistics (4 items in one line) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-6 md:divide-x md:divide-slate-200/80">
           <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
             <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-[#0C4FA8] border border-blue-100 shadow-xs">
               <Users className="size-4 sm:size-5" aria-hidden="true" />
