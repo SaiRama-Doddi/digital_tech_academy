@@ -314,7 +314,7 @@ export function HeroCarousel({ onSelectDomain }: HeroCarouselProps) {
   return (
     <section
       aria-label="Digitech Academy Hero Carousel"
-      className="relative overflow-hidden bg-white text-slate-900 select-none transition-colors duration-700 min-h-[480px] sm:min-h-[540px] lg:min-h-[580px] xl:min-h-[620px] flex flex-col justify-start pt-3 sm:pt-4 lg:pt-6 pb-6 sm:pb-8 border-b border-slate-200/80"
+      className="relative overflow-hidden bg-white text-slate-900 select-none transition-colors duration-700 flex flex-col justify-start pt-1 sm:pt-1.5 lg:pt-2 pb-2.5 sm:pb-3 border-b border-slate-200/80"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -354,7 +354,7 @@ export function HeroCarousel({ onSelectDomain }: HeroCarouselProps) {
       {/* ========================================================================= */}
       {/* MAIN CAROUSEL CONTENT CONTAINER                                           */}
       {/* ========================================================================= */}
-      <div className="container-site relative z-10 w-full pt-1 sm:pt-2 lg:pt-3 pb-3 sm:pb-5 px-4 sm:px-8 lg:px-20 xl:px-24">
+      <div className="container-site relative z-10 w-full pt-0 pb-0.5 sm:pb-1 px-4 sm:px-8 lg:px-20 xl:px-24">
         {/* DESKTOP SIDE ARROWS */}
         <button
           type="button"
@@ -376,13 +376,13 @@ export function HeroCarousel({ onSelectDomain }: HeroCarouselProps) {
 
         {/* Slides Track */}
         <div key={slide.id} className="relative w-full animate-in fade-in duration-500 ease-out">
-          <div className="grid lg:grid-cols-12 items-center gap-6 sm:gap-8 lg:gap-6 xl:gap-12 w-full">
+          <div className="grid lg:grid-cols-12 items-center gap-4 sm:gap-6 lg:gap-6 xl:gap-10 w-full">
             {/* ========================================================= */}
             {/* LEFT COLUMN: Eyebrow, Large Headline, Subtitle & CTAs     */}
             {/* ========================================================= */}
             <div className="lg:col-span-6 xl:col-span-6 w-full text-left flex flex-col justify-center min-w-0 pr-0 lg:pr-2">
               {/* Eyebrow Pill */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 sm:px-4 sm:py-1.5 shadow-xs mb-2.5 sm:mb-3 w-fit max-w-full">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 sm:px-4 sm:py-1 shadow-xs mb-2 sm:mb-2.5 w-fit max-w-full">
                 <span className="relative flex size-2 shrink-0">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#E14E2E] opacity-75" />
                   <span className="relative inline-flex size-2 rounded-full bg-[#E14E2E]" />
@@ -472,7 +472,7 @@ export function HeroCarousel({ onSelectDomain }: HeroCarouselProps) {
             {/* ========================================================= */}
             {/* RIGHT COLUMN: 3D Visual Scene & Floating Glass Cards       */}
             {/* ========================================================= */}
-            <div className="lg:col-span-6 xl:col-span-6 relative w-full flex flex-col justify-center items-center mt-3 sm:mt-6 lg:mt-0 min-h-[280px] sm:min-h-[380px] lg:min-h-[460px]">
+            <div className="lg:col-span-6 xl:col-span-6 relative w-full flex flex-col justify-center items-center mt-2 sm:mt-4 lg:mt-0">
               {/* Visual Center Wrapper */}
               <div className="relative w-full max-w-[540px] lg:max-w-none aspect-[16/10] sm:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-visible flex items-center justify-center">
                 {/* Radial Glow */}
@@ -575,7 +575,7 @@ export function HeroCarousel({ onSelectDomain }: HeroCarouselProps) {
         {/* ========================================================================= */}
         {/* CAROUSEL CONTROLS BAR (Arrows on Mobile/Tablet + Bottom Pagination Dots)  */}
         {/* ========================================================================= */}
-        <div className="relative z-30 mt-6 sm:mt-8 flex items-center justify-center gap-3">
+        <div className="relative z-30 mt-2.5 sm:mt-3.5 flex items-center justify-center gap-3">
           {/* Mobile Prev Arrow */}
           <button
             type="button"

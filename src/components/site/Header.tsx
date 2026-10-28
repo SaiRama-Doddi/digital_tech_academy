@@ -417,7 +417,7 @@ export function Header() {
       <header
         className={cn(
           "w-full px-3 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300",
-          isHomePage ? "sticky top-2.5 sm:top-3.5 z-50" : "relative my-2 sm:my-3 z-40",
+          isHomePage ? "sticky top-1 sm:top-1.5 z-50 mb-0" : "relative my-1.5 sm:my-2 z-40",
         )}
       >
         <div
@@ -453,7 +453,7 @@ export function Header() {
                       <Link
                         to={link.to}
                         className={cn(
-                          "relative inline-flex items-center gap-1.5 rounded-full font-bold text-[13px] xl:text-[13.5px] transition-all duration-200 cursor-pointer select-none px-4 xl:px-5 py-2",
+                          "relative inline-flex items-center gap-1.5 rounded-full font-bold text-[14px] transition-all duration-200 cursor-pointer select-none px-4 xl:px-5 py-2",
                           isCoursesActive
                             ? "bg-blue-600 text-white shadow-sm"
                             : "text-slate-700 hover:text-blue-600 hover:bg-slate-100/70",
@@ -501,7 +501,7 @@ export function Header() {
                                     }
                                   }}
                                   className={cn(
-                                    "relative flex items-center gap-2.5 px-3.5 py-2.5 text-[13px] rounded-xl transition-colors cursor-pointer select-none mx-1",
+                                    "relative flex items-center gap-2.5 px-3.5 py-2.5 text-[14px] rounded-xl transition-colors cursor-pointer select-none mx-1",
                                     isSelected
                                       ? "text-blue-600 font-bold bg-blue-50/80"
                                       : "text-slate-700 hover:text-blue-600 hover:bg-slate-50 font-medium",
@@ -557,7 +557,7 @@ export function Header() {
                                         }
                                       }
                                     }}
-                                    className="group/sub flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-slate-700 hover:text-blue-600 hover:bg-white hover:shadow-2xs transition-all"
+                                    className="group/sub flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[14px] text-slate-700 hover:text-blue-600 hover:bg-white hover:shadow-2xs transition-all"
                                   >
                                     <SubIcon className="size-3.5 shrink-0 text-slate-400 group-hover/sub:text-blue-600 transition-colors" />
                                     <span className="truncate flex-1 font-medium group-hover/sub:font-bold">
@@ -603,7 +603,7 @@ export function Header() {
                     key={link.to}
                     to={link.to}
                     className={cn(
-                      "relative rounded-full font-bold text-[13px] xl:text-[13.5px] transition-all duration-200 select-none px-4 xl:px-5 py-2",
+                      "relative rounded-full font-bold text-[14px] transition-all duration-200 select-none px-4 xl:px-5 py-2",
                       active
                         ? "bg-blue-600 text-white shadow-sm"
                         : "text-slate-700 hover:text-blue-600 hover:bg-slate-100/70",
@@ -630,7 +630,7 @@ export function Header() {
               {/* Primary Pill CTA Button ("Get Started →") */}
               <Link
                 to="/courses"
-                className="hidden sm:inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-[13px] xl:text-sm px-5 xl:px-6 py-2.5 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 active:scale-[0.98] transition-all cursor-pointer select-none whitespace-nowrap"
+                className="hidden sm:inline-flex items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-[14px] px-5 xl:px-6 py-2.5 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 active:scale-[0.98] transition-all cursor-pointer select-none whitespace-nowrap"
               >
                 <span>Get Started</span>
                 <ArrowRight className="size-4 text-white" />
