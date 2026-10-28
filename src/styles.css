@@ -772,6 +772,26 @@
     animation-play-state: paused;
   }
 
+  /* Smooth continuous Alumni marquee scrolling left-to-right */
+  @keyframes alumni-marquee-ltr {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-alumni-marquee {
+    animation: alumni-marquee-ltr 28s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-alumni-marquee:hover,
+  .animate-alumni-marquee:active {
+    animation-play-state: paused;
+  }
+
   /* Premium Cyber Security step transition cards for all screens */
   .cyber-step-card {
     will-change: transform, opacity, box-shadow, border-color;

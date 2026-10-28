@@ -62,6 +62,7 @@ import { StudentLearningPath } from "@/components/site/StudentLearningPath";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { HeroCarousel } from "@/components/site/HeroCarousel";
+import { AlumniWorkplaceStrip } from "@/components/site/AlumniWorkplaceStrip";
 import { practicalTraining, whoIsForAudience } from "@/data/content";
 import { courses } from "@/data/courses";
 import {
@@ -145,6 +146,9 @@ function Home() {
 
       {/* 4. USP / Trust Strip */}
       <UspTrustStrip />
+
+      {/* Where Our Alumni Work (Auto-scrolling Left to Right) */}
+      <AlumniWorkplaceStrip />
 
       {/* 5. Why Digitechademy */}
       <WhyDigitechademy />
