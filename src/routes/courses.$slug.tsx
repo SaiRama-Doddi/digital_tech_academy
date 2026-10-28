@@ -12,7 +12,11 @@ import {
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseDemoSidebar } from "@/components/site/CourseDemoSidebar";
-import { CourseRichDescription } from "@/components/site/CourseRichDescription";
+import {
+  CourseRichDescription,
+  WhoShouldAttendPoints,
+  CareerOutcomesPoints,
+} from "@/components/site/CourseRichDescription";
 import {
   Award,
   BookOpen,
@@ -31,6 +35,7 @@ import {
   Signal,
   Users,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -518,30 +523,69 @@ function CourseDetailPage() {
                   </div>
 
                   {/* Key Highlights / Program Features */}
-                  <div className="space-y-3">
-                    <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
-                      <CheckCircle2 className="size-5 text-accent shrink-0" />
-                      Key Course Features &amp; Placement Support
-                    </h3>
-                    <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-purple-200/90 bg-gradient-to-br from-purple-50/30 via-white to-indigo-50/20 p-6 sm:p-7 shadow-xs space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-purple-100">
+                      <div className="flex items-center gap-3">
+                        <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-xs shrink-0">
+                          <CheckCircle2 className="size-5" />
+                        </span>
+                        <div className="text-left">
+                          <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+                            Key Course Features &amp; Placement Support
+                          </h3>
+                          <p className="text-xs text-slate-500">
+                            Practical training pillars, platform tool access, and career mentorship
+                          </p>
+                        </div>
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200 shadow-2xs">
+                        <Sparkles className="size-3.5 text-purple-600" />
+                        <span>Included with Program</span>
+                      </span>
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2 pt-1">
                       {[
-                        "100% Job-Oriented Hands-On Practical Curriculum",
-                        "Live Interactive Online Sessions by Industry Experts",
-                        "Cloud-Based Virtual Lab Environments & Tool Access",
-                        "Real-Time Case Studies & Capstone Industry Project",
-                        "Comprehensive Resume Building & Mock Interview Sessions",
-                        "Official Authorized Course Completion Credential",
+                        {
+                          title: "Job-Oriented Curriculum",
+                          desc: "100% practical, project-based syllabus aligned with enterprise hiring benchmarks.",
+                        },
+                        {
+                          title: "Live Mentor Masterclasses",
+                          desc: "Interactive instructor-led sessions with real-time doubt resolution and drills.",
+                        },
+                        {
+                          title: "Enterprise Lab Environments",
+                          desc: "Hands-on access to live platforms, simulation dashboards, and industry tools.",
+                        },
+                        {
+                          title: "Capstone Case Studies",
+                          desc: "Build end-to-end industry portfolio projects ready for commercial client reviews.",
+                        },
+                        {
+                          title: "Interview Drills & ATS Resume",
+                          desc: "1-on-1 mock technical interviews and targeted portfolio presentation techniques.",
+                        },
+                        {
+                          title: "Authorized Certification",
+                          desc: "Accredited credential verified by certified industry instruction faculty.",
+                        },
                       ].map((item, idx) => (
                         <div
                           key={idx}
-                          className="flex items-start gap-3 rounded-xl border border-slate-300 bg-white p-3.5 shadow-xs"
+                          className="group flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-purple-100/90 bg-white hover:border-purple-400 hover:shadow-xs transition-all duration-200 text-left shadow-2xs"
                         >
-                          <span className="grid size-6 place-items-center rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold shrink-0 mt-0.5">
-                            <Check className="size-3.5 stroke-[2.5]" />
+                          <span className="grid size-7.5 place-items-center rounded-lg bg-purple-50 text-purple-600 border border-purple-200/80 font-black text-xs shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                            <Check className="size-4 stroke-[2.5]" />
                           </span>
-                          <span className="text-xs sm:text-sm text-slate-700 font-medium leading-snug">
-                            {item}
-                          </span>
+                          <div className="space-y-0.5 min-w-0 flex-1">
+                            <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -551,13 +595,22 @@ function CourseDetailPage() {
                   {((course.overview?.whatYouLearnDetailed &&
                     course.overview.whatYouLearnDetailed.length > 0) ||
                     (course.overview?.learn && course.overview.learn.length > 0)) && (
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-base sm:text-lg font-black text-navy flex items-center gap-2">
-                          <BookOpen className="size-5 text-accent shrink-0" />
-                          What You Will Learn
-                        </h3>
-                        <span className="text-xs font-bold text-slate-600">
+                    <div className="rounded-2xl border border-slate-300 bg-white p-6 sm:p-7 shadow-xs space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                        <div className="flex items-center gap-3">
+                          <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 to-navy text-white shadow-xs shrink-0">
+                            <BookOpen className="size-5" />
+                          </span>
+                          <div className="text-left">
+                            <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+                              What You Will Learn
+                            </h3>
+                            <p className="text-xs text-slate-500">
+                              Core functional competencies and platform execution skills
+                            </p>
+                          </div>
+                        </div>
+                        <span className="self-start sm:self-center text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200/80 px-3 py-1 rounded-full shadow-2xs">
                           {course.overview?.whatYouLearnDetailed?.length ||
                             course.overview?.learn?.length ||
                             0}{" "}
@@ -565,97 +618,60 @@ function CourseDetailPage() {
                         </span>
                       </div>
 
-                      {course.overview?.whatYouLearnDetailed ? (
-                        <div className="grid gap-3.5 sm:grid-cols-2">
+                      {course.overview?.whatYouLearnDetailed &&
+                      course.overview.whatYouLearnDetailed.length > 0 ? (
+                        <div className="grid gap-3.5 sm:grid-cols-2 pt-1">
                           {course.overview.whatYouLearnDetailed.map((item, idx) => (
                             <div
                               key={idx}
-                              className="rounded-2xl border border-slate-300 bg-white p-4.5 shadow-xs hover:border-indigo-500 hover:shadow-md transition-all group"
+                              className="rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white p-4 shadow-2xs hover:border-indigo-500 hover:shadow-xs transition-all group text-left"
                             >
                               <div className="flex items-center gap-2.5 mb-1.5">
-                                <span className="grid size-7 place-items-center rounded-lg bg-indigo-50 text-indigo-600 text-xs font-black shrink-0">
+                                <span className="grid size-7 place-items-center rounded-lg bg-indigo-100 text-indigo-700 text-xs font-black shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                                   {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                                 </span>
                                 <h4 className="text-xs sm:text-sm font-bold text-navy leading-tight">
                                   {item.title}
                                 </h4>
                               </div>
-                              <p className="text-xs text-slate-700 leading-relaxed pl-9">
+                              <p className="text-xs text-slate-600 leading-relaxed pl-9">
                                 {item.description}
                               </p>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <div className="bg-white border border-slate-300 rounded-2xl p-5 shadow-xs">
-                          <ul className="grid gap-2.5 sm:grid-cols-2">
-                            {(course.overview?.learn || []).map((item) => (
-                              <li
-                                key={item}
-                                className="flex gap-2.5 text-xs sm:text-sm text-slate-700 leading-snug"
-                              >
-                                <Check className="size-4 shrink-0 text-accent mt-0.5" />
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                        <div className="grid gap-3 sm:grid-cols-2 pt-1">
+                          {(course.overview?.learn || []).map((item, idx) => (
+                            <div
+                              key={item}
+                              className="flex items-start gap-3 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-white p-3.5 text-left shadow-2xs hover:border-indigo-400 transition-all"
+                            >
+                              <span className="grid size-6 place-items-center rounded-md bg-indigo-50 text-indigo-600 border border-indigo-200/70 text-[11px] font-black shrink-0 mt-0.5">
+                                {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
+                              </span>
+                              <span className="text-xs sm:text-sm text-slate-700 font-medium leading-snug">
+                                {item}
+                              </span>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
                   )}
 
-                  {/* Who Should Enroll */}
+                  {/* Who Should Attend Section */}
                   {(course.overview?.audienceDescription ||
                     (course.overview?.audience && course.overview.audience.length > 0)) && (
-                    <div className="bg-white border border-slate-300 rounded-2xl p-6 shadow-xs space-y-3">
-                      <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
-                        <Users className="size-4 text-accent shrink-0" />
-                        Who Should Attend This Training?
-                      </h3>
-                      {course.overview?.audienceDescription ? (
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                          {course.overview.audienceDescription}
-                        </p>
-                      ) : (
-                        <ul className="space-y-2">
-                          {(course.overview?.audience || []).map((item) => (
-                            <li
-                              key={item}
-                              className="flex gap-2.5 text-xs sm:text-sm text-slate-700 leading-snug"
-                            >
-                              <span className="size-2 rounded-full bg-accent shrink-0 mt-1.5" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
+                    <WhoShouldAttendPoints
+                      audience={course.overview?.audience}
+                      audienceDescription={course.overview?.audienceDescription}
+                    />
                   )}
 
-                  {/* Career Readiness & Placement Outcomes */}
+                  {/* Career Readiness & Placement Outcomes Section */}
                   {course.overview?.outcomes && course.overview.outcomes.length > 0 && (
-                    <div className="rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50/70 to-white p-6 shadow-xs space-y-3">
-                      <h3 className="text-sm font-black uppercase tracking-wider text-navy flex items-center gap-2">
-                        <Award className="size-4 text-accent shrink-0" />
-                        Career Outcomes &amp; Skills Acquired
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                        Graduates from this program gain working competence, resume-ready portfolio
-                        projects, and direct preparation for high-demand technical roles across the
-                        industry.
-                      </p>
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {(course.overview.outcomes || []).map((item, i) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
-                          >
-                            <Check className="size-3.5 text-emerald-600" />
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    <CareerOutcomesPoints outcomes={course.overview.outcomes} />
                   )}
                 </div>
               )}
