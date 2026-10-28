@@ -794,7 +794,7 @@ export function CareerOutcomesPoints({
               </div>
               <div className="w-full h-2.5 sm:h-3 rounded-full bg-slate-100 overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#3851dd] via-[#6342db] to-[#b320d7] transition-all duration-700 ease-out"
+                  className="h-full rounded-full bg-gradient-to-r from-[#0C4FA8] to-[#E14E2E] transition-all duration-700 ease-out"
                   style={{ width: `${tier.percentage}%` }}
                 />
               </div>
