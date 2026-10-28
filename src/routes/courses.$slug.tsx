@@ -17,6 +17,7 @@ import {
   WhoShouldAttendPoints,
   CareerOutcomesPoints,
 } from "@/components/site/CourseRichDescription";
+import { AlumniWorkplaceStrip } from "@/components/site/AlumniWorkplaceStrip";
 import {
   Award,
   BookOpen,
@@ -971,6 +972,14 @@ function CourseDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* ========================================================================= */}
+      {/* 2.2 WHERE OUR ALUMNI WORK (Programmatic Advertising Enterprise Network)   */}
+      {/* ========================================================================= */}
+      {(course.slug === "programmatic-advertising" ||
+        course.category === "Programmatic Advertising") && (
+        <AlumniWorkplaceStrip />
+      )}
 
       {/* ========================================================================= */}
       {/* 2.5 EXPLORE OTHER COURSES SECTION                                          */}
