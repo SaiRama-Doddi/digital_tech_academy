@@ -465,8 +465,8 @@ function CourseDetailPage() {
 
               {/* Curriculum Download Notice Toast */}
               {downloadSuccess && (
-                <div className="w-fit rounded-lg bg-emerald-50 border border-emerald-300 px-3.5 py-1.5 text-xs font-semibold text-emerald-800 flex items-center gap-2 mt-2">
-                  <Check className="size-3.5 text-emerald-600" />
+                <div className="w-fit rounded-lg bg-blue-50 border border-blue-200 px-3.5 py-1.5 text-xs font-semibold text-[#0C4FA8] flex items-center gap-2 mt-2">
+                  <Check className="size-3.5 text-[#0C4FA8]" />
                   <span>Curriculum PDF guide downloaded successfully for {course.title}!</span>
                 </div>
               )}
@@ -497,8 +497,8 @@ function CourseDetailPage() {
                       className={cn(
                         "rounded-lg px-6 py-2.5 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer border",
                         isActive
-                          ? "bg-[#5455f6] text-white border-indigo-600 shadow-md shadow-indigo-500/25"
-                          : "bg-[#eff2fe] hover:bg-[#e0e7ff] text-[#4b52c0] border-slate-300",
+                          ? "bg-[#0C4FA8] text-white border-[#0C4FA8] shadow-md shadow-blue-900/15"
+                          : "bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-[#0C4FA8] border-slate-300",
                       )}
                     >
                       {tab.label}
@@ -524,10 +524,10 @@ function CourseDetailPage() {
                   </div>
 
                   {/* Key Highlights / Program Features */}
-                  <div className="rounded-2xl border border-purple-200/90 bg-gradient-to-br from-purple-50/30 via-white to-indigo-50/20 p-6 sm:p-7 shadow-xs space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-purple-100">
+                  <div className="rounded-2xl border border-blue-200/90 bg-blue-50/30 p-6 sm:p-7 shadow-xs space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-blue-100">
                       <div className="flex items-center gap-3">
-                        <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-xs shrink-0">
+                        <span className="grid size-10 place-items-center rounded-xl bg-[#0C4FA8] text-white shadow-xs shrink-0">
                           <CheckCircle2 className="size-5" />
                         </span>
                         <div className="text-left">
@@ -539,8 +539,8 @@ function CourseDetailPage() {
                           </p>
                         </div>
                       </div>
-                      <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200 shadow-2xs">
-                        <Sparkles className="size-3.5 text-purple-600" />
+                      <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-orange-50 text-[#E14E2E] border border-orange-200 shadow-2xs">
+                        <Sparkles className="size-3.5 text-[#E14E2E]" />
                         <span>Included with Program</span>
                       </span>
                     </div>
@@ -574,9 +574,9 @@ function CourseDetailPage() {
                       ].map((item, idx) => (
                         <div
                           key={idx}
-                          className="group flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-purple-100/90 bg-white hover:border-purple-400 hover:shadow-xs transition-all duration-200 text-left shadow-2xs"
+                          className="group flex items-start gap-3 p-3.5 sm:p-4 rounded-xl border border-blue-100/90 bg-white hover:border-[#0C4FA8] hover:shadow-xs transition-all duration-200 text-left shadow-2xs"
                         >
-                          <span className="grid size-7.5 place-items-center rounded-lg bg-purple-50 text-purple-600 border border-purple-200/80 font-black text-xs shrink-0 mt-0.5 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                          <span className="grid size-7.5 place-items-center rounded-lg bg-blue-50 text-[#0C4FA8] border border-blue-200/80 font-black text-xs shrink-0 mt-0.5 group-hover:bg-[#0C4FA8] group-hover:text-white transition-colors">
                             <Check className="size-4 stroke-[2.5]" />
                           </span>
                           <div className="space-y-0.5 min-w-0 flex-1">
@@ -599,7 +599,7 @@ function CourseDetailPage() {
                     <div className="rounded-2xl border border-slate-300 bg-white p-6 sm:p-7 shadow-xs space-y-4">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
                         <div className="flex items-center gap-3">
-                          <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 to-navy text-white shadow-xs shrink-0">
+                          <span className="grid size-10 place-items-center rounded-xl bg-[#0C4FA8] text-white shadow-xs shrink-0">
                             <BookOpen className="size-5" />
                           </span>
                           <div className="text-left">
@@ -611,7 +611,7 @@ function CourseDetailPage() {
                             </p>
                           </div>
                         </div>
-                        <span className="self-start sm:self-center text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200/80 px-3 py-1 rounded-full shadow-2xs">
+                        <span className="self-start sm:self-center text-xs font-bold text-[#0C4FA8] bg-blue-50 border border-blue-200 px-3 py-1 rounded-full shadow-2xs">
                           {course.overview?.whatYouLearnDetailed?.length ||
                             course.overview?.learn?.length ||
                             0}{" "}
@@ -625,10 +625,10 @@ function CourseDetailPage() {
                           {course.overview.whatYouLearnDetailed.map((item, idx) => (
                             <div
                               key={idx}
-                              className="rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white p-4 shadow-2xs hover:border-indigo-500 hover:shadow-xs transition-all group text-left"
+                              className="rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white p-4 shadow-2xs hover:border-[#0C4FA8] hover:shadow-xs transition-all group text-left"
                             >
                               <div className="flex items-center gap-2.5 mb-1.5">
-                                <span className="grid size-7 place-items-center rounded-lg bg-indigo-100 text-indigo-700 text-xs font-black shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                <span className="grid size-7 place-items-center rounded-lg bg-blue-50 text-[#0C4FA8] text-xs font-black shrink-0 group-hover:bg-[#0C4FA8] group-hover:text-white transition-colors">
                                   {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                                 </span>
                                 <h4 className="text-xs sm:text-sm font-bold text-navy leading-tight">
@@ -646,9 +646,9 @@ function CourseDetailPage() {
                           {(course.overview?.learn || []).map((item, idx) => (
                             <div
                               key={item}
-                              className="flex items-start gap-3 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-white p-3.5 text-left shadow-2xs hover:border-indigo-400 transition-all"
+                              className="flex items-start gap-3 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-white p-3.5 text-left shadow-2xs hover:border-[#0C4FA8] transition-all"
                             >
-                              <span className="grid size-6 place-items-center rounded-md bg-indigo-50 text-indigo-600 border border-indigo-200/70 text-[11px] font-black shrink-0 mt-0.5">
+                              <span className="grid size-6 place-items-center rounded-md bg-blue-50 text-[#0C4FA8] border border-blue-200 text-[11px] font-black shrink-0 mt-0.5">
                                 {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                               </span>
                               <span className="text-xs sm:text-sm text-slate-700 font-medium leading-snug">
@@ -696,7 +696,7 @@ function CourseDetailPage() {
                     <button
                       type="button"
                       onClick={handleDownloadCurriculum}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-3.5 py-2 shadow-xs transition-colors cursor-pointer shrink-0"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-[#0C4FA8] hover:bg-blue-800 text-white text-xs font-bold px-3.5 py-2 shadow-xs transition-colors cursor-pointer shrink-0"
                     >
                       <Download className="size-3.5" />
                       <span>Download PDF Syllabus</span>
@@ -724,7 +724,7 @@ function CourseDetailPage() {
                             className={cn(
                               "border rounded-2xl transition-all duration-200 overflow-hidden shadow-xs",
                               isExpanded
-                                ? "border-indigo-500 bg-indigo-50/30"
+                                ? "border-[#0C4FA8] bg-blue-50/30"
                                 : "border-slate-300 bg-white",
                             )}
                           >
@@ -734,7 +734,7 @@ function CourseDetailPage() {
                               className="w-full flex items-center justify-between p-4 text-left font-bold text-navy hover:bg-slate-50 transition-colors cursor-pointer"
                             >
                               <div className="flex items-center gap-3">
-                                <span className="text-[0.7rem] bg-[#0b1633] text-amber-300 font-black px-2.5 py-1 rounded-md tracking-wider">
+                                <span className="text-[0.7rem] bg-[#0C4FA8] text-white font-black px-2.5 py-1 rounded-md tracking-wider">
                                   {item.module}
                                 </span>
                                 <span className="text-xs sm:text-sm font-bold text-navy">
@@ -742,7 +742,7 @@ function CourseDetailPage() {
                                 </span>
                               </div>
                               {isExpanded ? (
-                                <ChevronUp className="size-4 text-indigo-600" />
+                                <ChevronUp className="size-4 text-[#0C4FA8]" />
                               ) : (
                                 <ChevronDown className="size-4 text-slate-500" />
                               )}
@@ -756,7 +756,7 @@ function CourseDetailPage() {
                                       key={i}
                                       className="flex items-center gap-2 text-xs sm:text-sm text-slate-700"
                                     >
-                                      <span className="size-1.5 bg-indigo-600 rounded-full shrink-0" />
+                                      <span className="size-1.5 bg-[#0C4FA8] rounded-full shrink-0" />
                                       <span>{topic}</span>
                                     </li>
                                   ))}
@@ -796,7 +796,7 @@ function CourseDetailPage() {
                       <ul className="space-y-2">
                         {(course.practicalTraining || []).map((item, i) => (
                           <li key={i} className="flex gap-2 text-xs text-slate-700">
-                            <Check className="size-3.5 shrink-0 text-emerald-600 mt-0.5" />
+                            <Check className="size-3.5 shrink-0 text-[#0C4FA8] mt-0.5" />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -825,9 +825,9 @@ function CourseDetailPage() {
                   </div>
 
                   {/* Certification Credential Box */}
-                  <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] border border-slate-300 rounded-2xl p-6 bg-gradient-to-br from-white to-indigo-50/40 items-center shadow-xs">
+                  <div className="grid gap-6 md:grid-cols-[1.3fr_1fr] border border-blue-200 rounded-2xl p-6 bg-white items-center shadow-xs">
                     <div className="space-y-2">
-                      <span className="text-[0.65rem] font-black uppercase tracking-widest text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-md">
+                      <span className="text-[0.65rem] font-black uppercase tracking-widest text-[#0C4FA8] bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-md">
                         Official Credential
                       </span>
                       <h4 className="text-base font-black text-navy">
@@ -841,8 +841,8 @@ function CourseDetailPage() {
                     </div>
                     <div className="flex justify-center">
                       <div className="border border-slate-300 shadow-md rounded-xl bg-white p-4 rotate-1 max-w-[200px] text-center">
-                        <Award className="size-8 text-amber-500 mx-auto" />
-                        <span className="block text-xs font-black text-navy uppercase tracking-wider mt-2">
+                        <Award className="size-8 text-[#E14E2E] mx-auto" />
+                        <span className="block text-xs font-black text-[#0C4FA8] uppercase tracking-wider mt-2">
                           DIGITECHADEMY
                         </span>
                         <span className="block text-[0.65rem] text-slate-600 font-semibold mt-1">
@@ -871,7 +871,7 @@ function CourseDetailPage() {
                           <div>
                             <h5 className="text-sm font-bold text-navy">{item.name}</h5>
                             <span className="block text-xs text-slate-600">{item.role}</span>
-                            <span className="block text-[0.7rem] text-indigo-600 font-bold mt-0.5">
+                            <span className="block text-[0.7rem] text-[#0C4FA8] font-bold mt-0.5">
                               {item.experience}
                             </span>
                           </div>
@@ -889,7 +889,7 @@ function CourseDetailPage() {
                 <div className="space-y-6 animate-in fade-in duration-200">
                   <div data-reveal="left" className="border-b border-slate-300 pb-3">
                     <h3 className="text-lg sm:text-xl font-black text-navy flex items-center gap-2">
-                      <HelpCircle className="size-5 text-indigo-600 shrink-0" />
+                      <HelpCircle className="size-5 text-[#0C4FA8] shrink-0" />
                       Frequently Asked Questions
                     </h3>
                     <p className="text-xs text-slate-600 mt-0.5">
@@ -925,7 +925,7 @@ function CourseDetailPage() {
                             >
                               <span>{faq.question}</span>
                               {isFaqExpanded ? (
-                                <ChevronUp className="size-4 text-indigo-600 shrink-0 ml-2" />
+                                <ChevronUp className="size-4 text-[#0C4FA8] shrink-0 ml-2" />
                               ) : (
                                 <ChevronDown className="size-4 text-slate-500 shrink-0 ml-2" />
                               )}
@@ -952,7 +952,7 @@ function CourseDetailPage() {
                     <button
                       type="button"
                       onClick={scrollToDemoForm}
-                      className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2.5 shadow-sm cursor-pointer shrink-0"
+                      className="inline-flex items-center gap-2 rounded-xl bg-[#E14E2E] hover:bg-orange-700 text-white font-bold text-xs px-4 py-2.5 shadow-sm cursor-pointer shrink-0"
                     >
                       <PhoneCall className="size-3.5" />
                       <span>Request Free Counseling</span>
@@ -1042,14 +1042,14 @@ function CourseDetailPage() {
                       className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                    <span className="absolute left-3 top-3 rounded-md bg-[#0b1633]/90 px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wider text-amber-300 border border-white/10">
+                    <span className="absolute left-3 top-3 rounded-md bg-[#0C4FA8] px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-wider text-white border border-white/20">
                       {otherCourse.category}
                     </span>
                   </div>
 
                   <div className="flex flex-1 flex-col p-5 space-y-3">
                     <div>
-                      <h3 className="text-base font-black text-navy group-hover:text-indigo-600 transition-colors line-clamp-1">
+                      <h3 className="text-base font-black text-navy group-hover:text-[#0C4FA8] transition-colors line-clamp-1">
                         {otherCourse.title}
                       </h3>
                       <p className="mt-1 text-xs text-slate-700 line-clamp-2 text-justify">
@@ -1059,17 +1059,17 @@ function CourseDetailPage() {
 
                     <div className="flex items-center gap-3 text-xs font-semibold text-slate-600 border-t border-slate-200 pt-3 mt-auto">
                       <div className="flex items-center gap-1">
-                        <Clock className="size-3.5 text-indigo-600" />
+                        <Clock className="size-3.5 text-[#0C4FA8]" />
                         <span>{otherCourse.duration}</span>
                       </div>
                       <span className="text-slate-400">&bull;</span>
                       <div className="flex items-center gap-1">
-                        <Signal className="size-3.5 text-indigo-600" />
+                        <Signal className="size-3.5 text-[#0C4FA8]" />
                         <span>{levelText}</span>
                       </div>
                       <span className="text-slate-400">&bull;</span>
                       <div className="flex items-center gap-1">
-                        <BookOpen className="size-3.5 text-indigo-600" />
+                        <BookOpen className="size-3.5 text-[#0C4FA8]" />
                         <span>{moduleCount} Modules</span>
                       </div>
                     </div>
@@ -1080,7 +1080,7 @@ function CourseDetailPage() {
                         params={{ slug: otherSlug }}
                         variant="accent"
                         size="sm"
-                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs h-9 justify-center gap-1.5 shadow-xs"
+                        className="w-full bg-[#0C4FA8] hover:bg-blue-800 text-white font-bold rounded-xl text-xs h-9 justify-center gap-1.5 shadow-xs"
                       >
                         <span>View Program Curriculum</span>
                         <ArrowRight className="size-3.5" />

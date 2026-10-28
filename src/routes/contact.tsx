@@ -194,7 +194,7 @@ function ContactPage() {
               <h3 className="text-sm font-extrabold text-navy">What Happens Next?</h3>
               <ul className="space-y-2.5 text-xs text-slate-600">
                 <li className="flex items-start gap-2.5">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-blue-50 text-[#0C4FA8] border border-blue-200 text-[10px] font-bold">
                     1
                   </span>
                   <span>
@@ -203,7 +203,7 @@ function ContactPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-sky-100 text-sky-700 text-[10px] font-bold">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-orange-50 text-[#E14E2E] border border-orange-200 text-[10px] font-bold">
                     2
                   </span>
                   <span>

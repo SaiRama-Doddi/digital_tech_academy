@@ -125,8 +125,8 @@ function renderQualityPillarCard(pillar: (typeof trustPillars)[number], key: str
           {pillar.description}
         </p>
       </div>
-      <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-blue-600">
-        <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+      <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-[#0C4FA8]">
+        <CheckCircle2 className="size-3.5 text-[#0C4FA8] shrink-0" />
         <span>Institutional Standard</span>
       </div>
     </div>
@@ -159,7 +159,7 @@ function TestimonialCard({ review }: { review: FirebaseTestimonial }) {
                 className="size-11 rounded-full object-cover border border-slate-200 shrink-0"
               />
             ) : (
-              <div className="grid size-11 place-items-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-black text-sm shrink-0 shadow-2xs">
+              <div className="grid size-11 place-items-center rounded-full bg-[#0C4FA8] text-white font-black text-sm shrink-0 shadow-2xs">
                 {initials}
               </div>
             )}
@@ -176,13 +176,13 @@ function TestimonialCard({ review }: { review: FirebaseTestimonial }) {
           </div>
 
           {/* Star Rating */}
-          <div className="flex items-center gap-0.5 shrink-0 bg-amber-50 border border-amber-200/60 px-2 py-1 rounded-lg">
+          <div className="flex items-center gap-0.5 shrink-0 bg-orange-50 border border-orange-200/60 px-2 py-1 rounded-lg">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
                 className={`size-3.5 ${
                   i < (review.rating || 5)
-                    ? "fill-amber-400 text-amber-400"
+                    ? "fill-[#E14E2E] text-[#E14E2E]"
                     : "fill-slate-200 text-slate-200"
                 }`}
               />
@@ -193,7 +193,7 @@ function TestimonialCard({ review }: { review: FirebaseTestimonial }) {
         {/* Course Badge */}
         {review.course && (
           <div className="mt-3.5">
-            <span className="inline-block rounded-full bg-blue-50 border border-blue-100 px-2.5 py-0.5 text-[11px] font-bold text-blue-700">
+            <span className="inline-block rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-[11px] font-bold text-[#0C4FA8]">
               {review.course}
             </span>
           </div>
@@ -210,7 +210,7 @@ function TestimonialCard({ review }: { review: FirebaseTestimonial }) {
 
       {/* Footer: Verified Learner Badge & Date */}
       <div className="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-        <div className="flex items-center gap-1.5 text-emerald-600 font-bold">
+        <div className="flex items-center gap-1.5 text-[#0C4FA8] font-bold">
           <CheckCircle2 className="size-3.5" />
           <span>Verified Learner</span>
         </div>
@@ -294,15 +294,15 @@ function TrustAndValuesPage() {
 
                 <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2.5 pt-5 border-t border-blue-100/80">
                   <div className="flex items-center gap-2 rounded-xl bg-white/90 border border-slate-200/80 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-2xs">
-                    <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                    <CheckCircle2 className="size-4 text-[#0C4FA8] shrink-0" />
                     <span>Zero Fabricated Quotes</span>
                   </div>
                   <div className="flex items-center gap-2 rounded-xl bg-white/90 border border-slate-200/80 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-2xs">
-                    <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                    <CheckCircle2 className="size-4 text-[#0C4FA8] shrink-0" />
                     <span>Attributable Alumni Feedback</span>
                   </div>
                   <div className="flex items-center gap-2 rounded-xl bg-white/90 border border-slate-200/80 px-3 py-1.5 text-xs font-bold text-slate-700 shadow-2xs">
-                    <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                    <CheckCircle2 className="size-4 text-[#0C4FA8] shrink-0" />
                     <span>Verified Capstones</span>
                   </div>
                 </div>

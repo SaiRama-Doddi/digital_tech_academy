@@ -93,37 +93,37 @@ export function getTrackBadgeStyle(track: string): { badgeBg: string; gradient: 
   const lower = (track || "").toLowerCase();
   if (lower.includes("digital") || lower.includes("marketing") || lower.includes("seo")) {
     return {
-      badgeBg: "bg-blue-500/15 text-blue-300 border-blue-400/30",
-      gradient: "from-blue-600 to-cyan-600",
+      badgeBg: "bg-blue-50 text-[#0C4FA8] border-blue-200",
+      gradient: "from-[#0C4FA8] to-blue-700",
     };
   }
   if (lower.includes("cyber") || lower.includes("defense")) {
     return {
-      badgeBg: "bg-blue-600/15 text-blue-300 border-blue-400/30",
-      gradient: "from-blue-700 to-sky-600",
+      badgeBg: "bg-orange-50 text-[#E14E2E] border-orange-200",
+      gradient: "from-[#E14E2E] to-orange-700",
     };
   }
   if (lower.includes("programmatic") || lower.includes("ad")) {
     return {
-      badgeBg: "bg-sky-500/15 text-sky-300 border-sky-400/30",
-      gradient: "from-sky-500 to-blue-600",
+      badgeBg: "bg-blue-50 text-[#0C4FA8] border-blue-200",
+      gradient: "from-[#0C4FA8] to-blue-700",
     };
   }
   if (lower.includes("growth") || lower.includes("paid")) {
     return {
-      badgeBg: "bg-sky-500/15 text-sky-300 border-sky-400/30",
-      gradient: "from-sky-500 to-blue-600",
+      badgeBg: "bg-orange-50 text-[#E14E2E] border-orange-200",
+      gradient: "from-[#E14E2E] to-orange-700",
     };
   }
   if (lower.includes("offensive") || lower.includes("hack") || lower.includes("security")) {
     return {
-      badgeBg: "bg-blue-600/15 text-blue-300 border-blue-400/30",
-      gradient: "from-blue-700 to-sky-600",
+      badgeBg: "bg-orange-50 text-[#E14E2E] border-orange-200",
+      gradient: "from-[#E14E2E] to-orange-700",
     };
   }
   return {
-    badgeBg: "bg-blue-500/15 text-blue-300 border-blue-400/30",
-    gradient: "from-blue-600 to-cyan-600",
+    badgeBg: "bg-blue-50 text-[#0C4FA8] border-blue-200",
+    gradient: "from-[#0C4FA8] to-blue-700",
   };
 }
 

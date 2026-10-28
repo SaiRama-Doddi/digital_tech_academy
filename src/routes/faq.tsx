@@ -72,32 +72,32 @@ const categoryIcons: Record<string, typeof HelpCircle> = {
 };
 
 const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
-  General: { bg: "bg-blue-500/10", text: "text-blue-600", border: "border-blue-300/40" },
+  General: { bg: "bg-blue-50", text: "text-[#0C4FA8]", border: "border-blue-200" },
   "Digital Marketing": {
-    bg: "bg-blue-500/10",
-    text: "text-blue-600",
-    border: "border-blue-300/40",
+    bg: "bg-blue-50",
+    text: "text-[#0C4FA8]",
+    border: "border-blue-200",
   },
   "Programmatic Advertising": {
-    bg: "bg-sky-500/10",
-    text: "text-sky-600",
-    border: "border-sky-300/40",
+    bg: "bg-orange-50",
+    text: "text-[#E14E2E]",
+    border: "border-orange-200",
   },
-  "Cyber Security": { bg: "bg-blue-600/10", text: "text-blue-700", border: "border-blue-300/40" },
+  "Cyber Security": { bg: "bg-blue-50", text: "text-[#0C4FA8]", border: "border-blue-200" },
   "Enrollment & Support": {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-600",
-    border: "border-emerald-300/40",
+    bg: "bg-orange-50",
+    text: "text-[#E14E2E]",
+    border: "border-orange-200",
   },
   "AI & Automation": {
-    bg: "bg-purple-500/10",
-    text: "text-purple-600",
-    border: "border-purple-300/40",
+    bg: "bg-blue-50",
+    text: "text-[#0C4FA8]",
+    border: "border-blue-200",
   },
   "Full Stack Development": {
-    bg: "bg-indigo-500/10",
-    text: "text-indigo-600",
-    border: "border-indigo-300/40",
+    bg: "bg-orange-50",
+    text: "text-[#E14E2E]",
+    border: "border-orange-200",
   },
 };
 
@@ -468,7 +468,7 @@ function FaqPage() {
                       href={whatsappLink("Hi DIGITECHADEMY, I have a question about your courses.")}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 transition-colors inline-flex items-center gap-1.5"
+                      className="rounded-xl bg-[#E14E2E] hover:bg-orange-700 text-white text-xs font-bold px-4 py-2 transition-colors inline-flex items-center gap-1.5"
                     >
                       <MessageCircle className="size-3.5" />
                       <span>Ask on WhatsApp</span>
@@ -517,8 +517,8 @@ function FaqPage() {
                                   </span>
                                 )}
                                 {item.courseTitle && (
-                                  <span className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9.5px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/70">
-                                    <GraduationCap className="size-3 text-indigo-600 shrink-0" />
+                                  <span className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9.5px] font-bold bg-blue-50 text-[#0C4FA8] border border-blue-200">
+                                    <GraduationCap className="size-3 text-[#0C4FA8] shrink-0" />
                                     <span className="truncate max-w-[200px] sm:max-w-sm">
                                       {item.courseTitle}
                                     </span>
@@ -590,12 +590,12 @@ function FaqPage() {
             {/* Right Column: Sticky Support & Help Box */}
             <aside className="lg:sticky lg:top-36 space-y-4" data-reveal="right">
               {/* Card 1: Direct Support Card */}
-              <div className="rounded-2xl border border-sky-400/30 bg-gradient-to-br from-[#091738] via-[#061126] to-[#040b1a] p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
-                <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-blue-500/15 blur-2xl" />
+              <div className="rounded-2xl border border-blue-700/60 bg-[#0C4FA8] p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-white/10 blur-2xl" />
 
                 <div className="relative z-10 space-y-3">
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300">
-                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <div className="inline-flex items-center gap-1.5 rounded-full bg-[#E14E2E] px-2.5 py-0.5 text-[10px] font-bold text-white shadow-xs">
+                    <span className="size-1.5 rounded-full bg-white animate-pulse" />
                     <span>Average response: &lt; 15 mins</span>
                   </div>
 
@@ -603,7 +603,7 @@ function FaqPage() {
                     Have a Question Not Listed Here?
                   </h3>
 
-                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                  <p className="text-xs text-blue-100 leading-relaxed font-normal">
                     Our academic advisors are online to assist with syllabus, pricing, batch
                     timings, and career paths.
                   </p>
@@ -615,7 +615,7 @@ function FaqPage() {
                       )}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-2.5 px-4 transition-all shadow-md shadow-emerald-600/20 active:scale-[0.99]"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-slate-100 text-[#0C4FA8] text-xs font-extrabold py-2.5 px-4 transition-all shadow-md active:scale-[0.99]"
                     >
                       <MessageCircle className="size-4" />
                       <span>Chat on WhatsApp</span>
@@ -623,7 +623,7 @@ function FaqPage() {
 
                     <a
                       href={site.phoneHref}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-sky-400/30 bg-sky-950/40 hover:bg-sky-500 hover:text-slate-950 text-sky-300 text-xs font-bold py-2.5 px-4 transition-all"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 hover:bg-white hover:text-[#0C4FA8] text-white text-xs font-bold py-2.5 px-4 transition-all"
                     >
                       <Phone className="size-4" />
                       <span>Call {site.phone}</span>
@@ -631,7 +631,7 @@ function FaqPage() {
 
                     <Link
                       to="/request-call"
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold py-2.5 px-4 transition-all border border-white/10"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#E14E2E] hover:bg-[#be391d] text-white text-xs font-extrabold py-2.5 px-4 transition-all shadow-md"
                     >
                       <span>Request a Callback</span>
                       <ArrowRight className="size-3.5" />

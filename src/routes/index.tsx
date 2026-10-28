@@ -201,7 +201,21 @@ function UspTrustStrip() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
-            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 shadow-xs">
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-[#0C4FA8] border border-blue-100 shadow-xs">
+              <Users className="size-4 sm:size-5" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-lg sm:text-2xl font-black text-slate-900 leading-none">
+                <CountUp value={3} suffix="k+" />
+              </p>
+              <p className="text-[11px] sm:text-xs font-semibold text-slate-500 mt-1 leading-tight truncate">
+                Learners Mentored
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-orange-50 text-[#E14E2E] border border-orange-100 shadow-xs">
               <UserCheck className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
@@ -215,7 +229,7 @@ function UspTrustStrip() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
-            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-sky-50 text-sky-600 border border-sky-100 shadow-xs">
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-blue-50 text-[#0C4FA8] border border-blue-100 shadow-xs">
               <Cpu className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
@@ -229,7 +243,7 @@ function UspTrustStrip() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 px-0.5 sm:px-4 min-w-0" data-reveal>
-            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-xs">
+            <span className="grid size-9 sm:size-11 shrink-0 place-items-center rounded-xl bg-orange-50 text-[#E14E2E] border border-orange-100 shadow-xs">
               <Award className="size-4 sm:size-5" aria-hidden="true" />
             </span>
             <div className="min-w-0">
@@ -260,9 +274,9 @@ function WhyDigitechademy() {
       title: "Industry-Led Training",
       desc: "Learn concepts through an industry-focused lens, not just theory. Curriculum structured around active company workflows, live agency briefs, and real operational demands.",
       icon: Briefcase,
-      iconBg: "bg-blue-50 text-blue-600 border-blue-200/80",
-      accentBorder: "hover:border-blue-500",
-      accentLine: "from-blue-600 via-indigo-500 to-blue-400",
+      iconBg: "bg-blue-50 text-[#0C4FA8] border-blue-200/80",
+      accentBorder: "hover:border-[#0C4FA8]",
+      accentLine: "from-[#0C4FA8] to-[#0C4FA8]",
       pills: ["Live Agency Briefs", "Real-World Projects", "Zero Dry Theory"],
     },
     {
@@ -271,9 +285,9 @@ function WhyDigitechademy() {
       title: "Hands-On Practice",
       desc: "Practice the skills you are learning through exercises, live consoles, sandbox labs, and realistic scenarios instead of passive video lectures.",
       icon: Terminal,
-      iconBg: "bg-sky-50 text-sky-600 border-sky-200/80",
-      accentBorder: "hover:border-sky-500",
-      accentLine: "from-sky-500 via-cyan-500 to-blue-500",
+      iconBg: "bg-orange-50 text-[#E14E2E] border-orange-200/80",
+      accentBorder: "hover:border-[#E14E2E]",
+      accentLine: "from-[#E14E2E] to-[#E14E2E]",
       pills: ["Command Line & Consoles", "Interactive Sandboxes", "Real-Time Problem Solving"],
     },
   ];
@@ -285,9 +299,9 @@ function WhyDigitechademy() {
       title: "Build Work You Can Talk About",
       desc: "Use capstone projects and documented performance outcomes to demonstrate your capabilities with tangible proof during hiring interviews.",
       icon: Award,
-      iconBg: "bg-indigo-50 text-indigo-600 border-indigo-200/80",
-      accentBorder: "hover:border-indigo-500",
-      accentLine: "from-indigo-600 via-purple-500 to-blue-600",
+      iconBg: "bg-blue-50 text-[#0C4FA8] border-blue-200/80",
+      accentBorder: "hover:border-[#0C4FA8]",
+      accentLine: "from-[#0C4FA8] to-[#0C4FA8]",
       pills: ["Campaign Case Studies", "Security Audit Reports", "Interview Portfolio"],
     },
     {
@@ -296,9 +310,9 @@ function WhyDigitechademy() {
       title: "Industry-Relevant Skills",
       desc: "Focus on modern tools, enterprise workflows (DV360, Meta Ads, Wireshark, Linux, GA4) relevant to current digital & technology roles.",
       icon: Target,
-      iconBg: "bg-cyan-50 text-cyan-700 border-cyan-200/80",
-      accentBorder: "hover:border-cyan-500",
-      accentLine: "from-cyan-500 via-blue-500 to-indigo-500",
+      iconBg: "bg-orange-50 text-[#E14E2E] border-orange-200/80",
+      accentBorder: "hover:border-[#E14E2E]",
+      accentLine: "from-[#E14E2E] to-[#E14E2E]",
       pills: ["DV360 & CM360", "Meta & Google Ads", "Linux & Wireshark"],
     },
     {
@@ -307,9 +321,9 @@ function WhyDigitechademy() {
       title: "Guidance, Not Just Content",
       desc: "Learn with structured guidance, personalized feedback, continuous support and practical direction from experienced practitioners.",
       icon: Users,
-      iconBg: "bg-blue-50 text-blue-600 border-blue-200/80",
-      accentBorder: "hover:border-blue-500",
-      accentLine: "from-blue-500 via-indigo-500 to-violet-500",
+      iconBg: "bg-blue-50 text-[#0C4FA8] border-blue-200/80",
+      accentBorder: "hover:border-[#0C4FA8]",
+      accentLine: "from-[#0C4FA8] via-[#E14E2E] to-[#0C4FA8]",
       pills: ["Personalized Reviews", "Doubt Clearing", "Career Coaching"],
     },
   ];
@@ -354,16 +368,16 @@ function WhyDigitechademy() {
               <ItemIcon className="size-5 stroke-[2.2]" />
             </span>
 
-            <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-blue-600 transition-colors uppercase font-mono">
+            <span className="text-[11px] font-bold tracking-wider text-slate-400 group-hover:text-[#0C4FA8] transition-colors uppercase font-mono">
               {item.step} // 05
             </span>
           </div>
 
-          <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-blue-600 mb-1">
+          <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#0C4FA8] mb-1">
             {item.eyebrow}
           </span>
 
-          <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition-colors">
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#0C4FA8] transition-colors">
             {item.title}
           </h3>
 
@@ -388,19 +402,22 @@ function WhyDigitechademy() {
   };
 
   return (
-    <section className="relative py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-white via-slate-50/50 to-white overflow-hidden border-b border-slate-200/80">
+    <section className="relative py-8 sm:py-12 lg:py-16 bg-white overflow-hidden border-b border-slate-200/80">
       <div className="container-site relative z-10">
         {/* Section Header: Left Aligned */}
         <div className="text-left max-w-4xl" data-reveal="left">
-          <div className="eyebrow text-xs inline-flex items-center gap-2 text-blue-700 mb-2">
-            <span className="h-px w-5 sm:w-6 bg-blue-600" aria-hidden="true" />
+          <div className="eyebrow text-xs inline-flex items-center gap-2 text-[#0C4FA8] mb-2">
+            <span className="h-px w-5 sm:w-6 bg-[#0C4FA8]" aria-hidden="true" />
             <span className="font-bold uppercase tracking-wider">WHY DIGITECHADEMY</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2]">
             What Makes{" "}
-            <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent">
-              DIGITECHADEMY
+            <span className="text-[#0C4FA8]">
+              DIGITECH
+            </span>
+            <span className="text-[#E14E2E]">
+              ADEMY
             </span>{" "}
             Different?
           </h2>
@@ -416,7 +433,7 @@ function WhyDigitechademy() {
         <div className="mt-6 md:hidden">
           <div className="flex items-center justify-between mb-2.5 px-0.5 text-xs font-semibold text-slate-500">
             <span className="text-[11px] uppercase tracking-wider font-bold text-slate-400">5 Pillars</span>
-            <span className="text-[11px] font-medium text-blue-600 flex items-center gap-1">
+            <span className="text-[11px] font-medium text-[#0C4FA8] flex items-center gap-1">
               Scroll across →
             </span>
           </div>
@@ -440,22 +457,20 @@ function WhyDigitechademy() {
           </div>
         </div>
 
-        {/* Sleek Horizontal Benchmark Strip */}
         {/* High-Impact Highlighted Benchmark Banner */}
         <div
           id="benchmark-banner"
           data-reveal="bottom-to-up"
-          className="mt-8 rounded-2xl border border-sky-400/35 bg-gradient-to-r from-[#091738] via-[#0b224e] to-[#07132e] p-4 sm:p-5 text-white shadow-xl shadow-blue-950/25 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-5"
+          className="mt-8 rounded-2xl border border-blue-700/60 bg-[#0C4FA8] p-4 sm:p-5 text-white shadow-xl shadow-blue-900/25 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-5"
         >
           {/* Ambient Glow Effects */}
-          <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-blue-500/20 blur-3xl" />
-          <div className="pointer-events-none absolute -left-16 -bottom-16 size-48 rounded-full bg-emerald-500/15 blur-3xl" />
-          <div className="pointer-events-none absolute top-1/2 left-1/3 -translate-y-1/2 size-36 rounded-full bg-indigo-500/15 blur-2xl" />
+          <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -left-16 -bottom-16 size-48 rounded-full bg-[#E14E2E]/25 blur-3xl" />
 
           {/* Highlight Badges */}
           <div className="relative z-10 flex flex-wrap items-center gap-2 sm:gap-2.5 justify-center lg:justify-start">
-            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
-              <span className="grid size-5 place-items-center rounded-lg bg-emerald-500/25 border border-emerald-400/40 text-emerald-300 shrink-0">
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-[#E14E2E] border border-orange-400/40 text-white shrink-0">
                 <CheckCircle2 className="size-3.5 stroke-[2.5]" />
               </span>
               <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
@@ -463,8 +478,8 @@ function WhyDigitechademy() {
               </span>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
-              <span className="grid size-5 place-items-center rounded-lg bg-sky-500/25 border border-sky-400/40 text-sky-300 shrink-0">
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-[#E14E2E] border border-orange-400/40 text-white shrink-0">
                 <CheckCircle2 className="size-3.5 stroke-[2.5]" />
               </span>
               <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
@@ -472,8 +487,8 @@ function WhyDigitechademy() {
               </span>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
-              <span className="grid size-5 place-items-center rounded-lg bg-indigo-500/25 border border-indigo-400/40 text-indigo-300 shrink-0">
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-[#E14E2E] border border-orange-400/40 text-white shrink-0">
                 <CheckCircle2 className="size-3.5 stroke-[2.5]" />
               </span>
               <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
@@ -481,8 +496,8 @@ function WhyDigitechademy() {
               </span>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
-              <span className="grid size-5 place-items-center rounded-lg bg-amber-500/25 border border-amber-400/40 text-amber-300 shrink-0">
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 backdrop-blur-md shadow-xs transition-transform duration-200 hover:scale-[1.02]">
+              <span className="grid size-5 place-items-center rounded-lg bg-[#E14E2E] border border-orange-400/40 text-white shrink-0">
                 <CheckCircle2 className="size-3.5 stroke-[2.5]" />
               </span>
               <span className="text-xs sm:text-[13px] font-extrabold text-white tracking-tight whitespace-nowrap">
@@ -497,7 +512,7 @@ function WhyDigitechademy() {
               to="/courses"
               variant="primary"
               size="sm"
-              className="bg-gradient-to-r from-blue-500 via-sky-500 to-blue-600 hover:from-blue-600 hover:to-sky-600 text-white font-extrabold px-3.5 sm:px-4.5 py-2 rounded-xl text-xs sm:text-sm shadow-md shadow-blue-500/30 ring-2 ring-white/20 transition-all hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 whitespace-nowrap"
+              className="bg-[#E14E2E] hover:bg-[#be391d] text-white font-extrabold px-3.5 sm:px-4.5 py-2 rounded-xl text-xs sm:text-sm shadow-md shadow-orange-950/20 ring-2 ring-white/20 transition-all hover:scale-[1.03] active:scale-[0.98] flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
             >
               <span>Explore Programs</span>
               <ArrowRight className="size-3.5" />
@@ -506,7 +521,7 @@ function WhyDigitechademy() {
               to="/request-call"
               variant="outline"
               size="sm"
-              className="border border-sky-400/40 bg-sky-950/60 hover:bg-sky-500 hover:text-slate-950 text-sky-200 font-bold px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm transition-all hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap"
+              className="border border-white bg-white hover:bg-slate-100 text-[#0C4FA8] font-extrabold px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm transition-all hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap shadow-sm cursor-pointer"
             >
               <span>Talk to an Expert</span>
             </BtnLink>
@@ -974,9 +989,9 @@ function ProgrammaticDifferentiator() {
         </div>
 
         {/* Bottom Micro Standard Indicator */}
-        <div className="relative z-10 mt-4 pt-3 border-t border-slate-100 flex items-center text-[10.5px] font-semibold text-slate-500 group-hover:text-blue-600 transition-colors">
+        <div className="relative z-10 mt-4 pt-3 border-t border-slate-100 flex items-center text-[10.5px] font-semibold text-slate-500 group-hover:text-[#0C4FA8] transition-colors">
           <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="size-3 text-emerald-600" />
+            <CheckCircle2 className="size-3 text-[#0C4FA8]" />
             <span>Industry Framework</span>
           </span>
         </div>
@@ -995,14 +1010,14 @@ function ProgrammaticDifferentiator() {
           data-reveal
         >
           <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700 mb-3 shadow-xs">
-              <Radio className="size-3.5 text-blue-600 animate-pulse" />
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#0C4FA8] mb-3 shadow-xs">
+              <Radio className="size-3.5 text-[#0C4FA8] animate-pulse" />
               <span>GO BEYOND BASIC DIGITAL MARKETING</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-[1.2] tracking-tight whitespace-normal sm:whitespace-nowrap">
               Learn Programmatic Advertising{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-sky-600 to-indigo-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0C4FA8] to-[#E14E2E]">
                 From the Inside Out
               </span>
             </h2>
@@ -1045,15 +1060,15 @@ function ProgrammaticDifferentiator() {
 
         {/* Signature Statement Banner */}
         <div
-          className="mt-4 rounded-xl sm:rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 via-sky-50 to-indigo-50 p-3.5 sm:p-4.5 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 relative overflow-hidden"
+          className="mt-4 rounded-xl sm:rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50/80 via-white to-orange-50/60 p-3.5 sm:p-4.5 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 relative overflow-hidden"
           data-reveal
         >
           <div className="flex items-center gap-3">
-            <span className="grid size-9 sm:size-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md">
+            <span className="grid size-9 sm:size-10 shrink-0 place-items-center rounded-xl bg-[#0C4FA8] text-white shadow-md">
               <Sparkles className="size-4.5" />
             </span>
             <div>
-              <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-blue-700">
+              <span className="block text-[10px] font-black uppercase tracking-[0.16em] text-[#0C4FA8]">
                 Signature Programmatic Philosophy
               </span>
               <p className="text-xs sm:text-sm md:text-[15px] font-black text-slate-900 tracking-wide mt-0.5 uppercase">
@@ -1145,14 +1160,14 @@ function CyberSecurityDifferentiator() {
       icon: ShieldCheck,
       image: cyberPhase1Img,
       badge: "FOUNDATIONS",
-      dotColor: "bg-cyan-400 shadow-[0_0_8px_#22d3ee]",
+      dotColor: "bg-[#0C4FA8]",
       cardBorder:
-        "border-cyan-500/25 hover:border-cyan-400/80 hover:shadow-[0_0_25px_rgba(6,182,212,0.25)]",
-      badgeStyle: "text-cyan-300 bg-cyan-950/80 border-cyan-500/30",
+        "border-slate-200 hover:border-[#0C4FA8] hover:shadow-md",
+      badgeStyle: "text-[#0C4FA8] bg-blue-50 border-blue-200",
       iconStyle:
-        "text-cyan-400 bg-cyan-500/10 border-cyan-500/30 group-hover:bg-cyan-500/20 group-hover:border-cyan-400",
-      stepColor: "text-cyan-400 bg-cyan-950/90 border-cyan-500/40",
-      glow: "from-cyan-500/15",
+        "text-[#0C4FA8] bg-blue-50 border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
+      stepColor: "text-[#0C4FA8] bg-blue-50 border-blue-200",
+      glow: "from-blue-500/10",
     },
     {
       step: "02",
@@ -1161,14 +1176,14 @@ function CyberSecurityDifferentiator() {
       icon: Terminal,
       image: cyberPhase2Img,
       badge: "TOOLING & OS",
-      dotColor: "bg-purple-400 shadow-[0_0_8px_#c084fc]",
+      dotColor: "bg-[#E14E2E]",
       cardBorder:
-        "border-purple-500/25 hover:border-purple-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
-      badgeStyle: "text-purple-300 bg-purple-950/80 border-purple-500/30",
+        "border-slate-200 hover:border-[#E14E2E] hover:shadow-md",
+      badgeStyle: "text-[#E14E2E] bg-orange-50 border-orange-200",
       iconStyle:
-        "text-purple-400 bg-purple-500/10 border-purple-500/30 group-hover:bg-purple-500/20 group-hover:border-purple-400",
-      stepColor: "text-purple-400 bg-purple-950/90 border-purple-500/40",
-      glow: "from-purple-500/15",
+        "text-[#E14E2E] bg-orange-50 border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white",
+      stepColor: "text-[#E14E2E] bg-orange-50 border-orange-200",
+      glow: "from-orange-500/10",
     },
     {
       step: "03",
@@ -1177,14 +1192,14 @@ function CyberSecurityDifferentiator() {
       icon: Cpu,
       image: cyberPhase3Img,
       badge: "HANDS-ON",
-      dotColor: "bg-emerald-400 shadow-[0_0_8px_#34d399]",
+      dotColor: "bg-[#0C4FA8]",
       cardBorder:
-        "border-emerald-500/25 hover:border-emerald-400/80 hover:shadow-[0_0_25px_rgba(168,85,247,0.25)]",
-      badgeStyle: "text-emerald-300 bg-emerald-950/80 border-emerald-500/30",
+        "border-slate-200 hover:border-[#0C4FA8] hover:shadow-md",
+      badgeStyle: "text-[#0C4FA8] bg-blue-50 border-blue-200",
       iconStyle:
-        "text-emerald-400 bg-emerald-500/10 border-emerald-500/30 group-hover:bg-emerald-500/20 group-hover:border-emerald-400",
-      stepColor: "text-emerald-400 bg-emerald-950/90 border-emerald-500/40",
-      glow: "from-emerald-500/15",
+        "text-[#0C4FA8] bg-blue-50 border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
+      stepColor: "text-[#0C4FA8] bg-blue-50 border-blue-200",
+      glow: "from-blue-500/10",
     },
     {
       step: "04",
@@ -1193,14 +1208,14 @@ function CyberSecurityDifferentiator() {
       icon: Lock,
       image: cyberPhase4Img,
       badge: "ASSESSMENT",
-      dotColor: "bg-amber-400 shadow-[0_0_8px_#fbbf24]",
+      dotColor: "bg-[#E14E2E]",
       cardBorder:
-        "border-amber-500/25 hover:border-amber-400/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.25)]",
-      badgeStyle: "text-amber-300 bg-amber-950/80 border-amber-500/30",
+        "border-slate-200 hover:border-[#E14E2E] hover:shadow-md",
+      badgeStyle: "text-[#E14E2E] bg-orange-50 border-orange-200",
       iconStyle:
-        "text-amber-400 bg-amber-500/10 border-amber-500/30 group-hover:bg-amber-500/20 group-hover:border-amber-400",
-      stepColor: "text-amber-400 bg-amber-950/90 border-amber-500/40",
-      glow: "from-amber-500/15",
+        "text-[#E14E2E] bg-orange-50 border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white",
+      stepColor: "text-[#E14E2E] bg-orange-50 border-orange-200",
+      glow: "from-orange-500/10",
     },
     {
       step: "05",
@@ -1209,68 +1224,37 @@ function CyberSecurityDifferentiator() {
       icon: Target,
       image: cyberPhase5Img,
       badge: "REAL SCENARIOS",
-      dotColor: "bg-pink-400 shadow-[0_0_8px_#f472b6]",
+      dotColor: "bg-[#0C4FA8]",
       cardBorder:
-        "border-pink-500/25 hover:border-pink-400/80 hover:shadow-[0_0_25px_rgba(236,72,153,0.25)]",
-      badgeStyle: "text-pink-300 bg-pink-950/80 border-pink-500/30",
+        "border-slate-200 hover:border-[#0C4FA8] hover:shadow-md",
+      badgeStyle: "text-[#0C4FA8] bg-blue-50 border-blue-200",
       iconStyle:
-        "text-pink-400 bg-pink-500/10 border-pink-500/30 group-hover:bg-pink-500/20 group-hover:border-pink-400",
-      stepColor: "text-pink-400 bg-pink-950/90 border-pink-500/40",
-      glow: "from-pink-500/15",
+        "text-[#0C4FA8] bg-blue-50 border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
+      stepColor: "text-[#0C4FA8] bg-blue-50 border-blue-200",
+      glow: "from-blue-500/10",
     },
   ];
 
   const hudVectors = [
-    { icon: Search, label: "DETECT", color: "text-cyan-400 border-cyan-500/30 bg-cyan-950/50" },
-    { icon: BarChart3, label: "ANALYZE", color: "text-sky-400 border-sky-500/30 bg-sky-950/50" },
+    { icon: Search, label: "DETECT", color: "text-[#0C4FA8] border-blue-200 bg-blue-50/70" },
+    { icon: BarChart3, label: "ANALYZE", color: "text-[#E14E2E] border-orange-200 bg-orange-50/70" },
     {
       icon: ShieldCheck,
       label: "SECURE",
-      color: "text-emerald-400 border-emerald-500/30 bg-emerald-950/50",
+      color: "text-[#0C4FA8] border-blue-200 bg-blue-50/70",
     },
     {
       icon: Settings,
       label: "DEFEND",
-      color: "text-indigo-400 border-indigo-500/30 bg-indigo-950/50",
+      color: "text-[#E14E2E] border-orange-200 bg-orange-50/70",
     },
   ];
 
   return (
     <section
       id="cyber-security-differentiator"
-      className="bg-[#030914] relative py-7 sm:py-9 overflow-hidden border-t border-b border-cyan-950/80"
+      className="bg-white relative py-7 sm:py-9 overflow-hidden border-t border-b border-slate-200"
     >
-      {/* Cyber Security Background Image strictly positioned in top-right area with higher opacity */}
-      <div className="pointer-events-none absolute top-0 right-0 w-full sm:w-[65%] lg:w-[50%] h-64 sm:h-72 lg:h-80 z-0 overflow-hidden">
-        <img
-          src={cyberHeroBg}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover object-right-top opacity-65"
-        />
-        {/* Soft edge blend overlays so it fades smoothly into the dark section background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#030914] via-[#030914]/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030914]/30 to-[#030914]" />
-      </div>
-
-      {/* High-tech Cyber Grid Background & Subtle Ambient Fades */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.06] z-0"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(34, 211, 238, 0.45) 1px, transparent 0)`,
-          backgroundSize: "24px 24px",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -top-32 left-1/3 size-96 rounded-full bg-cyan-500/10 blur-[100px] z-0"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-32 right-1/4 size-96 rounded-full bg-blue-600/10 blur-[100px] z-0"
-        aria-hidden="true"
-      />
-
       <div className="container-site relative z-10">
         {/* Unified Compact Header */}
         <div
@@ -1278,19 +1262,19 @@ function CyberSecurityDifferentiator() {
           data-reveal
         >
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-950/70 px-3 py-1 text-[10.5px] sm:text-xs font-bold uppercase tracking-wider text-cyan-300 backdrop-blur-md mb-2.5 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-              <ShieldCheck className="size-3.5 text-cyan-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-[10.5px] sm:text-xs font-bold uppercase tracking-wider text-[#0C4FA8] mb-2.5 shadow-xs">
+              <ShieldCheck className="size-3.5 text-[#E14E2E]" />
               <span>THINK LIKE A DEFENDER • TEST LIKE AN ETHICAL HACKER</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight tracking-tight">
               Build Practical{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+              <span className="text-[#0C4FA8]">
                 Cyber Security Skills
               </span>
             </h2>
 
-            <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-2xl">
+            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-2xl">
               Cyber Security is not learned by memorizing definitions. Learn how systems work, where
               vulnerabilities occur, and how security professionals identify, analyze, and respond
               to threats.
@@ -1299,7 +1283,7 @@ function CyberSecurityDifferentiator() {
 
           {/* Right Action & Controls Strip */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 shrink-0 self-start lg:self-end">
-            <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-xl border border-slate-800 bg-slate-950/70 backdrop-blur-md">
+            <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-xl border border-slate-200 bg-slate-50">
               {hudVectors.map((hud) => {
                 const HudIcon = hud.icon;
                 return (
@@ -1318,12 +1302,12 @@ function CyberSecurityDifferentiator() {
             </div>
 
             {/* Mobile / Tablet Arrow Navigation Controls */}
-            <div className="flex lg:hidden items-center gap-1 p-1 rounded-xl border border-slate-800 bg-slate-950/70 backdrop-blur-md">
+            <div className="flex lg:hidden items-center gap-1 p-1 rounded-xl border border-slate-200 bg-white">
               <button
                 type="button"
                 onClick={scrollPrev}
                 aria-label="Previous cyber phase"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-900 transition-all cursor-pointer active:scale-95"
+                className="p-1.5 rounded-lg text-slate-500 hover:text-[#0C4FA8] hover:bg-slate-100 transition-all cursor-pointer active:scale-95"
               >
                 <ChevronLeft className="size-4" />
               </button>
@@ -1331,7 +1315,7 @@ function CyberSecurityDifferentiator() {
                 type="button"
                 onClick={scrollNext}
                 aria-label="Next cyber phase"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-slate-900 transition-all cursor-pointer active:scale-95"
+                className="p-1.5 rounded-lg text-slate-500 hover:text-[#0C4FA8] hover:bg-slate-100 transition-all cursor-pointer active:scale-95"
               >
                 <ChevronRight className="size-4" />
               </button>
@@ -1342,7 +1326,7 @@ function CyberSecurityDifferentiator() {
               params={{ slug: "cyber-security" }}
               variant="primary"
               size="sm"
-              className="bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-black px-4 py-2 sm:px-4.5 sm:py-2.5 rounded-xl text-xs shrink-0 whitespace-nowrap shadow-[0_0_20px_rgba(6,182,212,0.35)] flex items-center gap-1.5 hover:scale-[1.02] transition-all"
+              className="bg-[#E14E2E] hover:bg-[#be391d] text-white font-extrabold px-4 py-2 sm:px-4.5 sm:py-2.5 rounded-xl text-xs shrink-0 whitespace-nowrap shadow-md shadow-orange-500/20 flex items-center gap-1.5 hover:scale-[1.02] transition-all cursor-pointer"
             >
               <span>Explore Cyber Track</span>
               <ArrowRight className="size-3.5" />
@@ -1375,24 +1359,16 @@ function CyberSecurityDifferentiator() {
                     data-reveal="bottom-to-up"
                     style={{ "--reveal-delay": `${index * 80}ms` } as React.CSSProperties}
                     className={cn(
-                      "h-full group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-[#061122]/90 p-4 transition-all duration-300 ease-out hover:-translate-y-1.5 cursor-pointer border backdrop-blur-md shadow-md shadow-black/40 select-none",
+                      "h-full group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white p-4 transition-all duration-300 ease-out hover:-translate-y-1.5 cursor-pointer border shadow-sm select-none",
                       item.cardBorder,
                     )}
                   >
-                    {/* Top Subtle Accent Gradient Glow */}
-                    <div
-                      className={cn(
-                        "pointer-events-none absolute -top-10 -right-10 size-28 rounded-full bg-gradient-to-br to-transparent opacity-0 group-hover:opacity-60 blur-xl transition-opacity duration-500",
-                        item.glow,
-                      )}
-                    />
-
                     <div className="relative z-10">
                       {/* Top Row: Step Tag + Category Pill */}
                       <div className="flex items-center justify-between gap-2 mb-3">
                         <span
                           className={cn(
-                            "text-[10px] font-mono font-black px-2 py-0.5 rounded-md border shadow-xs tracking-wider",
+                            "text-[10px] font-mono font-black px-2 py-0.5 rounded-md border shadow-2xs tracking-wider",
                             item.stepColor,
                           )}
                         >
@@ -1419,24 +1395,24 @@ function CyberSecurityDifferentiator() {
                         >
                           <ItemIcon className="size-4.5" aria-hidden="true" />
                         </span>
-                        <h3 className="text-sm sm:text-base font-extrabold text-white group-hover:text-cyan-300 transition-colors">
+                        <h3 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-[#0C4FA8] transition-colors">
                           {item.title}
                         </h3>
                       </div>
 
                       {/* Concise Description */}
-                      <p className="text-[11.5px] leading-relaxed text-slate-300/90 font-normal">
+                      <p className="text-[11.5px] leading-relaxed text-slate-600 font-normal">
                         {item.desc}
                       </p>
                     </div>
 
-                    {/* Small Cyber 3D Illustration at Bottom (Square 1:1 Aspect Ratio - No Cropping) */}
-                    <div className="relative z-10 mt-3.5 flex items-center justify-center overflow-hidden rounded-xl bg-slate-950/70 border border-white/10 p-2 group-hover:border-cyan-400/40 transition-colors duration-300">
+                    {/* Small Cyber 3D Illustration at Bottom */}
+                    <div className="relative z-10 mt-3.5 flex items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200 p-2 group-hover:border-blue-300 transition-colors duration-300">
                       <img
                         src={item.image}
                         alt={item.title}
                         loading="lazy"
-                        className="size-24 sm:size-28 object-contain transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                        className="size-24 sm:size-28 object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   </Link>
@@ -1456,8 +1432,8 @@ function CyberSecurityDifferentiator() {
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300 cursor-pointer",
                 selectedIndex === i
-                  ? "w-6 bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"
-                  : "w-1.5 bg-slate-700 hover:bg-slate-600",
+                  ? "w-6 bg-[#0C4FA8]"
+                  : "w-1.5 bg-slate-300 hover:bg-slate-400",
               )}
               aria-label={`Go to phase ${i + 1}`}
             />
@@ -1466,21 +1442,21 @@ function CyberSecurityDifferentiator() {
 
         {/* Slim Cyber Philosophy Strip */}
         <div
-          className="mt-3.5 sm:mt-4 rounded-xl border border-cyan-500/20 bg-gradient-to-r from-cyan-950/40 via-slate-900/60 to-blue-950/40 px-3.5 py-2.5 sm:px-4.5 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-300 backdrop-blur-md"
+          className="mt-3.5 sm:mt-4 rounded-xl border border-blue-200 bg-blue-50/70 px-3.5 py-2.5 sm:px-4.5 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-slate-700"
           data-reveal
         >
-          <div className="flex items-center gap-2.5 text-slate-200 font-medium">
-            <span className="grid size-6 place-items-center rounded-lg bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 shrink-0">
+          <div className="flex items-center gap-2.5 font-medium">
+            <span className="grid size-6 place-items-center rounded-lg bg-[#E14E2E] text-white shrink-0">
               <ShieldCheck className="size-3.5" />
             </span>
-            <span className="text-[11px] sm:text-xs">
-              <strong className="text-white font-bold">The Practical Defense Pathway:</strong>{" "}
+            <span className="text-[11px] sm:text-xs text-slate-700">
+              <strong className="text-[#0C4FA8] font-bold">The Practical Defense Pathway:</strong>{" "}
               Structured progression from network fundamentals to real-world attack mitigation.
             </span>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[10.5px] text-cyan-300/90 shrink-0">
-            <span className="inline-block size-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <div className="flex items-center gap-2 font-mono text-[10.5px] text-[#0C4FA8] font-bold shrink-0">
+            <span className="inline-block size-1.5 rounded-full bg-[#E14E2E] animate-pulse" />
             <span>100% Practical Labs • Live Tooling</span>
           </div>
         </div>
@@ -1825,8 +1801,8 @@ function WhoIsThisFor() {
                       </p>
                     </div>
 
-                    <div className="mt-4 pt-3.5 border-t border-slate-200/70 flex items-center gap-2 text-[11.5px] font-semibold text-blue-700">
-                      <Check className="size-3.5 text-emerald-600 shrink-0" />
+                    <div className="mt-4 pt-3.5 border-t border-slate-200/70 flex items-center gap-2 text-[11.5px] font-semibold text-[#0C4FA8]">
+                      <Check className="size-3.5 text-[#0C4FA8] shrink-0" />
                       <span>{persona.highlight}</span>
                     </div>
                   </div>
@@ -1846,7 +1822,7 @@ function WhoIsThisFor() {
               className={cn(
                 "h-2 rounded-full transition-all duration-300 cursor-pointer",
                 selectedIndex === i
-                  ? "w-7 bg-blue-600 shadow-xs"
+                  ? "w-7 bg-[#0C4FA8] shadow-xs"
                   : "w-2 bg-slate-300 hover:bg-slate-400",
               )}
               aria-label={`Go to slide ${i + 1}`}

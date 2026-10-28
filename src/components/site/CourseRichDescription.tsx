@@ -275,7 +275,7 @@ export function CourseRichDescription({
               key={idx}
               className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 leading-relaxed text-left"
             >
-              <CheckCircle2 className="size-4 text-indigo-600 shrink-0 mt-0.5" />
+              <CheckCircle2 className="size-4 text-[#0C4FA8] shrink-0 mt-0.5" />
               <span>{renderFormattedMarkdown(item)}</span>
             </li>
           ))}
@@ -287,7 +287,7 @@ export function CourseRichDescription({
         <div className="space-y-3 pt-2">
           {activeHeading && (
             <div className="flex items-center gap-2 mb-3">
-              <span className="grid size-6 place-items-center rounded-lg bg-indigo-50 text-indigo-600">
+              <span className="grid size-6 place-items-center rounded-lg bg-blue-50 text-[#0C4FA8]">
                 <Sparkles className="size-3.5" />
               </span>
               <h4 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
@@ -302,9 +302,9 @@ export function CourseRichDescription({
               return (
                 <div
                   key={pt.num}
-                  className="flex items-start gap-3.5 p-4 sm:p-4.5 rounded-2xl border border-slate-200/90 bg-gradient-to-br from-slate-50/70 via-white to-white hover:border-indigo-400 hover:shadow-xs transition-all duration-200 text-left"
+                  className="flex items-start gap-3.5 p-4 sm:p-4.5 rounded-2xl border border-slate-200/90 bg-white hover:border-[#0C4FA8] hover:shadow-xs transition-all duration-200 text-left"
                 >
-                  <span className="grid size-7 sm:size-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 text-white font-black text-xs sm:text-[13px] shadow-xs shrink-0 mt-0.5 select-none">
+                  <span className="grid size-7 sm:size-8 place-items-center rounded-xl bg-[#0C4FA8] text-white font-black text-xs sm:text-[13px] shadow-xs shrink-0 mt-0.5 select-none">
                     {displayNum}
                   </span>
                   <div className="space-y-1 min-w-0 flex-1">
@@ -405,33 +405,33 @@ interface AudienceSectionProps {
 const AUDIENCE_ACCENTS = [
   {
     icon: Target,
-    badgeBg: "bg-blue-50 text-blue-600 border-blue-200/80 group-hover:bg-blue-600 group-hover:text-white",
-    borderHover: "hover:border-blue-400 hover:shadow-blue-500/10",
+    badgeBg: "bg-blue-50 text-[#0C4FA8] border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
+    borderHover: "hover:border-[#0C4FA8] hover:shadow-blue-500/10",
   },
   {
     icon: TrendingUp,
-    badgeBg: "bg-indigo-50 text-indigo-600 border-indigo-200/80 group-hover:bg-indigo-600 group-hover:text-white",
-    borderHover: "hover:border-indigo-400 hover:shadow-indigo-500/10",
+    badgeBg: "bg-orange-50 text-[#E14E2E] border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white",
+    borderHover: "hover:border-[#E14E2E] hover:shadow-orange-500/10",
   },
   {
     icon: Briefcase,
-    badgeBg: "bg-violet-50 text-violet-600 border-violet-200/80 group-hover:bg-violet-600 group-hover:text-white",
-    borderHover: "hover:border-violet-400 hover:shadow-violet-500/10",
+    badgeBg: "bg-blue-50 text-[#0C4FA8] border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
+    borderHover: "hover:border-[#0C4FA8] hover:shadow-blue-500/10",
   },
   {
     icon: Users,
-    badgeBg: "bg-cyan-50 text-cyan-700 border-cyan-200/80 group-hover:bg-cyan-600 group-hover:text-white",
-    borderHover: "hover:border-cyan-400 hover:shadow-cyan-500/10",
+    badgeBg: "bg-orange-50 text-[#E14E2E] border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white",
+    borderHover: "hover:border-[#E14E2E] hover:shadow-orange-500/10",
   },
   {
     icon: GraduationCap,
-    badgeBg: "bg-emerald-50 text-emerald-600 border-emerald-200/80 group-hover:bg-emerald-600 group-hover:text-white",
-    borderHover: "hover:border-emerald-400 hover:shadow-emerald-500/10",
+    badgeBg: "bg-blue-50 text-[#0C4FA8] border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
+    borderHover: "hover:border-[#0C4FA8] hover:shadow-blue-500/10",
   },
   {
     icon: Laptop,
-    badgeBg: "bg-amber-50 text-amber-700 border-amber-200/80 group-hover:bg-amber-600 group-hover:text-white",
-    borderHover: "hover:border-amber-400 hover:shadow-amber-500/10",
+    badgeBg: "bg-orange-50 text-[#E14E2E] border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white",
+    borderHover: "hover:border-[#E14E2E] hover:shadow-orange-500/10",
   },
 ];
 
@@ -473,14 +473,14 @@ export function WhoShouldAttendPoints({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-blue-200/90 bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/30 p-6 sm:p-7 shadow-xs space-y-5",
+        "rounded-2xl border border-blue-200 bg-white p-6 sm:p-7 shadow-xs space-y-5",
         className,
       )}
     >
       {/* Distinct Header with Gradient Icon & Tag */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-100/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-100">
         <div className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-xs shrink-0">
+          <span className="grid size-10 place-items-center rounded-xl bg-[#0C4FA8] text-white shadow-xs shrink-0">
             <Users className="size-5" />
           </span>
           <div className="text-left">
@@ -492,16 +492,16 @@ export function WhoShouldAttendPoints({
             </p>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200/80 shadow-2xs">
-          <Target className="size-3.5 text-blue-600" />
+        <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-[#0C4FA8] border border-blue-200 shadow-2xs">
+          <Target className="size-3.5 text-[#0C4FA8]" />
           <span>Tailored Career Tracks</span>
         </span>
       </div>
 
       {/* Preamble Callout Banner if present */}
       {preamble && (
-        <div className="rounded-xl border border-blue-200/90 bg-gradient-to-r from-blue-50/90 via-indigo-50/40 to-white p-4 text-xs sm:text-sm text-slate-700 leading-relaxed flex items-start gap-3 shadow-2xs text-left">
-          <span className="grid size-6 place-items-center rounded-lg bg-blue-600 text-white shrink-0 mt-0.5">
+        <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 text-xs sm:text-sm text-slate-700 leading-relaxed flex items-start gap-3 shadow-2xs text-left">
+          <span className="grid size-6 place-items-center rounded-lg bg-[#0C4FA8] text-white shrink-0 mt-0.5">
             <Sparkles className="size-3.5" />
           </span>
           <p className="font-medium text-slate-800 leading-snug">{preamble}</p>
@@ -680,14 +680,14 @@ export function CareerOutcomesPoints({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/40 via-white to-teal-50/30 p-6 sm:p-7 shadow-xs space-y-5",
+        "rounded-2xl border border-blue-200 bg-white p-6 sm:p-7 shadow-xs space-y-5",
         className,
       )}
     >
-      {/* Distinct Emerald Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-emerald-100">
+      {/* Distinct Blue & Orange Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-100">
         <div className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 text-white shadow-xs shrink-0">
+          <span className="grid size-10 place-items-center rounded-xl bg-[#0C4FA8] text-white shadow-xs shrink-0">
             <Award className="size-5" />
           </span>
           <div className="text-left">
@@ -699,8 +699,8 @@ export function CareerOutcomesPoints({
             </p>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs">
-          <ShieldCheck className="size-3.5 text-emerald-600" />
+        <span className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1 rounded-full text-[11px] font-bold bg-orange-50 text-[#E14E2E] border border-orange-200 shadow-2xs">
+          <ShieldCheck className="size-3.5 text-[#E14E2E]" />
           <span>Industry Validated</span>
         </span>
       </div>
@@ -721,7 +721,7 @@ export function CareerOutcomesPoints({
           return (
             <div
               key={pt.num}
-              className="group flex flex-col justify-between p-4 rounded-xl border border-emerald-200/80 bg-white hover:border-emerald-500 hover:shadow-md transition-all duration-200 text-left shadow-2xs h-full"
+              className="group flex flex-col justify-between p-4 rounded-xl border border-slate-200 bg-white hover:border-[#0C4FA8] hover:shadow-md transition-all duration-200 text-left shadow-2xs h-full"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
@@ -729,8 +729,8 @@ export function CareerOutcomesPoints({
                     className={cn(
                       "grid size-7 place-items-center rounded-lg font-black text-xs shrink-0 transition-colors",
                       isSalary
-                        ? "bg-amber-50 text-amber-700 border border-amber-200/80 group-hover:bg-amber-600 group-hover:text-white"
-                        : "bg-emerald-50 text-emerald-600 border border-emerald-200/80 group-hover:bg-emerald-600 group-hover:text-white",
+                        ? "bg-orange-50 text-[#E14E2E] border border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white"
+                        : "bg-blue-50 text-[#0C4FA8] border border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
                     )}
                   >
                     <Check className="size-4 stroke-[2.5]" />
@@ -739,8 +739,8 @@ export function CareerOutcomesPoints({
                     className={cn(
                       "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md",
                       isSalary
-                        ? "text-amber-800 bg-amber-50 border border-amber-200/70"
-                        : "text-emerald-700 bg-emerald-50/80 border border-emerald-200/60",
+                        ? "text-[#E14E2E] bg-orange-50 border border-orange-200"
+                        : "text-[#0C4FA8] bg-blue-50 border border-blue-200",
                     )}
                   >
                     {isSalary ? "Salary Benchmark" : "Verified Role"}
@@ -762,8 +762,8 @@ export function CareerOutcomesPoints({
 
       {/* Note / Salary Footnote Banner if present */}
       {note && (
-        <div className="rounded-xl border border-emerald-200/70 bg-emerald-50/40 p-3.5 text-xs text-slate-600 text-left flex items-start gap-2.5">
-          <span className="font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-200/70 text-[10px] uppercase px-2 py-0.5 rounded-md shrink-0">
+        <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-3.5 text-xs text-slate-700 text-left flex items-start gap-2.5">
+          <span className="font-bold text-white bg-[#0C4FA8] text-[10px] uppercase px-2 py-0.5 rounded-md shrink-0">
             Note
           </span>
           <p className="leading-relaxed text-[11px] sm:text-xs text-slate-600">{note}</p>
@@ -771,7 +771,7 @@ export function CareerOutcomesPoints({
       )}
 
       {/* Career Launchpad Proof Points */}
-      <div className="pt-2 border-t border-emerald-100/80">
+      <div className="pt-2 border-t border-slate-100">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {[
             { icon: FileCheck, label: "Live Portfolio Projects" },
@@ -780,12 +780,18 @@ export function CareerOutcomesPoints({
             { icon: Users, label: "Hiring Partner Referrals" },
           ].map((item, idx) => {
             const ItemIcon = item.icon;
+            const isOrange = idx % 2 === 1;
             return (
               <div
                 key={idx}
-                className="flex items-center gap-2 p-2.5 rounded-lg bg-emerald-50/60 border border-emerald-200/60 text-emerald-900 text-xs font-semibold"
+                className={cn(
+                  "flex items-center gap-2 p-2.5 rounded-lg border text-xs font-semibold",
+                  isOrange
+                    ? "bg-orange-50/60 border-orange-200/70 text-[#E14E2E]"
+                    : "bg-blue-50/60 border-blue-200/70 text-[#0C4FA8]",
+                )}
               >
-                <ItemIcon className="size-4 text-emerald-600 shrink-0" />
+                <ItemIcon className="size-4 shrink-0" />
                 <span className="text-[11px] leading-tight font-bold">{item.label}</span>
               </div>
             );

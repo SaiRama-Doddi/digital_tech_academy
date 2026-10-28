@@ -100,20 +100,16 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="surface-navy relative text-slate-300 border-t border-sky-500/20 overflow-hidden">
+    <footer className="bg-white relative text-slate-700 border-t border-slate-200 overflow-hidden">
       {/* ========================================================================= */}
-      {/* 1. TOP AMBIENT GLOW & MULTI-STOP BORDER                                   */}
+      {/* 1. TOP BRAND ACCENT BORDER                                                */}
       {/* ========================================================================= */}
       <div
-        className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent"
+        className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0C4FA8] via-[#E14E2E] to-[#0C4FA8]"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-blue-600/10 blur-[120px]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-40 right-0 size-[500px] rounded-full bg-indigo-600/10 blur-[140px]"
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-blue-500/5 blur-[120px]"
         aria-hidden="true"
       />
 
@@ -125,20 +121,20 @@ export function Footer() {
           {/* Column 1: Brand & Description (4 cols on lg/xl) */}
           <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-4 min-w-0">
             <div>
-              <Logo onDark />
-              <div className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-400">
+              <Logo />
+              <div className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0C4FA8]">
                 <span>Digital Marketing</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-slate-400">•</span>
                 <span>Programmatic Advertising</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-slate-400">•</span>
                 <span>Cyber Security</span>
               </div>
-              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300 max-w-md font-normal">
+              <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 max-w-md font-normal">
                 Digitechademy is a practical learning platform focused on helping learners build
                 relevant digital and technology skills through structured training, practical
                 learning and expert guidance.
               </p>
-              <p className="mt-2 text-xs font-bold text-sky-300 tracking-wide">
+              <p className="mt-2 text-xs font-bold text-[#E14E2E] tracking-wider uppercase">
                 LEARN • GROW • ACHIEVE
               </p>
             </div>
@@ -150,25 +146,25 @@ export function Footer() {
                   icon: OfficialLinkedInIcon,
                   label: "LinkedIn",
                   href: "https://linkedin.com",
-                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(10,102,194,0.65)]",
+                  hoverShadow: "hover:shadow-md",
                 },
                 {
                   icon: OfficialTwitterIcon,
                   label: "Twitter",
                   href: "https://twitter.com",
-                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(29,161,242,0.65)]",
+                  hoverShadow: "hover:shadow-md",
                 },
                 {
                   icon: OfficialInstagramIcon,
                   label: "Instagram",
                   href: "https://instagram.com",
-                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(225,48,108,0.65)]",
+                  hoverShadow: "hover:shadow-md",
                 },
                 {
                   icon: OfficialYouTubeIcon,
                   label: "YouTube",
                   href: "https://youtube.com",
-                  hoverShadow: "hover:shadow-[0_6px_20px_-2px_rgba(255,0,0,0.65)]",
+                  hoverShadow: "hover:shadow-md",
                 },
               ].map((social) => {
                 const IconComp = social.icon;
@@ -179,9 +175,9 @@ export function Footer() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Follow us on ${social.label}`}
-                    className={`group relative rounded-xl transition-all duration-200 hover:-translate-y-1 hover:scale-105 active:scale-95 shadow-md ${social.hoverShadow}`}
+                    className={`group relative rounded-xl transition-all duration-200 hover:-translate-y-1 hover:scale-105 active:scale-95 shadow-xs ${social.hoverShadow}`}
                   >
-                    <IconComp className="size-9.5 rounded-xl block" />
+                    <IconComp className="size-9 rounded-xl block" />
                   </a>
                 );
               })}
@@ -191,8 +187,8 @@ export function Footer() {
           {/* Column 2: Quick Links (2 cols) */}
           <div className="md:col-span-1 lg:col-span-2 min-w-0">
             <div className="flex items-center gap-2 mb-4">
-              <span className="h-4 w-1 rounded-full bg-sky-500 shrink-0" />
-              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
+              <span className="h-4 w-1 rounded-full bg-[#0C4FA8] shrink-0" />
+              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-slate-900 whitespace-nowrap">
                 Navigation
               </h3>
             </div>
@@ -201,9 +197,9 @@ export function Footer() {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="group flex items-center gap-1.5 text-slate-300 transition-all duration-200 hover:text-sky-300 hover:translate-x-1 w-full min-w-0"
+                    className="group flex items-center gap-1.5 text-slate-600 transition-all duration-200 hover:text-[#0C4FA8] hover:translate-x-1 w-full min-w-0 font-medium"
                   >
-                    <ChevronRight className="size-3 text-sky-400 shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
+                    <ChevronRight className="size-3 text-[#0C4FA8] shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
                     <span className="truncate">{link.label}</span>
                   </Link>
                 </li>
@@ -211,11 +207,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Courses (3 cols on lg/xl with min-w-0 and clean truncate) */}
+          {/* Column 3: Courses (3 cols on lg/xl) */}
           <div className="md:col-span-1 lg:col-span-3 min-w-0">
             <div className="flex items-center gap-2 mb-4">
-              <span className="h-4 w-1 rounded-full bg-indigo-500 shrink-0" />
-              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
+              <span className="h-4 w-1 rounded-full bg-[#E14E2E] shrink-0" />
+              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-slate-900 whitespace-nowrap">
                 Programs
               </h3>
             </div>
@@ -228,9 +224,9 @@ export function Footer() {
                     <Link
                       to="/courses/$slug"
                       params={{ slug: course.slug }}
-                      className="group flex items-center gap-1.5 text-slate-300 transition-all duration-200 hover:text-sky-300 hover:translate-x-1 w-full min-w-0 overflow-hidden"
+                      className="group flex items-center gap-1.5 text-slate-600 transition-all duration-200 hover:text-[#0C4FA8] hover:translate-x-1 w-full min-w-0 overflow-hidden font-medium"
                     >
-                      <ChevronRight className="size-3 text-indigo-400 shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
+                      <ChevronRight className="size-3 text-[#E14E2E] shrink-0 opacity-0 -translate-x-1.5 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0" />
                       <span className="truncate block min-w-0 flex-1">{course.title}</span>
                     </Link>
                   </li>
@@ -238,28 +234,28 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Contact Information (3 cols on lg/xl with min-w-0) */}
+          {/* Column 4: Contact Information (3 cols on lg/xl) */}
           <div className="md:col-span-2 lg:col-span-3 min-w-0">
             <div className="flex items-center gap-2 mb-4">
-              <span className="h-4 w-1 rounded-full bg-emerald-500 shrink-0" />
-              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-white whitespace-nowrap">
+              <span className="h-4 w-1 rounded-full bg-[#0C4FA8] shrink-0" />
+              <h3 className="text-xs font-black uppercase tracking-[0.16em] text-slate-900 whitespace-nowrap">
                 Contact Us
               </h3>
             </div>
-            <ul className="space-y-3 text-xs sm:text-[13px] text-slate-300 min-w-0">
+            <ul className="space-y-3 text-xs sm:text-[13px] text-slate-600 min-w-0">
               <li className="min-w-0">
                 <a
                   href={site.phoneHref}
-                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-white/[0.04] hover:text-white min-w-0"
+                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-blue-50/50 min-w-0"
                 >
-                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-sky-500/15 border border-sky-400/30 text-sky-400 transition-all group-hover:bg-sky-500 group-hover:text-white group-hover:scale-110 shadow-sm shadow-sky-500/20">
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-blue-50 border border-blue-200 text-[#0C4FA8] transition-all group-hover:bg-[#0C4FA8] group-hover:text-white group-hover:scale-110 shadow-xs">
                     <Phone className="size-3.5" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="block font-bold text-white group-hover:text-sky-300 transition-colors truncate">
+                    <span className="block font-bold text-slate-900 group-hover:text-[#0C4FA8] transition-colors truncate">
                       {site.phone}
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">
+                    <span className="block text-[11px] text-slate-500 mt-0.5">
                       Admissions Hotline
                     </span>
                   </div>
@@ -270,16 +266,16 @@ export function Footer() {
                   href={whatsappLink()}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-white/[0.04] hover:text-white min-w-0"
+                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-orange-50/50 min-w-0"
                 >
-                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-400 transition-all group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 shadow-sm shadow-emerald-500/20">
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-orange-50 border border-orange-200 text-[#E14E2E] transition-all group-hover:bg-[#E14E2E] group-hover:text-white group-hover:scale-110 shadow-xs">
                     <MessageCircle className="size-3.5" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="block font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
+                    <span className="block font-bold text-slate-900 group-hover:text-[#E14E2E] transition-colors truncate">
                       WhatsApp Enquiry
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">
+                    <span className="block text-[11px] text-slate-500 mt-0.5">
                       Instant Counselor Chat
                     </span>
                   </div>
@@ -288,26 +284,26 @@ export function Footer() {
               <li className="min-w-0">
                 <a
                   href={`mailto:${site.email}`}
-                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-white/[0.04] hover:text-white min-w-0"
+                  className="group flex items-start gap-2.5 rounded-xl p-1.5 -m-1.5 transition-colors hover:bg-blue-50/50 min-w-0"
                 >
-                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-indigo-500/15 border border-indigo-400/30 text-indigo-400 transition-all group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 shadow-sm shadow-indigo-500/20">
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-blue-50 border border-blue-200 text-[#0C4FA8] transition-all group-hover:bg-[#0C4FA8] group-hover:text-white group-hover:scale-110 shadow-xs">
                     <Mail className="size-3.5" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <span className="block font-semibold text-white group-hover:text-indigo-300 transition-colors break-all text-xs xl:text-[13px] leading-snug">
+                    <span className="block font-semibold text-slate-900 group-hover:text-[#0C4FA8] transition-colors break-all text-xs xl:text-[13px] leading-snug">
                       {site.email}
                     </span>
-                    <span className="block text-[11px] text-slate-400 mt-0.5">
+                    <span className="block text-[11px] text-slate-500 mt-0.5">
                       Official Business Email
                     </span>
                   </div>
                 </a>
               </li>
               <li className="flex items-start gap-2.5 p-1.5 -m-1.5 min-w-0">
-                <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-rose-500/15 border border-rose-400/30 text-rose-400 shadow-sm shadow-rose-500/20">
+                <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-orange-50 border border-orange-200 text-[#E14E2E] shadow-xs">
                   <MapPin className="size-3.5" />
                 </span>
-                <span className="leading-relaxed text-slate-300 text-[11.5px] min-w-0 flex-1">
+                <span className="leading-relaxed text-slate-600 text-[11.5px] min-w-0 flex-1">
                   {site.address}
                 </span>
               </li>
@@ -319,21 +315,21 @@ export function Footer() {
       {/* ========================================================================= */}
       {/* 4. FOOTER BOTTOM COMPLETE LINKS & COPYRIGHT STRIP                          */}
       {/* ========================================================================= */}
-      <div className="border-t border-white/[0.08] bg-[#01040a]/95 py-6">
-        <div className="container-site flex flex-col items-center justify-between gap-4 text-xs text-slate-400 lg:flex-row">
+      <div className="border-t border-slate-200 bg-slate-50/80 py-5">
+        <div className="container-site flex flex-col items-center justify-between gap-4 text-xs text-slate-500 lg:flex-row">
           <p className="text-center sm:text-left">
-            © 2026 <span className="font-bold text-white">{site.name}</span>. All Rights Reserved.{" "}
-            <span className="text-sky-400 font-semibold tracking-wider">
+            © 2026 <span className="font-bold text-slate-900">{site.name}</span>. All Rights Reserved.{" "}
+            <span className="text-[#E14E2E] font-bold tracking-wider">
               LEARN • GROW • ACHIEVE
             </span>
           </p>
 
-          <div className="flex items-center gap-x-3 text-[11.5px] text-slate-400">
-            <Link to="/privacy-policy" className="transition-colors hover:text-sky-300">
+          <div className="flex items-center gap-x-3 text-[11.5px] text-slate-500">
+            <Link to="/privacy-policy" className="transition-colors hover:text-[#0C4FA8]">
               Privacy Policy
             </Link>
-            <span className="text-slate-700">|</span>
-            <Link to="/terms" className="transition-colors hover:text-sky-300">
+            <span className="text-slate-300">|</span>
+            <Link to="/terms" className="transition-colors hover:text-[#0C4FA8]">
               Terms &amp; Conditions
             </Link>
           </div>

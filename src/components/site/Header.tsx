@@ -271,19 +271,19 @@ export function Header() {
       {/* ========================================================================= */}
       {/* 1. TOP ANNOUNCEMENT TICKER BAR                                            */}
       {/* ========================================================================= */}
-      <div className="w-full bg-gradient-to-r from-slate-950 via-[#07132b] to-slate-950 text-slate-300 border-b border-white/[0.08] text-xs font-medium select-none py-1.5 sm:py-2">
+      <div className="w-full bg-[#0C4FA8] text-white border-b border-blue-800 text-xs font-medium select-none py-1.5 sm:py-2">
         <div className="container-site">
           {/* Mobile super-compact view */}
           <div className="flex sm:hidden items-center justify-between gap-1.5 text-[10px] font-semibold min-w-0 w-full">
             <div className="flex items-center gap-1 shrink-0">
               <span className="relative flex size-1.5 shrink-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-white" />
               </span>
-              <span className="font-extrabold text-emerald-400 uppercase tracking-wider text-[8.5px] min-[360px]:text-[9.5px] whitespace-nowrap">
+              <span className="font-extrabold bg-[#E14E2E] text-white px-2 py-0.5 rounded-full uppercase tracking-wider text-[8.5px] min-[360px]:text-[9px] whitespace-nowrap">
                 Admissions Open
               </span>
-              <span className="text-slate-500 shrink-0 select-none text-[9px]" aria-hidden="true">
+              <span className="text-blue-300 shrink-0 select-none text-[9px]" aria-hidden="true">
                 •
               </span>
             </div>
@@ -291,24 +291,24 @@ export function Header() {
             <div className="relative overflow-hidden flex-1 min-w-0 h-4 flex items-center mx-1 [mask-image:linear-gradient(to_right,transparent,black_6px,black_calc(100%-6px),transparent)]">
               <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused]">
                 <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]">
-                  <span className="text-slate-200 font-medium whitespace-nowrap">
+                  <span className="text-white font-medium whitespace-nowrap">
                     New Batches Starting Soon
                   </span>
-                  <span className="text-amber-400/90 font-bold whitespace-nowrap">
+                  <span className="text-orange-200 font-bold whitespace-nowrap">
                     • Limited Seats
                   </span>
-                  <span className="text-sky-300 font-semibold whitespace-nowrap">
+                  <span className="text-blue-100 font-semibold whitespace-nowrap">
                     • Fast-Track Batches
                   </span>
                 </div>
                 <div className="flex items-center gap-2.5 pr-2.5 shrink-0 text-[8.5px] min-[360px]:text-[9.5px]" aria-hidden="true">
-                  <span className="text-slate-200 font-medium whitespace-nowrap">
+                  <span className="text-white font-medium whitespace-nowrap">
                     New Batches Starting Soon
                   </span>
-                  <span className="text-amber-400/90 font-bold whitespace-nowrap">
+                  <span className="text-orange-200 font-bold whitespace-nowrap">
                     • Limited Seats
                   </span>
-                  <span className="text-sky-300 font-semibold whitespace-nowrap">
+                  <span className="text-blue-100 font-semibold whitespace-nowrap">
                     • Fast-Track Batches
                   </span>
                 </div>
@@ -318,7 +318,7 @@ export function Header() {
             <div className="flex items-center gap-1.5 shrink-0">
               <Link
                 to="/courses"
-                className="inline-flex items-center gap-1 rounded-full bg-blue-600/30 border border-blue-400/30 px-2 py-0.5 text-[9px] font-bold text-sky-300 hover:bg-blue-600 hover:text-white shrink-0 transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-1 rounded-full bg-white/20 border border-white/30 px-2 py-0.5 text-[9px] font-bold text-white hover:bg-white hover:text-[#0C4FA8] shrink-0 transition-colors whitespace-nowrap"
               >
                 <span>Programs</span>
                 <ArrowRight className="size-2.5" />
@@ -328,7 +328,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-                className="grid size-5.5 place-items-center rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white transition-colors shrink-0"
+                className="grid size-5.5 place-items-center rounded-full bg-white/20 text-white border border-white/30 hover:bg-white hover:text-[#0C4FA8] transition-colors shrink-0"
               >
                 <MessageCircle className="size-2.5" />
               </a>
@@ -339,43 +339,43 @@ export function Header() {
           <div className="hidden sm:flex items-center justify-between gap-3 w-full">
             <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
               <span className="relative flex size-2 shrink-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-white" />
               </span>
-              <span className="font-extrabold text-emerald-400 tracking-wider text-[11px] uppercase whitespace-nowrap shrink-0">
+              <span className="font-extrabold bg-[#E14E2E] text-white px-2.5 py-0.5 rounded-full tracking-wider text-[10.5px] uppercase whitespace-nowrap shrink-0 shadow-xs">
                 Admissions Open 2026
               </span>
-              <span className="text-slate-600 shrink-0 select-none text-[11px]" aria-hidden="true">
+              <span className="text-blue-300 shrink-0 select-none text-[11px]" aria-hidden="true">
                 •
               </span>
 
               <div className="relative overflow-hidden flex-1 max-w-[320px] lg:max-w-[420px] xl:max-w-[500px] h-4 flex items-center [mask-image:linear-gradient(to_right,transparent,black_8px,black_calc(100%-8px),transparent)]">
                 <div className="flex w-max animate-announcement-marquee hover:[animation-play-state:paused]">
                   <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]">
-                    <span className="text-slate-200 font-medium whitespace-nowrap">
+                    <span className="text-white font-medium whitespace-nowrap">
                       New Batches Starting Soon
                     </span>
-                    <span className="text-amber-300 font-bold whitespace-nowrap">
+                    <span className="text-orange-200 font-bold whitespace-nowrap">
                       • Practical Live Training
                     </span>
-                    <span className="text-sky-300 font-medium whitespace-nowrap">
+                    <span className="text-blue-100 font-medium whitespace-nowrap">
                       • Weekend &amp; Weekday Batches
                     </span>
-                    <span className="text-slate-600 select-none" aria-hidden="true">
+                    <span className="text-blue-300 select-none" aria-hidden="true">
                       •
                     </span>
                   </div>
                   <div className="flex items-center gap-3 pr-3 shrink-0 text-[11px]" aria-hidden="true">
-                    <span className="text-slate-200 font-medium whitespace-nowrap">
+                    <span className="text-white font-medium whitespace-nowrap">
                       New Batches Starting Soon
                     </span>
-                    <span className="text-amber-300 font-bold whitespace-nowrap">
+                    <span className="text-orange-200 font-bold whitespace-nowrap">
                       • Practical Live Training
                     </span>
-                    <span className="text-sky-300 font-medium whitespace-nowrap">
+                    <span className="text-blue-100 font-medium whitespace-nowrap">
                       • Weekend &amp; Weekday Batches
                     </span>
-                    <span className="text-slate-600 select-none" aria-hidden="true">
+                    <span className="text-blue-300 select-none" aria-hidden="true">
                       •
                     </span>
                   </div>
@@ -386,22 +386,22 @@ export function Header() {
             <div className="flex items-center gap-2 shrink-0 text-[11px]">
               <a
                 href={site.phoneHref}
-                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.06] hover:bg-blue-600/20 border border-white/[0.08] hover:border-blue-400/40 text-slate-200 hover:text-white transition-all whitespace-nowrap shrink-0"
+                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white border border-white/20 hover:border-white text-white hover:text-[#0C4FA8] transition-all whitespace-nowrap shrink-0"
               >
-                <span className="grid size-3.5 place-items-center rounded-full bg-blue-600/30 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
+                <span className="grid size-3.5 place-items-center rounded-full bg-white/20 text-white group-hover:bg-[#0C4FA8] group-hover:text-white transition-all shrink-0">
                   <Phone className="size-2" />
                 </span>
                 <span className="font-semibold text-[10.5px] hidden xl:inline">{site.phone}</span>
                 <span className="font-semibold text-[10.5px] xl:hidden">Call</span>
               </a>
-              <span className="h-3 w-px bg-white/10 shrink-0" aria-hidden="true" />
+              <span className="h-3 w-px bg-white/20 shrink-0" aria-hidden="true" />
               <a
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 hover:text-emerald-200 transition-all font-semibold text-[10.5px] whitespace-nowrap shrink-0"
+                className="group inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white border border-white/20 hover:border-white text-white hover:text-[#0C4FA8] transition-all font-semibold text-[10.5px] whitespace-nowrap shrink-0"
               >
-                <span className="grid size-3.5 place-items-center rounded-full bg-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all shrink-0">
+                <span className="grid size-3.5 place-items-center rounded-full bg-white/20 text-white group-hover:bg-[#0C4FA8] group-hover:text-white transition-all shrink-0">
                   <MessageCircle className="size-2" />
                 </span>
                 <span>WhatsApp</span>
