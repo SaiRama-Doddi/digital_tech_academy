@@ -183,8 +183,9 @@ function adaptFirebaseCourseToDetail(fbCourse: FirebaseCourse): Course {
 
 function renderFormattedText(text?: string | null) {
   if (!text) return null;
-  if (!text.includes("**")) return text;
-  const parts = text.split(/(\*\*.*?\*\*)/g);
+  const clean = text.replace(/\r?\n+/g, " ").trim();
+  if (!clean.includes("**")) return clean;
+  const parts = clean.split(/(\*\*.*?\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return (
@@ -450,7 +451,7 @@ function CourseDetailPage() {
                 </h1>
                 <p
                   className={cn(
-                    "leading-relaxed font-normal w-full max-w-4xl transition-all duration-300",
+                    "leading-relaxed font-normal w-full max-w-4xl transition-all duration-300 text-justify",
                     isHeroScrolled
                       ? "text-[10.5px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5"
                       : "text-xs sm:text-sm text-slate-600 mt-2 sm:mt-2.5",
@@ -513,7 +514,7 @@ function CourseDetailPage() {
                 <div className="space-y-7 animate-in fade-in duration-200">
                   {/* Opening Lead Paragraph from screenshot */}
                   <div className="bg-white rounded-2xl border border-slate-300 p-6 sm:p-7 shadow-xs space-y-4">
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-left">
+                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed text-justify">
                       Our online {course.title} training and placement program is fully job-oriented
                       and includes real-time project work for hands-on learning. The{" "}
                       <strong className="text-navy">{displayTitle} Course</strong> is developed by

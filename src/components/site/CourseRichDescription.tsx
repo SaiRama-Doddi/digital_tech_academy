@@ -261,7 +261,7 @@ export function CourseRichDescription({
       {parsed.paragraphs.map((para, idx) => (
         <p
           key={idx}
-          className="text-xs sm:text-sm text-slate-700 leading-relaxed text-left"
+          className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify"
         >
           {renderFormattedMarkdown(para)}
         </p>
