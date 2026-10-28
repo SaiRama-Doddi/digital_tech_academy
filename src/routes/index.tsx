@@ -56,14 +56,13 @@ import domainProgrammaticAdsImg from "@/assets/domain-programmatic-ads.jpg";
 import { BtnLink } from "@/components/site/Btn";
 import { CourseCard } from "@/components/site/CourseCard";
 import { CountUp } from "@/components/site/CountUp";
-import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { DemoClassModal } from "@/components/site/DemoClassModal";
 import { Icon } from "@/components/site/Icon";
 import { StudentLearningPath } from "@/components/site/StudentLearningPath";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { HeroCarousel } from "@/components/site/HeroCarousel";
-import { homeFaqs, practicalTraining, whoIsForAudience } from "@/data/content";
+import { practicalTraining, whoIsForAudience } from "@/data/content";
 import { courses } from "@/data/courses";
 import {
   subscribeCourses,
@@ -168,9 +167,6 @@ function Home() {
 
       {/* 11. Who Is This For? */}
       <WhoIsThisFor />
-
-      {/* 13. FAQ */}
-      <FaqSection />
 
       {/* Interactive Global Demo Class Modal */}
       <DemoClassModal />
@@ -1856,87 +1852,6 @@ function WhoIsThisFor() {
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * =========================================================================
- * 17. FAQ — EXACT QUESTIONS & ANSWERS
- * =========================================================================
- */
-function FaqSection() {
-  const midIndex = Math.ceil(homeFaqs.length / 2);
-  const leftFaqs = homeFaqs.slice(0, midIndex);
-  const rightFaqs = homeFaqs.slice(midIndex);
-
-  return (
-    <section className="relative bg-white py-7 sm:py-10 overflow-hidden border-b border-slate-200/80">
-      {/* Soft ambient gradient accents */}
-      <div
-        className="pointer-events-none absolute -top-24 -left-24 size-80 rounded-full bg-blue-500/5 blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-24 -right-24 size-80 rounded-full bg-sky-500/5 blur-3xl"
-        aria-hidden="true"
-      />
-
-      <div className="container-site relative z-10">
-        {/* Section Header: Title on Left, Action Buttons Up on Right */}
-        <div
-          className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2.5 sm:mb-3"
-          data-reveal="top"
-        >
-          <div className="min-w-0 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/70 border border-blue-200 text-blue-800 text-xs font-bold tracking-wider uppercase mb-2">
-              <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-              FAQ — QUESTIONS &amp; ANSWERS
-            </div>
-
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.2] whitespace-normal sm:whitespace-nowrap">
-              Frequently Asked Questions
-            </h2>
-          </div>
-
-          {/* Buttons placed up on the right */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0 self-start md:self-center">
-            <BtnLink
-              to="/faq"
-              variant="outline"
-              size="md"
-              className="border-slate-300 text-slate-800 hover:bg-slate-100/80 font-bold px-4.5 py-2.5 rounded-xl text-xs sm:text-sm shadow-xs"
-            >
-              <span>View All Questions</span>
-              <ArrowRight className="size-3.5 ml-1.5" />
-            </BtnLink>
-
-            <BtnLink
-              to="/contact"
-              variant="outline"
-              size="md"
-              className="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold px-4.5 py-2.5 rounded-xl text-xs sm:text-sm border border-blue-200 shadow-xs"
-            >
-              <span>Ask a Counselor</span>
-            </BtnLink>
-          </div>
-        </div>
-
-        {/* Paragraph brought below across full width, wrapping cleanly */}
-        <p
-          className="mb-5 sm:mb-6 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-5xl"
-          data-reveal="top"
-        >
-          Find clear, straightforward answers about eligibility, hands-on learning, offered
-          programs, prerequisites, and certifications at DIGITECHADEMY.
-        </p>
-
-        {/* FAQs Side by Side in 2 Balanced Columns */}
-        <div className="grid gap-5 lg:gap-6 md:grid-cols-2 items-start" data-reveal="bottom">
-          <FaqAccordion items={leftFaqs} defaultOpen={0} />
-          <FaqAccordion items={rightFaqs} defaultOpen={null} />
         </div>
       </div>
     </section>

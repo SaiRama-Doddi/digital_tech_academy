@@ -11,6 +11,7 @@ import {
 import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import faviconPng from "../assets/favicon.png";
 
 function NotFoundComponent() {
   return (
@@ -111,7 +112,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: faviconPng, type: "image/png" },
+      { rel: "shortcut icon", href: faviconPng, type: "image/png" },
+      { rel: "apple-touch-icon", href: faviconPng },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
