@@ -640,16 +640,73 @@ export function parseOutcomesData(input: string[] | string | undefined | null): 
   return { preamble, items, note };
 }
 
+export interface SalaryTier {
+  role: string;
+  salary: string;
+  percentage: number;
+}
+
+export function getSalaryTiers(
+  slug?: string,
+  category?: string,
+  title?: string,
+): SalaryTier[] {
+  const s = (slug || "").toLowerCase();
+  const c = (category || "").toLowerCase();
+  const t = (title || "").toLowerCase();
+
+  if (s.includes("programmatic") || c.includes("programmatic") || t.includes("programmatic")) {
+    return [
+      { role: "Entry-Level", salary: "₹4–6 LPA", percentage: 28 },
+      { role: "Mid-Level", salary: "₹6–10 LPA", percentage: 48 },
+      { role: "Senior Specialist / Trader", salary: "₹10–16 LPA", percentage: 72 },
+      { role: "Programmatic Lead / Manager", salary: "₹16–25 LPA", percentage: 96 },
+    ];
+  }
+
+  if (s.includes("cyber") || c.includes("cyber") || t.includes("security") || s.includes("security")) {
+    return [
+      { role: "Entry-Level (SOC Analyst L1)", salary: "₹4.5–7 LPA", percentage: 28 },
+      { role: "Mid-Level (Security Analyst L2 / Pen Tester)", salary: "₹7–12 LPA", percentage: 48 },
+      { role: "Senior Specialist / Security Engineer", salary: "₹12–18 LPA", percentage: 72 },
+      { role: "Cybersecurity Lead / Architect", salary: "₹18–28 LPA", percentage: 96 },
+    ];
+  }
+
+  if (s.includes("digital-marketing") || c.includes("marketing") || t.includes("marketing")) {
+    return [
+      { role: "Entry-Level (Digital Marketing Exec)", salary: "₹3.5–5.5 LPA", percentage: 28 },
+      { role: "Mid-Level (SEO / SEM / Growth Specialist)", salary: "₹5.5–9.5 LPA", percentage: 48 },
+      { role: "Senior Specialist / Performance Lead", salary: "₹9.5–15 LPA", percentage: 72 },
+      { role: "Digital Marketing Lead / Manager", salary: "₹15–24 LPA", percentage: 96 },
+    ];
+  }
+
+  return [
+    { role: "Entry-Level", salary: "₹4–6 LPA", percentage: 28 },
+    { role: "Mid-Level", salary: "₹6–10 LPA", percentage: 48 },
+    { role: "Senior Specialist / Trader", salary: "₹10–16 LPA", percentage: 72 },
+    { role: "Programmatic Lead / Manager", salary: "₹16–25 LPA", percentage: 96 },
+  ];
+}
+
 interface OutcomesSectionProps {
   outcomes?: string[] | null | undefined;
   className?: string | undefined;
+  courseSlug?: string | undefined;
+  courseCategory?: string | undefined;
+  courseTitle?: string | undefined;
 }
 
 export function CareerOutcomesPoints({
   outcomes,
   className,
+  courseSlug,
+  courseCategory,
+  courseTitle,
 }: OutcomesSectionProps) {
   const { preamble, items, note } = parseOutcomesData(outcomes);
+  const salaryTiers = getSalaryTiers(courseSlug, courseCategory, courseTitle);
 
   const displayItems =
     items.length > 0
@@ -677,10 +734,23 @@ export function CareerOutcomesPoints({
           },
         ];
 
+  // Filter out any salary lines from competency cards since they are now featured in Market Demand & Salary Trends
+  const competencyItems = displayItems.filter(
+    (pt) =>
+      !(
+        pt.body?.includes("₹") ||
+        pt.body?.toLowerCase().includes("lpa") ||
+        pt.title?.toLowerCase().includes("lpa") ||
+        pt.title?.toLowerCase().includes("entry-level (") ||
+        pt.title?.toLowerCase().includes("mid-level (") ||
+        pt.title?.toLowerCase().includes("salary")
+      ),
+  );
+
   return (
     <div
       className={cn(
-        "rounded-2xl border border-blue-200 bg-white p-6 sm:p-7 shadow-xs space-y-5",
+        "rounded-2xl border border-blue-200 bg-white p-6 sm:p-7 shadow-xs space-y-6",
         className,
       )}
     >
@@ -695,7 +765,7 @@ export function CareerOutcomesPoints({
               Career Outcomes &amp; Skills Acquired
             </h3>
             <p className="text-xs text-slate-500">
-              Verifiable competencies, portfolio assets, and career readiness
+              Verifiable competencies, market demand, and salary benchmarks
             </p>
           </div>
         </div>
@@ -710,55 +780,65 @@ export function CareerOutcomesPoints({
           "Graduates from this program gain working competence, resume-ready portfolio projects, and direct preparation for high-demand technical roles across the industry."}
       </p>
 
-      {/* Responsive Verified Skill Cards */}
-      <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 pt-1 items-stretch">
-        {displayItems.map((pt) => {
-          const isSalary =
-            pt.body?.includes("₹") ||
-            pt.body?.toLowerCase().includes("lpa") ||
-            pt.title?.toLowerCase().includes("salary");
-
-          return (
-            <div
-              key={pt.num}
-              className="group flex flex-col justify-between p-4 rounded-xl border border-slate-200 bg-white hover:border-[#0C4FA8] hover:shadow-md transition-all duration-200 text-left shadow-2xs h-full"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span
-                    className={cn(
-                      "grid size-7 place-items-center rounded-lg font-black text-xs shrink-0 transition-colors",
-                      isSalary
-                        ? "bg-orange-50 text-[#E14E2E] border border-orange-200 group-hover:bg-[#E14E2E] group-hover:text-white"
-                        : "bg-blue-50 text-[#0C4FA8] border border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white",
-                    )}
-                  >
-                    <Check className="size-4 stroke-[2.5]" />
-                  </span>
-                  <span
-                    className={cn(
-                      "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md",
-                      isSalary
-                        ? "text-[#E14E2E] bg-orange-50 border border-orange-200"
-                        : "text-[#0C4FA8] bg-blue-50 border border-blue-200",
-                    )}
-                  >
-                    {isSalary ? "Salary Benchmark" : "Verified Role"}
-                  </span>
-                </div>
-                <h5 className="font-bold text-xs sm:text-sm text-slate-950 leading-snug pt-1 text-left">
-                  {renderFormattedMarkdown(pt.title)}
-                </h5>
-                {pt.body && (
-                  <p className="text-xs text-slate-600 leading-relaxed text-left [text-align:left] [text-justify:none] [word-spacing:normal]">
-                    {renderFormattedMarkdown(pt.body)}
-                  </p>
-                )}
+      {/* Market Demand & Salary Trends Model Design (Matching Reference Image) */}
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs text-left">
+        <h4 className="text-base sm:text-lg font-black text-slate-900 tracking-tight mb-4 sm:mb-5">
+          Market Demand &amp; Salary Trends
+        </h4>
+        <div className="space-y-4 sm:space-y-5">
+          {salaryTiers.map((tier, idx) => (
+            <div key={idx} className="space-y-2">
+              <div className="flex items-center justify-between text-xs sm:text-sm md:text-[15px]">
+                <span className="font-semibold text-slate-700">{tier.role}</span>
+                <span className="font-bold text-slate-950 tracking-tight">{tier.salary}</span>
+              </div>
+              <div className="w-full h-2.5 sm:h-3 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-[#3851dd] via-[#6342db] to-[#b320d7] transition-all duration-700 ease-out"
+                  style={{ width: `${tier.percentage}%` }}
+                />
               </div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
+
+      {/* Target Job Profiles & Competencies Header (Non-salary competencies) */}
+      {competencyItems.length > 0 && (
+        <div className="pt-2">
+          <h4 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-wider text-left mb-3">
+            Verified Roles &amp; Acquired Competencies
+          </h4>
+          {/* Responsive Verified Skill Cards */}
+          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+            {competencyItems.map((pt) => (
+              <div
+                key={pt.num}
+                className="group flex flex-col justify-between p-4 rounded-xl border border-slate-200 bg-white hover:border-[#0C4FA8] hover:shadow-md transition-all duration-200 text-left shadow-2xs h-full"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="grid size-7 place-items-center rounded-lg font-black text-xs shrink-0 transition-colors bg-blue-50 text-[#0C4FA8] border border-blue-200 group-hover:bg-[#0C4FA8] group-hover:text-white">
+                      <Check className="size-4 stroke-[2.5]" />
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md text-[#0C4FA8] bg-blue-50 border border-blue-200">
+                      Verified Role
+                    </span>
+                  </div>
+                  <h5 className="font-bold text-xs sm:text-sm text-slate-950 leading-snug pt-1 text-left">
+                    {renderFormattedMarkdown(pt.title)}
+                  </h5>
+                  {pt.body && (
+                    <p className="text-xs text-slate-600 leading-relaxed text-left [text-align:left] [text-justify:none] [word-spacing:normal]">
+                      {renderFormattedMarkdown(pt.body)}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Note / Salary Footnote Banner if present */}
       {note && (

@@ -673,7 +673,12 @@ function CourseDetailPage() {
 
                   {/* Career Readiness & Placement Outcomes Section */}
                   {course.overview?.outcomes && course.overview.outcomes.length > 0 && (
-                    <CareerOutcomesPoints outcomes={course.overview.outcomes} />
+                    <CareerOutcomesPoints
+                      outcomes={course.overview.outcomes}
+                      courseSlug={course.slug}
+                      courseCategory={course.category}
+                      courseTitle={course.title}
+                    />
                   )}
                 </div>
               )}
