@@ -463,6 +463,14 @@
     text-wrap: normal;
   }
 
+  /* Keep natural equal spacing inside cards and grids */
+  .grid p,
+  [class*="rounded-"] p,
+  .card p {
+    text-align: left;
+    text-justify: auto;
+  }
+
   h1,
   h2,
   h3,
@@ -784,8 +792,7 @@
 }
 
 .text-justify,
-[data-justify],
-p:not(.text-left):not(.text-center):not(.text-right):not(.whitespace-nowrap):not(.truncate) {
+[data-justify] {
   text-align: justify;
   text-justify: inter-word;
   text-align-last: left;

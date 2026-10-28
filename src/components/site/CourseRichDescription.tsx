@@ -534,11 +534,11 @@ export function WhoShouldAttendPoints({
 
               {/* Persona Content */}
               <div className="space-y-1 min-w-0 flex-1">
-                <h5 className="font-bold text-xs sm:text-sm text-slate-900 leading-snug">
+                <h5 className="font-bold text-xs sm:text-sm text-slate-900 leading-snug text-left">
                   {renderFormattedMarkdown(pt.title)}
                 </h5>
                 {pt.body && (
-                  <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
+                  <p className="text-xs text-slate-600 leading-relaxed mt-0.5 text-left [text-align:left] [text-justify:none] [word-spacing:normal]">
                     {renderFormattedMarkdown(pt.body)}
                   </p>
                 )}
@@ -608,7 +608,12 @@ export function parseOutcomesData(input: string[] | string | undefined | null): 
     }
 
     // Check if it's a subheader or section label
-    if (clean.endsWith(":") || clean.toLowerCase().startsWith("primary career paths")) {
+    if (
+      clean.endsWith(":") ||
+      clean.toLowerCase().startsWith("primary career paths") ||
+      clean.toLowerCase().includes("salary benchmark") ||
+      clean.toLowerCase().startsWith("salary range")
+    ) {
       continue;
     }
 
@@ -706,32 +711,53 @@ export function CareerOutcomesPoints({
       </p>
 
       {/* Responsive Verified Skill Cards */}
-      <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 pt-1">
-        {displayItems.map((pt) => (
-          <div
-            key={pt.num}
-            className="group flex flex-col justify-between p-4 rounded-xl border border-emerald-200/80 bg-white hover:border-emerald-500 hover:shadow-md transition-all duration-200 text-left shadow-2xs"
-          >
-            <div className="space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <span className="grid size-7 place-items-center rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200/80 font-black text-xs shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                  <Check className="size-4 stroke-[2.5]" />
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50/80 border border-emerald-200/60 px-2 py-0.5 rounded-md">
-                  Verified Skill
-                </span>
+      <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 pt-1 items-stretch">
+        {displayItems.map((pt) => {
+          const isSalary =
+            pt.body?.includes("₹") ||
+            pt.body?.toLowerCase().includes("lpa") ||
+            pt.title?.toLowerCase().includes("salary");
+
+          return (
+            <div
+              key={pt.num}
+              className="group flex flex-col justify-between p-4 rounded-xl border border-emerald-200/80 bg-white hover:border-emerald-500 hover:shadow-md transition-all duration-200 text-left shadow-2xs h-full"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span
+                    className={cn(
+                      "grid size-7 place-items-center rounded-lg font-black text-xs shrink-0 transition-colors",
+                      isSalary
+                        ? "bg-amber-50 text-amber-700 border border-amber-200/80 group-hover:bg-amber-600 group-hover:text-white"
+                        : "bg-emerald-50 text-emerald-600 border border-emerald-200/80 group-hover:bg-emerald-600 group-hover:text-white",
+                    )}
+                  >
+                    <Check className="size-4 stroke-[2.5]" />
+                  </span>
+                  <span
+                    className={cn(
+                      "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md",
+                      isSalary
+                        ? "text-amber-800 bg-amber-50 border border-amber-200/70"
+                        : "text-emerald-700 bg-emerald-50/80 border border-emerald-200/60",
+                    )}
+                  >
+                    {isSalary ? "Salary Benchmark" : "Verified Role"}
+                  </span>
+                </div>
+                <h5 className="font-bold text-xs sm:text-sm text-slate-950 leading-snug pt-1 text-left">
+                  {renderFormattedMarkdown(pt.title)}
+                </h5>
+                {pt.body && (
+                  <p className="text-xs text-slate-600 leading-relaxed text-left [text-align:left] [text-justify:none] [word-spacing:normal]">
+                    {renderFormattedMarkdown(pt.body)}
+                  </p>
+                )}
               </div>
-              <h5 className="font-bold text-xs sm:text-sm text-slate-950 leading-snug pt-1">
-                {renderFormattedMarkdown(pt.title)}
-              </h5>
-              {pt.body && (
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {renderFormattedMarkdown(pt.body)}
-                </p>
-              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Note / Salary Footnote Banner if present */}
